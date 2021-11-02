@@ -123,7 +123,10 @@ namespace JoanpixerClient
         {
             QuestSpoof = Create.Ini.GetBool("Toggles", "QuestSpoof");
             LoginDelay = Create.Ini.GetBool("Toggles", "QuestSpoof");
-            MelonCoroutines.Start(Awa());
+            if (QuestSpoof)
+            {
+                MelonCoroutines.Start(Awa());
+            }
         }
     }
 }
