@@ -30,13 +30,17 @@ namespace JoanpixerClient
         {
             try
             {
-                Instance.Patch(typeof(PortalTrigger).GetMethod(nameof(PortalTrigger.OnTriggerEnter), BindingFlags.Public | BindingFlags.Instance), GetPatch("EnterPortal"), null, null);
-                Instance.Patch(typeof(UdonSync).GetMethod(nameof(UdonSync.UdonSyncRunProgramAsRPC)), GetPatch("UdonSyncPatch"), null);
+                Instance.Patch(
+                    typeof(PortalTrigger).GetMethod(nameof(PortalTrigger.OnTriggerEnter),
+                        BindingFlags.Public | BindingFlags.Instance), GetPatch("EnterPortal"), null, null);
+                Instance.Patch(typeof(UdonSync).GetMethod(nameof(UdonSync.UdonSyncRunProgramAsRPC)),
+                    GetPatch("UdonSyncPatch"), null);
                 Instance.Patch(AccessTools.Property(typeof(Tools), "Platform").GetMethod, null, GetPatch("ModelSpoof"));
                 Instance.Patch(typeof(NetworkManager).GetMethod("OnJoinedRoom"), GetPatch("OnJoinedRoom"), null);
             }
-            catch
+            catch (Exception arg)
             {
+                MelonLogger.Msg(ConsoleColor.Green, string.Format("Failed Patching {0}\n", arg));
             }
         }
         
@@ -96,7 +100,7 @@ namespace JoanpixerClient
 
         public static bool QuestSpoof = false;
 
-        public static void ModelSpoof(ref string __result)
+        private static void ModelSpoof(ref string __result)
         {
             if (QuestSpoof)
             {
@@ -107,18 +111,19 @@ namespace JoanpixerClient
             }
         }
 
+        public static IEnumerator Awa()
+        {
+            yield return new WaitForSeconds(5);
+            QuestSpoof = false;
+            LoginDelay = false;
+            MelonLogger.Msg("Quest Spoofed");
+        }
+
         public static void QuestIni()
         {
-            if (Create.Ini.GetBool("Toggles", "QuestSpoof"))
-            {
-                QuestSpoof = true;
-                LoginDelay = true;
-            }
-            else
-            {
-                QuestSpoof = false;
-                LoginDelay = false;
-            }
+            QuestSpoof = Create.Ini.GetBool("Toggles", "QuestSpoof");
+            LoginDelay = Create.Ini.GetBool("Toggles", "QuestSpoof");
+            MelonCoroutines.Start(Awa());
         }
     }
 }
