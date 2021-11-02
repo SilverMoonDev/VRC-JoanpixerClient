@@ -372,7 +372,7 @@ namespace JoanpixerClient
 
             #region Murder4 Teleport Menu Buttons
             ///Teleports
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Teleports", "Opens Teleports menu", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, murder42ndpage.transform/*Your Parent Transform*/, delegate (bool a)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Teleports", "Opens Teleports menu", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, murder42ndpage.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 ButtonAPI.EnterSubMenu(murderteleportmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
             }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
@@ -482,7 +482,7 @@ namespace JoanpixerClient
 
             #region Piano Songs
 
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Piano Songs", "Allows you play any song you want to", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, murder42ndpage.transform/*Your Parent Transform*/, delegate (bool a)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Piano Songs", "Allows you play any song you want to", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, murder42ndpage.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 ButtonAPI.EnterSubMenu(pianomenu);
             }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
