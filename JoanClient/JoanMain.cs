@@ -17,7 +17,6 @@ namespace JoanpixerClient
         public static Sprite Background = null;
 
         internal static Sprite MainMenuImage = null;
-        private AssetBundle bl { get; set; }
         public override void OnApplicationStart()
         {
             FoldersManager.Create.Initialize();
