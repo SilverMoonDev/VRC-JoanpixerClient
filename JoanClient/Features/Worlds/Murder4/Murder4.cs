@@ -163,7 +163,7 @@ namespace JoanpixerClient.Features.Worlds
                 if (beartrap.gameObject.name.Contains("Bear Trap"))
                 {
                     beartrap.enabled = false;
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(0.2f);
                     beartrap.gameObject.GetComponent<VRC_Pickup>().pickupable = true;
                 }
             }

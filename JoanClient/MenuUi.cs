@@ -1,6 +1,4 @@
-﻿using System;
-using Harmony;
-using JoanpixerClient.Features.Worlds;
+﻿using JoanpixerClient.Features.Worlds;
 using PlagueButtonAPI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,11 +17,6 @@ namespace JoanpixerClient
             #region SubMenus
             //Menus
             var mainmenu = ButtonAPI.MakeEmptyPage("MainMenu", "Main Menu", null,
-                Color.magenta /*An Optional OnColour For The Title If You're Making It A Toggle, You Can Pass Null Otherwise*/,
-                Color.white /*An Optional OffColour Here, This Sets The Standard Colour Of The Title, And The OnColour If Being Made A Toggle, If Either This Or OnColour Are Defined, It Will Use That Colour By Default If It Is Available, If Both Are Null, It Will Use Color.white.*/,
-                null);
-
-            var NoWorldCompatible = ButtonAPI.MakeEmptyPage("NoWorldCompatible", "World Not Compatible", null,
                 Color.magenta /*An Optional OnColour For The Title If You're Making It A Toggle, You Can Pass Null Otherwise*/,
                 Color.white /*An Optional OffColour Here, This Sets The Standard Colour Of The Title, And The OnColour If Being Made A Toggle, If Either This Or OnColour Are Defined, It Will Use That Colour By Default If It Is Available, If Both Are Null, It Will Use Color.white.*/,
                 null);
@@ -165,526 +158,493 @@ namespace JoanpixerClient
 
             #region Worlds
 
-            if (Murder4.worldLoaded)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Worlds", "Opens World Hacks", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, mainmenu.transform/*Your Parent Transform*/, delegate (bool a)
             {
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Worlds", "Opens World Hacks", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, mainmenu.transform/*Your Parent Transform*/, delegate (bool a)
+                ButtonAPI.EnterSubMenu(worldssubmenu);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            #region Murder4
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Murder 4", "Opens Murder 4 Functions", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, worldssubmenu.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 ButtonAPI.EnterSubMenu(WorldMurder4);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-            #region Murder4
 
-                //Murder 4 Exploits
-                ButtonAPI.PlagueButton SpamRevolverEnable = null;
-                ButtonAPI.PlagueButton LockDoors = null;
-                ButtonAPI.PlagueButton LightOff = null;
-                ButtonAPI.PlagueButton SoundsAnnoy = null;
+            //Murder 4 Exploits
+            ButtonAPI.PlagueButton SpamRevolverEnable = null;
+            ButtonAPI.PlagueButton SpamMeeting = null;
+            ButtonAPI.PlagueButton LockDoors = null;
+            ButtonAPI.PlagueButton LightOff = null;
+            ButtonAPI.PlagueButton SoundsAnnoy = null;
 
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Unlock Doors", "Unlocks all doors", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Murder4.UnLockDoors();
-                }, Color.blue/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                #region Annoy
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Annoy", "Opens Annoying Functions", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    ButtonAPI.EnterSubMenu(Murder4Annoy/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
-                }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
-
-                SpamRevolverEnable = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spam Revolver\nOff", "Spams Revolver Fire", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Murder4.revolverspam = a;
-                    if (a)
-                    {
-                        SpamRevolverEnable.SetText("Spam Revolver\nOn");
-                        MelonCoroutines.Start(Murder4.Fire());
-                    }
-                    else
-                    {
-                        SpamRevolverEnable.SetText("Spam Revolver\nOff");
-                        MelonCoroutines.Stop(Murder4.Fire());
-                    }
-                }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                LockDoors = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Lock Doors\nOff", "Locks all doors", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Murder4.doorlock = a;
-                    if (a)
-                    {
-                        LockDoors.SetText("Lock Doors\nOn");
-                        MelonCoroutines.Start(Murder4.LockDoors());
-                    }
-                    else
-                    {
-                        LockDoors.SetText("Lock Doors\nOff");
-                        MelonCoroutines.Stop(Murder4.LockDoors());
-                    }
-                }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                LightOff = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Lights Off\nOff", "", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Murder4.lightsoff = a;
-                    if (a)
-                    {
-                        LightOff.SetText("Lights Off\nOn");
-                        MelonCoroutines.Start(Murder4.TurnLightsOff());
-                    }
-                    else
-                    {
-                        LightOff.SetText("Lights Off\nOff");
-                        MelonCoroutines.Stop(Murder4.TurnLightsOff());
-                    }
-                }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                SoundsAnnoy = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spam sounds\nOff", null, ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Murder4.spamsounds = a;
-                    if (a)
-                    {
-                        SoundsAnnoy.SetText("Spam sounds\nOn");
-                        MelonCoroutines.Start(Murder4.SpamSounds());
-                    }
-                    else
-                    {
-                        SoundsAnnoy.SetText("Spam sounds\nOff");
-                        MelonCoroutines.Stop(Murder4.SpamSounds());
-                    }
-                }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                #endregion
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Lights On", "Turns Lights On", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Murder4.TurnLightsOn();
-                }, Color.blue/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Start", "Forces Game Start", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Murder4.CallGameLogic("SyncStart");
-                }, Color.green/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Abort Game", "Aborts Game", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Murder4.CallGameLogic("SyncAbort");
-                }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Bystanders Win", "Forces Bystanders to win", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    MelonCoroutines.Start(Murder4.BWin());
-                    MelonCoroutines.Stop(Murder4.BWin());
-                }, Color.blue/*ToggledOffColour*/, Color.magenta, bordercolor, true, false, false, false, null, true);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Murderer\nWin", "Forces Murderer to win", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Murder4.CallGameLogic("SyncVictoryM");
-                }, Color.red, Color.red, bordercolor, true, false, false, false, null, true);
-
-                ButtonAPI.PlagueButton Doors = null;
-
-                Doors = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Doors\nOn", "Disables all doors", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldMurder4.transform, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Murder4.doorcollision = a;
-                    if (a)
-                    {
-                        Doors.SetText("Doors\nOff");
-                        Murder4.doors.SetActive(false);
-                    }
-                    else
-                    {
-                        Doors.SetText("Doors\nOn");
-                        Murder4.doors.SetActive(true);
-                    }
-                }, Color.green, Color.red, bordercolor, true, false, false, false, null, true);
-
-                ButtonAPI.PlagueButton PatreonSelf = null;
-
-                PatreonSelf = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Patreon Self\nOff", "Gives patreon to you", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    Murder4.patreonself = a;
-                    if (a)
-                    {
-                        PatreonSelf.SetText("Patreon Self\nOn");
-                        MelonCoroutines.Start(Murder4.GivePatreonSelf());
-                    }
-                    else
-                    {
-                        PatreonSelf.SetText("Patreon Self\nOff");
-                        MelonCoroutines.Stop(Murder4.GivePatreonSelf());
-                        Murder4.CallRevolver("NonPatronSkin");
-                    }
-                }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
-
-                ButtonAPI.PlagueButton MurderxD = null;
-
-                MurderxD = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Show Murderer", "Shows you the Murderer", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    var Murderer = Murder4.MurderText.GetComponent<Text>().m_Text;
-                    MurderxD.SetTooltip($"Murderer is {Murderer}");
-                }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
-
-                ButtonAPI.PlagueButton GodMode = null;
-
-                GodMode = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "GodMode\nOff", "Gives you Immortality", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    PatchManager.Godmode = a;
-                    if (a)
-                    {
-                        GodMode.SetText("GodMode\nOn");
-                    }
-                    else
-                    {
-                        GodMode.SetText("GodMode\nOff");
-
-                    }
-                }, Color.red, Color.magenta, bordercolor, true, false, false, PatchManager.Godmode, null, true);
-
-                ButtonAPI.PlagueButton Beartraps = null;
-
-                Beartraps = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Pickup Beartraps\nOff", "Allows you to pickup Beartraps even being bystander", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    Murder4.pickupweapontoggle = a;
-                    if (a)
-                    {
-                        Beartraps.SetText("Pickup Beartraps\nOn");
-                        MelonCoroutines.Start(Murder4.PickupBearTraps());
-                        MelonCoroutines.Stop(Murder4.PickupBearTraps());
-                    }
-                    else
-                    {
-                        Beartraps.SetText("Pickup Beartraps\nOff");
-                        Murder4.DisablePickupBearTraps();
-                    }
-                }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
-
-                #region Murder42ndpage
-
-                ButtonAPI.PlagueButton PickupWeapons = null;
-
-                PickupWeapons = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Pickup Weapon in Cooldown\nOff", "Allows you to pickup every weapon that's in cooldown", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, murder42ndpage.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    Murder4.pickupweapontoggle = a;
-                    if (a)
-                    {
-                        PickupWeapons.SetText("Pickup Weapon in Cooldown\nOn");
-                        MelonCoroutines.Start(Murder4.PickupWeaponInCooldown());
-                    }
-                    else
-                    {
-                        PickupWeapons.SetText("Pickup Weapon in Cooldown\nOff");
-                        MelonCoroutines.Stop(Murder4.PickupWeaponInCooldown());
-                    }
-                }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
-
-                #endregion
-
-                #region Murder4 Teleport Menu Buttons
-                ///Teleports
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Teleports", "Opens Teleports menu", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, murder42ndpage.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    ButtonAPI.EnterSubMenu(murderteleportmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
-                }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Next page", "2nd page of teleports", ButtonAPI.HorizontalPosition.RightOfMenu, ButtonAPI.VerticalPosition.AboveTopButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    ButtonAPI.EnterSubMenu(murderteleport2nmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
-                }, Color.white, Color.magenta, bordercolor, false, true, false, false, null, true);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Back page", "1st page of teleports", ButtonAPI.HorizontalPosition.LeftOfMenu, ButtonAPI.VerticalPosition.AboveTopButton, murderteleport2nmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    ButtonAPI.EnterSubMenu(murderteleportmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
-                }, Color.white, Color.magenta, bordercolor, false, true, false, false, null, true);
-                #endregion
-
-                #region Murder4 Teleports
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kitchen", null, ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-20.8f, 0, 121.6f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Lounge", null, ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-15.9f, 0, 130.1f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Dining Room", null, ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-11.3f, 0, 119.2f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Grand Hall", null, ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(0.6f, 0, 116.4f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Library", null, ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(12.2f, 0, 119.7f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Piano", null, ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(15.9f, 0, 131.5f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Garage", null, ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(17.3f, 0, 140.4f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Outside", null, ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.SecondButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(2.8f, 0, 140.5f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Conservatory", null, ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-0.4f, 0, 146);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Billard", null, ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.BottomButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-14.7f, 0, 140.2f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Cellar", null, ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.BottomButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-2.1f, -3, 130.8f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Bedroom", null, ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.BottomButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-9.9f, 3.6f, 129.2f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Detective\nRoom", null, ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleport2nmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(5, 3, 122.8f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Bathroom", null, ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleport2nmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-0.4f, 3, 133.4f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Closet", null, ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleport2nmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(0.4673f, 2.995f, 124.234f);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-                #endregion
-
-                #region Piano Songs
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Piano Songs", "Allows you play any song you want to", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, murder42ndpage.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    ButtonAPI.EnterSubMenu(pianomenu);
-                }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
-
-                ButtonAPI.PlagueButton Halloween = null;
-
-                Halloween = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spooky\nOff", "Plays the Halloween Song continuously", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, pianomenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    Murder4.halloweensong = a;
-                    if (a)
-                    {
-                        Halloween.SetText("Spooky\nOn");
-                        MelonCoroutines.Start(Murder4.PlayPiano());
-                    }
-                    else
-                    {
-                        Halloween.SetText("Spooky\nOff");
-                        MelonCoroutines.Stop(Murder4.PlayPiano());
-                    }
-                }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
-
-                #endregion
-
-                #endregion
-            }
-
-            if (AmongUs.worldLoaded)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Unlock Doors", "Unlocks all doors", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
             {
-                ButtonAPI.PlagueButton SpamMeeting = null;
+                if (!Murder4.worldLoaded) return;
+                Murder4.UnLockDoors();
+            }, Color.blue/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Worlds", "Opens World Hacks", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, mainmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    ButtonAPI.EnterSubMenu(WorldAmongUs);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+            #region Annoy
 
-                #region Among Us
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Among Us", "Opens Among Us Functions", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, worldssubmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    ButtonAPI.EnterSubMenu(WorldAmongUs);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                //Among Us Exploits
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Start", "Forces Game Start", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncStart");
-                }, Color.green/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Abort Game", "Aborts Game", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncAbort");
-                }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Crewmates\nWin", "Forces Crewmates to win", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncVictoryB");
-                }, Color.blue/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Imposters\nWin", "Forces Imposters to win", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncVictoryM");
-                }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Skip Vote", "Forces Skip Vote", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncVoteResultSkip");
-                    AmongUs.CallUdonEvent("SyncEndVotingPhase");
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Admin Scan", "Starts Admin Scan", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("AdminScan");
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kill Sound", "Global Kill Sound", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("OnLocalPlayerKillsOther");
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                SpamMeeting = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spam Meeting\nOff", "Respawns People with Meeting", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.enableEmergencySpam = a;
-                    if (a)
-                    {
-                        SpamMeeting.SetText("Spam Meeting\nOn");
-                        MelonCoroutines.Start(AmongUs.EmergencyButton());
-                    }
-                    else
-                    {
-                        SpamMeeting.SetText("Spam Meeting\nOff");
-                        MelonCoroutines.Stop(AmongUs.EmergencyButton());
-
-                    }
-                }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                #region Among Us Sabotages
-                //Sabotages
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotages\nMenu", "Opens Sabotages menu", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    ButtonAPI.EnterSubMenu(amongussabotages/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotage All Doors", "Sabotages All Doors", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncDoSabotageDoorsElectrical");
-                    AmongUs.CallUdonEvent("SyncDoSabotageDoorsStorage");
-                    AmongUs.CallUdonEvent("SyncDoSabotageDoorsSecurity");
-                    AmongUs.CallUdonEvent("SyncDoSabotageDoorsLower");
-                    AmongUs.CallUdonEvent("SyncDoSabotageDoorsUpper");
-                    AmongUs.CallUdonEvent("SyncDoSabotageDoorsMedbay");
-                    AmongUs.CallUdonEvent("SyncDoSabotageDoorsCafeteria");
-                }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotage Lights", "Sabotages Lights", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncDoSabotageLights");
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotage Comms", "Sabotages Communications", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncDoSabotageComms");
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotage Reactor", "Sabotages Reactor", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncDoSabotageReactor");
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotage Oxygen", "Sabotages Oxygen", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncDoSabotageOxygen");
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Repair All", "Repairs all including doors", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("CancelAllSabotage");
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-                #endregion
-
-                ButtonAPI.PlagueButton GodModeAmongUs = null;
-
-                GodModeAmongUs = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "GodMode\nOff", "Gives you Immortality", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    PatchManager.Godmode = a;
-                    if (a)
-                    {
-                        GodModeAmongUs.SetText("GodMode\nOn");
-                    }
-                    else
-                    {
-                        GodModeAmongUs.SetText("GodMode\nOff");
-
-                    }
-                }, Color.red, Color.magenta, bordercolor, true, false, false, PatchManager.Godmode, null, true);
-
-                #endregion
-            }
-
-            if (!Murder4.worldLoaded || AmongUs.worldLoaded)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Annoy", "Opens Annoying Functions", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
             {
-                ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Worlds", "Opens World Hacks", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, mainmenu.transform/*Your Parent Transform*/, delegate (bool a)
-                {
-                    ButtonAPI.EnterSubMenu(NoWorldCompatible);
-                }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+                ButtonAPI.EnterSubMenu(Murder4Annoy/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
+            }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
 
-                ButtonAPI.CreateText(ButtonAPI.ButtonType.Default, ButtonAPI.SizeType.QuickMenuSize, "                        This World Is Not Compatible!"/*Text*/, null/*ToolTip*/, ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, NoWorldCompatible.transform, false/*Clickable, If You Want The Text To Be Able To Be Selectable Or Not*/, false/*ChangeColourOnClick, If You Want The Text To Change Between The Two Colours Set Later, On Only The OffColour*/, delegate (bool a)
+            SpamRevolverEnable = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spam Revolver\nOff", "Spams Revolver Fire", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Murder4.revolverspam = a;
+                if (a)
                 {
-                }, false/*CurrentToggleState, The Toggle State Of The Text On Creation*/, Color.white/*OnColour, When Toggled On The Text Is This Colour (If ChangeColourOnClick Is True)*/, Color.white/*OffColour, When The Text Is Toggled Off The Text Is This Colour*/);
+                    SpamRevolverEnable.SetText("Spam Revolver\nOn");
+                    MelonCoroutines.Start(Murder4.Fire());
+                }
+                else
+                {
+                    SpamRevolverEnable.SetText("Spam Revolver\nOff");
+                    MelonCoroutines.Stop(Murder4.Fire());
+                }
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            }
+            LockDoors = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Lock Doors\nOff", "Locks all doors", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Murder4.doorlock = a;
+                if (a)
+                {
+                    LockDoors.SetText("Lock Doors\nOn");
+                    MelonCoroutines.Start(Murder4.LockDoors());
+                }
+                else
+                {
+                    LockDoors.SetText("Lock Doors\nOff");
+                    MelonCoroutines.Stop(Murder4.LockDoors());
+                }
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            LightOff = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Lights Off\nOff", "", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Murder4.lightsoff = a;
+                if (a)
+                {
+                    LightOff.SetText("Lights Off\nOn");
+                    MelonCoroutines.Start(Murder4.TurnLightsOff());
+                }
+                else
+                {
+                    LightOff.SetText("Lights Off\nOff");
+                    MelonCoroutines.Stop(Murder4.TurnLightsOff());
+                }
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            SoundsAnnoy = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spam sounds\nOff", null, ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Murder4.spamsounds = a;
+                if (a)
+                {
+                    SoundsAnnoy.SetText("Spam sounds\nOn");
+                    MelonCoroutines.Start(Murder4.SpamSounds());
+                }
+                else
+                {
+                    SoundsAnnoy.SetText("Spam sounds\nOff");
+                    MelonCoroutines.Stop(Murder4.SpamSounds());
+                }
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            #endregion
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Lights On", "Turns Lights On", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Murder4.TurnLightsOn();
+            }, Color.blue/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Start", "Forces Game Start", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Murder4.CallGameLogic("SyncStart");
+            }, Color.green/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Abort Game", "Aborts Game", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Murder4.CallGameLogic("SyncAbort");
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Bystanders Win", "Forces Bystanders to win", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                MelonCoroutines.Start(Murder4.BWin());
+                MelonCoroutines.Stop(Murder4.BWin());
+            }, Color.blue/*ToggledOffColour*/, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Murderer\nWin", "Forces Murderer to win", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Murder4.CallGameLogic("SyncVictoryM");
+            }, Color.red, Color.red, bordercolor, true, false, false, false, null, true);
+
+            ButtonAPI.PlagueButton Doors = null;
+
+            Doors = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Doors\nOn", "Disables all doors", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldMurder4.transform, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Murder4.doorcollision = a;
+                if (a)
+                {
+                    Doors.SetText("Doors\nOff");
+                    Murder4.doors.SetActive(false);
+                }
+                else
+                {
+                    Doors.SetText("Doors\nOn");
+                    Murder4.doors.SetActive(true);
+                }
+            }, Color.green, Color.red, bordercolor, true, false, false, false, null, true);
+
+            ButtonAPI.PlagueButton PatreonSelf = null;
+
+            PatreonSelf = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Patreon Self\nOff", "Gives patreon to you", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                Murder4.patreonself = a;
+                if (a)
+                {
+                    PatreonSelf.SetText("Patreon Self\nOn");
+                    MelonCoroutines.Start(Murder4.GivePatreonSelf());
+                }
+                else
+                {
+                    PatreonSelf.SetText("Patreon Self\nOff");
+                    MelonCoroutines.Stop(Murder4.GivePatreonSelf());
+                    Murder4.CallRevolver("NonPatronSkin");
+                }
+            }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            ButtonAPI.PlagueButton MurderxD = null;
+
+            MurderxD = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Show Murderer", "Shows you the Murderer", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                var Murderer = Murder4.MurderText.GetComponent<Text>().m_Text;
+                MurderxD.SetTooltip($"Murderer is {Murderer}");
+            }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            ButtonAPI.PlagueButton Beartraps = null;
+
+            Beartraps = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Pickup Beartraps\nOff", "Allows you to pickup Beartraps even being bystander", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                Murder4.pickupweapontoggle = a;
+                if (a)
+                {
+                    Beartraps.SetText("Pickup Beartraps\nOn");
+                    MelonCoroutines.Start(Murder4.PickupBearTraps());
+                    MelonCoroutines.Stop(Murder4.PickupBearTraps());
+                }
+                else
+                {
+                    Beartraps.SetText("Pickup Beartraps\nOff");
+                    Murder4.DisablePickupBearTraps();
+                }
+            }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            ButtonAPI.PlagueButton PickupWeapons = null;
+
+
+            PickupWeapons = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Pickup Weapon in Cooldown\nOff", "Allows you to pickup every weapon that's in cooldown", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                Murder4.pickupweapontoggle = a;
+                if (a)
+                {
+                    PickupWeapons.SetText("Pickup Weapon in Cooldown\nOn");
+                    MelonCoroutines.Start(Murder4.PickupWeaponInCooldown());
+                }
+                else
+                {
+                    PickupWeapons.SetText("Pickup Weapon in Cooldown\nOff");
+                    MelonCoroutines.Stop(Murder4.PickupWeaponInCooldown());
+                }
+            }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            #region Murder42ndpage
+
+            #region Murder4 Teleport Menu Buttons
+            ///Teleports
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Teleports", "Opens Teleports menu", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, murder42ndpage.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                ButtonAPI.EnterSubMenu(murderteleportmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
+            }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Next page", "2nd page of teleports", ButtonAPI.HorizontalPosition.RightOfMenu, ButtonAPI.VerticalPosition.AboveTopButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                ButtonAPI.EnterSubMenu(murderteleport2nmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
+            }, Color.white, Color.magenta, bordercolor, false, true, false, false, null, true);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Back page", "1st page of teleports", ButtonAPI.HorizontalPosition.LeftOfMenu, ButtonAPI.VerticalPosition.AboveTopButton, murderteleport2nmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                ButtonAPI.EnterSubMenu(murderteleportmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
+            }, Color.white, Color.magenta, bordercolor, false, true, false, false, null, true);
+            #endregion
+
+            #region Murder4 Teleports
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kitchen", null, ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(-20.8f, 0, 121.6f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Lounge", null, ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(-15.9f, 0, 130.1f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Dining Room", null, ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(-11.3f, 0, 119.2f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Grand Hall", null, ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(0.6f, 0, 116.4f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Library", null, ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(12.2f, 0, 119.7f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Piano", null, ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(15.9f, 0, 131.5f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Garage", null, ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(17.3f, 0, 140.4f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Outside", null, ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.SecondButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(2.8f, 0, 140.5f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Conservatory", null, ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(-0.4f, 0, 146);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Billard", null, ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.BottomButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(-14.7f, 0, 140.2f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Cellar", null, ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.BottomButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(-2.1f, -3, 130.8f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Bedroom", null, ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.BottomButton, murderteleportmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(-9.9f, 3.6f, 129.2f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Detective\nRoom", null, ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleport2nmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(5, 3, 122.8f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Bathroom", null, ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleport2nmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(-0.4f, 3, 133.4f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Closet", null, ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, murderteleport2nmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Utils.GetLocalPlayer().transform.position = new Vector3(0.4673f, 2.995f, 124.234f);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+            #endregion
+
+            #region Piano Songs
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Piano Songs", "Allows you play any song you want to", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, murder42ndpage.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                ButtonAPI.EnterSubMenu(pianomenu);
+            }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            ButtonAPI.PlagueButton Halloween = null;
+
+            Halloween = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spooky\nOff", "Plays the Halloween Song continuously", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, pianomenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                Murder4.halloweensong = a;
+                if (a)
+                {
+                    Halloween.SetText("Spooky\nOn");
+                    MelonCoroutines.Start(Murder4.PlayPiano());
+                }
+                else
+                {
+                    Halloween.SetText("Spooky\nOff");
+                    MelonCoroutines.Stop(Murder4.PlayPiano());
+                }
+            }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            #endregion
+
+            #endregion
+
+            #endregion
+
+            #region Among Us
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Among Us", "Opens Among Us Functions", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, worldssubmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                ButtonAPI.EnterSubMenu(WorldAmongUs);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            //Among Us Exploits
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Start", "Forces Game Start", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("SyncStart");
+            }, Color.green/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Abort Game", "Aborts Game", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("SyncAbort");
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Crewmates\nWin", "Forces Crewmates to win", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("SyncVictoryB");
+            }, Color.blue/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Imposters\nWin", "Forces Imposters to win", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("SyncVictoryM");
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Skip Vote", "Forces Skip Vote", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("SyncVoteResultSkip");
+                AmongUs.CallUdonEvent("SyncEndVotingPhase");
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Admin Scan", "Starts Admin Scan", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("AdminScan");
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kill Sound", "Global Kill Sound", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("OnLocalPlayerKillsOther");
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            SpamMeeting = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spam Meeting\nOff", "Respawns People with Meeting", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.SecondButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.enableEmergencySpam = a;
+                if (a)
+                {
+                    SpamMeeting.SetText("Spam Meeting\nOn");
+                    MelonCoroutines.Start(AmongUs.EmergencyButton());
+                }
+                else
+                {
+                    SpamMeeting.SetText("Spam Meeting\nOff");
+                    MelonCoroutines.Stop(AmongUs.EmergencyButton());
+
+                }
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            #region Among Us Sabotages
+            //Sabotages
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotages\nMenu", "Opens Sabotages menu", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                ButtonAPI.EnterSubMenu(amongussabotages/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotage All Doors", "Sabotages All Doors", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("SyncDoSabotageDoorsElectrical");
+                AmongUs.CallUdonEvent("SyncDoSabotageDoorsStorage");
+                AmongUs.CallUdonEvent("SyncDoSabotageDoorsSecurity");
+                AmongUs.CallUdonEvent("SyncDoSabotageDoorsLower");
+                AmongUs.CallUdonEvent("SyncDoSabotageDoorsUpper");
+                AmongUs.CallUdonEvent("SyncDoSabotageDoorsMedbay");
+                AmongUs.CallUdonEvent("SyncDoSabotageDoorsCafeteria");
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotage Lights", "Sabotages Lights", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("SyncDoSabotageLights");
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotage Comms", "Sabotages Communications", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("SyncDoSabotageComms");
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotage Reactor", "Sabotages Reactor", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("SyncDoSabotageReactor");
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Sabotage Oxygen", "Sabotages Oxygen", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("SyncDoSabotageOxygen");
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Repair All", "Repairs all including doors", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, amongussabotages.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!AmongUs.worldLoaded) return;
+                AmongUs.CallUdonEvent("CancelAllSabotage");
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+            #endregion
+
+            #endregion
+
+            ButtonAPI.PlagueButton GodMode = null;
+
+            GodMode = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "GodMode\nOff", "Gives you Immortality", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, worldssubmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                PatchManager.Godmode = a;
+                if (a)
+                {
+                    GodMode.SetText("GodMode\nOn");
+                }
+                else
+                {
+                    GodMode.SetText("GodMode\nOff");
+
+                }
+            }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
+
             #endregion
 
             #region Movement
@@ -871,13 +831,12 @@ namespace JoanpixerClient
             From Pickups to MainMenu
             From Protections to MainMenu
             From Microphone to MainMenu
-            From Murder4 to MainMenu
-            From NoCompatibleWorld to MainMenu
+            From Murder4 to Worlds
             From Murder4 to Murder42ndpage
             From Piano to Murder42ndpage
             From Murder42ndpage to Murder4
             From Murder4Annoy to Murder4
-            From AmongUs to MainMenu
+            From AmongUs to Worlds
             From Worlds to MainMenu
             From AmongUsSabotages to Among Us
             From Player options to UserInteract
@@ -939,11 +898,11 @@ namespace JoanpixerClient
                 ButtonAPI.EnterSubMenu(mainmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, false/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, true/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            //From Murder4 to MainMenu
+            //From Murder4 to Worlds
 
             ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Back", "Go back", ButtonAPI.HorizontalPosition.LeftOfMenu, ButtonAPI.VerticalPosition.AboveTopButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
             {
-                ButtonAPI.EnterSubMenu(mainmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
+                ButtonAPI.EnterSubMenu(worldssubmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, false/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, true/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
             //From Murder4Annoy to Murder4
@@ -953,18 +912,11 @@ namespace JoanpixerClient
                 ButtonAPI.EnterSubMenu(WorldMurder4/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, false/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, true/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            //From AmongUs to MainMenu
+            //From AmongUs to Worlds
 
             ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Back", "Go back", ButtonAPI.HorizontalPosition.LeftOfMenu, ButtonAPI.VerticalPosition.AboveTopButton, WorldAmongUs.transform/*Your Parent Transform*/, delegate (bool a)
             {
-                ButtonAPI.EnterSubMenu(mainmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
-            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, false/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, true/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-            //From NoCompatibleWorld to MainMenu
-
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Back", "Go back", ButtonAPI.HorizontalPosition.LeftOfMenu, ButtonAPI.VerticalPosition.AboveTopButton, NoWorldCompatible.transform/*Your Parent Transform*/, delegate (bool a)
-            {
-                ButtonAPI.EnterSubMenu(mainmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
+                ButtonAPI.EnterSubMenu(worldssubmenu/*Or You Can Paste The Code Just Above In Here To Make The SubMenu Page As You Enter It, Or Return It If It Was Made Beforehand*/);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, false/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, true/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
             //From Worlds to MainMenu
