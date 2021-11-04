@@ -487,19 +487,290 @@ namespace JoanpixerClient
                 ButtonAPI.EnterSubMenu(pianomenu);
             }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
 
-            ButtonAPI.PlagueButton Halloween = null;
+            ButtonAPI.PlagueButton Jojos = null;
+            ButtonAPI.PlagueButton Moonlight = null;
+            ButtonAPI.PlagueButton Believing = null;
+            ButtonAPI.PlagueButton ClocksColdplay = null;
+            ButtonAPI.PlagueButton Imagine = null;
+            ButtonAPI.PlagueButton megalovania = null;
+            ButtonAPI.PlagueButton LinusnLucy = null;
 
-            Halloween = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spooky\nOff", "Plays the Halloween Song continuously", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, pianomenu.transform/*Your Parent Transform*/, delegate (bool a)
+            Jojos = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "JoJo's\nOff", "Giorno's Theme", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, pianomenu.transform /*Your Parent Transform*/, delegate(bool a)
+                {
+                    Murder4.jojossong = a;
+                    Murder4.Prestoagitato = false;
+                    Murder4.Believing = false;
+                    Murder4.ClocksColdplay = false;
+                    Murder4.imagine = false;
+                    Murder4.megalovania = false;
+                    Murder4.LinusnLucy = false;
+                    if (a)
+                    {
+                        MelonCoroutines.Stop(Murder4.PlayPiano());
+                        Moonlight.SetToggleState(false);
+                        Moonlight.text.color = Color.red;
+                        Believing.SetToggleState(false);
+                        Believing.text.color = Color.red;
+                        ClocksColdplay.SetToggleState(false);
+                        ClocksColdplay.text.color = Color.red;
+                        megalovania.SetToggleState(false);
+                        megalovania.text.color = Color.red;
+                        Imagine.SetToggleState(false);
+                        Imagine.SetText("Imagine\nOff");
+                        LinusnLucy.SetToggleState(false);
+                        LinusnLucy.text.color = Color.red;
+                        LinusnLucy.SetText("LinusnLucy\nOff");
+                        Imagine.text.color = Color.red;
+                        Jojos.SetText("JoJo's\nOn");
+                        Moonlight.SetText("Presto Agitato\nOff");
+                        Believing.SetText("Believing\nOff");
+                        ClocksColdplay.SetText("Clocks\nOff");
+                        megalovania.SetText("Megalovania\nOff");
+                        MelonCoroutines.Start(Murder4.PlayPiano());
+                    }
+                    else
+                    {
+                        Jojos.SetText("JoJo's\nOff");
+                        MelonCoroutines.Stop(Murder4.PlayPiano());
+                    }
+                }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            Moonlight = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Presto Agitato\nOff", "Moonlight Sonata 3rd movement", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.TopButton, pianomenu.transform /*Your Parent Transform*/, delegate (bool a)
+                {
+                    Murder4.jojossong = false;
+                    Murder4.Prestoagitato = a;
+                    Murder4.Believing = false;
+                    Murder4.ClocksColdplay = false;
+                    Murder4.imagine = false;
+                    Murder4.megalovania = false;
+                    Murder4.LinusnLucy = false;
+                    if (a)
+                    {
+                        MelonCoroutines.Stop(Murder4.PlayPiano());
+                        Jojos.SetToggleState(false);
+                        Jojos.text.color = Color.red;
+                        Believing.SetToggleState(false);
+                        Believing.text.color = Color.red;
+                        ClocksColdplay.SetToggleState(false);
+                        ClocksColdplay.text.color = Color.red;
+                        megalovania.SetToggleState(false);
+                        megalovania.text.color = Color.red;
+                        Imagine.SetToggleState(false);
+                        Imagine.SetText("Imagine\nOff");
+                        Imagine.text.color = Color.red;
+                        LinusnLucy.SetToggleState(false);
+                        LinusnLucy.text.color = Color.red;
+                        LinusnLucy.SetText("LinusnLucy\nOff");
+                        Jojos.SetText("JoJo's\nOff");
+                        Moonlight.SetText("Presto Agitato\nOn");
+                        Believing.SetText("Believing\nOff");
+                        ClocksColdplay.SetText("Clocks\nOff");
+                        megalovania.SetText("Megalovania\nOff");
+                        MelonCoroutines.Start(Murder4.PlayPiano());
+                    }
+                    else
+                    {
+                        Moonlight.SetText("Presto Agitato\nOff");
+                        MelonCoroutines.Stop(Murder4.PlayPiano());
+                    }
+                }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            Believing = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Believing\nOff", "Don't Stop Believing", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, pianomenu.transform /*Your Parent Transform*/, delegate (bool a)
             {
-                Murder4.halloweensong = a;
+                Murder4.jojossong = false;
+                Murder4.Prestoagitato = false;
+                Murder4.Believing = a;
+                Murder4.ClocksColdplay = false;
+                Murder4.imagine = false;
+                Murder4.megalovania = false;
+                Murder4.LinusnLucy = false;
                 if (a)
                 {
-                    Halloween.SetText("Spooky\nOn");
+                    MelonCoroutines.Stop(Murder4.PlayPiano());
+                    Jojos.SetToggleState(false);
+                    Jojos.text.color = Color.red;
+                    Moonlight.SetToggleState(false);
+                    Moonlight.text.color = Color.red;
+                    ClocksColdplay.SetToggleState(false);
+                    ClocksColdplay.text.color = Color.red;
+                    Imagine.SetToggleState(false);
+                    Imagine.text.color = Color.red;
+                    megalovania.SetToggleState(false);
+                    megalovania.text.color = Color.red;
+                    LinusnLucy.SetToggleState(false);
+                    LinusnLucy.text.color = Color.red;
+                    LinusnLucy.SetText("LinusnLucy\nOff");
+                    Jojos.SetText("JoJo's\nOff");
+                    Moonlight.SetText("Presto Agitato\nOff");
+                    ClocksColdplay.SetText("Clocks\nOff");
+                    Imagine.SetText("Imagine\nOff");
+                    megalovania.SetText("Megalovania\nOff");
+                    Believing.SetText("Believing\nOn");
                     MelonCoroutines.Start(Murder4.PlayPiano());
                 }
                 else
                 {
-                    Halloween.SetText("Spooky\nOff");
+                    Believing.SetText("Believing\nOff");
+                    MelonCoroutines.Stop(Murder4.PlayPiano());
+                }
+            }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            ClocksColdplay = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Clocks\nOff", "Clocks from Coldplay", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, pianomenu.transform /*Your Parent Transform*/, delegate (bool a)
+            {
+                Murder4.jojossong = false;
+                Murder4.Prestoagitato = false;
+                Murder4.Believing = false;
+                Murder4.ClocksColdplay = a;
+                Murder4.imagine = false;
+                Murder4.megalovania = false;
+                Murder4.LinusnLucy = false;
+                if (a)
+                {
+                    MelonCoroutines.Stop(Murder4.PlayPiano());
+                    Jojos.SetToggleState(false);
+                    Jojos.text.color = Color.red;
+                    Moonlight.SetToggleState(false);
+                    Moonlight.text.color = Color.red;
+                    Believing.SetToggleState(false);
+                    Believing.text.color = Color.red;
+                    Imagine.SetToggleState(false);
+                    Imagine.text.color = Color.red;
+                    megalovania.SetToggleState(false);
+                    megalovania.text.color = Color.red;
+                    LinusnLucy.SetToggleState(false);
+                    LinusnLucy.text.color = Color.red;
+                    LinusnLucy.SetText("LinusnLucy\nOff");
+                    Jojos.SetText("JoJo's\nOff");
+                    Moonlight.SetText("Presto Agitato\nOff");
+                    Believing.SetText("Believing\nOff");
+                    Imagine.SetText("Imagine\nOff");
+                    megalovania.SetText("Megalovania\nOff");
+                    ClocksColdplay.SetText("Clocks\nOn");
+                    MelonCoroutines.Start(Murder4.PlayPiano());
+                }
+                else
+                {
+                    ClocksColdplay.SetText("Clocks\nOff");
+                    MelonCoroutines.Stop(Murder4.PlayPiano());
+                }
+            }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            Imagine = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Imagine\nOff", "Imagine from Shari", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, pianomenu.transform /*Your Parent Transform*/, delegate (bool a)
+            {
+                Murder4.jojossong = false;
+                Murder4.Prestoagitato = false;
+                Murder4.Believing = false;
+                Murder4.ClocksColdplay = false;
+                Murder4.imagine = a;
+                Murder4.megalovania = false;
+                Murder4.LinusnLucy = false;
+                if (a)
+                {
+                    MelonCoroutines.Stop(Murder4.PlayPiano());
+                    Jojos.SetToggleState(false);
+                    Jojos.text.color = Color.red;
+                    Moonlight.SetToggleState(false);
+                    Moonlight.text.color = Color.red;
+                    Believing.SetToggleState(false);
+                    Believing.text.color = Color.red;
+                    ClocksColdplay.SetToggleState(false);
+                    ClocksColdplay.text.color = Color.red;
+                    megalovania.SetToggleState(false);
+                    megalovania.text.color = Color.red;
+                    LinusnLucy.SetToggleState(false);
+                    LinusnLucy.text.color = Color.red;
+                    LinusnLucy.SetText("LinusnLucy\nOff");
+                    Jojos.SetText("JoJo's\nOff");
+                    Moonlight.SetText("Presto Agitato\nOff");
+                    Believing.SetText("Believing\nOff");
+                    ClocksColdplay.SetText("Clocks\nOff");
+                    megalovania.SetText("Megalovania\nOff");
+                    Imagine.SetText("Imagine\nOn");
+                    MelonCoroutines.Start(Murder4.PlayPiano());
+                }
+                else
+                {
+                    Imagine.SetText("Imagine\nOff");
+                    MelonCoroutines.Stop(Murder4.PlayPiano());
+                }
+            }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            megalovania = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Megalovania\nOff", "Megalovania from Undertale", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, pianomenu.transform /*Your Parent Transform*/, delegate (bool a)
+            {
+                Murder4.jojossong = false;
+                Murder4.Prestoagitato = false;
+                Murder4.Believing = false;
+                Murder4.ClocksColdplay = false;
+                Murder4.imagine = false;
+                Murder4.megalovania = a;
+                Murder4.LinusnLucy = false;
+                if (a)
+                {
+                    MelonCoroutines.Stop(Murder4.PlayPiano());
+                    Jojos.SetToggleState(false);
+                    Jojos.text.color = Color.red;
+                    Moonlight.SetToggleState(false);
+                    Moonlight.text.color = Color.red;
+                    Believing.SetToggleState(false);
+                    Believing.text.color = Color.red;
+                    ClocksColdplay.SetToggleState(false);
+                    ClocksColdplay.text.color = Color.red;
+                    LinusnLucy.SetToggleState(false);
+                    LinusnLucy.text.color = Color.red;
+                    LinusnLucy.SetText("LinusnLucy\nOff");
+                    Imagine.SetToggleState(false);
+                    Imagine.SetText("Imagine\nOff");
+                    Imagine.text.color = Color.red;
+                    Jojos.SetText("JoJo's\nOff");
+                    Moonlight.SetText("Presto Agitato\nOff");
+                    Believing.SetText("Believing\nOff");
+                    ClocksColdplay.SetText("Clocks\nOff");
+                    megalovania.SetText("Megalovania\nOn");
+                    MelonCoroutines.Start(Murder4.PlayPiano());
+                }
+                else
+                {
+                    megalovania.SetText("Megalovania\nOff");
+                    MelonCoroutines.Stop(Murder4.PlayPiano());
+                }
+            }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
+
+            LinusnLucy = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "LinusnLucy\nOff", "Vince Guaraldi Trio - Linus And Lucy", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, pianomenu.transform /*Your Parent Transform*/, delegate (bool a)
+            {
+                Murder4.jojossong = false;
+                Murder4.Prestoagitato = false;
+                Murder4.Believing = false;
+                Murder4.ClocksColdplay = false;
+                Murder4.imagine = false;
+                Murder4.megalovania = false;
+                Murder4.LinusnLucy = a;
+                if (a)
+                {
+                    MelonCoroutines.Stop(Murder4.PlayPiano());
+                    Jojos.SetToggleState(false);
+                    Jojos.text.color = Color.red;
+                    Moonlight.SetToggleState(false);
+                    Moonlight.text.color = Color.red;
+                    Believing.SetToggleState(false);
+                    Believing.text.color = Color.red;
+                    ClocksColdplay.SetToggleState(false);
+                    ClocksColdplay.text.color = Color.red;
+                    Imagine.SetToggleState(false);
+                    Imagine.SetText("Imagine\nOff");
+                    Imagine.text.color = Color.red;
+                    megalovania.SetToggleState(false);
+                    megalovania.text.color = Color.red;
+                    Jojos.SetText("JoJo's\nOff");
+                    Moonlight.SetText("Presto Agitato\nOff");
+                    Believing.SetText("Believing\nOff");
+                    ClocksColdplay.SetText("Clocks\nOff");
+                    megalovania.SetText("Megalovania\nOff");
+                    LinusnLucy.SetText("LinusnLucy\nOn");
+                    MelonCoroutines.Start(Murder4.PlayPiano());
+                }
+                else
+                {
+                    LinusnLucy.SetText("LinusnLucy\nOff");
                     MelonCoroutines.Stop(Murder4.PlayPiano());
                 }
             }, Color.red, Color.magenta, bordercolor, true, false, false, false, null, true);
@@ -706,7 +977,7 @@ namespace JoanpixerClient
 
             ButtonAPI.PlagueButton QuestSpoofButton = null;
 
-            if (FoldersManager.Create.Ini.GetBool("Toggles", "QuestSpoof"))
+            if (PatchManager.QuestSpoof)
             {
                 QuestSpoofButton = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Quest Spoof\nOn", "Spoofs you as a Quest", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, Protections.transform/*Your Parent Transform*/, delegate (bool a)
                 {
@@ -752,6 +1023,14 @@ namespace JoanpixerClient
                 {
                     LogUdon.SetText("Log Udon\nOff");
                 }
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.PlagueButton LogCheaters = null;
+
+            LogCheaters = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Log Cheaters\nOff", "Logs all client users abusing udon events onto the MLConsole", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, Protections.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                PatchManager.LogCheaters = a;
+                LogCheaters.SetText(a ? "Log Cheaters\nOn" : "Log Cheaters\nOff");
             }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
             #endregion
@@ -1000,42 +1279,35 @@ namespace JoanpixerClient
                 Murder4Items.knife.transform.position = Utils.GetSelectedPlayer().transform.position + new Vector3(0, 0.1f, 0);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Cursed Bomb", "Teleports the Cursed Bomb to the Target", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
-            {
-                if (!Murder4.worldLoaded) return;
-                Items.TakeOwnershipIfNecessary(Murder4.bomb.gameObject);
-                Murder4.bomb.gameObject.transform.position = Utils.GetSelectedPlayer().transform.position + new Vector3(0, 0.1f, 0);
-            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Luger", "Teleports a Luger to the Target", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Luger", "Teleports a Luger to the Target", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.TopButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if (!Murder4.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.luger);
                 Murder4Items.luger.transform.position = Utils.GetSelectedPlayer().transform.position + new Vector3(0, 0.1f, 0);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Shotgun", "Teleports the Shotgun to the Target", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Shotgun", "Teleports the Shotgun to the Target", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if (!Murder4.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.shotgun);
                 Murder4Items.shotgun.transform.position = Utils.GetSelectedPlayer().transform.position + new Vector3(0, 0.1f, 0);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Grenade", "Teleports the Grenade to the Target", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Grenade", "Teleports the Grenade to the Target", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if (!Murder4.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.frag);
                 Murder4Items.frag.transform.position = Utils.GetSelectedPlayer().transform.position + new Vector3(0, 0.1f, 0);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Bear Trap", "Teleports a Bear Trap to the Target", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Bear Trap", "Teleports a Bear Trap to the Target", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if (!Murder4.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.Beartrap);
                 Murder4Items.Beartrap.transform.position = Utils.GetSelectedPlayer().transform.position + new Vector3(0, 0.1f, 0);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kill Knife", "Kill target with Knife", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kill Knife", "Kill target with Knife", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if(!Murder4.worldLoaded) return;
                 var player = Utils.GetSelectedPlayer();
@@ -1043,12 +1315,32 @@ namespace JoanpixerClient
                 MelonCoroutines.Stop(Murder4.KillSelectedPlayerKnife(player));
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kill Frag", "Kill target with Grenade", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kill Frag", "Kill target with Grenade", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if (!Murder4.worldLoaded) return;
                 var player = Utils.GetSelectedPlayer();
                 MelonCoroutines.Start(Murder4.KillSelectedPlayerFrag(player));
                 MelonCoroutines.Stop(Murder4.KillSelectedPlayerFrag(player));
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.PlagueButton GivePatreon = null;
+
+            GivePatreon = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Give Patreon\nOff", "Gives Patreon to the target", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                var player = Utils.GetSelectedPlayer();
+                Murder4.givepatreon = a;
+                if (a)
+                {
+                    GivePatreon.SetText("Give Patreon\nOn");
+                    MelonCoroutines.Start(Murder4.GivePatreonTarget(player));
+                }
+                else
+                {
+                    GivePatreon.SetText("Give Patreon\nOff");
+                    MelonCoroutines.Stop(Murder4.GivePatreonTarget(player));
+                    Murder4.CallRevolver("NonPatronSkin");
+                }
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
             #endregion

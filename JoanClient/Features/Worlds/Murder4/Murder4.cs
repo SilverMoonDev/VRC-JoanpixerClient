@@ -18,8 +18,19 @@ namespace JoanpixerClient.Features.Worlds
         public static bool doorcollision = false;
         public static bool lightsoff = false;
         public static bool patreonself = false;
+        public static bool givepatreon = false;
         public static bool pickupweapontoggle = false;
-        public static bool halloweensong = false;
+        #region piano songs
+
+        public static bool ClocksColdplay = false;
+        public static bool megalovania = false;
+        public static bool LinusnLucy = false;
+        public static bool Prestoagitato = false;
+        public static bool imagine = false;
+        public static bool jojossong = false;
+        public static bool Believing = false;
+
+        #endregion
         public static bool spamsounds = false;
         public static GameObject doors = null;
         public static GameObject MurderText = null;
@@ -35,7 +46,7 @@ namespace JoanpixerClient.Features.Worlds
         {
             // TODO: Check world ID aswell.
 
-            if (sceneName == "Nevermore Halloween")
+            if (sceneName == "Murder Nevermore")
             {
                 piano = GameObject.Find("Game Logic/PianoKeys (continuous)")?.GetComponent<UdonBehaviour>();
                 MurderText = GameObject.Find("Game Logic/Game Canvas/Postgame/Murderer Name");
@@ -44,13 +55,14 @@ namespace JoanpixerClient.Features.Worlds
                 Murder4Items.knife = GameObject.Find("Game Logic/Weapons/Knife (0)");
                 Murder4Items.revolverobject = GameObject.Find("Game Logic/Weapons/Revolver");
                 Murder4Items.luger = GameObject.Find("Game Logic/Weapons/Unlockables/Luger (0)");
+                Murder4Items.luger1 = GameObject.Find("Game Logic/Weapons/Unlockables/Luger (1)");
                 Murder4Items.shotgun = GameObject.Find("Game Logic/Weapons/Unlockables/Shotgun (0)");
                 Murder4Items.frag = GameObject.Find("Game Logic/Weapons/Unlockables/Frag (0)");
                 fragudon = GameObject.Find("Game Logic/Weapons/Unlockables/Frag (0)")?.GetComponent<UdonBehaviour>();
-                bomb = GameObject.Find("Game Logic/Skulls Unlock CursedBomb/CursedBomb")?.GetComponent<UdonBehaviour>();
                 gameLogic = GameObject.Find("Game Logic")?.GetComponent<UdonBehaviour>();
                 revolver = GameObject.Find("Game Logic/Weapons/Revolver")?.GetComponent<UdonBehaviour>();
                 revolverpickup = Murder4Items.revolverobject.GetComponent<VRC_Pickup>();
+
                 if (gameLogic != null && revolver != null)
                 {
                     worldLoaded = true;
@@ -113,10 +125,64 @@ namespace JoanpixerClient.Features.Worlds
 
         public static IEnumerator PlayPiano()
         {
-            if (halloweensong)
+            if (jojossong)
+            {
+                Udon.CallUdonEvent(piano, "PlaySong4");
+                while (jojossong)
+                {
+                    Udon.CallUdonEvent(piano, "PlayContinue");
+                    yield return new WaitForSeconds(1);
+                }
+            }
+            if(ClocksColdplay)
+            {
+                Udon.CallUdonEvent(piano, "PlaySong1");
+                while (ClocksColdplay)
+                {
+                    Udon.CallUdonEvent(piano, "PlayContinue");
+                    yield return new WaitForSeconds(1);
+                }
+            }
+            if (Prestoagitato)
+            {
+                Udon.CallUdonEvent(piano, "PlaySong5");
+                while (Prestoagitato)
+                {
+                    Udon.CallUdonEvent(piano, "PlayContinue");
+                    yield return new WaitForSeconds(1);
+                }
+            }
+            if (Believing)
+            {
+                Udon.CallUdonEvent(piano, "PlaySong8");
+                while (Believing)
+                {
+                    Udon.CallUdonEvent(piano, "PlayContinue");
+                    yield return new WaitForSeconds(1);
+                }
+            }
+            if (megalovania)
+            {
+                Udon.CallUdonEvent(piano, "PlaySong7");
+                while (megalovania)
+                {
+                    Udon.CallUdonEvent(piano, "PlayContinue");
+                    yield return new WaitForSeconds(1);
+                }
+            }
+            if (imagine)
+            {
+                Udon.CallUdonEvent(piano, "PlaySong6");
+                while (imagine)
+                {
+                    Udon.CallUdonEvent(piano, "PlayContinue");
+                    yield return new WaitForSeconds(1);
+                }
+            }
+            if (LinusnLucy)
             {
                 Udon.CallUdonEvent(piano, "PlaySong0");
-                while (halloweensong)
+                while (LinusnLucy)
                 {
                     Udon.CallUdonEvent(piano, "PlayContinue");
                     yield return new WaitForSeconds(1);
@@ -199,6 +265,27 @@ namespace JoanpixerClient.Features.Worlds
             }
             yield return new WaitForSeconds(0.1f);
             
+        }
+
+        public static IEnumerator GivePatreonTarget(VRCPlayer player)
+        {
+            while (givepatreon)
+            {
+                yield return new WaitForSeconds(0.2f);
+                try
+                {
+                    if (revolverpickup.currentPlayer.playerId ==
+                        player.prop_VRCPlayerApi_0.playerId)
+                    {
+                        CallRevolver("PatronSkin");
+                    }
+                }
+                catch
+                {
+                }
+            }
+            yield return new WaitForSeconds(0.1f);
+
         }
 
         public static IEnumerator TurnLightsOff()

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using VRC.SDKBase;
 
 namespace JoanpixerClient.Features.Worlds
 {
@@ -11,6 +12,7 @@ namespace JoanpixerClient.Features.Worlds
     {
         public static GameObject revolverobject = null;
         public static GameObject luger = null;
+        public static GameObject luger1 = null;
         public static GameObject shotgun = null;
         public static GameObject frag = null;
         public static GameObject Beartrap = null;

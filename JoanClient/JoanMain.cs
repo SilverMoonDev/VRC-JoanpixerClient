@@ -1,9 +1,14 @@
 ﻿using Il2CppSystem.Diagnostics;
+using JoanpixerClient.Buttons;
+using JoanpixerClient.ConsoleUtils;
 using JoanpixerClient.Features.Worlds;
+using JoanpixerClient.Modules;
 using UnityEngine;
 using MelonLoader;
 using LoadSprite;
 using UnityEngine.UI;
+using VRC;
+using VRC.Core;
 using VRC.Udon;
 using Environment = System.Environment;
 
@@ -17,6 +22,7 @@ namespace JoanpixerClient
         public static Sprite Background = null;
 
         internal static Sprite MainMenuImage = null;
+
         public override void OnApplicationStart()
         {
             FoldersManager.Create.Initialize();
@@ -29,9 +35,11 @@ namespace JoanpixerClient
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
+            VRConsole.AllLogsText.Clear();
             if (sceneName == "ui")
             {
                 MenuUi.MainMenu();
+                ConsoleMenu.Initialize();
             }
             if (Background != null)
             {
@@ -101,6 +109,7 @@ namespace JoanpixerClient
             Features.Noclip.Main();
             Features.ESP.Main();
         }
+
 
         public override void OnApplicationQuit() // Runs when the Game is told to Close.
         {

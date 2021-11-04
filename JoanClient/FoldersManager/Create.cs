@@ -20,6 +20,11 @@ namespace JoanpixerClient.FoldersManager
                 var client = new System.Net.WebClient();
                 client.DownloadFile(new Uri("https://i.imgur.com/35gOq2v.png"), "Joanpixer\\MainMenu.png");
             }
+            if (!File.Exists("Joanpixer\\VRConsole.png"))
+            {
+                var client = new System.Net.WebClient();
+                client.DownloadFile(new Uri("https://i.imgur.com/DlWsdFh.png"), "Joanpixer\\VRConsole.png");
+            }
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\ButtonBackground.png"))
             {
                 var client = new System.Net.WebClient();
@@ -29,10 +34,6 @@ namespace JoanpixerClient.FoldersManager
             if (File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\ButtonBackground.png"))
             {
                 JoanpixerMain.Background = (Environment.CurrentDirectory + "\\Joanpixer\\ButtonBackground.png").LoadSpriteFromDisk();
-            }
-            else
-            {
-                MelonLogger.Error("Could Not Find ButtonBackground.png - UI Not Edited As A Result!");
             }
             if (!File.Exists("Joanpixer\\Config.ini"))
             {

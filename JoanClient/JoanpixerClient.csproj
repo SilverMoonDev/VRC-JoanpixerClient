@@ -395,6 +395,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\ConsoleMenu.cs" />
+    <Compile Include="API\QMInfo.cs" />
+    <Compile Include="API\VRConsole.cs" />
     <Compile Include="API\LoadSprite.cs" />
     <Compile Include="API\PlagueButtonAPI.cs" />
     <Compile Include="Drawing.cs" />
