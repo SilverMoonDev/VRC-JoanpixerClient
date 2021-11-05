@@ -6,7 +6,6 @@ using System.Reflection;
 using JoanpixerClient.ConsoleUtils;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.FoldersManager;
-using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC;

@@ -1300,14 +1300,21 @@ namespace JoanpixerClient
                 Murder4Items.frag.transform.position = Utils.GetSelectedPlayer().transform.position + new Vector3(0, 0.1f, 0);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Bear Trap", "Teleports a Bear Trap to the Target", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Smoke Bomb", "Teleports the Smoke Bomb to the Target", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Items.TakeOwnershipIfNecessary(Murder4Items.smokebomb);
+                Murder4Items.smokebomb.transform.position = Utils.GetSelectedPlayer().transform.position + new Vector3(0, 0.1f, 0);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Bear Trap", "Teleports a Bear Trap to the Target", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if (!Murder4.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.Beartrap);
                 Murder4Items.Beartrap.transform.position = Utils.GetSelectedPlayer().transform.position + new Vector3(0, 0.1f, 0);
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kill Knife", "Kill target with Knife", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kill Knife", "Kill target with Knife", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if(!Murder4.worldLoaded) return;
                 var player = Utils.GetSelectedPlayer();
@@ -1315,7 +1322,7 @@ namespace JoanpixerClient
                 MelonCoroutines.Stop(Murder4.KillSelectedPlayerKnife(player));
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kill Frag", "Kill target with Grenade", ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.SecondButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Kill Frag", "Kill target with Grenade", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if (!Murder4.worldLoaded) return;
                 var player = Utils.GetSelectedPlayer();
@@ -1325,7 +1332,7 @@ namespace JoanpixerClient
 
             ButtonAPI.PlagueButton GivePatreon = null;
 
-            GivePatreon = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Give Patreon\nOff", "Gives Patreon to the target", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
+            GivePatreon = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Give Patreon\nOff", "Gives Patreon to the target", ButtonAPI.HorizontalPosition.SecondButtonPos, ButtonAPI.VerticalPosition.BottomButton, Itemstpmurder.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if (!Murder4.worldLoaded) return;
                 var player = Utils.GetSelectedPlayer();

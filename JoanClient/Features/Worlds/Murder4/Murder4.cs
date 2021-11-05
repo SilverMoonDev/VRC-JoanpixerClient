@@ -53,6 +53,7 @@ namespace JoanpixerClient.Features.Worlds
                 piano = GameObject.Find("Game Logic/PianoKeys (continuous)")?.GetComponent<UdonBehaviour>();
                 MurderText = GameObject.Find("Game Logic/Game Canvas/Postgame/Murderer Name");
                 doors = GameObject.Find("Environment/Doors");
+                Murder4Items.smokebomb = GameObject.Find("Game Logic/Weapons/Unlockables/Smoke (0)");
                 Murder4Items.Beartrap = GameObject.Find("Game Logic/Weapons/Bear Trap (0)");
                 Murder4Items.knife = GameObject.Find("Game Logic/Weapons/Knife (0)");
                 Murder4Items.revolverobject = GameObject.Find("Game Logic/Weapons/Revolver");
