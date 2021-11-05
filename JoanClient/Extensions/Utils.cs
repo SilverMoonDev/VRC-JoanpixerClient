@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Il2CppSystem.Collections.Generic;
-using JoanpixerClient.Wrappers;
 using UnityEngine;
 using VRC;
 using System.Collections.Generic;
