@@ -6,12 +6,14 @@ using System.Reflection;
 using JoanpixerClient.ConsoleUtils;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.FoldersManager;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC;
 using VRC.Networking;
 using AccessTools = HarmonyLib.AccessTools;
 using HarmonyMethod = HarmonyLib.HarmonyMethod;
+using Player = VRC.Player;
 
 namespace JoanpixerClient
 {
@@ -31,6 +33,7 @@ namespace JoanpixerClient
                 Instance.Patch(typeof(PortalTrigger).GetMethod(nameof(PortalTrigger.OnTriggerEnter),BindingFlags.Public | BindingFlags.Instance), GetPatch("EnterPortal"), null, null);
                 Instance.Patch(typeof(UdonSync).GetMethod(nameof(UdonSync.UdonSyncRunProgramAsRPC)), GetPatch("UdonSyncPatch"), null);
                 Instance.Patch(AccessTools.Property(typeof(Tools), "Platform").GetMethod, null, GetPatch("ModelSpoof"));
+                Instance.Patch(typeof(NetworkManager).GetMethod("OnJoinedRoom"), GetPatch("OnJoinedRoom"), null);
             }
             catch (Exception arg)
             {
@@ -141,6 +144,12 @@ namespace JoanpixerClient
             {
                 MelonCoroutines.Start(QuestSpoofer());
             }
+        }
+
+        private static void OnJoinedRoom()
+        {
+            AmongUs.Initialize();
+            Murder4.Initialize();
         }
     }
 }

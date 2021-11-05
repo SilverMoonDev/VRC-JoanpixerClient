@@ -9,7 +9,7 @@ namespace JoanpixerClient.Features.Worlds
         public static bool enableEmergencySpam = false;
         public static UdonBehaviour gameLogic = null;
 
-        public static void Initialize(string sceneName)
+        public static void Initialize()
         {
             // TODO: Check world ID aswell.
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_dd036610-a246-4f52-bf01-9d7cea3405d7")

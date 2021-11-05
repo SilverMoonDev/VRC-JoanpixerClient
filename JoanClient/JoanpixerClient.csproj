@@ -433,7 +433,6 @@
     <Compile Include="Features\Noclip.cs" />
     <Compile Include="Features\Speedhack.cs" />
     <Compile Include="Features\Worlds\AmongUs.cs" />
-    <Compile Include="Features\Worlds\JustBClub.cs" />
     <Compile Include="Features\Worlds\Murder4\Murder4 Items.cs" />
     <Compile Include="Features\Worlds\Murder4\Murder4.cs" />
     <Compile Include="FoldersManager\Create.cs" />

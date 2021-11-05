@@ -43,7 +43,7 @@ namespace JoanpixerClient.Features.Worlds
         public static VRC_Pickup revolverpickup = null;
 
 
-        public static void Initialize(string sceneName)
+        public static void Initialize()
         {
             // TODO: Check world ID aswell.
 

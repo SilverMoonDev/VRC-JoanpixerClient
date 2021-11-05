@@ -67,13 +67,6 @@ namespace JoanpixerClient
                 }
             }
         }
-        public override void OnSceneWasInitialized(int buildIndex, string sceneName)
-        {
-
-            JustBClub.Initialize(sceneName);
-            AmongUs.Initialize(sceneName);
-            Murder4.Initialize(sceneName);
-        }
         public override void OnPreferencesSaved()
         {
             new Features.KeyPaste().OnPreferencesSaved();
