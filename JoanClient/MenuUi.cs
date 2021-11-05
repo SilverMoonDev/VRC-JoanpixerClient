@@ -176,6 +176,7 @@ namespace JoanpixerClient
             ButtonAPI.PlagueButton LockDoors = null;
             ButtonAPI.PlagueButton LightOff = null;
             ButtonAPI.PlagueButton SoundsAnnoy = null;
+            ButtonAPI.PlagueButton SoundsAnnoyFaster = null;
 
             ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Unlock Doors", "Unlocks all doors", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
             {
@@ -238,19 +239,43 @@ namespace JoanpixerClient
                 }
             }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            SoundsAnnoy = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spam sounds\nOff", null, ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
+            SoundsAnnoy = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spam sounds slow\nOff", null, ButtonAPI.HorizontalPosition.FourthButtonPos, ButtonAPI.VerticalPosition.TopButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if (!Murder4.worldLoaded) return;
                 Murder4.spamsounds = a;
                 if (a)
                 {
-                    SoundsAnnoy.SetText("Spam sounds\nOn");
-                    MelonCoroutines.Start(Murder4.SpamSounds());
+                    MelonCoroutines.Stop(Murder4.SpamSounds(0));
+                    SoundsAnnoyFaster.SetToggleState(false);
+                    SoundsAnnoyFaster.SetText("Spam sounds slow\nOff");
+                    SoundsAnnoyFaster.text.color = Color.red;
+                    SoundsAnnoy.SetText("Spam sounds slow\nOn");
+                    MelonCoroutines.Start(Murder4.SpamSounds(0.03f));
                 }
                 else
                 {
-                    SoundsAnnoy.SetText("Spam sounds\nOff");
-                    MelonCoroutines.Stop(Murder4.SpamSounds());
+                    SoundsAnnoy.SetText("Spam sounds slow\nOff");
+                    MelonCoroutines.Stop(Murder4.SpamSounds(0.03f));
+                }
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            SoundsAnnoyFaster = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spam sounds fast\nOff", null, ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (!Murder4.worldLoaded) return;
+                Murder4.spamsounds = a;
+                if (a)
+                {
+                    MelonCoroutines.Stop(Murder4.SpamSounds(0.03f));
+                    SoundsAnnoy.SetToggleState(false);
+                    SoundsAnnoy.SetText("Spam sounds slow\nOff");
+                    SoundsAnnoy.text.color = Color.red;
+                    SoundsAnnoyFaster.SetText("Spam sounds fast\nOn");
+                    MelonCoroutines.Start(Murder4.SpamSounds(0));
+                }
+                else
+                {
+                    SoundsAnnoyFaster.SetText("Spam sounds fast\nOff");
+                    MelonCoroutines.Stop(Murder4.SpamSounds(0));
                 }
             }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 

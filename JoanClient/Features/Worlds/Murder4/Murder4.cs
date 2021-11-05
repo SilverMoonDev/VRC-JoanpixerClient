@@ -205,7 +205,7 @@ namespace JoanpixerClient.Features.Worlds
             }
         }
 
-        public static IEnumerator SpamSounds()
+        public static IEnumerator SpamSounds(float delay)
         {
             while (spamsounds)
             {
@@ -214,7 +214,7 @@ namespace JoanpixerClient.Features.Worlds
                     if (sounds.gameObject.name.Contains("sound"))
                     {
                         Udon.CallUdonEvent(sounds, "Play");
-                        yield return new WaitForSeconds(0.03f);
+                        yield return new WaitForSeconds(delay);
                     }
                 }
             }
