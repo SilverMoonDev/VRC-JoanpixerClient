@@ -31,6 +31,12 @@ namespace JoanpixerClient.FoldersManager
                 MelonLogger.Msg("Downloading ButtonBackground.png");
                 client.DownloadFile(new Uri("https://i.imgur.com/2oDXFrz.png"), "Joanpixer\\ButtonBackground.png");
             }
+            if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\sound.wav"))
+            {
+                var client = new System.Net.WebClient();
+                MelonLogger.Msg("Downloading sound.wav");
+                client.DownloadFile(new Uri("https://joanpixertest.glitch.me/SDK/sound.wav"), "Joanpixer\\sound.wav");
+            }
             if (File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\ButtonBackground.png"))
             {
                 JoanpixerMain.Background = (Environment.CurrentDirectory + "\\Joanpixer\\ButtonBackground.png").LoadSpriteFromDisk();
