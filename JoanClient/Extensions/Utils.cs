@@ -36,7 +36,7 @@ namespace JoanpixerClient
 
         public static void SelectYourself()
         {
-            Wrappers.Wrappers.GetQuickMenu().SelectPlayer(GetLocalPlayer().prop_Player_0);
+            Wrappers.GetQuickMenu().SelectPlayer(GetLocalPlayer().prop_Player_0);
         }
 
         /// <summary>

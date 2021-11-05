@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VRC;
 
-namespace JoanpixerClient.Wrappers
+namespace JoanpixerClient
 {
     public static class Wrappers
     {
