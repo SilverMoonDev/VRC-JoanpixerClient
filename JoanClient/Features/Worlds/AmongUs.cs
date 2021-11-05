@@ -12,14 +12,10 @@ namespace JoanpixerClient.Features.Worlds
         public static void Initialize(string sceneName)
         {
             // TODO: Check world ID aswell.
-            if (sceneName == "Skeld")
+            if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_dd036610-a246-4f52-bf01-9d7cea3405d7")
             {
                 gameLogic = GameObject.Find("Game Logic")?.GetComponent<UdonBehaviour>();
-
-                if (gameLogic != null)
-                {
-                    worldLoaded = true;
-                }
+                worldLoaded = true;
             }
             else
             {

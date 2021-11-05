@@ -5,6 +5,7 @@ using System.Collections;
 using JoanpixerClient.Modules;
 using MelonLoader;
 using Photon.Pun;
+using VRC.Core;
 using VRC.Networking;
 using VRC.SDKBase;
 
@@ -46,8 +47,9 @@ namespace JoanpixerClient.Features.Worlds
         {
             // TODO: Check world ID aswell.
 
-            if (sceneName == "Murder Nevermore")
+            if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_858dfdfc-1b48-4e1e-8a43-f0edc611e5fe")
             {
+                worldLoaded = true;
                 piano = GameObject.Find("Game Logic/PianoKeys (continuous)")?.GetComponent<UdonBehaviour>();
                 MurderText = GameObject.Find("Game Logic/Game Canvas/Postgame/Murderer Name");
                 doors = GameObject.Find("Environment/Doors");
@@ -62,11 +64,6 @@ namespace JoanpixerClient.Features.Worlds
                 gameLogic = GameObject.Find("Game Logic")?.GetComponent<UdonBehaviour>();
                 revolver = GameObject.Find("Game Logic/Weapons/Revolver")?.GetComponent<UdonBehaviour>();
                 revolverpickup = Murder4Items.revolverobject.GetComponent<VRC_Pickup>();
-
-                if (gameLogic != null && revolver != null)
-                {
-                    worldLoaded = true;
-                }
             }
             else
             {
