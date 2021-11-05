@@ -247,7 +247,7 @@ namespace JoanpixerClient
                 {
                     MelonCoroutines.Stop(Murder4.SpamSounds(0));
                     SoundsAnnoyFaster.SetToggleState(false);
-                    SoundsAnnoyFaster.SetText("Spam sounds slow\nOff");
+                    SoundsAnnoyFaster.SetText("Spam sounds fast\nOff");
                     SoundsAnnoyFaster.text.color = Color.red;
                     SoundsAnnoy.SetText("Spam sounds slow\nOn");
                     MelonCoroutines.Start(Murder4.SpamSounds(0.03f));
@@ -259,7 +259,7 @@ namespace JoanpixerClient
                 }
             }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
 
-            SoundsAnnoyFaster = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spam sounds fast\nOff", null, ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.BottomButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
+            SoundsAnnoyFaster = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Spam sounds fast\nOff", null, ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.SecondButton, Murder4Annoy.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if (!Murder4.worldLoaded) return;
                 Murder4.spamsounds = a;
