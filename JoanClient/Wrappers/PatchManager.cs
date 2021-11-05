@@ -2,22 +2,16 @@
 using MelonLoader;
 using System;
 using System.Collections;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using JoanpixerClient.ConsoleUtils;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.FoldersManager;
-using JoanpixerClient.Modules;
-using UnhollowerBaseLib;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC;
-using VRC.Core;
 using VRC.Networking;
 using AccessTools = HarmonyLib.AccessTools;
 using HarmonyMethod = HarmonyLib.HarmonyMethod;
-using Logger = UnityEngine.Logger;
 
 namespace JoanpixerClient
 {
@@ -37,7 +31,6 @@ namespace JoanpixerClient
                 Instance.Patch(typeof(PortalTrigger).GetMethod(nameof(PortalTrigger.OnTriggerEnter),BindingFlags.Public | BindingFlags.Instance), GetPatch("EnterPortal"), null, null);
                 Instance.Patch(typeof(UdonSync).GetMethod(nameof(UdonSync.UdonSyncRunProgramAsRPC)), GetPatch("UdonSyncPatch"), null);
                 Instance.Patch(AccessTools.Property(typeof(Tools), "Platform").GetMethod, null, GetPatch("ModelSpoof"));
-                Instance.Patch(typeof(NetworkManager).GetMethod("OnJoinedRoom"), GetPatch("OnJoinedRoom"), null);
             }
             catch (Exception arg)
             {
@@ -59,31 +52,40 @@ namespace JoanpixerClient
                 VRConsole.Log(VRConsole.LogsType.Udon, $"Event: {__0}, Player: {__1.field_Private_VRCPlayerApi_0.displayName}");
             }
 
-            if (LogCheaters)
+            if (LogCheaters && __1.field_Private_VRCPlayerApi_0.playerId != Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0.playerId)
             {
-                var Murderer = Murder4.MurderText.GetComponent<Text>().m_Text;
                 if (__0.Contains("Abort") && !__1.field_Private_VRCPlayerApi_0.isMaster || __0.Contains("SyncVictory") && !__1.field_Private_VRCPlayerApi_0.isMaster)
                 {
                     MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} finished the game while not being the Master");
                     VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} finished the game while not being the Master");
                 }
 
-                if (__0.Contains("Stab") && Murderer != __1.field_Private_VRCPlayerApi_0.displayName)
+                if (__0.Contains("Assign") && !__1.field_Private_VRCPlayerApi_0.isMaster)
                 {
-                    MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
-                    VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
+                    MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is giving roles while not being the Master");
+                    VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is giving roles while not being the Master");
                 }
 
-                if (__0.Contains("Down") && Murderer != __1.field_Private_VRCPlayerApi_0.displayName)
+                if (Murder4.worldLoaded)
                 {
-                    MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
-                    VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
+                    var Murderer = Murder4.MurderText.GetComponent<Text>().m_Text;
+                    if (__0.Contains("Stab") && Murderer != __1.field_Private_VRCPlayerApi_0.displayName)
+                    {
+                        MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
+                        VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
+                    }
+
+                    if (__0.Contains("Down") && Murderer != __1.field_Private_VRCPlayerApi_0.displayName)
+                    {
+                        MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
+                        VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
+                    }
                 }
 
                 if (__0 == "Play")
                 {
-                    VRConsole.Log(VRConsole.LogsType.Cheater, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is spamming sounds");
-                    MelonLogger.Msg(ConsoleColor.Yellow, $"{__1.field_Private_VRCPlayerApi_0.displayName} is spamming sounds");
+                    VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is spamming sounds");
+                    MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is spamming sounds");
                 }
             }
 
@@ -111,26 +113,6 @@ namespace JoanpixerClient
             return true;
         }
 
-        public static bool playing = true;
-
-        public static IEnumerator QuestSpoofDelay()
-        {
-            yield return new WaitForSeconds(4);
-            QuestSpoof = false;
-            yield break;
-        }
-
-        private static void OnJoinedRoom()
-        {
-            if (LoginDelay)
-            {
-                LoginDelay = false;
-                MelonCoroutines.Start(QuestSpoofDelay());
-            }
-        }
-
-        public static bool LoginDelay = true;
-
         public static bool QuestSpoof = false;
 
         private static void ModelSpoof(ref string __result)
@@ -144,21 +126,20 @@ namespace JoanpixerClient
             }
         }
 
-        public static IEnumerator Awa()
+        public static IEnumerator QuestSpoofer()
         {
             yield return new WaitForSeconds(5);
             QuestSpoof = false;
-            LoginDelay = false;
             MelonLogger.Msg("Quest Spoofed");
+            VRConsole.Log(VRConsole.LogsType.Info, "Quest Spoofed");
         }
 
         public static void QuestIni()
         {
             QuestSpoof = Create.Ini.GetBool("Toggles", "QuestSpoof");
-            LoginDelay = Create.Ini.GetBool("Toggles", "QuestSpoof");
             if (QuestSpoof)
             {
-                MelonCoroutines.Start(Awa());
+                MelonCoroutines.Start(QuestSpoofer());
             }
         }
     }
