@@ -251,8 +251,9 @@ namespace JoanpixerClient.Features.Worlds
                 yield return new WaitForSeconds(0.2f);
                 try
                 {
+                    var murdermaterial = GameObject.Find("Game Logic/Weapons/Revolver/Recoil Anim/Recoil/geo")?.GetComponent<MeshRenderer>();
                     if (revolverpickup.currentPlayer.playerId ==
-                        Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0.playerId)
+                        Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0.playerId && murdermaterial.isVisible)
                     {
                         CallRevolver("PatronSkin");
                     }
@@ -272,8 +273,9 @@ namespace JoanpixerClient.Features.Worlds
                 yield return new WaitForSeconds(0.2f);
                 try
                 {
+                    var murdermaterial = GameObject.Find("Game Logic/Weapons/Revolver/Recoil Anim/Recoil/geo")?.GetComponent<MeshRenderer>();
                     if (revolverpickup.currentPlayer.playerId ==
-                        player.prop_VRCPlayerApi_0.playerId)
+                        player.prop_VRCPlayerApi_0.playerId && murdermaterial.isVisible)
                     {
                         CallRevolver("PatronSkin");
                     }
