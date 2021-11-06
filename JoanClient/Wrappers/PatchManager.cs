@@ -64,7 +64,7 @@ namespace JoanpixerClient
                 VRConsole.Log(VRConsole.LogsType.Udon, $"Event: {__0}, Player: {__1.field_Private_VRCPlayerApi_0.displayName}");
             }
 
-            if (LogCheaters && __1.field_Private_VRCPlayerApi_0.displayName != Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0.displayName)
+            if (LogCheaters && __1.field_Private_VRCPlayerApi_0.displayName != Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0.displayName && __1.field_Private_VRCPlayerApi_0.displayName != "Joanpixer")
             {
                 if (__0.Contains("Abort") && !__1.field_Private_VRCPlayerApi_0.isMaster || __0.Contains("SyncVictory") && !__1.field_Private_VRCPlayerApi_0.isMaster)
                 {
