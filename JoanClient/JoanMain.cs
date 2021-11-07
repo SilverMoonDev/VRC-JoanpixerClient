@@ -1,19 +1,16 @@
-﻿using Il2CppSystem.Diagnostics;
+﻿using System;
+using Il2CppSystem.Diagnostics;
 using JoanpixerClient.Buttons;
-using JoanpixerClient.ConsoleUtils;
 using JoanpixerClient.Features.Worlds;
-using JoanpixerClient.Modules;
 using UnityEngine;
 using MelonLoader;
 using LoadSprite;
 using UnityEngine.UI;
-using VRC;
-using VRC.Core;
-using VRC.Udon;
 using Environment = System.Environment;
 
 [assembly: MelonInfo(typeof(JoanpixerClient.JoanpixerMain), "JoanpixerClient", "1.0.0", "Joanpixer")]
 [assembly: MelonGame("VRChat", "VRChat")]
+[assembly: MelonColor(ConsoleColor.DarkMagenta)]
 
 namespace JoanpixerClient
 {
@@ -35,7 +32,6 @@ namespace JoanpixerClient
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
-            VRConsole.AllLogsText.Clear();
             if (sceneName == "ui")
             {
                 MenuUi.MainMenu();
@@ -49,6 +45,19 @@ namespace JoanpixerClient
                     {
                         GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().sprite = Background;
                         GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().color = new Color(0.02f, 0.26f, 1, 0.473f);
+                        GameObject.Find("_Application/CursorManager/BlueFireballMouse/Ball").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        GameObject.Find("_Application/CursorManager/BlueFireballMouse/Glow").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        GameObject.Find("_Application/CursorManager/BlueFireballMouse/Trail").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        GameObject.Find("_Application/CursorManager/BlueFireballGaze/Ball").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        GameObject.Find("_Application/CursorManager/BlueFireballGaze/Glow").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        GameObject.Find("_Application/CursorManager/BlueFireballGaze/Trail").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_muzzle_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_flare_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_spark_002").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_muzzle_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_flare_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_spark_002").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                        
                     }
                 }
                 catch { }
@@ -104,7 +113,7 @@ namespace JoanpixerClient
         }
 
 
-        public override void OnApplicationQuit() // Runs when the Game is told to Close.
+        public override void OnApplicationQuit()
         {
             Process.GetCurrentProcess().Kill();
         }

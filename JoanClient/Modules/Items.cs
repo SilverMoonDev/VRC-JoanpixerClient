@@ -33,7 +33,6 @@ namespace JoanpixerClient.Modules
                     if (vrc_Pickup.IsHeld && GetOwnerOfGameObject(vrc_Pickup.gameObject) != Utils.GetLocalPlayer())
                     {
                         TakeOwnershipIfNecessary(vrc_Pickup.gameObject);
-                        vrc_Pickup.Drop();
                     }
                 }
             }

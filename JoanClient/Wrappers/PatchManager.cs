@@ -10,6 +10,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC;
 using VRC.Networking;
+using VRC.SDK.Internal.Shootout;
+using VRC.SDK3.Components;
+using VRC.SDKBase;
 using AccessTools = HarmonyLib.AccessTools;
 using HarmonyMethod = HarmonyLib.HarmonyMethod;
 using Player = VRC.Player;
@@ -24,7 +27,6 @@ namespace JoanpixerClient
         {
             return new HarmonyMethod(typeof(PatchManager).GetMethod(name, BindingFlags.Static | BindingFlags.NonPublic));
         }
-
         public unsafe static void InitPatch()
         {
             try
@@ -46,6 +48,7 @@ namespace JoanpixerClient
         public static bool LogUdon = false;
         public static bool LogCheaters = false;
         public static bool playsound = false;
+        public static bool logconsole = false;
 
         public static void Play()
         {
@@ -68,14 +71,20 @@ namespace JoanpixerClient
             {
                 if (__0.Contains("Abort") && !__1.field_Private_VRCPlayerApi_0.isMaster || __0.Contains("SyncVictory") && !__1.field_Private_VRCPlayerApi_0.isMaster)
                 {
-                    MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} finished the game while not being the Master");
+                    if (logconsole)
+                    {
+                        MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} finished the game while not being the Master");
+                    }
                     VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} finished the game while not being the Master");
                     Play();
                 }
 
                 if (__0.Contains("Assign") && !__1.field_Private_VRCPlayerApi_0.isMaster)
                 {
-                    MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is giving roles while not being the Master");
+                    if (logconsole)
+                    {
+                        MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is giving roles while not being the Master");
+                    }
                     VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is giving roles while not being the Master");
                     Play();
                 }
@@ -83,25 +92,56 @@ namespace JoanpixerClient
                 if (Murder4.worldLoaded)
                 {
                     var Murderer = Murder4.MurderText.GetComponent<Text>().m_Text;
-                    if (__0.Contains("Stab") && Murderer != __1.field_Private_VRCPlayerApi_0.displayName)
+                    if (__0.Contains("Stab"))
                     {
-                        MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
-                        VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
-                        Play();
+                        if (Murderer.Contains(__1.field_Private_VRCPlayerApi_0.displayName)){}
+                        else
+                        {
+                            if (logconsole)
+                            {
+                                MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
+                            }
+                            VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
+                            Play();
+                        }
                     }
 
-                    if (__0.Contains("Down") && Murderer != __1.field_Private_VRCPlayerApi_0.displayName)
+                    if (__0 == "DispenseSnake")
                     {
-                        MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
-                        VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
-                        Play();
+                        if (Murderer.Contains(__1.field_Private_VRCPlayerApi_0.displayName)){}
+                        else
+                        {
+                            if (logconsole)
+                            {
+                                MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} released the snake while not being the murderer");
+                            }
+                            VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} released the snake while not being the murderer");
+                            Play();
+                        }
+                    }
+
+                    if (__0.Contains("Down"))
+                    {
+                        if (Murderer.Contains(__1.field_Private_VRCPlayerApi_0.displayName)){}
+                        else
+                        {
+                            if (logconsole)
+                            {
+                                MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
+                            }
+                            VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
+                            Play();
+                        }
                     }
                 }
 
                 if (__0 == "Play")
                 {
                     VRConsole.Log(VRConsole.LogsType.Cheater, $"{__1.field_Private_VRCPlayerApi_0.displayName} is spamming sounds");
-                    MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is spamming sounds");
+                    if (logconsole)
+                    {
+                        MelonLogger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is spamming sounds");
+                    }
                     Play();
                 }
             }
@@ -164,6 +204,7 @@ namespace JoanpixerClient
         {
             AmongUs.Initialize();
             Murder4.Initialize();
+            VRConsole.AllLogsText.Clear();
         }
     }
 }
