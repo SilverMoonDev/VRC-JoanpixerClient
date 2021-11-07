@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using Il2CppSystem.Diagnostics;
 using JoanpixerClient.Buttons;
 using JoanpixerClient.Features.Worlds;
+using JoanpixerClient.Modules;
 using UnityEngine;
 using MelonLoader;
 using LoadSprite;
@@ -45,19 +47,9 @@ namespace JoanpixerClient
                     {
                         GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().sprite = Background;
                         GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().color = new Color(0.02f, 0.26f, 1, 0.473f);
-                        GameObject.Find("_Application/CursorManager/BlueFireballMouse/Ball").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/BlueFireballMouse/Glow").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/BlueFireballMouse/Trail").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/BlueFireballGaze/Ball").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/BlueFireballGaze/Glow").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/BlueFireballGaze/Trail").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
                         GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_muzzle_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
                         GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_flare_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
                         GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_spark_002").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_muzzle_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_flare_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_spark_002").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        
                     }
                 }
                 catch { }
@@ -66,16 +58,20 @@ namespace JoanpixerClient
             {
                 if (buttons.gameObject.scene.name == "DontDestroyOnLoad")
                 {
-                    ColorBlock cb = buttons.colors;
-                    cb.m_NormalColor = Color.magenta;
-                    cb.m_PressedColor = new Color(1, 0, 1, 0.2f);
-                    cb.m_HighlightedColor = new Color(1, 0, 1, 0.5f);
-                    cb.m_DisabledColor = Color.magenta;
-                    cb.m_SelectedColor = new Color(1, 0, 1, 0.5f);
-                    buttons.colors = cb;
+                    if (Utils.GetGameObjectPath(buttons.gameObject).Contains("UserInterface"))
+                    {
+                        ColorBlock cb = buttons.colors;
+                        cb.m_NormalColor = Color.magenta;
+                        cb.m_PressedColor = new Color(1, 0, 1, 0.2f);
+                        cb.m_HighlightedColor = new Color(1, 0, 1, 0.5f);
+                        cb.m_DisabledColor = Color.magenta;
+                        cb.m_SelectedColor = new Color(1, 0, 1, 0.5f);
+                        buttons.colors = cb;
+                    }
                 }
             }
         }
+
         public override void OnPreferencesSaved()
         {
             new Features.KeyPaste().OnPreferencesSaved();

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using JoanpixerClient.Modules;
 using MelonLoader;
+using VRC.Core;
 using VRC.SDKBase;
 
 namespace JoanpixerClient
@@ -17,6 +18,11 @@ namespace JoanpixerClient
             #region SubMenus
             //Menus
             var mainmenu = ButtonAPI.MakeEmptyPage("MainMenu", "Main Menu", null,
+                Color.magenta /*An Optional OnColour For The Title If You're Making It A Toggle, You Can Pass Null Otherwise*/,
+                Color.white /*An Optional OffColour Here, This Sets The Standard Colour Of The Title, And The OnColour If Being Made A Toggle, If Either This Or OnColour Are Defined, It Will Use That Colour By Default If It Is Available, If Both Are Null, It Will Use Color.white.*/,
+                null);
+
+            var photonexploits = ButtonAPI.MakeEmptyPage("Photon", "Photon Exploits", null,
                 Color.magenta /*An Optional OnColour For The Title If You're Making It A Toggle, You Can Pass Null Otherwise*/,
                 Color.white /*An Optional OffColour Here, This Sets The Standard Colour Of The Title, And The OnColour If Being Made A Toggle, If Either This Or OnColour Are Defined, It Will Use That Colour By Default If It Is Available, If Both Are Null, It Will Use Color.white.*/,
                 null);
@@ -353,8 +359,9 @@ namespace JoanpixerClient
             MurderxD = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Show Murderer", "Shows you the Murderer", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.BottomButton, WorldMurder4.transform/*Your Parent Transform*/, delegate (bool a)
             {
                 if (!Murder4.worldLoaded) return;
-                var Murderer = Murder4.MurderText.GetComponent<Text>().m_Text;
-                MurderxD.SetTooltip($"Murderer is {Murderer}");
+                var Murderer = $"Murderer is {Murder4.MurderText.GetComponent<Text>().m_Text}";
+                MurderxD.SetTooltip(Murderer);
+                MelonCoroutines.Start(Utils.Notification(Murderer));
             }, Color.white, Color.magenta, bordercolor, true, false, false, false, null, true);
 
             ButtonAPI.PlagueButton Beartraps = null;
@@ -1141,6 +1148,31 @@ namespace JoanpixerClient
                 MelonCoroutines.Start(Murder4.KillSelectedPlayerFrag(player));
                 MelonCoroutines.Stop(Murder4.KillSelectedPlayerFrag(player));
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            #region Photon
+
+            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Photon Exploits", "Mess with the lobby", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, mainmenu.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                ButtonAPI.EnterSubMenu(photonexploits);
+            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            ButtonAPI.PlagueButton Serialize = null;
+
+            Serialize = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Serialize\nOff", "People see you frozen", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, photonexploits.transform/*Your Parent Transform*/, delegate (bool a)
+            {
+                if (a)
+                {
+                    Serialize.SetText("Serialize\nOn");
+                    PhotonModule.CustomSerialize(true);
+                }
+                else
+                {
+                    Serialize.SetText("Serialize\nOff");
+                    PhotonModule.CustomSerialize(false);
+                }
+            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
+
+            #endregion
 
             #endregion
 

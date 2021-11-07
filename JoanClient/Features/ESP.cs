@@ -31,8 +31,6 @@ namespace JoanpixerClient.Features
                 {
                     if (playerObject.transform.Find("SelectRegion"))
                     {
-                        playerObject.transform.Find("SelectRegion").GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
-                        playerObject.transform.Find("SelectRegion").GetComponent<Renderer>().sharedMaterial.SetColor("_Color", Color.magenta);
                         Utils.ToggleOutline(playerObject.transform.Find("SelectRegion").GetComponent<Renderer>(), false);
                     }
                 }

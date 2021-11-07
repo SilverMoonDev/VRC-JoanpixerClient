@@ -449,6 +449,7 @@
     <Compile Include="JoanMain.cs" />
     <Compile Include="MenuUi.cs" />
     <Compile Include="Modules\Items.cs" />
+    <Compile Include="Modules\Photon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflections.cs" />
     <Compile Include="Udon.cs" />
