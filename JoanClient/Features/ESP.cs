@@ -1,8 +1,7 @@
-﻿using VRC;
-using VRC.Core;
+﻿using JoanpixerClient.Features.Worlds;
 using UnityEngine;
-using MelonLoader;
-using System;
+using UnityEngine.UI;
+using VRC;
 
 namespace JoanpixerClient.Features
 {
@@ -38,55 +37,55 @@ namespace JoanpixerClient.Features
         }
 
         private static void SelectRegionESP(GameObject player)
-        {
-            if (player.transform.Find("SelectRegion"))
             {
-                // Get the selection region for the player.
-                var renderer = player.transform.Find("SelectRegion").GetComponent<Renderer>();
-
-                if (renderer == null)
+                if (player.transform.Find("SelectRegion"))
                 {
-                    return;
-                }
+                    // Get the selection region for the player.
+                    var renderer = player.transform.Find("SelectRegion").GetComponent<Renderer>();
 
-                // Toggle the player outline.
-                Utils.ToggleOutline(renderer, true);
-            }
-
-            if (player.transform.Find("SelectRegion"))
-            {
-                // Get the selection region for the player.
-                var renderer = player.transform.Find("SelectRegion").GetComponent<Renderer>();
-
-                if (renderer == null)
-                {
-                    return;
-                }
-
-                // Toggle the player outline.
-                Utils.ToggleOutline(renderer, true);
-            }
-        }
-        public static void Main()
-        {
-            if (espEnabled)
-            {
-                GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
-
-                // Loop through all the player objects in the world.
-                for (int i = 0; i < playerObjects.Length; i++)
-                {
-                    GameObject playerObject = playerObjects[i];
-
-                    // Make sure the player is valid.
-                    if (playerObject == null)
+                    if (renderer == null)
                     {
-                        continue;
+                        return;
                     }
-                    // Render ESP for users.
-                    SelectRegionESP(playerObject);
+
+                    // Toggle the player outline.
+                    Utils.ToggleOutline(renderer, true);
+                }
+
+                if (player.transform.Find("SelectRegion"))
+                {
+                    // Get the selection region for the player.
+                    var renderer = player.transform.Find("SelectRegion").GetComponent<Renderer>();
+
+                    if (renderer == null)
+                    {
+                        return;
+                    }
+
+                    // Toggle the player outline.
+                    Utils.ToggleOutline(renderer, true);
                 }
             }
-        }
+            public static void Main()
+            {
+                if (espEnabled)
+                {
+                    GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+
+                    // Loop through all the player objects in the world.
+                    for (int i = 0; i < playerObjects.Length; i++)
+                    {
+                        GameObject playerObject = playerObjects[i];
+
+                        // Make sure the player is valid.
+                        if (playerObject == null)
+                        {
+                            continue;
+                        }
+                        // Render ESP for users.
+                        SelectRegionESP(playerObject);
+                    }
+                }
+            }
     }
 }

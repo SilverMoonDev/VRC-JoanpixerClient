@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Il2CppSystem.Diagnostics;
+using JoanClient.Features;
 using JoanpixerClient.Buttons;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.Modules;
@@ -39,37 +40,7 @@ namespace JoanpixerClient
                 MenuUi.MainMenu();
                 ConsoleMenu.Initialize();
             }
-            if (Background != null)
-            {
-                try
-                {
-                    if (GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").gameObject.scene.name == "DontDestroyOnLoad")
-                    {
-                        GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().sprite = Background;
-                        GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().color = new Color(0.02f, 0.26f, 1, 0.473f);
-                        GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_muzzle_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_flare_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_spark_002").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                    }
-                }
-                catch { }
-            }
-            foreach (var buttons in Resources.FindObjectsOfTypeAll<Button>())
-            {
-                if (buttons.gameObject.scene.name == "DontDestroyOnLoad")
-                {
-                    if (Utils.GetGameObjectPath(buttons.gameObject).Contains("UserInterface"))
-                    {
-                        ColorBlock cb = buttons.colors;
-                        cb.m_NormalColor = Color.magenta;
-                        cb.m_PressedColor = new Color(1, 0, 1, 0.2f);
-                        cb.m_HighlightedColor = new Color(1, 0, 1, 0.5f);
-                        cb.m_DisabledColor = Color.magenta;
-                        cb.m_SelectedColor = new Color(1, 0, 1, 0.5f);
-                        buttons.colors = cb;
-                    }
-                }
-            }
+            UIColor.UiColor();
         }
 
         public override void OnPreferencesSaved()
@@ -97,15 +68,9 @@ namespace JoanpixerClient
                 sendInput.Mouse.RightButtonClick();
             }
             */
-
-            // Noclip.
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
-            {
-                Features.Noclip.Toggle();
-            }
             Features.Speedhack.Main();
-            Features.Noclip.Main();
             Features.ESP.Main();
+            FlightMod.Flight.OnUpdate();
         }
 
 

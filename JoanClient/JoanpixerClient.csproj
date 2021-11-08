@@ -437,11 +437,13 @@
     <Compile Include="API\LoadSprite.cs" />
     <Compile Include="API\PlagueButtonAPI.cs" />
     <Compile Include="Drawing.cs" />
+    <Compile Include="Extensions\PlayerExtensions.cs" />
     <Compile Include="Extensions\Utils.cs" />
     <Compile Include="Features\ESP.cs" />
     <Compile Include="Features\KeyboardPaste.cs" />
     <Compile Include="Features\Noclip.cs" />
     <Compile Include="Features\Speedhack.cs" />
+    <Compile Include="Features\UIColor.cs" />
     <Compile Include="Features\Worlds\AmongUs.cs" />
     <Compile Include="Features\Worlds\Murder4\Murder4 Items.cs" />
     <Compile Include="Features\Worlds\Murder4\Murder4.cs" />
@@ -449,7 +451,6 @@
     <Compile Include="JoanMain.cs" />
     <Compile Include="MenuUi.cs" />
     <Compile Include="Modules\Items.cs" />
-    <Compile Include="Modules\Photon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflections.cs" />
     <Compile Include="Udon.cs" />

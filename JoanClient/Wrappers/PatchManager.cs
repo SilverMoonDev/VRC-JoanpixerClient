@@ -6,6 +6,7 @@ using System.Reflection;
 using JoanpixerClient.ConsoleUtils;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.FoldersManager;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC;
@@ -16,6 +17,7 @@ using VRC.SDK3.Components;
 using VRC.SDKBase;
 using AccessTools = HarmonyLib.AccessTools;
 using HarmonyMethod = HarmonyLib.HarmonyMethod;
+using Object = System.Object;
 using Player = VRC.Player;
 
 namespace JoanpixerClient
@@ -205,7 +207,7 @@ namespace JoanpixerClient
         private static IEnumerator ShowMurderer()
         {
             yield return new WaitForSeconds(1);
-            var Murderer = Murder4.MurderText.GetComponent<Text>().m_Text;
+            var Murderer = $"Murderer is {Murder4.MurderText.GetComponent<Text>().m_Text}";
             MelonCoroutines.Start(Utils.Notification(Murderer));
         }
 
@@ -236,12 +238,17 @@ namespace JoanpixerClient
         {
             yield return new WaitForSeconds(5);
             QuestSpoof = false;
-            MelonLogger.Msg("Quest Spoofed");
-            VRConsole.Log(VRConsole.LogsType.Info, "Quest Spoofed");
-            yield return new WaitForSeconds(13);
-            if (!UnityEngine.XR.XRDevice.isPresent)
+            if (UnityEngine.XR.XRDevice.isPresent)
             {
+                MelonLogger.Msg("Quest Spoofed");
+                VRConsole.Log(VRConsole.LogsType.Info, "Quest Spoofed");
+            }
+            else
+            {
+                yield return new WaitForSeconds(13);
+                MelonLogger.Warning("Spoofing Quest In Desktop!");
                 MelonCoroutines.Start(Utils.Notification("Warning: Spoofing Quest In Desktop!"));
+                VRConsole.Log(VRConsole.LogsType.Warn, "Spoofing Quest In Desktop!");
                 yield return new WaitForSeconds(1);
                 System.Media.SoundPlayer player = new System.Media.SoundPlayer(Environment.CurrentDirectory + "\\Joanpixer\\sound.wav");
                 player.Play();

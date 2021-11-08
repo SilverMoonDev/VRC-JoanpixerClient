@@ -1,4 +1,5 @@
-﻿using JoanpixerClient.Features.Worlds;
+﻿using FlightMod;
+using JoanpixerClient.Features.Worlds;
 using PlagueButtonAPI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -116,17 +117,18 @@ namespace JoanpixerClient
 
             Noclip = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Noclip\nOff", "Allows you fly trough walls", ButtonAPI.HorizontalPosition.LeftOfMenu, ButtonAPI.VerticalPosition.TopButton, mainmenu.transform, delegate (bool a)
             {
-                if (!Features.Noclip.noclipEnabled)
+                if (a)
                 {
-                    a = Features.Noclip.noclipEnabled;
+                    PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = false;
+                    Flight.player = PlayerExtensions.LocalPlayer.gameObject;
+                    Flight.flying = true;
                     Noclip.SetText("Noclip\nOn");
-                    Features.Noclip.Toggle();
                 }
                 else
                 {
-                    a = Features.Noclip.noclipEnabled;
+                    PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = true;
+                    Flight.flying = false;
                     Noclip.SetText("Noclip\nOff");
-                    Features.Noclip.Toggle();
                 }
             }, Color.red, Color.green, bordercolor, false, false, false, false, null, true);
 
@@ -1148,31 +1150,6 @@ namespace JoanpixerClient
                 MelonCoroutines.Start(Murder4.KillSelectedPlayerFrag(player));
                 MelonCoroutines.Stop(Murder4.KillSelectedPlayerFrag(player));
             }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-            #region Photon
-
-            ButtonAPI.CreateButton(ButtonAPI.ButtonType.Default, "Photon Exploits", "Mess with the lobby", ButtonAPI.HorizontalPosition.ThirdButtonPos, ButtonAPI.VerticalPosition.SecondButton, mainmenu.transform/*Your Parent Transform*/, delegate (bool a)
-            {
-                ButtonAPI.EnterSubMenu(photonexploits);
-            }, Color.white/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-            ButtonAPI.PlagueButton Serialize = null;
-
-            Serialize = ButtonAPI.CreateButton(ButtonAPI.ButtonType.Toggle, "Serialize\nOff", "People see you frozen", ButtonAPI.HorizontalPosition.FirstButtonPos, ButtonAPI.VerticalPosition.TopButton, photonexploits.transform/*Your Parent Transform*/, delegate (bool a)
-            {
-                if (a)
-                {
-                    Serialize.SetText("Serialize\nOn");
-                    PhotonModule.CustomSerialize(true);
-                }
-                else
-                {
-                    Serialize.SetText("Serialize\nOff");
-                    PhotonModule.CustomSerialize(false);
-                }
-            }, Color.red/*ToggledOffColour*/, Color.magenta/*ToggledOnColour, Always Used On Default ButtonType*/, bordercolor/*BorderColour, Set To Null To Inherit The Current QuickMenu Button Colours*/, true/*FullSizeButton, If You Want The Button To Be Full Size, Or Half The Hight*/, false/*ButtomHalf, If You Want The Button Placed On The Top Half Of The Button (If This Button Is Half Sized) Or The Bottom Half*/, false/*HalfHorizontally, Whether You Want The Button Size Cut In Half Horizontally*/, false/*CurrentToggleState, Typically A Boolean In Your Mod, Only Applies If Current Button Is ButtonType.Toggle*/, null/*SpriteForButton, The Option To Add A Sprite Image As Your Button's Background*/, true/*ChangeColourOnClick, Only Change This If You Will Be Changing The Text Colour To OnColour Manually In Your OnClick Delegate*/);
-
-            #endregion
 
             #endregion
 

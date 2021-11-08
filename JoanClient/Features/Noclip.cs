@@ -1,93 +1,90 @@
-﻿using System.Collections.Generic;
-using JoanpixerClient;
-using VRC.Animation;
+﻿using MelonLoader;
+using System;
 using UnityEngine;
-using MelonLoader;
+using UnityEngine.UI;
 
-namespace JoanpixerClient.Features
+namespace FlightMod
 {
-    class Noclip
+    public class Flight
     {
-        public static bool noclipEnabled = false;
-        public static List<int> noclipToEnable = new List<int>();
-
-        private static VRCMotionState motionState;
-        private static InputStateController stateController;
-
-        /// <summary>
-        /// Used to toggle noclip.
-        /// </summary>
-        public static void Toggle()
+        public static void OnUpdate()
         {
-            if (!noclipEnabled)
+            if (!PlayerExtensions.IsInWorld() && flying)
             {
-                noclipEnabled = !noclipEnabled;
-            }
-            else
-            {
-                noclipEnabled = !noclipEnabled;
-
-                VRCPlayer localPlayer = Utils.GetLocalPlayer();
-                localPlayer.GetComponent<VRCMotionState>().field_Private_CharacterController_0.enabled = true;
+                PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = true;
+                flying = false;
             }
 
-            if (stateController != null && !noclipEnabled)
+            if (flying)
             {
-                stateController.ResetLastPosition();
+                float number = Input.GetKey(KeyCode.LeftShift) ? (flySpeed * 2f) : flySpeed;
+                if (Input.mouseScrollDelta.y != 0)
+                {
+                    flySpeed += (int)Input.mouseScrollDelta.y;
+
+                    if (flySpeed <= 0)
+                        flySpeed = 1;
+                }
+
+                if (PlayerExtensions.LocalPlayer.IsInVR())
+                {
+                    if (Math.Abs(Input.GetAxis("Vertical")) != 0f)
+                        player.transform.position += GetPlayerCamera.transform.forward * (number * Time.deltaTime * Input.GetAxis("Vertical"));
+
+                    if (Math.Abs(Input.GetAxis("Horizontal")) != 0f)
+                        player.transform.position += GetPlayerCamera.transform.right * (number * Time.deltaTime * Input.GetAxis("Horizontal"));
+                    if (Input.GetAxis("Oculus_CrossPlatform_SecondaryThumbstickVertical") < 0f)
+                        player.transform.position += GetPlayerCamera.transform.up * (number * Time.deltaTime * Input.GetAxisRaw("Oculus_CrossPlatform_SecondaryThumbstickVertical"));
+                    if (Input.GetAxis("Oculus_CrossPlatform_SecondaryThumbstickVertical") > 0f)
+                        player.transform.position += GetPlayerCamera.transform.up * (number * Time.deltaTime * Input.GetAxisRaw("Oculus_CrossPlatform_SecondaryThumbstickVertical"));
+                }
+
+                for (int i = 0; i < keys.Length; i++) switch (Input.GetKey(keys[i]))
+                {
+                    case true when (i == 0):
+                        player.transform.position += GetPlayerCamera.transform.forward * number * Time.deltaTime;
+                        break;
+
+                    case true when (i == 1):
+                        player.transform.position -= GetPlayerCamera.transform.right * number * Time.deltaTime;
+                        break;
+
+                    case true when (i == 2):
+                        player.transform.position -= GetPlayerCamera.transform.forward * number * Time.deltaTime;
+                        break;
+
+                    case true when (i == 3):
+                        player.transform.position += GetPlayerCamera.transform.right * number * Time.deltaTime;
+                        break;
+
+                    case true when (i == 4):
+                        player.transform.position += Vector3.up * number * Time.deltaTime;
+                        break;
+
+                    case true when (i == 5):
+                        player.transform.position -= Vector3.up * number * Time.deltaTime;
+                        break;
+                }
             }
         }
 
-        /// <summary>
-        /// The main noclip code.
-        /// </summary>
-        public static void Main()
+        private static KeyCode[] keys = new KeyCode[] { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.E, KeyCode.Q };
+
+        public static GameObject GetPlayerCamera
         {
-            VRCPlayer localPlayer = Utils.GetLocalPlayer();
-
-            if (localPlayer != null && localPlayer.gameObject != null && RoomManager.field_Internal_Static_ApiWorld_0 != null)
+            get
             {
-                // Keep track of our motion state.
-                if (motionState == null)
+                if (CachedPlayerCamera == null)
                 {
-                    motionState = localPlayer.GetComponent<VRCMotionState>();
+                    CachedPlayerCamera = GameObject.Find("Camera (eye)");
                 }
-
-                // Store our input state controller.
-                if (stateController == null)
-                {
-                    stateController = localPlayer.GetComponent<InputStateController>();
-                }
-
-                Physics.gravity = noclipEnabled ? new Vector3(0, 0, 0) : new Vector3(0, -9.81f, 0);
-
-                if (noclipEnabled)
-                {
-                    // TODO: Fix weird gravity bug.
-                    Transform cameraTransform = Camera.main.transform;
-
-                    if (Input.GetAxis("Vertical") != 0f)
-                    {
-                        localPlayer.transform.position += cameraTransform.forward * Time.deltaTime * Input.GetAxis("Vertical") * 
-                            ((Speedhack.speedEnabled || Input.GetKey(KeyCode.LeftShift)) ? Speedhack.speedMultiplier : 3);
-                    }
-
-                    if (Input.GetAxis("Horizontal") != 0f)
-                    {
-                        localPlayer.transform.position += cameraTransform.right * Time.deltaTime * Input.GetAxis("Horizontal") *
-                            ((Speedhack.speedEnabled || Input.GetKey(KeyCode.LeftShift)) ? Speedhack.speedMultiplier : 3);
-                    }
-
-                    if (motionState != null)
-                    {
-                        motionState.Reset();
-
-                        if (motionState.field_Private_CharacterController_0 != null)
-                        {
-                            motionState.field_Private_CharacterController_0.enabled = false;
-                        }
-                    }
-                }
+                return CachedPlayerCamera;
             }
         }
+
+        private static GameObject CachedPlayerCamera;
+        public static float flySpeed = 50;
+        public static bool flying = false;
+        public static GameObject player;
     }
 }
