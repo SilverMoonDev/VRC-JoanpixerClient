@@ -397,7 +397,7 @@ namespace JoanpixerClient
                     Pickups.OpenMenu();
                 });
 
-                new ToggleButton(MainMenuButtons, "Auto Drop", "Auto Drop all the Pickups", "Auto Drop all the Pickups", (val) =>
+                new ToggleButton(PickupsButtons, "Auto Drop", "Auto Drop all the Pickups", "Auto Drop all the Pickups", (val) =>
                 {
                     Items.AutoDropToggle = val;
                     if (val)
@@ -410,7 +410,7 @@ namespace JoanpixerClient
                     }
                 }).SetToggleState(false, true);
 
-                new ToggleButton(MainMenuButtons, "Thief", "Allows Thief of Pickups", "Allows Thief of Pickups", (val) =>
+                new ToggleButton(PickupsButtons, "Thief", "Allows Thief of Pickups", "Allows Thief of Pickups", (val) =>
                 {
                     if (val)
                     {
@@ -421,6 +421,11 @@ namespace JoanpixerClient
                         Items.DisallowThief();
                     }
                 }).SetToggleState(false, true);
+
+                new SimpleSingleButton(PickupsButtons, null, "Respawn Pickups", () =>
+                {
+                    Items.RespawnPickups();
+                });
 
                 #endregion
 
@@ -442,6 +447,7 @@ namespace JoanpixerClient
 
                 new ToggleButton(Movement, "ESP", "Allows you to see players through walls", "Allows you to see players through walls", (val) =>
                 {
+                    Features.ESP.Toggle();
                     if (val)
                     {
                         Features.ESP.espEnabled = true;

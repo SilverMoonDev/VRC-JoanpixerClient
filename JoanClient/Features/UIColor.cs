@@ -21,9 +21,6 @@ namespace JoanClient.Features
                     {
                         GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().sprite = JoanpixerMain.Background;
                         GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().color = new Color(0.02f, 0.26f, 1, 0.473f);
-                        GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_muzzle_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_flare_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                        GameObject.Find("_Application/CursorManager/LeftHandBeam/plasma_beam_spark_002").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
                     }
                 }
                 catch {}

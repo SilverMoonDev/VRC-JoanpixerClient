@@ -242,21 +242,7 @@ namespace JoanpixerClient
 
         private static void OnJoinedRoom()
         {
-            AmongUs.Initialize();
             Murder4.Initialize();
-            try
-            {
-                GameObject.Find("_Application/CursorManager/BlueFireballMouse/Ball").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/BlueFireballMouse/Glow").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/BlueFireballMouse/Trail").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/BlueFireballGaze/Ball").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/BlueFireballGaze/Glow").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/BlueFireballGaze/Trail").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_muzzle_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_flare_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_spark_002").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-            }
-            catch {}
         }
 
         private static void OnPlayerJoin(Player __0)
