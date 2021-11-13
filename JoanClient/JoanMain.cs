@@ -2,14 +2,18 @@
 using System.Collections;
 using Il2CppSystem.Diagnostics;
 using JoanClient.Features;
-using JoanpixerClient.Buttons;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.Modules;
 using UnityEngine;
 using MelonLoader;
 using LoadSprite;
-using UnityEngine.UI;
 using Environment = System.Environment;
+using PlagueButtonAPI;
+using PlagueButtonAPI.Controls;
+using PlagueButtonAPI.Controls.Grouping;
+using PlagueButtonAPI.Pages;
+using PlagueButtonAPI.Misc;
+using VRC;
 
 [assembly: MelonInfo(typeof(JoanpixerClient.JoanpixerMain), "JoanpixerClient", "1.0.0", "Joanpixer")]
 [assembly: MelonGame("VRChat", "VRChat")]
@@ -21,15 +25,14 @@ namespace JoanpixerClient
     {
         public static Sprite Background = null;
 
-        internal static Sprite MainMenuImage = null;
+        internal static Sprite ButtonImage = null;
 
         public override void OnApplicationStart()
         {
             FoldersManager.Create.Initialize();
             PatchManager.InitPatch();
             PatchManager.QuestIni();
-            new Features.KeyPaste().OnApplicationStart();
-            MainMenuImage = (Environment.CurrentDirectory + "\\Joanpixer\\MainMenu.png").LoadSpriteFromDisk();
+            ButtonImage = (Environment.CurrentDirectory + "\\Joanpixer\\MainMenu.png").LoadSpriteFromDisk();
             MelonUtils.SetConsoleTitle("Joanpixer Client Alpha");
         }
 
@@ -38,14 +41,9 @@ namespace JoanpixerClient
             if (sceneName == "ui")
             {
                 MenuUi.MainMenu();
-                ConsoleMenu.Initialize();
+                UIColor.UiColor();
             }
-            UIColor.UiColor();
-        }
-
-        public override void OnPreferencesSaved()
-        {
-            new Features.KeyPaste().OnPreferencesSaved();
+           
         }
 
         public override void OnUpdate()
@@ -54,12 +52,6 @@ namespace JoanpixerClient
             if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyUp(KeyCode.X))
             {
                 Features.Speedhack.Toggle();
-            }
-
-            // Failsafe for when the game lags while letting go of X preventing speedhack to turn off.
-            if (!Input.GetKey(KeyCode.X) && Features.Speedhack.speedEnabled)
-            {
-                Features.Speedhack.speedEnabled = false;
             }
 
             /*

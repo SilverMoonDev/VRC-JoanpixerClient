@@ -3,7 +3,6 @@ using MelonLoader;
 using System;
 using System.Collections;
 using System.Reflection;
-using JoanpixerClient.ConsoleUtils;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.FoldersManager;
 using TMPro;
@@ -40,8 +39,7 @@ namespace JoanpixerClient
                 Instance.Patch(typeof(UdonSync).GetMethod(nameof(UdonSync.UdonSyncRunProgramAsRPC)), GetPatch("UdonSyncPatch"), null);
                 Instance.Patch(AccessTools.Property(typeof(Tools), "Platform").GetMethod, null, GetPatch("ModelSpoof"));
                 Instance.Patch(typeof(NetworkManager).GetMethod("OnJoinedRoom"), GetPatch("OnJoinedRoom"), null);
-                Instance.Patch(typeof(NetworkManager).GetMethod("Method_Public_Void_Player_0"),
-                    GetPatch("OnPlayerJoin"), null);
+                Instance.Patch(typeof(NetworkManager).GetMethod("Method_Public_Void_Player_0"), GetPatch("OnPlayerJoin"), null);
             }
             catch (Exception arg)
             {
@@ -55,7 +53,7 @@ namespace JoanpixerClient
         public static bool LogUdon = false;
         public static bool LogCheaters = false;
         public static bool playsound = false;
-        public static bool logconsole = false;
+        public static bool logconsole = true;
 
         public static void Play()
         {
@@ -72,8 +70,6 @@ namespace JoanpixerClient
             if (LogUdon)
             {
                 MelonLogger.Msg($"[Udon]: Event: {__0}, Player: {__1.field_Private_VRCPlayerApi_0.displayName}");
-                VRConsole.Log(VRConsole.LogsType.Udon,
-                    $"Event: {__0}, Player: {__1.field_Private_VRCPlayerApi_0.displayName}");
             }
 
             if (LogCheaters && __1.field_Private_VRCPlayerApi_0.displayName != Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0.displayName && __1.field_Private_VRCPlayerApi_0.displayName != "Joanpixer")
@@ -86,9 +82,6 @@ namespace JoanpixerClient
                         MelonLogger.Msg(ConsoleColor.Yellow,
                             $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} finished the game while not being the Master");
                     }
-
-                    VRConsole.Log(VRConsole.LogsType.Cheater,
-                        $"{__1.field_Private_VRCPlayerApi_0.displayName} finished the game while not being the Master");
                     Play();
                 }
 
@@ -99,9 +92,6 @@ namespace JoanpixerClient
                         MelonLogger.Msg(ConsoleColor.Yellow,
                             $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is giving roles while not being the Master");
                     }
-
-                    VRConsole.Log(VRConsole.LogsType.Cheater,
-                        $"{__1.field_Private_VRCPlayerApi_0.displayName} is giving roles while not being the Master");
                     Play();
                 }
 
@@ -120,9 +110,6 @@ namespace JoanpixerClient
                                 MelonLogger.Msg(ConsoleColor.Yellow,
                                     $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
                             }
-
-                            VRConsole.Log(VRConsole.LogsType.Cheater,
-                                $"{__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
                             Play();
                         }
                     }
@@ -139,9 +126,6 @@ namespace JoanpixerClient
                                 MelonLogger.Msg(ConsoleColor.Yellow,
                                     $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} released the snake while not being the murderer");
                             }
-
-                            VRConsole.Log(VRConsole.LogsType.Cheater,
-                                $"{__1.field_Private_VRCPlayerApi_0.displayName} released the snake while not being the murderer");
                             Play();
                         }
                     }
@@ -158,9 +142,6 @@ namespace JoanpixerClient
                                 MelonLogger.Msg(ConsoleColor.Yellow,
                                     $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
                             }
-
-                            VRConsole.Log(VRConsole.LogsType.Cheater,
-                                $"{__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
                             Play();
                         }
                     }
@@ -168,14 +149,11 @@ namespace JoanpixerClient
 
                 if (__0 == "Play")
                 {
-                    VRConsole.Log(VRConsole.LogsType.Cheater,
-                        $"{__1.field_Private_VRCPlayerApi_0.displayName} is spamming sounds");
                     if (logconsole)
                     {
                         MelonLogger.Msg(ConsoleColor.Yellow,
                             $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is spamming sounds");
                     }
-
                     Play();
                 }
             }
@@ -241,14 +219,12 @@ namespace JoanpixerClient
             if (UnityEngine.XR.XRDevice.isPresent)
             {
                 MelonLogger.Msg("Quest Spoofed");
-                VRConsole.Log(VRConsole.LogsType.Info, "Quest Spoofed");
             }
             else
             {
                 yield return new WaitForSeconds(13);
                 MelonLogger.Warning("Spoofing Quest In Desktop!");
                 MelonCoroutines.Start(Utils.Notification("Warning: Spoofing Quest In Desktop!"));
-                VRConsole.Log(VRConsole.LogsType.Warn, "Spoofing Quest In Desktop!");
                 yield return new WaitForSeconds(1);
                 System.Media.SoundPlayer player = new System.Media.SoundPlayer(Environment.CurrentDirectory + "\\Joanpixer\\sound.wav");
                 player.Play();
@@ -268,27 +244,17 @@ namespace JoanpixerClient
         {
             AmongUs.Initialize();
             Murder4.Initialize();
-            VRConsole.Log(VRConsole.LogsType.Clear, "");
             try
             {
-                GameObject.Find("_Application/CursorManager/BlueFireballMouse/Ball").GetComponent<ParticleSystem>().main
-                    .startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/BlueFireballMouse/Glow").GetComponent<ParticleSystem>().main
-                    .startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/BlueFireballMouse/Trail").GetComponent<ParticleSystem>()
-                    .main.startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/BlueFireballGaze/Ball").GetComponent<ParticleSystem>().main
-                    .startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/BlueFireballGaze/Glow").GetComponent<ParticleSystem>().main
-                    .startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/BlueFireballGaze/Trail").GetComponent<ParticleSystem>().main
-                    .startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_muzzle_blue")
-                    .GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_flare_blue")
-                    .GetComponent<ParticleSystem>().main.startColor = Color.magenta;
-                GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_spark_002")
-                    .GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                GameObject.Find("_Application/CursorManager/BlueFireballMouse/Ball").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                GameObject.Find("_Application/CursorManager/BlueFireballMouse/Glow").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                GameObject.Find("_Application/CursorManager/BlueFireballMouse/Trail").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                GameObject.Find("_Application/CursorManager/BlueFireballGaze/Ball").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                GameObject.Find("_Application/CursorManager/BlueFireballGaze/Glow").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                GameObject.Find("_Application/CursorManager/BlueFireballGaze/Trail").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_muzzle_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_flare_blue").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
+                GameObject.Find("_Application/CursorManager/RightHandBeam/plasma_beam_spark_002").GetComponent<ParticleSystem>().main.startColor = Color.magenta;
             }
             catch {}
         }

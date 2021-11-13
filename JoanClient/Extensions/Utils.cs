@@ -48,11 +48,6 @@ namespace JoanpixerClient
             }
         }
 
-        public static void SelectYourself()
-        {
-            Wrappers.GetQuickMenu().SelectPlayer(GetLocalPlayer().prop_Player_0);
-        }
-
         /// <summary>
         /// Get a player object out of the specified player id.
         /// </summary>
@@ -87,25 +82,6 @@ namespace JoanpixerClient
                 path = "/" + obj.name + path;
             }
             return path;
-        }
-
-        public static QuickMenu quickmenuuser = null;
-
-        public static QuickMenu GetQuickMenuInstance()
-        {
-            if (quickmenuuser == null)
-            {
-                quickmenuuser = QuickMenu.prop_QuickMenu_0;
-            }
-            return quickmenuuser;
-        }
-
-        public static QuickMenu QuickMenu
-        {
-            get
-            {
-                return QuickMenu.prop_QuickMenu_0;
-            }
         }
 
         private const string sound = "Joanpixer/JN-Join.ogg";
@@ -162,8 +138,6 @@ namespace JoanpixerClient
                 yield return null;
             }
         }
-
-        public static VRCPlayer GetSelectedPlayer() { return GetQuickMenuInstance().field_Private_Player_0._vrcplayer; }
 
         public static void ToggleOutline(Renderer renderer, bool state)
         {

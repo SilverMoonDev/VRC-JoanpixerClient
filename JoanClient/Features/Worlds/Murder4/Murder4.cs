@@ -1,12 +1,7 @@
-﻿using System;
-using VRC.Udon;
+﻿using VRC.Udon;
 using UnityEngine;
 using System.Collections;
 using JoanpixerClient.Modules;
-using MelonLoader;
-using Photon.Pun;
-using VRC.Core;
-using VRC.Networking;
 using VRC.SDKBase;
 
 namespace JoanpixerClient.Features.Worlds
@@ -16,7 +11,6 @@ namespace JoanpixerClient.Features.Worlds
         public static bool worldLoaded = false;
         public static bool revolverspam = false;
         public static bool doorlock = false;
-        public static bool doorcollision = false;
         public static bool lightsoff = false;
         public static bool patreonself = false;
         public static bool givepatreon = false;

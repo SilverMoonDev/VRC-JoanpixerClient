@@ -49,16 +49,12 @@ namespace JoanpixerClient.Modules
 
         public static bool AllowThiefToggle = false;
 
-        public static IEnumerator AllowThief()
+        public static void AllowThief()
         {
-            while (AllowThiefToggle)
+            foreach (VRC.SDKBase.VRC_Pickup vrc_Pickup in Resources.FindObjectsOfTypeAll<VRC.SDKBase.VRC_Pickup>())
             {
-                yield return new WaitForSeconds(0.3f);
-                foreach (VRC.SDKBase.VRC_Pickup vrc_Pickup in Resources.FindObjectsOfTypeAll<VRC.SDKBase.VRC_Pickup>())
-                {
-                    vrc_Pickup.DisallowTheft = false;
-                    vrc_Pickup.pickupable = true;
-                }
+                vrc_Pickup.DisallowTheft = false;
+                vrc_Pickup.pickupable = true;
             }
         }
 
@@ -155,7 +151,7 @@ namespace JoanpixerClient.Modules
             {
                 Networking.SetOwner(Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0, vrc_Pickup.gameObject);
                 vrc_Pickup.transform.rotation = new Quaternion(-0.7f, 0f, 0f, 0.7f);
-                vrc_Pickup.transform.position = Utils.GetSelectedPlayer().transform.position;
+                //vrc_Pickup.transform.position = Utils.GetSelectedPlayer().transform.position;
                 Networking.SetOwner(Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0, vrc_Pickup.gameObject);
             }
         }

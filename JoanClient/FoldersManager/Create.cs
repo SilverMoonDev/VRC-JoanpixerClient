@@ -31,6 +31,11 @@ namespace JoanpixerClient.FoldersManager
                 MelonLogger.Msg("Downloading ButtonBackground.png");
                 client.DownloadFile(new Uri("https://i.imgur.com/2oDXFrz.png"), "Joanpixer\\ButtonBackground.png");
             }
+            if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\Protections Icon.png"))
+            {
+                MelonLogger.Msg("Downloading Protections Icon.png");
+                client.DownloadFile(new Uri("https://i.imgur.com/PTvpxmx.png"), "Joanpixer\\Protections Icon.png");
+            }
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\sound.wav"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");

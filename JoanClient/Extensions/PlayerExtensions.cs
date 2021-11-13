@@ -179,12 +179,6 @@ namespace FlightMod
             PlayerExtensions.LocalVRCPlayer.transform.position = player.GetVRCPlayer().transform.position;
         }
 
-        public static QuickMenu GetQuickMenu() =>
-            GameObject.Find("UserInterface/QuickMenu").GetComponent<QuickMenu>();
-
-        public static Player GetSelectedPlayer() =>
-                   GetQuickMenu().field_Private_Player_0;
-
         public static void ReloadAllAvatars()
         {
             PlayerExtensions.LocalVRCPlayer.Method_Public_Void_Boolean_0(false);
