@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections;
+using MelonLoader;
 using Il2CppSystem.Diagnostics;
 using JoanClient.Features;
-using JoanpixerClient.Features.Worlds;
-using JoanpixerClient.Modules;
 using UnityEngine;
-using MelonLoader;
 using LoadSprite;
 using Environment = System.Environment;
-using PlagueButtonAPI;
-using PlagueButtonAPI.Controls;
-using PlagueButtonAPI.Controls.Grouping;
-using PlagueButtonAPI.Pages;
-using PlagueButtonAPI.Misc;
-using VRC;
 
 [assembly: MelonInfo(typeof(JoanpixerClient.JoanpixerMain), "JoanpixerClient", "1.0.0", "Joanpixer")]
 [assembly: MelonGame("VRChat", "VRChat")]
@@ -40,10 +31,10 @@ namespace JoanpixerClient
         {
             if (sceneName == "ui")
             {
-                MenuUi.MainMenu();
                 UIColor.UiColor();
+                MenuUi.MainMenu();
             }
-           
+
         }
 
         public override void OnUpdate()

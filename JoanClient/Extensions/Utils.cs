@@ -1,19 +1,19 @@
 ﻿using System.Collections;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using Il2CppSystem.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC;
 using System.Collections.Generic;
-using JoanpixerClient.Features.Worlds;
 using MelonLoader;
-using VRC.Core;
+using VRC.SDKBase;
+using VRC.UI.Elements.Menus;
+using PlagueButtonAPI.Misc;
 
 namespace JoanpixerClient
 {
     class Utils
     {
+        public static bool IsWorldLoaded => Resources.FindObjectsOfTypeAll<VRC_SceneDescriptor>() != null;
+
         /// <summary>
         /// Returns the local VRCPlayer.
         /// </summary>
@@ -34,6 +34,34 @@ namespace JoanpixerClient
             }
 
             return PlayerManager.field_Private_Static_PlayerManager_0?.field_Private_List_1_Player_0;
+        }
+
+        internal static Player GetSelectedPlayer()
+        {
+            if (GameObject.Find("UserInterface").GetComponentInChildren<SelectedUserMenuQM>() == null)
+            {
+                return null;
+            }
+
+            return GetPlayerFromIDInLobby(GameObject.Find("UserInterface").gameObject.GetComponentInChildren<SelectedUserMenuQM>().field_Private_IUser_0.prop_String_0);
+        }
+
+        internal static Player GetPlayerFromIDInLobby(string id)
+        {
+            Il2CppSystem.Collections.Generic.List<Player> all_player = GetAllPlayers();
+
+            foreach (var player in all_player)
+            {
+                if (player != null && player.prop_APIUser_0 != null)
+                {
+                    if (player.prop_APIUser_0.id == id)
+                    {
+                        return player;
+                    }
+                }
+            }
+
+            return null;
         }
 
         public static VRCPlayer CurrentUser
@@ -90,7 +118,7 @@ namespace JoanpixerClient
         {
             var hudRoot = GameObject.Find("UserInterface/UnscaledUI/HudContent/Hud");
             var requestedParent = hudRoot.transform.Find("NotificationDotParent");
-            var indicator = Object.Instantiate(hudRoot.transform.Find("NotificationDotParent/NotificationDot").gameObject, requestedParent, false).Cast<GameObject>();
+            var indicator = UnityEngine.Object.Instantiate(hudRoot.transform.Find("NotificationDotParent/NotificationDot").gameObject, requestedParent, false).Cast<GameObject>();
             indicator.name = "NotifyDot-" + "Murderer";
             indicator.GetComponent<Image>().enabled = false;
             indicator.SetActive(true);
@@ -116,7 +144,7 @@ namespace JoanpixerClient
             yield return new WaitForSeconds(3);
             MelonCoroutines.Start(FadeTextToZeroAlpha(4, text));
             yield return new WaitForSeconds(5);
-            Object.Destroy(indicator);
+            UnityEngine.Object.Destroy(indicator);
         }
 
         public static System.Collections.IEnumerator FadeTextToFullAlpha(float t, Text i)

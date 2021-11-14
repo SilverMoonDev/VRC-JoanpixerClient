@@ -3,21 +3,18 @@ using MelonLoader;
 using System;
 using System.Collections;
 using System.Reflection;
+using System.Collections.Generic;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.FoldersManager;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC;
 using VRC.Core;
 using VRC.Networking;
-using VRC.SDK.Internal.Shootout;
-using VRC.SDK3.Components;
-using VRC.SDKBase;
 using AccessTools = HarmonyLib.AccessTools;
 using HarmonyMethod = HarmonyLib.HarmonyMethod;
-using Object = System.Object;
 using Player = VRC.Player;
+using PlagueButtonAPI.Misc;
 
 namespace JoanpixerClient
 {
@@ -30,6 +27,7 @@ namespace JoanpixerClient
             return new HarmonyMethod(typeof(PatchManager).GetMethod(name,
                 BindingFlags.Static | BindingFlags.NonPublic));
         }
+
 
         public unsafe static void InitPatch()
         {
