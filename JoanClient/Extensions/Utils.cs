@@ -2,11 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using VRC;
-using System.Collections.Generic;
 using MelonLoader;
 using VRC.SDKBase;
 using VRC.UI.Elements.Menus;
-using PlagueButtonAPI.Misc;
 
 namespace JoanpixerClient
 {

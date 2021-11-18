@@ -33,7 +33,7 @@ namespace JoanpixerClient
         {
             try
             {
-                Instance.Patch(typeof(PortalTrigger).GetMethod(nameof(PortalTrigger.OnTriggerEnter), BindingFlags.Public | BindingFlags.Instance), GetPatch("EnterPortal"),null, null);
+                Instance.Patch(typeof(PortalTrigger).GetMethod(nameof(PortalTrigger.OnTriggerEnter), BindingFlags.Public | BindingFlags.Instance), GetPatch("EnterPortal"), null, null);
                 Instance.Patch(typeof(UdonSync).GetMethod(nameof(UdonSync.UdonSyncRunProgramAsRPC)), GetPatch("UdonSyncPatch"), null);
                 Instance.Patch(AccessTools.Property(typeof(Tools), "Platform").GetMethod, null, GetPatch("ModelSpoof"));
                 Instance.Patch(typeof(NetworkManager).GetMethod("OnJoinedRoom"), GetPatch("OnJoinedRoom"), null);
@@ -47,7 +47,9 @@ namespace JoanpixerClient
 
         public static bool Godmode = false;
         public static bool AntiUdon = false;
+        public static Player player = null;
         public static bool PortalWalk = false;
+        public static bool AutoKill = false;
         public static bool LogUdon = false;
         public static bool LogCheaters = false;
         public static bool playsound = false;
@@ -57,8 +59,7 @@ namespace JoanpixerClient
         {
             if (playsound)
             {
-                System.Media.SoundPlayer player =
-                    new System.Media.SoundPlayer(Environment.CurrentDirectory + "\\Joanpixer\\sound.wav");
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(Environment.CurrentDirectory + "\\Joanpixer\\sound.wav");
                 player.Play();
             }
         }
@@ -185,6 +186,11 @@ namespace JoanpixerClient
             yield return new WaitForSeconds(1);
             var Murderer = $"Murderer is {Murder4.MurderText.GetComponent<Text>().m_Text}";
             MelonCoroutines.Start(Utils.Notification(Murderer));
+            if (AutoKill)
+            {
+                MelonCoroutines.Start(Murder4.KillSelectedPlayerKnife(player));
+                MelonCoroutines.Stop(Murder4.KillSelectedPlayerKnife(player));
+            }
         }
 
         private static bool EnterPortal()

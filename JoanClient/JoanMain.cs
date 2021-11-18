@@ -37,6 +37,8 @@ namespace JoanpixerClient
 
         }
 
+        internal static float OnUpdateRoutineDelay = 0f;
+
         public override void OnUpdate()
         {
             // Speedhack.
@@ -51,6 +53,14 @@ namespace JoanpixerClient
                 sendInput.Mouse.RightButtonClick();
             }
             */
+            if (Time.time > OnUpdateRoutineDelay && VRCUtils.IsWorldLoaded)
+            {
+                OnUpdateRoutineDelay = Time.time + 5f;
+                if (Features.Worlds.Murder4.worldLoaded && Features.Worlds.Murder4.CluesESP)
+                {
+                    Features.Worlds.Murder4.CluesESPCoro();
+                }
+            }
             Features.Speedhack.Main();
             Features.ESP.Main();
             FlightMod.Flight.OnUpdate();

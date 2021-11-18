@@ -15,6 +15,7 @@ namespace JoanpixerClient.Features.Worlds
         public static bool patreonself = false;
         public static bool givepatreon = false;
         public static bool pickupweapontoggle = false;
+        public static bool CluesESP = false; 
         #region piano songs
 
         public static bool ClocksColdplay = false;
@@ -226,6 +227,21 @@ namespace JoanpixerClient.Features.Worlds
                         Udon.CallUdonEvent(sounds, "Play");
                         yield return new WaitForSeconds(delay);
                     }
+                }
+            }
+        }
+
+        public static void CluesESPCoro()
+        {
+            foreach (var clue in Resources.FindObjectsOfTypeAll<Renderer>())
+            {
+                if (clue.gameObject.name == "geo" && clue.gameObject.transform.parent.gameObject.name.Contains("Clue"))
+                {
+                    Utils.ToggleOutline(clue, false);
+                }
+                if (clue.gameObject.name == "geo" && clue.gameObject.transform.parent.gameObject.name.Contains("Clue") && clue.gameObject.active)
+                {
+                    Utils.ToggleOutline(clue, true);
                 }
             }
         }

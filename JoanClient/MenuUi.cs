@@ -19,10 +19,9 @@ namespace JoanpixerClient
     {
         internal static void MainMenu()
         {
-            Player selectedplayer = null;
-
             ButtonAPI.OnInit += () =>
             {
+                Player selectedplayer = null;
                 //Menus
                 var mainmenu = new MenuPage("MainMenu", "Main Menu");
 
@@ -38,7 +37,7 @@ namespace JoanpixerClient
                 var Pickups = new MenuPage("Pickups", "Pickups", false);
                 var PickupsButtons = new ButtonGroup(Pickups, null);
 
-                var PlayerOptions = new MenuPage("PlayerOptions", "Player Options", false);
+                var PlayerOptions = new MenuPage("PlayerOptions", null, false);
                 var PlayerOptionsButtons = new ButtonGroup(PlayerOptions, null);
 
                 var Murder4ItemsButtons = new ButtonGroup(PlayerOptions, "Murder 4");
@@ -63,16 +62,21 @@ namespace JoanpixerClient
 
                 #region Murder4
 
-                new SimpleSingleButton(MainMenuButtons, "Opens Murder 4 Exploits Menu", "Murder 4", () =>
+                var Murder4Icon = (Environment.CurrentDirectory + "\\Joanpixer\\knife.png").LoadSpriteFromDisk();
+
+
+                new SingleButton(MainMenuButtons, "Murder 4", "Opens Murder 4 Exploits Menu", () =>
                 {
                     Murder4Menu.OpenMenu();
-                });
+                }, false, Murder4Icon);
 
-                new SimpleSingleButton(Murder4Buttons, "Unlocks all doors", "Unlock Doors", () =>
+                var UnlockIcon = (Environment.CurrentDirectory + "\\Joanpixer\\unlock.png").LoadSpriteFromDisk();
+
+                new SingleButton(Murder4Buttons, "Unlock Doors", "Unlocks all doors", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Murder4.UnLockDoors();
-                });
+                }, false, UnlockIcon);
 
                 new SimpleSingleButton(Murder4Buttons, "Aborts Game", "Abort Game", () =>
                 {
@@ -93,6 +97,8 @@ namespace JoanpixerClient
                     Murder4.CallGameLogic("SyncVictoryM");
                 });
 
+                var DoorsOffIcon = (Environment.CurrentDirectory + "\\Joanpixer\\doorsoff.png").LoadSpriteFromDisk();
+
                 new ToggleButton(Murder4Buttons, "Doors Off", "Disable Doors", "Enable Doors", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
@@ -104,7 +110,7 @@ namespace JoanpixerClient
                     {
                         Murder4.doors.SetActive(true);
                     }
-                }).SetToggleState(false, true);
+                }, DoorsOffIcon).SetToggleState(false, true);
 
                 new SimpleSingleButton(Murder4Buttons, "Turns Lights On", "Lights On", () =>
                 {
@@ -323,6 +329,21 @@ namespace JoanpixerClient
                 });
 
                 #endregion
+                new ToggleButton(Murder4Buttons, "Clues ESP", null, null, (val) =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    Murder4.CluesESP = val;
+                    if (!val)
+                    {
+                        foreach (var clue in Resources.FindObjectsOfTypeAll<Renderer>())
+                        {
+                            if (clue.gameObject.name == "geo" && clue.gameObject.transform.parent.gameObject.name.Contains("Clue"))
+                            {
+                                Utils.ToggleOutline(clue, false);
+                            }
+                        }
+                    }
+                }).SetToggleState(false, true);
 
                 #endregion
 
@@ -395,10 +416,13 @@ namespace JoanpixerClient
 
                 #region Pickups
 
-                new SimpleSingleButton(MainMenuButtons, "Opens Pickup Menu", "Pickups", () =>
+                var PickupsIcon = (Environment.CurrentDirectory + "\\Joanpixer\\pickup.png").LoadSpriteFromDisk();
+
+
+                new SingleButton(MainMenuButtons, "Pickups", "Opens Pickup Menu", () =>
                 {
                     Pickups.OpenMenu();
-                });
+                }, false, PickupsIcon);
 
                 new ToggleButton(PickupsButtons, "Auto Drop", "Auto Drop all the Pickups", "Auto Drop all the Pickups", (val) =>
                 {
@@ -432,17 +456,21 @@ namespace JoanpixerClient
 
                 #endregion
 
+                var GodmodeIcon = (Environment.CurrentDirectory + "\\Joanpixer\\god.png").LoadSpriteFromDisk();
+
                 new ToggleButton(MainMenuButtons, "GodMode", "Gives you Immortality", "Gives you Immortality", (val) =>
                 {
                     PatchManager.Godmode = val;
-                }).SetToggleState(false, true);
+                }, GodmodeIcon).SetToggleState(false, true);
 
-                new SimpleSingleButton(MainMenuButtons, "Kill Self with Grenade", "Kill Self", () =>
+                var KillSelfIcon = (Environment.CurrentDirectory + "\\Joanpixer\\killself.png").LoadSpriteFromDisk();
+
+                new SingleButton(MainMenuButtons, "Kill Self", "Kill Self with Grenade", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     MelonCoroutines.Start(Murder4.KillLocalPlayerFrag());
                     MelonCoroutines.Stop(Murder4.KillLocalPlayerFrag());
-                });
+                }, false, KillSelfIcon);
 
 
                 var Movement = new ButtonGroup(mainmenu, null);
@@ -470,8 +498,12 @@ namespace JoanpixerClient
                     }
                     else
                     {
-                        FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = true;
-                        FlightMod.Flight.flying = false;
+                        try
+                        {
+                                FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = true;
+                                FlightMod.Flight.flying = false;
+                        }
+                        catch {}
                     }
                 }).SetToggleState(false, true);
 
@@ -508,9 +540,8 @@ namespace JoanpixerClient
                 var PlayerListMenu = new MenuPage("PlayersList_1", "Player List", false);
 
                 var PlayersGroup = new ButtonGroup(PlayerListMenu, "", true, TextAnchor.UpperLeft);
-
+                //Player List Handler
                 var Handler = PlayersGroup.gameObject.GetOrAddComponent<ObjectHandler>();
-
                 Handler.OnUpdateEachSecond += (obj, IsEnabled) =>
                 {
                     if (IsEnabled)
@@ -525,20 +556,22 @@ namespace JoanpixerClient
                                 continue;
                             }
 
-                            new SingleButton(PlayersGroup, player.field_Private_APIUser_0.displayName, "Selects This Player", () =>
+                            new SimpleSingleButton(PlayersGroup, "Selects This Player", player.field_Private_APIUser_0.displayName,() =>
                             {
                                 selectedplayer = player;
+                                PlayerOptions.SetTitle($"{player.field_Private_APIUser_0.displayName}");
                                 PlayerOptions.OpenMenu();
-                            }, true, null);
+                            });
                         }
                     }
                 };
+                /////////////////////
+                var PlayerlistIcon = (Environment.CurrentDirectory + "\\Joanpixer\\playerlist.png").LoadSpriteFromDisk();
 
-
-                new SimpleSingleButton(MainMenuButtons, null, "Player List", () =>
+                new SingleButton(MainMenuButtons, "Player List", null, () =>
                 {
                     PlayerListMenu.OpenMenu();
-                });
+                }, false, PlayerlistIcon);
 
                 new SimpleSingleButton(PlayerOptionsButtons, "Teleports to player", "Teleport", () =>
                 {
@@ -615,17 +648,32 @@ namespace JoanpixerClient
                 new ToggleButton(Murder4ItemsButtons, "Give Patreon", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    var player = selectedplayer;
-                    Murder4.givepatreon = val;
                     if (val)
                     {
-                        MelonCoroutines.Stop(Murder4.GivePatreonTarget(player));
+                        var player = selectedplayer;
+                        Murder4.givepatreon = true;
                         MelonCoroutines.Start(Murder4.GivePatreonTarget(player));
                     }
                     else
                     {
+                        VRC.Player player = null;
+                        Murder4.givepatreon = false;
                         MelonCoroutines.Stop(Murder4.GivePatreonTarget(player));
                         Murder4.CallRevolver("NonPatronSkin");
+                    }
+                }).SetToggleState(false, true);
+
+                new ToggleButton(Murder4ItemsButtons, "Auto Kill", null, null, (val) =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    PatchManager.AutoKill = val;
+                    if (val)
+                    {
+                        PatchManager.player = selectedplayer;
+                    }
+                    else
+                    {
+                        PatchManager.player = null;
                     }
                 }).SetToggleState(false, true);
 
