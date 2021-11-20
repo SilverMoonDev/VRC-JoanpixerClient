@@ -22,6 +22,7 @@ namespace JoanpixerClient
         {
             FoldersManager.Create.Initialize();
             PatchManager.InitPatch();
+            new Features.ForceInvite().OnApplicationStart();
             PatchManager.QuestIni();
             ButtonImage = (Environment.CurrentDirectory + "\\Joanpixer\\MainMenu.png").LoadSpriteFromDisk();
             MelonUtils.SetConsoleTitle("Joanpixer Client Alpha");

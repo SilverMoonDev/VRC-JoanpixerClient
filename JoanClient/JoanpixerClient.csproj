@@ -38,6 +38,7 @@
     <Compile Include="Extensions\PlayerExtensions.cs" />
     <Compile Include="Extensions\Utils.cs" />
     <Compile Include="Features\ESP.cs" />
+    <Compile Include="Features\ForceInvite.cs" />
     <Compile Include="Features\Noclip.cs" />
     <Compile Include="Features\Speedhack.cs" />
     <Compile Include="Features\UIColor.cs" />
@@ -47,6 +48,7 @@
     <Compile Include="JoanMain.cs" />
     <Compile Include="MenuUi.cs" />
     <Compile Include="Modules\Items.cs" />
+    <Compile Include="Modules\Listener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflections.cs" />
     <Compile Include="Udon.cs" />
