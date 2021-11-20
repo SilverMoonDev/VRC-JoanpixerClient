@@ -137,6 +137,20 @@ namespace JoanpixerClient
                     }
                 }).SetToggleState(false, true);
 
+                new ToggleButton(annoybuttons, "Lock Drawers", "Enable Drawers Lock", "Disable Drawers Lock", (val) =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    Murder4.lockdrawers = val;
+                    if (val)
+                    {
+                        MelonCoroutines.Start(Murder4.LockDrawers());
+                    }
+                    else
+                    {
+                        MelonCoroutines.Stop(Murder4.LockDrawers());
+                    }
+                }).SetToggleState(false, true);
+
                 new ToggleButton(annoybuttons, "Spam Revolver", "Enable Revolver Spam", "Disable Revolver Spam", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
@@ -500,10 +514,10 @@ namespace JoanpixerClient
                     {
                         try
                         {
-                                FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = true;
-                                FlightMod.Flight.flying = false;
+                            FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = true;
+                            FlightMod.Flight.flying = false;
                         }
-                        catch {}
+                        catch { }
                     }
                 }).SetToggleState(false, true);
 
@@ -556,12 +570,12 @@ namespace JoanpixerClient
                                 continue;
                             }
 
-                            new SimpleSingleButton(PlayersGroup, "Selects This Player", player.field_Private_APIUser_0.displayName,() =>
-                            {
-                                selectedplayer = player;
-                                PlayerOptions.SetTitle($"{player.field_Private_APIUser_0.displayName}");
-                                PlayerOptions.OpenMenu();
-                            });
+                            new SimpleSingleButton(PlayersGroup, "Selects This Player", player.field_Private_APIUser_0.displayName, () =>
+                             {
+                                 selectedplayer = player;
+                                 PlayerOptions.SetTitle($"{player.field_Private_APIUser_0.displayName}");
+                                 PlayerOptions.OpenMenu();
+                             });
                         }
                     }
                 };

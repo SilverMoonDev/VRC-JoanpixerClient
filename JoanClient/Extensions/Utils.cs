@@ -99,7 +99,7 @@ namespace JoanpixerClient
             return null;
         }
 
-        public static string GetGameObjectPath(GameObject obj)
+        public static string GetGameObjectPathWithObjectName(GameObject obj)
         {
             string path = "/" + obj.name;
             while (obj.transform.parent != null)
@@ -110,7 +110,16 @@ namespace JoanpixerClient
             return path;
         }
 
-        private const string sound = "Joanpixer/JN-Join.ogg";
+        public static string GetGameObjectPath(GameObject obj)
+        {
+            string path = "/" + obj.name;
+            while (obj.transform.parent != null)
+            {
+                obj = obj.transform.parent.gameObject;
+                path = "/" + obj.name + path;
+            }
+            return path;
+        }
 
         public static IEnumerator Notification(string Text)
         {

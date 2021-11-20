@@ -15,6 +15,7 @@ using AccessTools = HarmonyLib.AccessTools;
 using HarmonyMethod = HarmonyLib.HarmonyMethod;
 using Player = VRC.Player;
 using PlagueButtonAPI.Misc;
+using VRC.Udon;
 
 namespace JoanpixerClient
 {

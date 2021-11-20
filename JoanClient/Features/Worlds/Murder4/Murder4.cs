@@ -11,6 +11,7 @@ namespace JoanpixerClient.Features.Worlds
         public static bool worldLoaded = false;
         public static bool revolverspam = false;
         public static bool doorlock = false;
+        public static bool lockdrawers = false;
         public static bool lightsoff = false;
         public static bool patreonself = false;
         public static bool givepatreon = false;
@@ -213,6 +214,25 @@ namespace JoanpixerClient.Features.Worlds
                         Udon.CallUdonEvent(door1, "SyncLock");
                     }
                 }
+            }
+        }
+
+        public static IEnumerator LockDrawers()
+        {
+            while (lockdrawers)
+            {
+                foreach (var drawers in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                {
+                    if (drawers.gameObject.name.Contains("Drawer"))
+                    {
+                        Udon.CallUdonEvent(drawers, "SyncClose");
+                    }
+                    if (drawers.gameObject.name.Contains("Door") && Utils.GetGameObjectPath(drawers.gameObject) != "/Environment/Doors/")
+                    {
+                        Udon.CallUdonEvent(drawers, "SyncClose");
+                    }
+                }
+                yield return new WaitForSeconds(1);
             }
         }
 
