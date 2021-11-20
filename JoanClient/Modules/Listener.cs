@@ -2,6 +2,7 @@
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
+#nullable enable
 
 namespace JoanpixerClient.Modules
 {
@@ -9,10 +10,10 @@ namespace JoanpixerClient.Modules
     {
 
         [method: HideFromIl2Cpp]
-        public event Action OnEnabled;
+        public event Action? OnEnabled;
 
         [method: HideFromIl2Cpp]
-        public event Action OnDisabled;
+        public event Action? OnDisabled;
 
         public EnableDisableListener(IntPtr obj0) : base(obj0)
         {

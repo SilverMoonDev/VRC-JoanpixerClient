@@ -14,7 +14,7 @@ namespace JoanpixerClient.Features
         GameObject socialMenu;
         Image background;
 
-        public void OnApplicationStart()
+        public void Start()
         {
             MelonCoroutines.Start(UiManagerInitializer());
         }

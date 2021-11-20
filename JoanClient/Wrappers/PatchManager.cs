@@ -200,7 +200,6 @@ namespace JoanpixerClient
             {
                 return false;
             }
-
             return true;
         }
 

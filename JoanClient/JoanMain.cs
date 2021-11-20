@@ -4,7 +4,9 @@ using Il2CppSystem.Diagnostics;
 using JoanClient.Features;
 using UnityEngine;
 using LoadSprite;
+using UnhollowerRuntimeLib;
 using Environment = System.Environment;
+using JoanpixerClient.Modules;
 
 [assembly: MelonInfo(typeof(JoanpixerClient.JoanpixerMain), "JoanpixerClient", "1.0.0", "Joanpixer")]
 [assembly: MelonGame("VRChat", "VRChat")]
@@ -17,13 +19,15 @@ namespace JoanpixerClient
         public static Sprite Background = null;
 
         internal static Sprite ButtonImage = null;
-
+        internal static JoanpixerMain Instance;
         public override void OnApplicationStart()
         {
+            Instance = this;
+            ClassInjector.RegisterTypeInIl2Cpp<EnableDisableListener>();
             FoldersManager.Create.Initialize();
             PatchManager.InitPatch();
-            new Features.ForceInvite().OnApplicationStart();
             PatchManager.QuestIni();
+            new Features.ForceInvite().Start();
             ButtonImage = (Environment.CurrentDirectory + "\\Joanpixer\\MainMenu.png").LoadSpriteFromDisk();
             MelonUtils.SetConsoleTitle("Joanpixer Client Alpha");
         }
