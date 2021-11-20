@@ -112,7 +112,7 @@ namespace JoanpixerClient
 
         public static string GetGameObjectPath(GameObject obj)
         {
-            string path = "/" + obj.name;
+            string path = "/";
             while (obj.transform.parent != null)
             {
                 obj = obj.transform.parent.gameObject;

@@ -223,7 +223,7 @@ namespace JoanpixerClient.Features.Worlds
             {
                 foreach (var drawers in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                 {
-                    if (drawers.gameObject.name.Contains("Drawer"))
+                    if (drawers.gameObject.name.Contains("Drawer") && Utils.GetGameObjectPath(drawers.gameObject) != "/Environment/Doors/")
                     {
                         Udon.CallUdonEvent(drawers, "SyncClose");
                     }
