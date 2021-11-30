@@ -7,6 +7,8 @@ using LoadSprite;
 using UnhollowerRuntimeLib;
 using Environment = System.Environment;
 using JoanpixerClient.Modules;
+using VRC.SDKBase;
+using static VRC.SDKBase.VRC_EventHandler;
 
 [assembly: MelonInfo(typeof(JoanpixerClient.JoanpixerMain), "JoanpixerClient", "1.0.0", "Joanpixer")]
 [assembly: MelonGame("VRChat", "VRChat")]
@@ -24,6 +26,8 @@ namespace JoanpixerClient
         {
             Instance = this;
             ClassInjector.RegisterTypeInIl2Cpp<EnableDisableListener>();
+            ClassInjector.RegisterTypeInIl2Cpp<AvatarFavs>();
+            OnStart();
             FoldersManager.Create.Initialize();
             PatchManager.InitPatch();
             PatchManager.QuestIni();
@@ -32,12 +36,22 @@ namespace JoanpixerClient
             MelonUtils.SetConsoleTitle("Joanpixer Client Alpha");
         }
 
+        public virtual void OnStart()
+        {
+
+        }
+
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
             if (sceneName == "ui")
             {
+                new Features.HighlightsComponent().OnUiManagerInitEarly();
                 UIColor.UiColor();
                 MenuUi.MainMenu();
+                var Client = new GameObject();
+                UnityEngine.Object.DontDestroyOnLoad(Client);
+                Client.AddComponent<AvatarFavs>();
+                Features.ThirdPersonComponent.OnUiManagerInit();
             }
 
         }
@@ -67,8 +81,8 @@ namespace JoanpixerClient
                 }
             }
             Features.Speedhack.Main();
-            Features.ESP.Main();
             FlightMod.Flight.OnUpdate();
+            Features.ThirdPersonComponent.OnUpdate();
         }
 
 

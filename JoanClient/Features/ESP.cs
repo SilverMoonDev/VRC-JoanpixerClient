@@ -1,91 +1,96 @@
-﻿using JoanpixerClient.Features.Worlds;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using VRC.SDKBase;
 using VRC;
+using VRC.Core;
 
 namespace JoanpixerClient.Features
 {
-    class ESP
+    internal class HighlightsComponent
     {
-        public static bool espEnabled = false;
-
-        /// <summary>
-        /// Responsible for toggling ESP on or off.
-        /// </summary>
-        public static void Toggle()
+        public static bool ESPEnabled = false;
+        private static HighlightsFXStandalone _friendsHighlights;
+        private static HighlightsFXStandalone _othersHighlights;
+        private static HighlightsFXStandalone _pickupHighlights;
+        private static HighlightsFXStandalone GetHighlightsFX(APIUser apiUser)
         {
-            if (!espEnabled)
-            {
-                espEnabled = !espEnabled;
-            }
-            else
-            {
-                espEnabled = !espEnabled;
-                
-                // This code is required to disable SelectRegionESP.
+            if (APIUser.IsFriendsWith(apiUser.id))
+                return _friendsHighlights;
+            else if (APIUser.IsFriendsWith(apiUser.id) && Worlds.Murder4.worldLoaded && Worlds.Murder4.MurderText.GetComponent<Text>().text == apiUser.displayName)
+                return _pickupHighlights;
+            if (Worlds.Murder4.worldLoaded)
+                if (Worlds.Murder4.MurderText.GetComponent<Text>().text == apiUser.displayName)
+                    return _pickupHighlights;
+            return _othersHighlights;
+        }
 
-                GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        public void OnUiManagerInitEarly()
+        {
+            var highlightsFx = HighlightsFX.field_Private_Static_HighlightsFX_0;
 
-                foreach (GameObject playerObject in playerObjects)
-                {
-                    if (playerObject.transform.Find("SelectRegion"))
-                    {
-                        Utils.ToggleOutline(playerObject.transform.Find("SelectRegion").GetComponent<Renderer>(), false);
-                    }
-                }
+            _friendsHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _friendsHighlights.highlightColor = Color.green;
+            _othersHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _othersHighlights.highlightColor = Color.magenta;
+            _pickupHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _pickupHighlights.highlightColor = Color.red;
+        }
+        public static void ToggleESP(bool enabled)
+        {
+            var playerManager = PlayerManager.field_Private_Static_PlayerManager_0;
+            if (playerManager == null)
+                return;
+
+            foreach (var player in Utils.GetAllPlayers())
+            {
+                HighlightPlayer(player, enabled);
             }
         }
 
-        private static void SelectRegionESP(GameObject player)
+        public static void DisableESP()
+        {
+            var playerManager = PlayerManager.field_Private_Static_PlayerManager_0;
+            if (playerManager == null)
+                return;
+
+            foreach (var player in Utils.GetAllPlayers())
             {
-                if (player.transform.Find("SelectRegion"))
-                {
-                    // Get the selection region for the player.
-                    var renderer = player.transform.Find("SelectRegion").GetComponent<Renderer>();
-
-                    if (renderer == null)
-                    {
-                        return;
-                    }
-
-                    // Toggle the player outline.
-                    Utils.ToggleOutline(renderer, true);
-                }
-
-                if (player.transform.Find("SelectRegion"))
-                {
-                    // Get the selection region for the player.
-                    var renderer = player.transform.Find("SelectRegion").GetComponent<Renderer>();
-
-                    if (renderer == null)
-                    {
-                        return;
-                    }
-
-                    // Toggle the player outline.
-                    Utils.ToggleOutline(renderer, true);
-                }
+                DisableESPChecker(player);
             }
-            public static void Main()
+        }
+
+        private static void DisableESPChecker(Player player)
+        {
+            if (player.field_Private_APIUser_0.IsSelf)
+                return;
+
+            var selectRegion = player.transform.Find("SelectRegion");
+            if (selectRegion == null)
+                return;
+
+            _othersHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
+            _friendsHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
+            _pickupHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
+        }
+
+        public static void HighlightPlayer(Player player, bool highlighted)
+        {
+            if (player.field_Private_APIUser_0.IsSelf)
+                return;
+
+            var selectRegion = player.transform.Find("SelectRegion");
+            if (selectRegion == null)
+                return;
+
+            GetHighlightsFX(player.field_Private_APIUser_0).Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), highlighted);
+        }
+
+        public static void PickupESP(bool on)
+        {
+            foreach (var Pickup in Resources.FindObjectsOfTypeAll<VRC.SDK3.Components.VRCPickup>())
             {
-                if (espEnabled)
-                {
-                    GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
-
-                    // Loop through all the player objects in the world.
-                    for (int i = 0; i < playerObjects.Length; i++)
-                    {
-                        GameObject playerObject = playerObjects[i];
-
-                        // Make sure the player is valid.
-                        if (playerObject == null)
-                        {
-                            continue;
-                        }
-                        // Render ESP for users.
-                        SelectRegionESP(playerObject);
-                    }
-                }
+                _pickupHighlights.Method_Public_Void_Renderer_Boolean_0(Pickup.gameObject.GetComponent<Renderer>(), on);
             }
+        }
     }
 }

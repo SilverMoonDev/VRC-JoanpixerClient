@@ -3,6 +3,9 @@ using MelonLoader;
 using System.IO;
 using System.Net;
 using LoadSprite;
+using Newtonsoft.Json;
+using JoanpixerClient.Api.Object;
+using System.Collections.Generic;
 
 namespace JoanpixerClient.FoldersManager
 {
@@ -30,8 +33,8 @@ namespace JoanpixerClient.FoldersManager
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
                 MelonLogger.Msg("Downloading Background.png");
                 client.DownloadFile(new Uri("https://joanpixertest.glitch.me/SDK/ButtonBackground.png"), "Joanpixer\\Background.png");
-                JoanpixerMain.Background = (Environment.CurrentDirectory + "\\Joanpixer\\Background.png").LoadSpriteFromDisk();
             }
+            JoanpixerMain.Background = (Environment.CurrentDirectory + "\\Joanpixer\\Background.png").LoadSpriteFromDisk();
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\doorsoff.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
@@ -104,6 +107,11 @@ namespace JoanpixerClient.FoldersManager
             else
             {
                 Ini = new IniFile("Joanpixer\\Config.ini");
+            }
+            if (!File.Exists("Joanpixer\\AvatarFavorites.json"))
+            {
+                string contents = JsonConvert.SerializeObject(new List<AvatarObject>(), Formatting.Indented);
+                File.WriteAllText("Joanpixer\\AvatarFavorites.json", contents);
             }
         }
     }

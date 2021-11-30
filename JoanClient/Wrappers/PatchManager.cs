@@ -1,9 +1,7 @@
 ﻿using Harmony;
 using MelonLoader;
 using System;
-using System.Collections;
 using System.Reflection;
-using System.Collections.Generic;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.FoldersManager;
 using UnityEngine;
@@ -14,8 +12,8 @@ using VRC.Networking;
 using AccessTools = HarmonyLib.AccessTools;
 using HarmonyMethod = HarmonyLib.HarmonyMethod;
 using Player = VRC.Player;
-using PlagueButtonAPI.Misc;
-using VRC.Udon;
+using static VRC.SDKBase.VRC_EventHandler;
+using VRC.SDKBase;
 
 namespace JoanpixerClient
 {
@@ -55,6 +53,7 @@ namespace JoanpixerClient
         public static bool LogCheaters = false;
         public static bool playsound = false;
         public static bool logconsole = true;
+        public static bool HideCamera = true;
 
         public static void Play()
         {
@@ -182,11 +181,17 @@ namespace JoanpixerClient
             return true;
         }
 
-        private static IEnumerator ShowMurderer()
+        private static System.Collections.IEnumerator ShowMurderer()
         {
             yield return new WaitForSeconds(1);
             var Murderer = $"Murderer is {Murder4.MurderText.GetComponent<Text>().m_Text}";
-            MelonCoroutines.Start(Utils.Notification(Murderer));
+            MelonCoroutines.Start(Utils.Notification(Murderer, Color.red));
+            if (Murder4.worldLoaded && Features.HighlightsComponent.ESPEnabled)
+                foreach (var player in Utils.GetAllPlayers())
+                {
+                    Features.HighlightsComponent.DisableESP();
+                    Features.HighlightsComponent.ToggleESP(true);
+                }
             if (AutoKill)
             {
                 MelonCoroutines.Start(Murder4.KillSelectedPlayerKnife(player));
@@ -216,7 +221,7 @@ namespace JoanpixerClient
             }
         }
 
-        public static IEnumerator QuestSpoofer()
+        public static System.Collections.IEnumerator QuestSpoofer()
         {
             yield return new WaitForSeconds(5);
             QuestSpoof = false;
@@ -228,7 +233,7 @@ namespace JoanpixerClient
             {
                 yield return new WaitForSeconds(13);
                 MelonLogger.Warning("Spoofing Quest In Desktop!");
-                MelonCoroutines.Start(Utils.Notification("Warning: Spoofing Quest In Desktop!"));
+                MelonCoroutines.Start(Utils.Notification("Warning: Spoofing Quest In Desktop!", Color.red));
                 yield return new WaitForSeconds(1);
                 System.Media.SoundPlayer player = new System.Media.SoundPlayer(Environment.CurrentDirectory + "\\Joanpixer\\sound.wav");
                 player.Play();
@@ -262,6 +267,8 @@ namespace JoanpixerClient
                 __0.field_Private_VRCPlayerApi_0.gameObject.transform.Find("SelectRegion").GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
                 __0.field_Private_VRCPlayerApi_0.gameObject.transform.Find("SelectRegion").GetComponent<Renderer>().sharedMaterial.SetColor("_Color", Color.magenta);
             }
+            if (Features.HighlightsComponent.ESPEnabled)
+                Features.HighlightsComponent.HighlightPlayer(__0, true);
         }
     }
 }

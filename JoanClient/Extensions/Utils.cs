@@ -4,12 +4,51 @@ using UnityEngine.UI;
 using VRC;
 using MelonLoader;
 using VRC.SDKBase;
+using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
 
 namespace JoanpixerClient
 {
     class Utils
     {
+
+        private static QuickMenu _quickMenuInstance;
+
+        private static SelectedUserMenuQM _selectedUserLocal;
+
+        public static QuickMenu Instance
+        {
+            get
+            {
+                if (Utils._quickMenuInstance == null)
+                {
+                    Utils._quickMenuInstance = GameObject.Find("UserInterface").GetComponentInChildren<QuickMenu>(true);
+                }
+                return Utils._quickMenuInstance;
+            }
+        }
+
+        internal static Player GetCurrentlySelectedPlayer()
+        {
+            if (GameObject.Find("UserInterface").GetComponentInChildren<SelectedUserMenuQM>() == null)
+            {
+                return null;
+            }
+
+            return GetPlayerFromIDInLobby(GameObject.Find("UserInterface").gameObject.GetComponentInChildren<SelectedUserMenuQM>().field_Private_IUser_0.prop_String_0);
+        }
+
+        public static SelectedUserMenuQM SelectedUserLocal
+        {
+            get
+            {
+                if (Utils._selectedUserLocal == null)
+                {
+                    Utils._selectedUserLocal = Utils.Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_SelectedUser_Local").GetComponent<SelectedUserMenuQM>();
+                }
+                return Utils._selectedUserLocal;
+            }
+        }
         public static bool IsWorldLoaded => Resources.FindObjectsOfTypeAll<VRC_SceneDescriptor>() != null;
 
         /// <summary>
@@ -121,11 +160,11 @@ namespace JoanpixerClient
             return path;
         }
 
-        public static IEnumerator Notification(string Text)
+        public static IEnumerator Notification(string Text, Color color)
         {
             var hudRoot = GameObject.Find("UserInterface/UnscaledUI/HudContent/Hud");
             var requestedParent = hudRoot.transform.Find("NotificationDotParent");
-            var indicator = UnityEngine.Object.Instantiate(hudRoot.transform.Find("NotificationDotParent/NotificationDot").gameObject, requestedParent, false).Cast<GameObject>();
+            var indicator = Object.Instantiate(hudRoot.transform.Find("NotificationDotParent/NotificationDot").gameObject, requestedParent, false).Cast<GameObject>();
             indicator.name = "NotifyDot-" + "Murderer";
             indicator.GetComponent<Image>().enabled = false;
             indicator.SetActive(true);
@@ -144,7 +183,7 @@ namespace JoanpixerClient
             text.fontSize = 34;
             text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
             text.supportRichText = true;
-            text.color = new Color(1, 0, 0, 0);
+            text.color = color;
             gameObject.SetActive(true);
             text.text = Text;
             MelonCoroutines.Start(FadeTextToFullAlpha(2, text));

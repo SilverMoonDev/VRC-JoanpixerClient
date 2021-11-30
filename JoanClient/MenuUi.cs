@@ -10,8 +10,8 @@ using UnityEngine;
 using LoadSprite;
 using UnityEngine.UI;
 using VRC.SDKBase;
-using PlagueButtonAPI.Misc;
 using VRC;
+using VRC.UI.Elements.Menus;
 
 namespace JoanpixerClient
 {
@@ -37,11 +37,6 @@ namespace JoanpixerClient
                 var Pickups = new MenuPage("Pickups", "Pickups", false);
                 var PickupsButtons = new ButtonGroup(Pickups, null);
 
-                var PlayerOptions = new MenuPage("PlayerOptions", null, false);
-                var PlayerOptionsButtons = new ButtonGroup(PlayerOptions, null);
-
-                var Murder4ItemsButtons = new ButtonGroup(PlayerOptions, "Murder 4");
-
                 #region Murder4
 
                 var Murder4Menu = new MenuPage("Murder4", "Murder 4", false);
@@ -58,11 +53,154 @@ namespace JoanpixerClient
 
                 #endregion
 
+                #region PlayerOptionsQuickMenu
+
+                var Murder4QuickMenu = new MenuPage("Murder4QuickMenu", "Murder 4", false);
+
+                var Murder4QuickMenuButtons = new ButtonGroup(Murder4QuickMenu, null);
+
+                var quickmenuplayeroptions = new ButtonGroup(Utils.SelectedUserLocal.transform.Find("ScrollRect").GetComponent<ScrollRect>().content, "Joanpixer Client");
+
+                new SimpleSingleButton(quickmenuplayeroptions, "Teleports to player", "Teleport", () =>
+                {
+                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+                    Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0.gameObject.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position;
+                });
+
+                new SimpleSingleButton(quickmenuplayeroptions, "Favorite/Unfavorite avatar", "Fav/UnFav Avatar", () =>
+                {
+                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+                    if (!AvatarFavs.AvatarObjects.Exists(m => m.id == selectedplayer.prop_ApiAvatar_0.id))
+                    {
+                        AvatarFavs.FavoriteAvatar(selectedplayer.prop_ApiAvatar_0);
+                    }
+                    else
+                    {
+                        AvatarFavs.UnfavoriteAvatar(selectedplayer.prop_ApiAvatar_0);
+                    }
+                    MelonCoroutines.Start(AvatarFavs.RefreshMenu(1));
+                });
+
+                #region Murder4Items
+
+                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Revolver", () =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.revolverobject);
+                    Murder4Items.revolverobject.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Knife", () =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.knife);
+                    Murder4Items.knife.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Luger", () =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.luger);
+                    Murder4Items.luger.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Shotgun", () =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.shotgun);
+                    Murder4Items.shotgun.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Grenade", () =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.frag);
+                    Murder4Items.frag.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Smoke Bomb", () =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.smokebomb);
+                    Murder4Items.smokebomb.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Bear Trap", () =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.Beartrap);
+                    Murder4Items.Beartrap.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Kill Knife", () =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    var player = selectedplayer;
+                    MelonCoroutines.Start(Murder4.KillSelectedPlayerKnife(player));
+                    MelonCoroutines.Stop(Murder4.KillSelectedPlayerKnife(player));
+                });
+
+                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Kill Frag", () =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    MelonCoroutines.Start(Murder4.KillSelectedPlayerFrag(selectedplayer));
+                    MelonCoroutines.Stop(Murder4.KillSelectedPlayerFrag(selectedplayer));
+                });
+
+                new ToggleButton(Murder4QuickMenuButtons, "Give Patreon", null, null, (val) =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    if (val)
+                    {
+                        Murder4.givepatreon = true;
+                        MelonCoroutines.Start(Murder4.GivePatreonTarget(selectedplayer));
+                    }
+                    else
+                    {
+                        Player player = null;
+                        Murder4.givepatreon = false;
+                        MelonCoroutines.Stop(Murder4.GivePatreonTarget(player));
+                        Murder4.CallRevolver("NonPatronSkin");
+                    }
+                }).SetToggleState(false, true);
+
+                new ToggleButton(Murder4QuickMenuButtons, "Auto Kill", null, null, (val) =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    PatchManager.AutoKill = val;
+                    if (val)
+                    {
+                        PatchManager.player = selectedplayer;
+                    }
+                    else
+                    {
+                        PatchManager.player = null;
+                    }
+                }).SetToggleState(false, true);
+
+                #endregion
+                var Murder4Icon = (Environment.CurrentDirectory + "\\Joanpixer\\knife.png").LoadSpriteFromDisk();
+
+                new SimpleSingleButton(quickmenuplayeroptions, "TP all pickups to the target", "Bring Pickups", () =>
+                {
+                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+                    Items.ItemsToPlayer();
+                });
+
+                new SingleButton(quickmenuplayeroptions, "Murder 4", "Open Murder 4 Target Options", () =>
+                {
+                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+                    Murder4QuickMenu.OpenMenu();
+                    Murder4QuickMenu.SetTitle(selectedplayer.prop_VRCPlayerApi_0.displayName);
+                }, false, Murder4Icon);
+
+
+                #endregion
+
                 #endregion
 
                 #region Murder4
 
-                var Murder4Icon = (Environment.CurrentDirectory + "\\Joanpixer\\knife.png").LoadSpriteFromDisk();
 
 
                 new SingleButton(MainMenuButtons, "Murder 4", "Opens Murder 4 Exploits Menu", () =>
@@ -229,7 +367,7 @@ namespace JoanpixerClient
                 {
                     if (!Murder4.worldLoaded) return;
                     var Murderer = $"Murderer is {Murder4.MurderText.GetComponent<Text>().m_Text}";
-                    MelonCoroutines.Start(Utils.Notification(Murderer));
+                    MelonCoroutines.Start(Utils.Notification(Murderer, Color.red));
                 });
 
                 new ToggleButton(Murder4Buttons, "Pickup Weapon in Cooldown", "Allows you to pickup every weapon that's in cooldown", "Allows you to pickup every weapon that's in cooldown", (val) =>
@@ -487,18 +625,19 @@ namespace JoanpixerClient
                 }, false, KillSelfIcon);
 
 
-                var Movement = new ButtonGroup(mainmenu, null);
+                var Movement = new ButtonGroup(mainmenu, "Movement");
 
                 new ToggleButton(Movement, "ESP", "Allows you to see players through walls", "Allows you to see players through walls", (val) =>
                 {
-                    Features.ESP.Toggle();
                     if (val)
                     {
-                        Features.ESP.espEnabled = true;
+                        Features.HighlightsComponent.ESPEnabled = true;
+                        Features.HighlightsComponent.ToggleESP(true);
                     }
                     else
                     {
-                        Features.ESP.espEnabled = false;
+                        Features.HighlightsComponent.ESPEnabled = false;
+                        Features.HighlightsComponent.ToggleESP(false);
                     }
                 }).SetToggleState(false, true);
 
@@ -545,159 +684,22 @@ namespace JoanpixerClient
                     }
                 });
 
+                new ToggleButton(Movement, "Pickup ESP", null, null, (val) =>
+                {
+                    if (val)
+                    {
+                        Features.HighlightsComponent.PickupESP(true);
+                    }
+                    else
+                    {
+                        Features.HighlightsComponent.PickupESP(false);
+                    }
+                }).SetToggleState(false, true);
+
                 new PlagueButtonAPI.Controls.Slider(mainmenu, "Speedhack Speed", null, (val) =>
                 {
                     Features.Speedhack.speedMultiplier = val;
                 });
-                #region Players
-
-                var PlayerListMenu = new MenuPage("PlayersList_1", "Player List", false);
-
-                var PlayersGroup = new ButtonGroup(PlayerListMenu, "", true, TextAnchor.UpperLeft);
-                //Player List Handler
-                var Handler = PlayersGroup.gameObject.GetOrAddComponent<ObjectHandler>();
-                Handler.OnUpdateEachSecond += (obj, IsEnabled) =>
-                {
-                    if (IsEnabled)
-                    {
-                        PlayersGroup.gameObject.transform.DestroyChildren();
-
-                        foreach (var player in Utils.GetAllPlayers())
-                        {
-                            if (player.field_Private_APIUser_0 == null)
-                            {
-                                MelonLogger.Error("Null APIUser!");
-                                continue;
-                            }
-
-                            new SimpleSingleButton(PlayersGroup, "Selects This Player", player.field_Private_APIUser_0.displayName, () =>
-                             {
-                                 selectedplayer = player;
-                                 PlayerOptions.SetTitle($"{player.field_Private_APIUser_0.displayName}");
-                                 PlayerOptions.OpenMenu();
-                             });
-                        }
-                    }
-                };
-                /////////////////////
-                var PlayerlistIcon = (Environment.CurrentDirectory + "\\Joanpixer\\playerlist.png").LoadSpriteFromDisk();
-
-                new SingleButton(MainMenuButtons, "Player List", null, () =>
-                {
-                    PlayerListMenu.OpenMenu();
-                }, false, PlayerlistIcon);
-
-                new SimpleSingleButton(PlayerOptionsButtons, "Teleports to player", "Teleport", () =>
-                {
-                    Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0.gameObject.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position;
-                });
-
-                #region Murder4Items
-
-                new SimpleSingleButton(Murder4ItemsButtons, null, "Revolver", () =>
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Items.TakeOwnershipIfNecessary(Murder4Items.revolverobject);
-                    Murder4Items.revolverobject.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
-                });
-
-                new SimpleSingleButton(Murder4ItemsButtons, null, "Knife", () =>
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Items.TakeOwnershipIfNecessary(Murder4Items.knife);
-                    Murder4Items.knife.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
-                });
-
-                new SimpleSingleButton(Murder4ItemsButtons, null, "Luger", () =>
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Items.TakeOwnershipIfNecessary(Murder4Items.luger);
-                    Murder4Items.luger.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
-                });
-
-                new SimpleSingleButton(Murder4ItemsButtons, null, "Shotgun", () =>
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Items.TakeOwnershipIfNecessary(Murder4Items.shotgun);
-                    Murder4Items.shotgun.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
-                });
-
-                new SimpleSingleButton(Murder4ItemsButtons, null, "Grenade", () =>
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Items.TakeOwnershipIfNecessary(Murder4Items.frag);
-                    Murder4Items.frag.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
-                });
-
-                new SimpleSingleButton(Murder4ItemsButtons, null, "Smoke Bomb", () =>
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Items.TakeOwnershipIfNecessary(Murder4Items.smokebomb);
-                    Murder4Items.smokebomb.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
-                });
-
-                new SimpleSingleButton(Murder4ItemsButtons, null, "Bear Trap", () =>
-                {
-                    if (!Murder4.worldLoaded) return;
-                    Items.TakeOwnershipIfNecessary(Murder4Items.Beartrap);
-                    Murder4Items.Beartrap.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
-                });
-
-                new SimpleSingleButton(Murder4ItemsButtons, null, "Kill Knife", () =>
-                {
-                    if (!Murder4.worldLoaded) return;
-                    var player = selectedplayer;
-                    MelonCoroutines.Start(Murder4.KillSelectedPlayerKnife(player));
-                    MelonCoroutines.Stop(Murder4.KillSelectedPlayerKnife(player));
-                });
-
-                new SimpleSingleButton(Murder4ItemsButtons, null, "Kill Frag", () =>
-                {
-                    if (!Murder4.worldLoaded) return;
-                    var player = selectedplayer;
-                    MelonCoroutines.Start(Murder4.KillSelectedPlayerFrag(player));
-                    MelonCoroutines.Stop(Murder4.KillSelectedPlayerFrag(player));
-                });
-
-                new ToggleButton(Murder4ItemsButtons, "Give Patreon", null, null, (val) =>
-                {
-                    if (!Murder4.worldLoaded) return;
-                    if (val)
-                    {
-                        var player = selectedplayer;
-                        Murder4.givepatreon = true;
-                        MelonCoroutines.Start(Murder4.GivePatreonTarget(player));
-                    }
-                    else
-                    {
-                        VRC.Player player = null;
-                        Murder4.givepatreon = false;
-                        MelonCoroutines.Stop(Murder4.GivePatreonTarget(player));
-                        Murder4.CallRevolver("NonPatronSkin");
-                    }
-                }).SetToggleState(false, true);
-
-                new ToggleButton(Murder4ItemsButtons, "Auto Kill", null, null, (val) =>
-                {
-                    if (!Murder4.worldLoaded) return;
-                    PatchManager.AutoKill = val;
-                    if (val)
-                    {
-                        PatchManager.player = selectedplayer;
-                    }
-                    else
-                    {
-                        PatchManager.player = null;
-                    }
-                }).SetToggleState(false, true);
-
-                #endregion
-
-                new SimpleSingleButton(PlayerOptionsButtons, "TP all pickups to the target", "Bring Pickups", () =>
-                {
-                    Items.ItemsToPlayer();
-                });
-                #endregion
             };
         }
     }

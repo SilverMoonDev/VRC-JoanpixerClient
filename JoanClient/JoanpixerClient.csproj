@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JoanClient</RootNamespace>
     <AssemblyName>JoanClient</AssemblyName>
-	<LangVersion>9.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,8 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="API\APIObjects.cs" />
+    <Compile Include="API\ButtonType.cs" />
     <Compile Include="API\IL2CPPAssetBundle.cs" />
     <Compile Include="API\LoadSprite.cs" />
+    <Compile Include="API\SocialMenuButtons.cs" />
+    <Compile Include="API\VRCList.cs" />
     <Compile Include="Drawing.cs" />
     <Compile Include="Extensions\PlayerExtensions.cs" />
     <Compile Include="Extensions\Utils.cs" />
@@ -42,12 +46,14 @@
     <Compile Include="Features\ForceInvite.cs" />
     <Compile Include="Features\Noclip.cs" />
     <Compile Include="Features\Speedhack.cs" />
+    <Compile Include="Features\ThirdPerson.cs" />
     <Compile Include="Features\UIColor.cs" />
     <Compile Include="Features\Worlds\Murder4\Murder4 Items.cs" />
     <Compile Include="Features\Worlds\Murder4\Murder4.cs" />
     <Compile Include="FoldersManager\Create.cs" />
     <Compile Include="JoanMain.cs" />
     <Compile Include="MenuUi.cs" />
+    <Compile Include="Modules\AvatarFavs.cs" />
     <Compile Include="Modules\Items.cs" />
     <Compile Include="Modules\Listener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,6 +91,10 @@
     </Reference>
     <Reference Include="MelonLoader">
       <HintPath>References\MelonLoader.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PlagueButtonAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -233,6 +243,9 @@
       <HintPath>References\VRCSDKBase.dll</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
