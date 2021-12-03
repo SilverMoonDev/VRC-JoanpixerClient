@@ -35,8 +35,24 @@
   <ItemGroup>
     <Compile Include="API\APIObjects.cs" />
     <Compile Include="API\ButtonType.cs" />
-    <Compile Include="API\IL2CPPAssetBundle.cs" />
     <Compile Include="API\LoadSprite.cs" />
+    <Compile Include="API\Menu API\Controls\Grouping\ButtonGroup.cs" />
+    <Compile Include="API\Menu API\Controls\Grouping\CollapsibleButtonGroup.cs" />
+    <Compile Include="API\Menu API\Controls\Label.cs" />
+    <Compile Include="API\Menu API\Controls\SimpleSingleButton.cs" />
+    <Compile Include="API\Menu API\Controls\SingleButton.cs" />
+    <Compile Include="API\Menu API\Controls\Slider.cs" />
+    <Compile Include="API\Menu API\Controls\Tab.cs" />
+    <Compile Include="API\Menu API\Controls\ToggleButton.cs" />
+    <Compile Include="API\Menu API\Controls\WingSingleButton.cs" />
+    <Compile Include="API\Menu API\External Libraries\IL2CPPAssetBundle\IL2CPPAssetBundle.cs" />
+    <Compile Include="API\Menu API\External Libraries\VRCUtils\VRCUtils.cs" />
+    <Compile Include="API\Menu API\Main\ButtonAPI.cs" />
+    <Compile Include="API\Menu API\Misc\ComponentManager.cs" />
+    <Compile Include="API\Menu API\Misc\Extensions.cs" />
+    <Compile Include="API\Menu API\Misc\MelonLoaderEvents.cs" />
+    <Compile Include="API\Menu API\Misc\PriorityAttribute.cs" />
+    <Compile Include="API\Menu API\Pages\MenuPage.cs" />
     <Compile Include="API\SocialMenuButtons.cs" />
     <Compile Include="API\VRCList.cs" />
     <Compile Include="Drawing.cs" />
@@ -96,12 +112,6 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="PlagueButtonAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\PlagueButtonAPI.dll</HintPath>
-      <Private>False</Private>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -208,15 +218,15 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="VRC.UI.Core">
-      <HintPath>References\VRC.UI.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\VRC.UI.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRC.UI.Elements">
-      <HintPath>References\VRC.UI.Elements.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\VRC.UI.Elements.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRC.UI.Shared">
-      <HintPath>References\VRC.UI.Shared.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\VRC.UI.Shared.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VRCCore-Editor">
@@ -247,5 +257,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

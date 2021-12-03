@@ -1,8 +1,8 @@
 ﻿using System;
-using PlagueButtonAPI;
-using PlagueButtonAPI.Controls;
-using PlagueButtonAPI.Controls.Grouping;
-using PlagueButtonAPI.Pages;
+using JoanButtonAPI;
+using JoanButtonAPI.Controls;
+using JoanButtonAPI.Controls.Grouping;
+using JoanButtonAPI.Pages;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.Modules;
 using MelonLoader;
@@ -25,7 +25,7 @@ namespace JoanpixerClient
                 //Menus
                 var mainmenu = new MenuPage("MainMenu", "Main Menu");
 
-                new Tab(mainmenu, JoanpixerMain.ButtonImage);
+                new Tab(mainmenu, "Main Menu", JoanpixerMain.ButtonImage);
 
                 var MainMenuButtons = new ButtonGroup(mainmenu, null);
 
@@ -61,13 +61,13 @@ namespace JoanpixerClient
 
                 var quickmenuplayeroptions = new ButtonGroup(Utils.SelectedUserLocal.transform.Find("ScrollRect").GetComponent<ScrollRect>().content, "Joanpixer Client");
 
-                new SimpleSingleButton(quickmenuplayeroptions, "Teleports to player", "Teleport", () =>
+                new SimpleSingleButton(quickmenuplayeroptions, "Teleport", "Teleports to player", () =>
                 {
                     selectedplayer = Utils.GetCurrentlySelectedPlayer();
                     Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0.gameObject.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position;
                 });
 
-                new SimpleSingleButton(quickmenuplayeroptions, "Favorite/Unfavorite avatar", "Fav/UnFav Avatar", () =>
+                new SimpleSingleButton(quickmenuplayeroptions, "Fav/UnFav Avatar", "Favorite/Unfavorites avatar", () =>
                 {
                     selectedplayer = Utils.GetCurrentlySelectedPlayer();
                     if (!AvatarFavs.AvatarObjects.Exists(m => m.id == selectedplayer.prop_ApiAvatar_0.id))
@@ -83,56 +83,56 @@ namespace JoanpixerClient
 
                 #region Murder4Items
 
-                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Revolver", () =>
+                new SimpleSingleButton(Murder4QuickMenuButtons, "Revolver", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Items.TakeOwnershipIfNecessary(Murder4Items.revolverobject);
                     Murder4Items.revolverobject.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
                 });
 
-                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Knife", () =>
+                new SimpleSingleButton(Murder4QuickMenuButtons, "Knife", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Items.TakeOwnershipIfNecessary(Murder4Items.knife);
                     Murder4Items.knife.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
                 });
 
-                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Luger", () =>
+                new SimpleSingleButton(Murder4QuickMenuButtons, "Luger", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Items.TakeOwnershipIfNecessary(Murder4Items.luger);
                     Murder4Items.luger.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
                 });
 
-                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Shotgun", () =>
+                new SimpleSingleButton(Murder4QuickMenuButtons, "Shotgun", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Items.TakeOwnershipIfNecessary(Murder4Items.shotgun);
                     Murder4Items.shotgun.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
                 });
 
-                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Grenade", () =>
+                new SimpleSingleButton(Murder4QuickMenuButtons, "Grenade", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Items.TakeOwnershipIfNecessary(Murder4Items.frag);
                     Murder4Items.frag.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
                 });
 
-                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Smoke Bomb", () =>
+                new SimpleSingleButton(Murder4QuickMenuButtons, "Smoke Bomb", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Items.TakeOwnershipIfNecessary(Murder4Items.smokebomb);
                     Murder4Items.smokebomb.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
                 });
 
-                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Bear Trap", () =>
+                new SimpleSingleButton(Murder4QuickMenuButtons, "Bear Trap", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Items.TakeOwnershipIfNecessary(Murder4Items.Beartrap);
                     Murder4Items.Beartrap.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
                 });
 
-                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Kill Knife", () =>
+                new SimpleSingleButton(Murder4QuickMenuButtons, "Kill Knife", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     var player = selectedplayer;
@@ -140,7 +140,7 @@ namespace JoanpixerClient
                     MelonCoroutines.Stop(Murder4.KillSelectedPlayerKnife(player));
                 });
 
-                new SimpleSingleButton(Murder4QuickMenuButtons, null, "Kill Frag", () =>
+                new SimpleSingleButton(Murder4QuickMenuButtons, "Kill Frag", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     MelonCoroutines.Start(Murder4.KillSelectedPlayerFrag(selectedplayer));
@@ -181,7 +181,7 @@ namespace JoanpixerClient
                 #endregion
                 var Murder4Icon = (Environment.CurrentDirectory + "\\Joanpixer\\knife.png").LoadSpriteFromDisk();
 
-                new SimpleSingleButton(quickmenuplayeroptions, "TP all pickups to the target", "Bring Pickups", () =>
+                new SimpleSingleButton(quickmenuplayeroptions, "Bring Pickups", "TP all pickups to the target", () =>
                 {
                     selectedplayer = Utils.GetCurrentlySelectedPlayer();
                     Items.ItemsToPlayer();
@@ -216,20 +216,20 @@ namespace JoanpixerClient
                     Murder4.UnLockDoors();
                 }, false, UnlockIcon);
 
-                new SimpleSingleButton(Murder4Buttons, "Aborts Game", "Abort Game", () =>
+                new SimpleSingleButton(Murder4Buttons, "Abort Game", "Aborts Game", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Murder4.CallGameLogic("SyncAbort");
                 });
 
-                new SimpleSingleButton(Murder4Buttons, "Forces Bystanders to win", "Bystanders Win", () =>
+                new SimpleSingleButton(Murder4Buttons, "Bystanders Win", "Forces Bystanders to win", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     MelonCoroutines.Start(Murder4.BWin());
                     MelonCoroutines.Stop(Murder4.BWin());
                 });
 
-                new SimpleSingleButton(Murder4Buttons, "Forces Murderer to win", "Murderer Win", () =>
+                new SimpleSingleButton(Murder4Buttons, "Murderer Win", "Forces Murderer to win", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Murder4.CallGameLogic("SyncVictoryM");
@@ -250,13 +250,13 @@ namespace JoanpixerClient
                     }
                 }, DoorsOffIcon).SetToggleState(false, true);
 
-                new SimpleSingleButton(Murder4Buttons, "Turns Lights On", "Lights On", () =>
+                new SimpleSingleButton(Murder4Buttons, "Lights On", "Turns Lights On", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Murder4.TurnLightsOn();
                 });
                 #region Annoy
-                new SimpleSingleButton(Murder4Buttons, "Annoy Functions", "Annoy", () =>
+                new SimpleSingleButton(Murder4Buttons, "Annoy", "Annoy Functions", () =>
                 {
                     annoy.OpenMenu();
                 });
@@ -363,7 +363,7 @@ namespace JoanpixerClient
                     }
                 }).SetToggleState(false, true);
 
-                new SimpleSingleButton(Murder4Buttons, "Shows you the Murderer", "Show Murderer", () =>
+                new SimpleSingleButton(Murder4Buttons, "Show Murderer", "Shows you the Murderer", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     var Murderer = $"Murderer is {Murder4.MurderText.GetComponent<Text>().m_Text}";
@@ -383,104 +383,106 @@ namespace JoanpixerClient
                         MelonCoroutines.Stop(Murder4.PickupWeaponInCooldown());
                     }
                 }).SetToggleState(false, true);
+
                 #region Teleports
 
-                new SimpleSingleButton(Murder4Buttons, null, "Teleports", () =>
+                new SimpleSingleButton(Murder4Buttons, "Teleports", null, () =>
                 {
                     teleportsmurder4.OpenMenu();
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Kitchen", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Kitchen", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(-20.8f, 0, 121.6f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Lounge", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Lounge", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(-15.9f, 0, 130.1f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Dining Room", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Dining Room", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(-11.3f, 0, 119.2f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Grand Hall", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Grand Hall", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(0.6f, 0, 116.4f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Library", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Library", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(12.2f, 0, 119.7f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Piano", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Piano", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(15.9f, 0, 131.5f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Garage", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Garage", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(17.3f, 0, 140.4f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Outside", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Outside", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(2.8f, 0, 140.5f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Conservatory", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Conservatory", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(-0.4f, 0, 146);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Billard", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Billard", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(-14.7f, 0, 140.2f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Cellar", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Cellar", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(-2.1f, -3, 130.8f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Bedroom", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Bedroom", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(-9.9f, 3.6f, 129.2f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Detective Room", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Detective Room", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(5, 3, 122.8f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Bathroom", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Bathroom", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(-0.4f, 3, 133.4f);
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, null, "Closet", () =>
+                new SimpleSingleButton(teleportsmurder4buttons, "Closet", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.GetLocalPlayer().transform.position = new Vector3(0.4673f, 2.995f, 124.234f);
                 });
 
                 #endregion
+
                 new ToggleButton(Murder4Buttons, "Clues ESP", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
@@ -495,6 +497,11 @@ namespace JoanpixerClient
                             }
                         }
                     }
+                }).SetToggleState(false, true);
+
+                new ToggleButton(Murder4Buttons, "Auto TP Detective", "TP to Detective Room when the game starts", "TP to Detective Room when the game starts", (val) =>
+                {
+                    PatchManager.TPDetective = val;
                 }).SetToggleState(false, true);
 
                 #endregion
@@ -601,7 +608,7 @@ namespace JoanpixerClient
                     }
                 }).SetToggleState(false, true);
 
-                new SimpleSingleButton(PickupsButtons, null, "Respawn Pickups", () =>
+                new SimpleSingleButton(PickupsButtons, "Respawn Pickups", null, () =>
                 {
                     Items.RespawnPickups();
                 });
@@ -672,7 +679,7 @@ namespace JoanpixerClient
                     }
                 }).SetToggleState(false, true);
 
-                new SimpleSingleButton(Movement, "Enables Jump in World", "Enable Jump", () =>
+                new SimpleSingleButton(Movement, "Enable Jump", "Enables Jump in World", () =>
                 {
                     if (Networking.LocalPlayer.GetJumpImpulse() > 1f)
                     {
@@ -684,11 +691,11 @@ namespace JoanpixerClient
                     }
                 });
 
-                new ToggleButton(Movement, "Pickup ESP", null, null, (val) =>
+                new ToggleButton(Movement, "Pickup ESP", "Being Fixed", "Being Fixed", (val) =>
                 {
                     if (val)
                     {
-                        Features.HighlightsComponent.PickupESP(true);
+                        JoanpixerMain.PickupESP = val;
                     }
                     else
                     {
@@ -696,10 +703,10 @@ namespace JoanpixerClient
                     }
                 }).SetToggleState(false, true);
 
-                new PlagueButtonAPI.Controls.Slider(mainmenu, "Speedhack Speed", null, (val) =>
+                new JoanButtonAPI.Controls.Slider(mainmenu, "Speedhack Speed", null, (val) =>
                 {
                     Features.Speedhack.speedMultiplier = val;
-                });
+                }, 1, 20, 6);
             };
         }
     }

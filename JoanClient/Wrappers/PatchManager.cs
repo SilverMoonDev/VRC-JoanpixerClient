@@ -49,6 +49,7 @@ namespace JoanpixerClient
         public static Player player = null;
         public static bool PortalWalk = false;
         public static bool AutoKill = false;
+        public static bool TPDetective = false;
         public static bool LogUdon = false;
         public static bool LogCheaters = false;
         public static bool playsound = false;
@@ -183,7 +184,10 @@ namespace JoanpixerClient
 
         private static System.Collections.IEnumerator ShowMurderer()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.3f);
+            if (TPDetective && Murder4.MurderText.GetComponent<Text>().m_Text != Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0.displayName)
+                Utils.GetLocalPlayer().transform.position = new Vector3(5, 3, 122.8f);
+            yield return new WaitForSeconds(0.7f);
             var Murderer = $"Murderer is {Murder4.MurderText.GetComponent<Text>().m_Text}";
             MelonCoroutines.Start(Utils.Notification(Murderer, Color.red));
             if (Murder4.worldLoaded && Features.HighlightsComponent.ESPEnabled)
@@ -256,17 +260,6 @@ namespace JoanpixerClient
 
         private static void OnPlayerJoin(Player __0)
         {
-            if (APIUser.CurrentUser.id == __0.field_Private_APIUser_0.id) return;
-            if (APIUser.CurrentUser.friendIDs.Contains(__0.field_Private_APIUser_0.id))
-            {
-                __0.field_Private_VRCPlayerApi_0.gameObject.transform.Find("SelectRegion").GetComponent<Renderer>().material.SetColor("_Color", Color.green);
-                __0.field_Private_VRCPlayerApi_0.gameObject.transform.Find("SelectRegion").GetComponent<Renderer>().sharedMaterial.SetColor("_Color", Color.green);
-            }
-            else
-            {
-                __0.field_Private_VRCPlayerApi_0.gameObject.transform.Find("SelectRegion").GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
-                __0.field_Private_VRCPlayerApi_0.gameObject.transform.Find("SelectRegion").GetComponent<Renderer>().sharedMaterial.SetColor("_Color", Color.magenta);
-            }
             if (Features.HighlightsComponent.ESPEnabled)
                 Features.HighlightsComponent.HighlightPlayer(__0, true);
         }

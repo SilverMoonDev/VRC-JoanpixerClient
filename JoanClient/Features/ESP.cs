@@ -14,10 +14,10 @@ namespace JoanpixerClient.Features
         private static HighlightsFXStandalone _pickupHighlights;
         private static HighlightsFXStandalone GetHighlightsFX(APIUser apiUser)
         {
-            if (APIUser.IsFriendsWith(apiUser.id))
-                return _friendsHighlights;
-            else if (APIUser.IsFriendsWith(apiUser.id) && Worlds.Murder4.worldLoaded && Worlds.Murder4.MurderText.GetComponent<Text>().text == apiUser.displayName)
+            if (APIUser.IsFriendsWith(apiUser.id) && Worlds.Murder4.worldLoaded && Worlds.Murder4.MurderText.GetComponent<Text>().text == apiUser.displayName)
                 return _pickupHighlights;
+            else if (APIUser.IsFriendsWith(apiUser.id))
+                return _friendsHighlights;
             if (Worlds.Murder4.worldLoaded)
                 if (Worlds.Murder4.MurderText.GetComponent<Text>().text == apiUser.displayName)
                     return _pickupHighlights;
@@ -89,7 +89,8 @@ namespace JoanpixerClient.Features
         {
             foreach (var Pickup in Resources.FindObjectsOfTypeAll<VRC.SDK3.Components.VRCPickup>())
             {
-                _pickupHighlights.Method_Public_Void_Renderer_Boolean_0(Pickup.gameObject.GetComponent<Renderer>(), on);
+                Utils.ToggleOutline(Pickup.gameObject.GetComponent<Renderer>(), on);
+                Utils.ToggleOutline(Pickup.gameObject.GetComponent<MeshRenderer>(), on);
             }
         }
     }

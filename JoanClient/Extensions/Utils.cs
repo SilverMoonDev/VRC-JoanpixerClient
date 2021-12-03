@@ -193,7 +193,7 @@ namespace JoanpixerClient
             UnityEngine.Object.Destroy(indicator);
         }
 
-        public static System.Collections.IEnumerator FadeTextToFullAlpha(float t, Text i)
+        public static IEnumerator FadeTextToFullAlpha(float t, Text i)
         {
             i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
             while (i.color.a < 1.0f)
@@ -203,7 +203,7 @@ namespace JoanpixerClient
             }
         }
 
-        public static System.Collections.IEnumerator FadeTextToZeroAlpha(float t, Text i)
+        public static IEnumerator FadeTextToZeroAlpha(float t, Text i)
         {
             i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
             while (i.color.a > 0.0f)
