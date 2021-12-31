@@ -1,4 +1,4 @@
-namespace JoanButtonAPI.Misc
+namespace JoanpixerButtonAPI.Misc
 {
     public class MelonLoaderEvents
 	{

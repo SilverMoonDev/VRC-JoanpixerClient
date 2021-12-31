@@ -20,7 +20,6 @@ namespace JoanpixerClient.Api
             UiVRCList.hideWhenEmpty = false;
             UiVRCList.field_Protected_Dictionary_2_Int32_List_1_ApiModel_0.Clear();
 
-
             GameObject.SetActive(true);
             GameObject.name = name;
             Text.text = name;

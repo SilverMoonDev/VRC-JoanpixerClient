@@ -36,16 +36,19 @@
     <Compile Include="API\APIObjects.cs" />
     <Compile Include="API\ButtonType.cs" />
     <Compile Include="API\LoadSprite.cs" />
+    <Compile Include="API\Menu API\Controls\Base Classes\Button.cs" />
+    <Compile Include="API\Menu API\Controls\Base Classes\ControlWithText.cs" />
+    <Compile Include="API\Menu API\Controls\Base Classes\GenericControl.cs" />
+    <Compile Include="API\Menu API\Controls\Base Classes\Toggle.cs" />
+    <Compile Include="API\Menu API\Controls\Buttons\Label.cs" />
+    <Compile Include="API\Menu API\Controls\Buttons\SimpleSingleButton.cs" />
+    <Compile Include="API\Menu API\Controls\Buttons\SingleButton.cs" />
+    <Compile Include="API\Menu API\Controls\Buttons\Toggles\ToggleButton.cs" />
+    <Compile Include="API\Menu API\Controls\Buttons\WingSingleButton.cs" />
     <Compile Include="API\Menu API\Controls\Grouping\ButtonGroup.cs" />
     <Compile Include="API\Menu API\Controls\Grouping\CollapsibleButtonGroup.cs" />
-    <Compile Include="API\Menu API\Controls\Label.cs" />
-    <Compile Include="API\Menu API\Controls\SimpleSingleButton.cs" />
-    <Compile Include="API\Menu API\Controls\SingleButton.cs" />
     <Compile Include="API\Menu API\Controls\Slider.cs" />
     <Compile Include="API\Menu API\Controls\Tab.cs" />
-    <Compile Include="API\Menu API\Controls\ToggleButton.cs" />
-    <Compile Include="API\Menu API\Controls\WingSingleButton.cs" />
-    <Compile Include="API\Menu API\External Libraries\IL2CPPAssetBundle\IL2CPPAssetBundle.cs" />
     <Compile Include="API\Menu API\External Libraries\VRCUtils\VRCUtils.cs" />
     <Compile Include="API\Menu API\Main\ButtonAPI.cs" />
     <Compile Include="API\Menu API\Misc\ComponentManager.cs" />
@@ -53,9 +56,10 @@
     <Compile Include="API\Menu API\Misc\MelonLoaderEvents.cs" />
     <Compile Include="API\Menu API\Misc\PriorityAttribute.cs" />
     <Compile Include="API\Menu API\Pages\MenuPage.cs" />
+    <Compile Include="API\PopUp.cs" />
+    <Compile Include="API\ScanningReflectionCache.cs" />
     <Compile Include="API\SocialMenuButtons.cs" />
     <Compile Include="API\VRCList.cs" />
-    <Compile Include="Drawing.cs" />
     <Compile Include="Extensions\PlayerExtensions.cs" />
     <Compile Include="Extensions\Utils.cs" />
     <Compile Include="Features\ESP.cs" />
@@ -63,7 +67,7 @@
     <Compile Include="Features\Noclip.cs" />
     <Compile Include="Features\Speedhack.cs" />
     <Compile Include="Features\ThirdPerson.cs" />
-    <Compile Include="Features\UIColor.cs" />
+    <Compile Include="Features\Worlds\Murder4\Murder 3.cs" />
     <Compile Include="Features\Worlds\Murder4\Murder4 Items.cs" />
     <Compile Include="Features\Worlds\Murder4\Murder4.cs" />
     <Compile Include="FoldersManager\Create.cs" />
@@ -113,10 +117,18 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>.\Photon3Unity3D.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="Transmtn">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\Transmtn.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnhollowerBaseLib">
       <HintPath>References\UnhollowerBaseLib.dll</HintPath>
       <Private>False</Private>

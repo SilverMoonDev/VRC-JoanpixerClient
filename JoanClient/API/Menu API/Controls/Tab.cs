@@ -1,18 +1,16 @@
 using System;
-using JoanButtonAPI.Misc;
-using JoanButtonAPI.Pages;
+using JoanpixerButtonAPI.Misc;
+using JoanpixerButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements.Controls;
 
-namespace JoanButtonAPI.Controls
+namespace JoanpixerButtonAPI.Controls
 {
-	public class Tab
+    public class Tab : Base_Classes.GenericControl
 	{
-        public readonly GameObject gameObject;
-
         public readonly MenuTab menuTab;
 
         public readonly Image tabIcon;

@@ -1,6 +1,6 @@
 using System;
 
-namespace JoanButtonAPI.Misc
+namespace JoanpixerButtonAPI.Misc
 {
     internal class PriorityAttribute : Attribute
 	{

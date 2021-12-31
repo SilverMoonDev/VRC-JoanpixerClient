@@ -1,13 +1,13 @@
 using System;
-using JoanButtonAPI.Controls.Grouping;
-using JoanButtonAPI.Pages;
+using JoanpixerButtonAPI.Controls.Grouping;
+using JoanpixerButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace JoanButtonAPI.Controls
+namespace JoanpixerButtonAPI.Controls
 {
-    public class Slider
+    public class Slider : Base_Classes.GenericControl
     {
         public readonly TextMeshProUGUI sliderText;
 
@@ -20,8 +20,6 @@ namespace JoanButtonAPI.Controls
         private readonly bool _floor;
 
         private readonly bool _percent;
-
-        public readonly GameObject gameObject;
 
         public Slider(Transform parent, string text, string tooltip, Action<float> onSliderAdjust, float minValue = 0f, float maxValue = 100f, float defaultValue = 50f, bool floor = false, bool percent = true, bool isGroup = false)
         {
@@ -124,15 +122,10 @@ namespace JoanButtonAPI.Controls
             sliderSlider.interactable = val;
         }
 
-        public void SetActive(bool state)
-        {
-            sliderSlider.gameObject.SetActive(state);
-            sliderTooltip.gameObject.SetActive(state);
-            sliderPercentText.gameObject.SetActive(state);
-        }
-
         public void SetValue(float newValue, bool invoke = false)
         {
+            sliderPercentText.text = (_floor ? Mathf.Floor(newValue).ToString() : newValue.ToString("0.00")) + (_percent ? "%" : "");
+
             var onValueChanged = sliderSlider.onValueChanged;
             sliderSlider.onValueChanged = new UnityEngine.UI.Slider.SliderEvent();
             sliderSlider.value = newValue;

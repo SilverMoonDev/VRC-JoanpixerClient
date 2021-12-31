@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnhollowerBaseLib;
+using UnhollowerRuntimeLib;
 using Object = UnityEngine.Object;
 
 namespace JoanpixerClient.Utility
@@ -28,11 +29,14 @@ namespace JoanpixerClient.Utility
             {
                 switch (buttontype)
                 {
+                    case MenuButtonType.WorldIfoButton:
+                        GameObject world = GameObject.Find("UserInterface/MenuContent/Screens/WorldInfo/ReportButton");
+                        Button = Object.Instantiate(world, world.transform);
+                        break;
                     case MenuButtonType.PlaylistButton:
                         GameObject original = GameObject.Find("UserInterface/MenuContent/Screens/UserInfo/User Panel/Playlists/PlaylistsButton");
                         Button = Object.Instantiate(original, original.transform);
                         break;
-
                     case MenuButtonType.AvatarFavButton:
                         GameObject gameObject = GameObject.Find("/UserInterface/MenuContent/Screens/Avatar/Favorite Button");
                         Button = Object.Instantiate(gameObject, gameObject.transform.parent);
@@ -83,11 +87,13 @@ namespace JoanpixerClient.Utility
             {
                 // this.Button.GetComponentInChildren<Image>().gameObject.active = false;
                 Button.GetComponentInChildren<Text>().text = text;
+                Button.name = "UwU";
+                Button.SetActive(true);
                 Button.GetComponentInChildren<Button>().onClick = new Button.ButtonClickedEvent();
                 Button.GetComponentInChildren<Button>().onClick.AddListener(listener);
                 Button.GetComponentInChildren<Button>().m_Interactable = true;
-                Button.GetComponent<RectTransform>().anchoredPosition = new Vector2(x_pos, y_pos);
-                Il2CppReferenceArray<Component> componentsInChildren = Button.GetComponentsInChildren(Image.Il2CppType);
+                Button.GetComponent<RectTransform>().localPosition = new Vector2(x_pos, y_pos);
+                Il2CppReferenceArray<Component> componentsInChildren = Button.GetComponentsInChildren(Il2CppType.Of<Image>());
                 foreach (Component component in componentsInChildren)
                 {
                     bool flag2 = component.name == "Icon_New";

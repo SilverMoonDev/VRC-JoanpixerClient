@@ -1,8 +1,9 @@
 ﻿using System;
-using JoanButtonAPI;
-using JoanButtonAPI.Controls;
-using JoanButtonAPI.Controls.Grouping;
-using JoanButtonAPI.Pages;
+using Il2CppSystem.IO;
+using JoanpixerButtonAPI;
+using JoanpixerButtonAPI.Controls;
+using JoanpixerButtonAPI.Controls.Grouping;
+using JoanpixerButtonAPI.Pages;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.Modules;
 using MelonLoader;
@@ -17,15 +18,21 @@ namespace JoanpixerClient
 {
     internal class MenuUi
     {
+        private static ToggleButton Noclip = null;
+        private static ToggleButton Speedhack = null;
+        private static ToggleButton QuestSpoofOn = null;
+        private static bool NoclipOn = false;
+        private static bool SpeedOn = false;
+
         internal static void MainMenu()
         {
             ButtonAPI.OnInit += () =>
             {
                 Player selectedplayer = null;
                 //Menus
-                var mainmenu = new MenuPage("MainMenu", "Main Menu");
+                var mainmenu = new MenuPage("MainMenu", "Joanpixer Client");
 
-                new Tab(mainmenu, "Main Menu", JoanpixerMain.ButtonImage);
+                new Tab(mainmenu, "Joanpixer Client", JoanpixerMain.ButtonImage);
 
                 var MainMenuButtons = new ButtonGroup(mainmenu, null);
 
@@ -53,18 +60,34 @@ namespace JoanpixerClient
 
                 #endregion
 
+                #region Murder3
+
+                var Murder3Menu = new MenuPage("Murder3", "Murder 3", false);
+
+                var Murder3Buttons = new ButtonGroup(Murder3Menu, null);
+
+                var annoy3 = new MenuPage("Annoy3", "Annoy Functions", false);
+
+                var annoy3buttons = new ButtonGroup(annoy3, null);
+
+                #endregion
+
                 #region PlayerOptionsQuickMenu
 
                 var Murder4QuickMenu = new MenuPage("Murder4QuickMenu", "Murder 4", false);
 
                 var Murder4QuickMenuButtons = new ButtonGroup(Murder4QuickMenu, null);
 
-                var quickmenuplayeroptions = new ButtonGroup(Utils.SelectedUserLocal.transform.Find("ScrollRect").GetComponent<ScrollRect>().content, "Joanpixer Client");
+                var Murder3QuickMenu = new MenuPage("Murder3QuickMenu", "Murder 3", false);
+
+                var Murder3QuickMenuButtons = new ButtonGroup(Murder3QuickMenu, null);
+
+                var quickmenuplayeroptions = new ButtonGroup(Utils.SelectedUserLocal.transform.Find("ScrollRect").GetComponent<ScrollRect>().content, "Joanpixer Client\n");
 
                 new SimpleSingleButton(quickmenuplayeroptions, "Teleport", "Teleports to player", () =>
                 {
                     selectedplayer = Utils.GetCurrentlySelectedPlayer();
-                    Utils.GetLocalPlayer().field_Private_VRCPlayerApi_0.gameObject.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position;
+                    Utils.TPLocalPlayer(selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position);
                 });
 
                 new SimpleSingleButton(quickmenuplayeroptions, "Fav/UnFav Avatar", "Favorite/Unfavorites avatar", () =>
@@ -179,12 +202,112 @@ namespace JoanpixerClient
                 }).SetToggleState(false, true);
 
                 #endregion
+
+                #region Murder3Items
+
+                new SimpleSingleButton(Murder3QuickMenuButtons, "Revolver", null, () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.revolverobject);
+                    Murder4Items.revolverobject.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder3QuickMenuButtons, "Knife", null, () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.knife);
+                    Murder4Items.knife.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder3QuickMenuButtons, "Luger", null, () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.luger);
+                    Murder4Items.luger.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder3QuickMenuButtons, "Shotgun", null, () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.shotgun);
+                    Murder4Items.shotgun.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder3QuickMenuButtons, "Grenade", null, () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.frag);
+                    Murder4Items.frag.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder3QuickMenuButtons, "Smoke Bomb", null, () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.smokebomb);
+                    Murder4Items.smokebomb.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder3QuickMenuButtons, "Bear Trap", null, () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Items.TakeOwnershipIfNecessary(Murder4Items.Beartrap);
+                    Murder4Items.Beartrap.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
+                });
+
+                new SimpleSingleButton(Murder3QuickMenuButtons, "Kill Knife", null, () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    var player = selectedplayer;
+                    MelonCoroutines.Start(Murder3.KillSelectedPlayerKnife(player));
+                    MelonCoroutines.Stop(Murder3.KillSelectedPlayerKnife(player));
+                });
+
+                new SimpleSingleButton(Murder3QuickMenuButtons, "Kill Frag", null, () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    MelonCoroutines.Start(Murder3.KillSelectedPlayerFrag(selectedplayer));
+                    MelonCoroutines.Stop(Murder3.KillSelectedPlayerFrag(selectedplayer));
+                });
+
+                new ToggleButton(Murder3QuickMenuButtons, "Give Patreon", null, null, (val) =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    if (val)
+                    {
+                        Murder3.givepatreon = true;
+                        MelonCoroutines.Start(Murder3.GivePatreonTarget(selectedplayer));
+                    }
+                    else
+                    {
+                        Player player = null;
+                        Murder3.givepatreon = false;
+                        MelonCoroutines.Stop(Murder3.GivePatreonTarget(player));
+                        Murder3.CallRevolver("NonPatronSkin");
+                    }
+                }).SetToggleState(false, true);
+
+                new ToggleButton(Murder3QuickMenuButtons, "Auto Kill", null, null, (val) =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    PatchManager.AutoKill = val;
+                    if (val)
+                    {
+                        PatchManager.player = selectedplayer;
+                    }
+                    else
+                    {
+                        PatchManager.player = null;
+                    }
+                }).SetToggleState(false, true);
+
+                #endregion
+
                 var Murder4Icon = (Environment.CurrentDirectory + "\\Joanpixer\\knife.png").LoadSpriteFromDisk();
 
-                new SimpleSingleButton(quickmenuplayeroptions, "Bring Pickups", "TP all pickups to the target", () =>
+                new SimpleSingleButton(quickmenuplayeroptions, "TP Pickups", "TP all pickups to the target", () =>
                 {
                     selectedplayer = Utils.GetCurrentlySelectedPlayer();
-                    Items.ItemsToPlayer();
+                    Items.ItemsToPlayer(selectedplayer);
                 });
 
                 new SingleButton(quickmenuplayeroptions, "Murder 4", "Open Murder 4 Target Options", () =>
@@ -194,6 +317,12 @@ namespace JoanpixerClient
                     Murder4QuickMenu.SetTitle(selectedplayer.prop_VRCPlayerApi_0.displayName);
                 }, false, Murder4Icon);
 
+                new SingleButton(quickmenuplayeroptions, "Murder 3", "Open Murder 3 Target Options", () =>
+                {
+                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+                    Murder3QuickMenu.OpenMenu();
+                    Murder3QuickMenu.SetTitle(selectedplayer.prop_VRCPlayerApi_0.displayName);
+                }, false, Murder4Icon);
 
                 #endregion
 
@@ -216,10 +345,10 @@ namespace JoanpixerClient
                     Murder4.UnLockDoors();
                 }, false, UnlockIcon);
 
-                new SimpleSingleButton(Murder4Buttons, "Abort Game", "Aborts Game", () =>
+                new SimpleSingleButton(Murder4Buttons, "Start Game", "Forces Start Game", () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Murder4.CallGameLogic("SyncAbort");
+                    Murder4.CallGameLogic("SyncStart");
                 });
 
                 new SimpleSingleButton(Murder4Buttons, "Bystanders Win", "Forces Bystanders to win", () =>
@@ -235,6 +364,12 @@ namespace JoanpixerClient
                     Murder4.CallGameLogic("SyncVictoryM");
                 });
 
+                new SimpleSingleButton(Murder4Buttons, "Abort Game", "Aborts Game", () =>
+                {
+                    if (!Murder4.worldLoaded) return;
+                    Murder4.CallGameLogic("SyncAbort");
+                });
+
                 var DoorsOffIcon = (Environment.CurrentDirectory + "\\Joanpixer\\doorsoff.png").LoadSpriteFromDisk();
 
                 new ToggleButton(Murder4Buttons, "Doors Off", "Disable Doors", "Enable Doors", (val) =>
@@ -248,7 +383,7 @@ namespace JoanpixerClient
                     {
                         Murder4.doors.SetActive(true);
                     }
-                }, DoorsOffIcon).SetToggleState(false, true);
+                }, DoorsOffIcon, null).SetToggleState(false, true);
 
                 new SimpleSingleButton(Murder4Buttons, "Lights On", "Turns Lights On", () =>
                 {
@@ -394,91 +529,91 @@ namespace JoanpixerClient
                 new SimpleSingleButton(teleportsmurder4buttons, "Kitchen", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-20.8f, 0, 121.6f);
+                    Utils.TPLocalPlayer(new Vector3(-20.8f, 0, 121.6f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Lounge", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-15.9f, 0, 130.1f);
+                    Utils.TPLocalPlayer(new Vector3(-15.9f, 0, 130.1f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Dining Room", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-11.3f, 0, 119.2f);
+                    Utils.TPLocalPlayer(new Vector3(-11.3f, 0, 119.2f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Grand Hall", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(0.6f, 0, 116.4f);
+                    Utils.TPLocalPlayer(new Vector3(0.6f, 0, 116.4f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Library", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(12.2f, 0, 119.7f);
+                    Utils.TPLocalPlayer(new Vector3(12.2f, 0, 119.7f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Piano", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(15.9f, 0, 131.5f);
+                    Utils.TPLocalPlayer(new Vector3(15.9f, 0, 131.5f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Garage", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(17.3f, 0, 140.4f);
+                    Utils.TPLocalPlayer(new Vector3(17.3f, 0, 140.4f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Outside", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(2.8f, 0, 140.5f);
+                    Utils.TPLocalPlayer(new Vector3(2.8f, 0, 140.5f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Conservatory", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-0.4f, 0, 146);
+                    Utils.TPLocalPlayer(new Vector3(-0.4f, 0, 146));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Billard", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-14.7f, 0, 140.2f);
+                    Utils.TPLocalPlayer(new Vector3(-14.7f, 0, 140.2f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Cellar", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-2.1f, -3, 130.8f);
+                    Utils.TPLocalPlayer(new Vector3(-2.1f, -3, 130.8f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Bedroom", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-9.9f, 3.6f, 129.2f);
+                    Utils.TPLocalPlayer(new Vector3(-9.9f, 3.6f, 129.2f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Detective Room", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(5, 3, 122.8f);
+                    Utils.TPLocalPlayer(new Vector3(5, 3, 122.8f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Bathroom", null,  () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(-0.4f, 3, 133.4f);
+                    Utils.TPLocalPlayer(new Vector3(-0.4f, 3, 133.4f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Closet", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.GetLocalPlayer().transform.position = new Vector3(0.4673f, 2.995f, 124.234f);
+                    Utils.TPLocalPlayer(new Vector3(0.4673f, 2.995f, 124.234f));
                 });
 
                 #endregion
@@ -506,6 +641,142 @@ namespace JoanpixerClient
 
                 #endregion
 
+                #region Murder3
+
+                new SingleButton(MainMenuButtons, "Murder 3", "Opens Murder 3 Exploits Menu", () =>
+                {
+                    Murder3Menu.OpenMenu();
+                }, false, Murder4Icon);
+
+                new SimpleSingleButton(Murder3Buttons, "Bystanders Win", "Forces Bystanders to win", () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    MelonCoroutines.Start(Murder3.BWin());
+                    MelonCoroutines.Stop(Murder3.BWin());
+                });
+
+                new SimpleSingleButton(Murder3Buttons, "Murderer Win", "Forces Murderer to win", () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Murder3.CallGameLogic("SyncVictoryM");
+                });
+
+                new SimpleSingleButton(Murder3Buttons, "Abort Game", "Aborts Game", () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Murder4.CallGameLogic("SyncAbort");
+                });
+
+                #region Annoy
+                new SimpleSingleButton(Murder3Buttons, "Annoy", "Annoy Functions", () =>
+                {
+                    annoy3.OpenMenu();
+                });
+
+                new ToggleButton(annoy3buttons, "Spam Revolver", "Enable Revolver Spam", "Disable Revolver Spam", (val) =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Murder3.revolverspam = val;
+                    if (val)
+                    {
+                        MelonCoroutines.Start(Murder3.Fire());
+                    }
+                    else
+                    {
+                        MelonCoroutines.Stop(Murder3.Fire());
+                    }
+                }).SetToggleState(false, true);
+
+                new ToggleButton(annoy3buttons, "Spam sounds", null, null, (val) =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Murder3.spamsounds = val;
+                    if (val)
+                    {
+                        MelonCoroutines.Start(Murder3.SpamSounds(0));
+                    }
+                    else
+                    {
+                        MelonCoroutines.Stop(Murder3.SpamSounds(0));
+                    }
+                }).SetToggleState(false, true);
+
+                #endregion
+
+                new ToggleButton(Murder3Buttons, "Patreon Self", null, null, (val) =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Murder3.patreonself = val;
+                    if (val)
+                    {
+                        MelonCoroutines.Start(Murder3.GivePatreonSelf());
+                    }
+                    else
+                    {
+                        MelonCoroutines.Stop(Murder3.GivePatreonSelf());
+                        Murder3.CallRevolver("NonPatronSkin");
+                    }
+                }).SetToggleState(false, true);
+
+                new ToggleButton(Murder3Buttons, "Pickup Beartraps", null, null, (val) =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Murder3.pickupweapontoggle = val;
+                    if (val)
+                    {
+                        MelonCoroutines.Start(Murder3.PickupBearTraps());
+                        MelonCoroutines.Stop(Murder3.PickupBearTraps());
+                    }
+                    else
+                    {
+                        Murder3.DisablePickupBearTraps();
+                    }
+                }).SetToggleState(false, true);
+
+                new SimpleSingleButton(Murder3Buttons, "Show Murderer", "Shows you the Murderer", () =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    var Murderer = $"Murderer is {Murder3.MurderText.GetComponent<Text>().m_Text}";
+                    MelonCoroutines.Start(Utils.Notification(Murderer, Color.red));
+                });
+
+                new ToggleButton(Murder3Buttons, "Pickup Weapon in Cooldown", "Allows you to pickup every weapon that's in cooldown", "Allows you to pickup every weapon that's in cooldown", (val) =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Murder3.pickupweapontoggle = val;
+                    if (val)
+                    {
+                        MelonCoroutines.Start(Murder3.PickupWeaponInCooldown());
+                    }
+                    else
+                    {
+                        MelonCoroutines.Stop(Murder3.PickupWeaponInCooldown());
+                    }
+                }).SetToggleState(false, true);
+
+                new ToggleButton(Murder3Buttons, "Clues ESP", null, null, (val) =>
+                {
+                    if (!Murder3.worldLoaded) return;
+                    Murder3.CluesESP = val;
+                    if (!val)
+                    {
+                        foreach (var clue in Resources.FindObjectsOfTypeAll<Renderer>())
+                        {
+                            if (clue.gameObject.name == "geo" && clue.gameObject.transform.parent.gameObject.name.Contains("Clue"))
+                            {
+                                Utils.ToggleOutline(clue, false);
+                            }
+                        }
+                    }
+                }).SetToggleState(false, true);
+
+                new ToggleButton(Murder3Buttons, "Auto TP Detective", "TP to Detective Room when the game starts", "TP to Detective Room when the game starts", (val) =>
+                {
+                    PatchManager.TPDetective = val;
+                }).SetToggleState(false, true);
+
+                #endregion
+
                 #region Protections
 
                 var ProtectionsIcon = (Environment.CurrentDirectory + "\\Joanpixer\\Protections Icon.png").LoadSpriteFromDisk();
@@ -525,36 +796,12 @@ namespace JoanpixerClient
                     PatchManager.PortalWalk = val;
                 }).SetToggleState(false, true);
 
-                if (PatchManager.QuestSpoof)
-                {
-                    new ToggleButton(ProtectionsButtons, "Quest Spoof", "Enable Quest Spoof (requires restart!)", "Disable Quest Spoof (requires restart!)", (val) =>
-                    {
-                        PatchManager.QuestSpoof = val;
-                        if (PatchManager.QuestSpoof)
-                        {
-                            FoldersManager.Create.Ini.SetBool("Toggles", "QuestSpoof", true);
-                        }
-                        else
-                        {
-                            FoldersManager.Create.Ini.SetBool("Toggles", "QuestSpoof", false);
-                        }
-                    }).SetToggleState(true, true);
-                }
-                else if (!PatchManager.QuestSpoof)
-                {
-                    new ToggleButton(ProtectionsButtons, "Quest Spoof", "Enable Quest Spoof (requires restart!)", "Disable Quest Spoof (requires restart!)", (val) =>
-                    {
-                        PatchManager.QuestSpoof = val;
-                        if (PatchManager.QuestSpoof)
-                        {
-                            FoldersManager.Create.Ini.SetBool("Toggles", "QuestSpoof", true);
-                        }
-                        else
-                        {
-                            FoldersManager.Create.Ini.SetBool("Toggles", "QuestSpoof", false);
-                        }
-                    }).SetToggleState(false, true);
-                }
+                QuestSpoofOn = new ToggleButton(ProtectionsButtons, "Quest Spoof", "Enable Quest Spoof (requires restart!)", "Disable Quest Spoof (requires restart!)", (val) => 
+                { 
+                        FoldersManager.Create.Ini.SetBool("Toggles", "QuestSpoof", val);
+                });
+
+                QuestSpoofOn.SetToggleState(PatchManager.QuestSpoof);
 
                 new ToggleButton(ProtectionsButtons, "Log Udon", "Logs all Udon Events onto the MLConsole", "Logs all Udon Events onto the MLConsole", (val) =>
                 {
@@ -620,15 +867,18 @@ namespace JoanpixerClient
                 new ToggleButton(MainMenuButtons, "GodMode", "Gives you Immortality", "Gives you Immortality", (val) =>
                 {
                     PatchManager.Godmode = val;
-                }, GodmodeIcon).SetToggleState(false, true);
+                }, GodmodeIcon, null).SetToggleState(false, true);
 
                 var KillSelfIcon = (Environment.CurrentDirectory + "\\Joanpixer\\killself.png").LoadSpriteFromDisk();
 
                 new SingleButton(MainMenuButtons, "Kill Self", "Kill Self with Grenade", () =>
                 {
-                    if (!Murder4.worldLoaded) return;
-                    MelonCoroutines.Start(Murder4.KillLocalPlayerFrag());
-                    MelonCoroutines.Stop(Murder4.KillLocalPlayerFrag());
+                    if (Murder4.worldLoaded)
+                        MelonCoroutines.Start(Murder4.KillLocalPlayerFrag());
+                        MelonCoroutines.Stop(Murder4.KillLocalPlayerFrag());
+                    if (Murder3.worldLoaded)
+                        MelonCoroutines.Start(Murder3.KillLocalPlayerFrag());
+                        MelonCoroutines.Stop(Murder3.KillLocalPlayerFrag());
                 }, false, KillSelfIcon);
 
 
@@ -644,30 +894,39 @@ namespace JoanpixerClient
                     else
                     {
                         Features.HighlightsComponent.ESPEnabled = false;
-                        Features.HighlightsComponent.ToggleESP(false);
+                        Features.HighlightsComponent.DisableESP();
                     }
                 }).SetToggleState(false, true);
-
-                new ToggleButton(Movement, "Noclip", null, null, (val) =>
+                if (!File.Exists(Environment.CurrentDirectory + "\\Mods\\AbyssLoader.dll"))
                 {
-                    if (val)
+                    Noclip = new ToggleButton(Movement, "Noclip", null, null, (val) =>
                     {
-                        FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = false;
-                        FlightMod.Flight.player = FlightMod.PlayerExtensions.LocalPlayer.gameObject;
-                        FlightMod.Flight.flying = true;
-                    }
-                    else
-                    {
-                        try
+                        if (val)
                         {
-                            FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = true;
-                            FlightMod.Flight.flying = false;
+                            FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>()
+                                .enabled = false;
+                            FlightMod.Flight.player = FlightMod.PlayerExtensions.LocalPlayer.gameObject;
+                            FlightMod.Flight.flying = true;
+                            NoclipOn = true;
                         }
-                        catch { }
-                    }
-                }).SetToggleState(false, true);
+                        else
+                        {
+                            try
+                            {
+                                FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>()
+                                    .enabled = true;
+                                FlightMod.Flight.flying = false;
+                                NoclipOn = false;
+                            }
+                            catch
+                            {
+                            }
+                        }
+                    });
+                    Noclip.SetToggleState(false, true);
+                }
 
-                new ToggleButton(Movement, "Speedhack", null, null, (val) =>
+                Speedhack = new ToggleButton(Movement, "Speedhack", null, null, (val) =>
                 {
                     if (val)
                     {
@@ -677,7 +936,9 @@ namespace JoanpixerClient
                     {
                         Features.Speedhack.speedEnabled = false;
                     }
-                }).SetToggleState(false, true);
+                });
+
+                Speedhack.SetToggleState(false, true);
 
                 new SimpleSingleButton(Movement, "Enable Jump", "Enables Jump in World", () =>
                 {
@@ -699,15 +960,53 @@ namespace JoanpixerClient
                     }
                     else
                     {
+                        JoanpixerMain.PickupESP = val;
                         Features.HighlightsComponent.PickupESP(false);
                     }
                 }).SetToggleState(false, true);
 
-                new JoanButtonAPI.Controls.Slider(mainmenu, "Speedhack Speed", null, (val) =>
+                new JoanpixerButtonAPI.Controls.Slider(mainmenu, "Speedhack Speed", null, (val) =>
                 {
                     Features.Speedhack.speedMultiplier = val;
-                }, 1, 20, 6);
+                    FlightMod.Flight.flySpeed = val;
+                }, 1, 20, 5);
             };
+        }
+
+        public static void OnUpdate()
+        {
+            if (!PatchManager.loggedin) return;
+            if (!File.Exists(Environment.CurrentDirectory + "\\Mods\\AbyssLoader"))
+            {
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyUp(KeyCode.F))
+                {
+                    if (NoclipOn)
+                    {
+                        Noclip.SetToggleState(false, true);
+                        NoclipOn = false;
+                    }
+                    else
+                    {
+                        Noclip.SetToggleState(true, true);
+                        NoclipOn = true;
+                    }
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyUp(KeyCode.X))
+            {
+                if (SpeedOn)
+                {
+                    Speedhack.SetToggleState(false, true);
+                    SpeedOn = false;
+                }
+                else
+                {
+                    Speedhack.SetToggleState(true, true);
+                    SpeedOn = true;
+                }
+            }
+
         }
     }
 }

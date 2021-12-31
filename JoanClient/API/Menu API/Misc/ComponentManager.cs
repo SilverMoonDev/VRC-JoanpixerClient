@@ -3,7 +3,7 @@ using System.Reflection;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
-namespace JoanButtonAPI.Misc
+namespace JoanpixerButtonAPI.Misc
 {
 	internal class ComponentManager : MelonLoaderEvents
 	{

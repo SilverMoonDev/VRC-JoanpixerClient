@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using VRC.SDKBase;
+using VRC.Udon;
 
 namespace JoanpixerClient.Features.Worlds
 {
@@ -18,5 +19,6 @@ namespace JoanpixerClient.Features.Worlds
         public static GameObject Beartrap = null;
         public static GameObject knife = null;
         public static GameObject smokebomb = null;
+        public static UdonBehaviour snakedispenser = null;
     }
 }

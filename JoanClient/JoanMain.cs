@@ -10,7 +10,12 @@ using JoanpixerClient.Modules;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
-using JoanButtonAPI.Misc;
+using Il2CppSystem.IO;
+using JoanpixerButtonAPI.Misc;
+using UnityEngine.UI;
+using VRC.UI.Elements.Tooltips;
+using Button = UnityEngine.UIElements.Button;
+
 
 [assembly: MelonInfo(typeof(JoanpixerClient.JoanpixerMain), "JoanpixerClient", "1.0.0", "Joanpixer")]
 [assembly: MelonGame("VRChat", "VRChat")]
@@ -40,8 +45,9 @@ namespace JoanpixerClient
             PatchManager.InitPatch();
             PatchManager.QuestIni();
             new Features.ForceInvite().Start();
+            JoanpixerButtonAPI.ButtonAPI.UseKeyboardOnlyForText = typeof(VRCInputManager).GetMethods().First(mi => mi.Name.StartsWith("Method_Public_Static_Void_Boolean_0") && mi.GetParameters().Count() == 1);
             ButtonImage = (Environment.CurrentDirectory + "\\Joanpixer\\MainMenu.png").LoadSpriteFromDisk();
-            MelonUtils.SetConsoleTitle("Joanpixer Client Alpha");
+            MelonUtils.SetConsoleTitle("Joanpixer Client");
             foreach (var eventListener in eventListeners)
             {
                 try
@@ -121,18 +127,6 @@ namespace JoanpixerClient
 
         public override void OnUpdate()
         {
-            // Speedhack.
-            if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyUp(KeyCode.X))
-            {
-                Features.Speedhack.Toggle();
-            }
-
-            /*
-            if (Input.GetAxis("Oculus_CrossPlatform_PrimaryHandTrigger") > 0.6f)
-            {
-                sendInput.Mouse.RightButtonClick();
-            }
-            */
             if (Time.time > OnUpdateRoutineDelay && VRCUtils.IsWorldLoaded)
             {
                 OnUpdateRoutineDelay = Time.time + 5f;
@@ -144,10 +138,13 @@ namespace JoanpixerClient
                 }
             }
             Features.Speedhack.Main();
-            FlightMod.Flight.OnUpdate();
+            if (!File.Exists(Environment.CurrentDirectory + "\\Mods\\AbyssLoader"))
+            {
+                FlightMod.Flight.OnUpdate();
+            }
             Features.ThirdPersonComponent.OnUpdate();
+            MenuUi.OnUpdate();
         }
-
 
         public override void OnApplicationQuit()
         {

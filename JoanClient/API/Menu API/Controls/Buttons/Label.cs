@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MelonLoader;
-using JoanButtonAPI.Controls.Grouping;
-using JoanButtonAPI.Misc;
-using JoanButtonAPI.Pages;
+using JoanpixerButtonAPI.Controls.Grouping;
+using JoanpixerButtonAPI.Misc;
+using JoanpixerButtonAPI.Pages;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Core.Styles;
 
-namespace JoanButtonAPI.Controls
+namespace JoanpixerButtonAPI.Controls
 {
     public class Label
     {
@@ -22,7 +22,7 @@ namespace JoanButtonAPI.Controls
         {
             LabelButton = new SimpleSingleButton(parent, text, tooltip, onClick);
 
-            LabelButton.gameObject.transform.Find("Background").GetOrAddComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
+            LabelButton.buttonBackground.color = new Color(0f, 0f, 0f, 0f);
 
             if (onClick == null)
             {

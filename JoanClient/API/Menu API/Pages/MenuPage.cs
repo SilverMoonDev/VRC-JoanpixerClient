@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using MelonLoader;
-using JoanButtonAPI.Misc;
+using JoanpixerButtonAPI.Misc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +11,7 @@ using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
 using Object = UnityEngine.Object;
 
-namespace JoanButtonAPI.Pages
+namespace JoanpixerButtonAPI.Pages
 {
     public class MenuPage
     {

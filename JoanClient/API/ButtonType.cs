@@ -4,7 +4,8 @@
     {
         PlaylistButton,
         AvatarFavButton,
-        ReportButton
+        ReportButton,
+        WorldIfoButton
     }
     enum MenuType
     {

@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Linq;
 using MelonLoader;
-using JoanButtonAPI.Misc;
-using JoanButtonAPI.Pages;
+using JoanpixerButtonAPI.Misc;
+using JoanpixerButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,12 +11,10 @@ using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using Object = UnityEngine.Object;
 
-namespace JoanButtonAPI.Controls.Grouping
+namespace JoanpixerButtonAPI.Controls.Grouping
 {
     public class CollapsibleButtonGroup
     {
-        public readonly TextMeshProUGUI foldoutButtonObjectText;
-
         public readonly ButtonGroup buttonGroup;
 
         public readonly SingleButton mainButtonObject;
@@ -92,14 +90,8 @@ namespace JoanButtonAPI.Controls.Grouping
         {
         }
 
-        public void SetText(string newText)
-        {
-            foldoutButtonObjectText.text = newText;
-        }
-
         public void Destroy()
         {
-            Object.Destroy(foldoutButtonObjectText.gameObject);
             Object.Destroy(buttonGroup.gameObject);
         }
 

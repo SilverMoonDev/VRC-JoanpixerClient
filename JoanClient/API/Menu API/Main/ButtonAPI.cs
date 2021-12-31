@@ -1,17 +1,24 @@
 using MelonLoader;
-using JoanButtonAPI.Misc;
+using JoanpixerButtonAPI.Misc;
 using System;
 using System.Collections;
 using System.Linq;
+using System.Reflection;
+using JoanpixerClient.API;
+using JoanpixerClient.Utility;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Elements;
+using VRC.SDKBase;
+using VRC.UI;
 
-namespace JoanButtonAPI
+namespace JoanpixerButtonAPI
 {
     public class ButtonAPI : MelonLoaderEvents
     {
         public static GameObject singleButtonBase;
+
+        public static MethodInfo UseKeyboardOnlyForText;
 
         public static GameObject toggleButtonBase;
 
@@ -65,6 +72,11 @@ namespace JoanButtonAPI
 
             buttonGroupHeaderBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Dashboard/ScrollRect/Viewport/VerticalLayoutGroup/Header_QuickActions").gameObject;
 
+            new MenuButton(MenuType.WorldInfoMenu, MenuButtonType.WorldIfoButton, "Custom Tag", 548, -190, () =>
+            {
+                CreateTextPopup();
+            });
+
             menuPageBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Dashboard").gameObject;
 
             menuTabBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings").gameObject;
@@ -81,6 +93,19 @@ namespace JoanButtonAPI
             OnInit?.Invoke();
 
             HasInit = true;
+        }
+
+        private static void CreateTextPopup()
+        {
+            UseKeyboardOnlyForText.Invoke(null, new object[] { true });
+
+            BuiltinUiUtils.ShowInputPopup("Joanpixer Client", null, InputField.InputType.Standard, false, "Join", (message, _, _2) =>
+            {
+                UseKeyboardOnlyForText.Invoke(null, new object[] { false });
+                var world = GameObject.Find("UserInterface/MenuContent/Screens/WorldInfo").GetComponent<PageWorldInfo>().prop_ApiWorld_0.id;
+                Networking.GoToRoom(world + ":" + message + "~region(eu)");
+            }, () => { UseKeyboardOnlyForText.Invoke(null, new object[] { false }); }, "Custom Tag:", true, null, false, 16);
+
         }
 
         public static event Action OnInit;

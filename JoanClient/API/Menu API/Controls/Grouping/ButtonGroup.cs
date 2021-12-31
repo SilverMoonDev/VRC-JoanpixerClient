@@ -1,18 +1,16 @@
 using MelonLoader;
-using JoanButtonAPI.Misc;
-using JoanButtonAPI.Pages;
+using JoanpixerButtonAPI.Misc;
+using JoanpixerButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace JoanButtonAPI.Controls.Grouping
+namespace JoanpixerButtonAPI.Controls.Grouping
 {
-    public class ButtonGroup
+    public class ButtonGroup : Base_Classes.GenericControl
     {
         public readonly TextMeshProUGUI headerText;
-
-        public readonly GameObject gameObject;
 
         public readonly GameObject headerGameObject;
 
@@ -34,6 +32,7 @@ namespace JoanButtonAPI.Controls.Grouping
 
             gameObject = Object.Instantiate(ButtonAPI.buttonGroupBase, parent);
             gameObject.transform.DestroyChildren();
+
             gameObject.GetOrAddComponent<GridLayoutGroup>().childAlignment = ButtonAlignment;
             parentMenuMask = parent.parent.GetOrAddComponent<RectMask2D>();
 
@@ -60,26 +59,6 @@ namespace JoanButtonAPI.Controls.Grouping
             {
                 headerText.text = newText;
             }
-        }
-
-        public void Destroy()
-        {
-            if (!WasNoText)
-            {
-                Object.Destroy(headerText.gameObject);
-            }
-
-            Object.Destroy(gameObject);
-        }
-
-        public void SetActive(bool state)
-        {
-            if (!WasNoText && headerGameObject != null)
-            {
-                headerGameObject.SetActive(state);
-            }
-
-            gameObject.SetActive(state);
         }
     }
 }

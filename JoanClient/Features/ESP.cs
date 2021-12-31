@@ -11,16 +11,17 @@ namespace JoanpixerClient.Features
         public static bool ESPEnabled = false;
         private static HighlightsFXStandalone _friendsHighlights;
         private static HighlightsFXStandalone _othersHighlights;
-        private static HighlightsFXStandalone _pickupHighlights;
+        private static HighlightsFXStandalone _murdererHighlights;
         private static HighlightsFXStandalone GetHighlightsFX(APIUser apiUser)
         {
             if (APIUser.IsFriendsWith(apiUser.id) && Worlds.Murder4.worldLoaded && Worlds.Murder4.MurderText.GetComponent<Text>().text == apiUser.displayName)
-                return _pickupHighlights;
+                return _murdererHighlights;
             else if (APIUser.IsFriendsWith(apiUser.id))
                 return _friendsHighlights;
-            if (Worlds.Murder4.worldLoaded)
-                if (Worlds.Murder4.MurderText.GetComponent<Text>().text == apiUser.displayName)
-                    return _pickupHighlights;
+            if (Worlds.Murder4.worldLoaded && Worlds.Murder4.MurderText.GetComponent<Text>().text.Contains(apiUser.displayName))
+                return _murdererHighlights;
+            if (Worlds.Murder3.worldLoaded && Worlds.Murder3.MurderText.GetComponent<Text>().text.Contains(apiUser.displayName))
+                return _murdererHighlights;
             return _othersHighlights;
         }
 
@@ -32,15 +33,15 @@ namespace JoanpixerClient.Features
             _friendsHighlights.highlightColor = Color.green;
             _othersHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
             _othersHighlights.highlightColor = Color.magenta;
-            _pickupHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
-            _pickupHighlights.highlightColor = Color.red;
+            _murdererHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _murdererHighlights.highlightColor = Color.red;
         }
         public static void ToggleESP(bool enabled)
         {
             var playerManager = PlayerManager.field_Private_Static_PlayerManager_0;
             if (playerManager == null)
                 return;
-
+            _murdererHighlights.highlightColor = Color.red;
             foreach (var player in Utils.GetAllPlayers())
             {
                 HighlightPlayer(player, enabled);
@@ -70,7 +71,7 @@ namespace JoanpixerClient.Features
 
             _othersHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
             _friendsHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
-            _pickupHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
+            _murdererHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
         }
 
         public static void HighlightPlayer(Player player, bool highlighted)
@@ -81,7 +82,7 @@ namespace JoanpixerClient.Features
             var selectRegion = player.transform.Find("SelectRegion");
             if (selectRegion == null)
                 return;
-
+            _murdererHighlights.highlightColor = Color.red;
             GetHighlightsFX(player.field_Private_APIUser_0).Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), highlighted);
         }
 

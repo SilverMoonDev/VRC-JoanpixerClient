@@ -103,6 +103,7 @@ namespace JoanpixerClient.FoldersManager
                 File.Create("Joanpixer\\Config.ini");
                 Ini = new IniFile("Joanpixer\\Config.ini");
                 Ini.SetBool("Toggles", "QuestSpoof", false);
+                Ini.SetBool("Toggles", "AntiBlock", false);
             }
             else
             {

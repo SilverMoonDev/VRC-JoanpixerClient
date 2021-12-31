@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
 
-namespace JoanButtonAPI.Misc
+namespace JoanpixerButtonAPI.Misc
 {
     public static class Extensions
 	{
