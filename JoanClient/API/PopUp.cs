@@ -2,7 +2,6 @@
 using Il2CppSystem.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using VRC.SDKBase;
 
 namespace JoanpixerClient.API
 {

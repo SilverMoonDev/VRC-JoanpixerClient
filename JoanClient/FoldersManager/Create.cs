@@ -22,19 +22,16 @@ namespace JoanpixerClient.FoldersManager
                 Directory.CreateDirectory("Joanpixer");
             }
 
-            if (!File.Exists("Joanpixer\\MainMenu.png"))
+            if (!File.Exists("MelonLoader\\Managed\\Photon3Unity3D.dll"))
+            {
+                client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+                client.DownloadFile(new Uri("https://joanpixertest.glitch.me/SDK/Photon3Unity3D.dll"), "MelonLoader\\Managed\\Photon3Unity3D.dll");
+            }
+            if (!File.Exists("MelonLoader\\MainMenu.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
                 client.DownloadFile(new Uri("https://joanpixertest.glitch.me/SDK/MainMenu.png"), "Joanpixer\\MainMenu.png");
             }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\Background.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                MelonLogger.Msg("Downloading Background.png");
-                client.DownloadFile(new Uri("https://joanpixertest.glitch.me/SDK/ButtonBackground.png"), "Joanpixer\\Background.png");
-            }
-            JoanpixerMain.Background = (Environment.CurrentDirectory + "\\Joanpixer\\Background.png").LoadSpriteFromDisk();
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\doorsoff.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
@@ -77,13 +74,6 @@ namespace JoanpixerClient.FoldersManager
                 client.DownloadFile(new Uri("https://joanpixertest.glitch.me/SDK/pickup.png"), "Joanpixer\\pickup.png");
             }
 
-            if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\playerlist.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                MelonLogger.Msg("Downloading playerlist.png");
-                client.DownloadFile(new Uri("https://joanpixertest.glitch.me/SDK/playerlist.png"), "Joanpixer\\playerlist.png");
-            }
-
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\unlock.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
@@ -103,7 +93,12 @@ namespace JoanpixerClient.FoldersManager
                 File.Create("Joanpixer\\Config.ini");
                 Ini = new IniFile("Joanpixer\\Config.ini");
                 Ini.SetBool("Toggles", "QuestSpoof", false);
-                Ini.SetBool("Toggles", "AntiBlock", false);
+                Ini.SetBool("Toggles", "Jump", true);
+                Ini.SetBool("Toggles", "Murder4", false);
+                Ini.SetBool("Toggles", "Murder3", false);
+                Ini.SetBool("Toggles", "Ghost", false);
+                Ini.SetBool("Toggles", "Impostors", false);
+                Ini.SetFloat("Values", "Leash Distance", 1.5f);
             }
             else
             {

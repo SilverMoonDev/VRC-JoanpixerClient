@@ -1,7 +1,5 @@
 ﻿using System;
 using MelonLoader;
-using UnityEngine;
-using VRC.Core;
 using VRC.SDKBase;
 
 namespace JoanpixerClient.Features

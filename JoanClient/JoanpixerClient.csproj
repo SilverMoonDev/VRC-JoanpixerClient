@@ -64,12 +64,15 @@
     <Compile Include="Extensions\Utils.cs" />
     <Compile Include="Features\ESP.cs" />
     <Compile Include="Features\ForceInvite.cs" />
+    <Compile Include="Features\InfiniteJump.cs" />
     <Compile Include="Features\Noclip.cs" />
     <Compile Include="Features\Speedhack.cs" />
     <Compile Include="Features\ThirdPerson.cs" />
-    <Compile Include="Features\Worlds\Murder4\Murder 3.cs" />
-    <Compile Include="Features\Worlds\Murder4\Murder4 Items.cs" />
-    <Compile Include="Features\Worlds\Murder4\Murder4.cs" />
+    <Compile Include="Features\Worlds\AmongUs.cs" />
+    <Compile Include="Features\Worlds\Murder\Murder 3.cs" />
+    <Compile Include="Features\Worlds\Ghost.cs" />
+    <Compile Include="Features\Worlds\Murder\Murder Items.cs" />
+    <Compile Include="Features\Worlds\Murder\Murder4.cs" />
     <Compile Include="FoldersManager\Create.cs" />
     <Compile Include="JoanMain.cs" />
     <Compile Include="MenuUi.cs" />
@@ -77,7 +80,6 @@
     <Compile Include="Modules\Items.cs" />
     <Compile Include="Modules\Listener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reflections.cs" />
     <Compile Include="Udon.cs" />
     <Compile Include="Wrappers\PatchManager.cs" />
   </ItemGroup>
@@ -110,7 +112,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>References\MelonLoader.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\MelonLoader.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

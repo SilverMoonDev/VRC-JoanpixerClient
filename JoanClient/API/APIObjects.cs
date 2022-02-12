@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using VRC.Core;
 
 namespace JoanpixerClient.Api.Object
