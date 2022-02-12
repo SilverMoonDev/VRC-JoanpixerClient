@@ -136,7 +136,7 @@ namespace JoanpixerClient
         public override void OnUpdate()
         {
 
-            if (Input.GetKeyUp(KeyCode.K))
+            if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.type == VRC.Core.InstanceAccessType.InvitePlus && Input.GetKeyUp(KeyCode.K) || RoomManager.field_Internal_Static_ApiWorldInstance_0?.type == VRC.Core.InstanceAccessType.InviteOnly && Input.GetKeyUp(KeyCode.K))
             {
                 var uwu = Utils.CurrentUser.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh.blendShapeCount;
                 for (int i = 0; i < uwu; i++)
