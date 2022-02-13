@@ -66,7 +66,7 @@ namespace JoanpixerClient.Features.Worlds
 
         public static IEnumerator ShowGhosts()
         {
-            yield return new WaitForSeconds(16);
+            yield return new WaitForSeconds(21);
             try
             {
                 foreach (var UpdateGhost in Resources.FindObjectsOfTypeAll<UdonBehaviour>())

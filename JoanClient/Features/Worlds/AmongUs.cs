@@ -51,12 +51,5 @@ namespace JoanpixerClient.Features.Worlds
         {   
             Udon.CallUdonEvent(gameLogic, eventName);
         }
-
-        /// Available UDON events:
-        /// GetLocalPlayerNode
-        /// SyncTrySabotageLights
-        /// SyncBodyFound
-        /// SyncRepairComms
-        /// SyncRepairOxygenB
     }
 }
