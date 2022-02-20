@@ -68,6 +68,7 @@
     <Compile Include="Features\Noclip.cs" />
     <Compile Include="Features\Speedhack.cs" />
     <Compile Include="Features\ThirdPerson.cs" />
+    <Compile Include="Features\VRCA.cs" />
     <Compile Include="Features\Worlds\AmongUs.cs" />
     <Compile Include="Features\Worlds\Murder\Murder 3.cs" />
     <Compile Include="Features\Worlds\Ghost.cs" />
@@ -125,6 +126,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="Transmtn">

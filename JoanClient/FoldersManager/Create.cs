@@ -21,17 +21,18 @@ namespace JoanpixerClient.FoldersManager
             {
                 Directory.CreateDirectory("Joanpixer");
             }
+            if (!Directory.Exists("Joanpixer\\VRCA"))
+            {
+                Directory.CreateDirectory("Joanpixer\\VRCA");
+            }
 
             if (!File.Exists("MelonLoader\\Managed\\Photon3Unity3D.dll"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
                 client.DownloadFile(new Uri("https://joanpixertest.glitch.me/SDK/Photon3Unity3D.dll"), "MelonLoader\\Managed\\Photon3Unity3D.dll");
             }
-            if (!File.Exists("MelonLoader\\MainMenu.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                client.DownloadFile(new Uri("https://joanpixertest.glitch.me/SDK/MainMenu.png"), "Joanpixer\\MainMenu.png");
-            }
+            client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+            client.DownloadFile(new Uri("https://joanpixertest.glitch.me/SDK/MainMenu.png"), "Joanpixer\\MainMenu.png");
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\doorsoff.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");

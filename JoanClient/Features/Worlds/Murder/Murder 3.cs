@@ -233,7 +233,7 @@ namespace JoanpixerClient.Features.Worlds
             while (revolverspam)
             {
                 CallRevolver("Fire");
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0);
             }
         }
 

@@ -1,6 +1,6 @@
 namespace JoanpixerButtonAPI.Misc
 {
-    public class MelonLoaderEvents
+	public class MelonLoaderEvents
 	{
 		public virtual void OnApplicationStart()
 		{

@@ -136,7 +136,7 @@ namespace JoanpixerClient.Features.Worlds
         {
             while (doorlock)
             {
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(1);
                 foreach (var door in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                 {
                     if (door.gameObject.name.Contains("Door ("))
@@ -317,7 +317,7 @@ namespace JoanpixerClient.Features.Worlds
             while (revolverspam)
             {
                 CallRevolver("Fire");
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.4f);
             }
         }
 

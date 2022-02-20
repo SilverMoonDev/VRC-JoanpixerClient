@@ -206,34 +206,46 @@ namespace JoanpixerClient
                 new SimpleSingleButton(Murder4QuickMenuButtons, "Kill Knife", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    var player = selectedplayer;
-                    MelonCoroutines.Start(Murder4.KillSelectedPlayerKnife(player));
-                    MelonCoroutines.Stop(Murder4.KillSelectedPlayerKnife(player));
+                    try
+                    {
+                        var player = selectedplayer;
+                        MelonCoroutines.Start(Murder4.KillSelectedPlayerKnife(player));
+                        MelonCoroutines.Stop(Murder4.KillSelectedPlayerKnife(player));
+                    }
+                    catch{}
                 });
 
                 new SimpleSingleButton(Murder4QuickMenuButtons, "Kill Frag", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    MelonCoroutines.Start(Murder4.KillSelectedPlayerFrag(selectedplayer));
-                    MelonCoroutines.Stop(Murder4.KillSelectedPlayerFrag(selectedplayer));
+                    try
+                    {
+                        MelonCoroutines.Start(Murder4.KillSelectedPlayerFrag(selectedplayer));
+                        MelonCoroutines.Stop(Murder4.KillSelectedPlayerFrag(selectedplayer));
+                    }
+                    catch{}
                 });
 
                 new ToggleButton(Murder4QuickMenuButtons, "Give Patreon", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    if (val)
+                    try
                     {
-                        Murder4.givepatreon = true;
-                        MelonCoroutines.Start(Murder4.GivePatreonTarget(selectedplayer));
+                        if (val)
+                        {
+                            Murder4.givepatreon = true;
+                            MelonCoroutines.Start(Murder4.GivePatreonTarget(selectedplayer));
+                        }
+                        else
+                        {
+                            Player player = null;
+                            Murder4.givepatreon = false;
+                            MelonCoroutines.Stop(Murder4.GivePatreonTarget(player));
+                            Murder4.CallRevolver("NonPatronSkin");
+                        }
                     }
-                    else
-                    {
-                        Player player = null;
-                        Murder4.givepatreon = false;
-                        MelonCoroutines.Stop(Murder4.GivePatreonTarget(player));
-                        Murder4.CallRevolver("NonPatronSkin");
-                    }
-                }).SetToggleState(false, true);
+                    catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(Murder4QuickMenuButtons, "Auto Kill", null, null, (val) =>
                 {
@@ -245,9 +257,9 @@ namespace JoanpixerClient
                     }
                     else
                     {
-                        PatchManager.player = null;
+                       PatchManager.player = null;
                     }
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 #endregion
 
@@ -305,34 +317,45 @@ namespace JoanpixerClient
                 new SimpleSingleButton(Murder3QuickMenuButtons, "Kill Knife", null, () =>
                 {
                     if (!Murder3.worldLoaded) return;
-                    var player = selectedplayer;
-                    MelonCoroutines.Start(Murder3.KillSelectedPlayerKnife(player));
-                    MelonCoroutines.Stop(Murder3.KillSelectedPlayerKnife(player));
+                    try
+                    {
+                        var player = selectedplayer;
+                        MelonCoroutines.Start(Murder3.KillSelectedPlayerKnife(player));
+                        MelonCoroutines.Stop(Murder3.KillSelectedPlayerKnife(player));
+                    }
+                    catch{}
                 });
 
                 new SimpleSingleButton(Murder3QuickMenuButtons, "Kill Frag", null, () =>
                 {
                     if (!Murder3.worldLoaded) return;
-                    MelonCoroutines.Start(Murder3.KillSelectedPlayerFrag(selectedplayer));
-                    MelonCoroutines.Stop(Murder3.KillSelectedPlayerFrag(selectedplayer));
+                    try
+                    {
+                        MelonCoroutines.Start(Murder3.KillSelectedPlayerFrag(selectedplayer));
+                        MelonCoroutines.Stop(Murder3.KillSelectedPlayerFrag(selectedplayer));
+                    }
+                    catch{}
                 });
 
                 new ToggleButton(Murder3QuickMenuButtons, "Give Patreon", null, null, (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
-                    if (val)
+                    try
                     {
-                        Murder3.givepatreon = true;
-                        MelonCoroutines.Start(Murder3.GivePatreonTarget(selectedplayer));
-                    }
-                    else
-                    {
-                        Player player = null;
-                        Murder3.givepatreon = false;
-                        MelonCoroutines.Stop(Murder3.GivePatreonTarget(player));
-                        Murder3.CallRevolver("NonPatronSkin");
-                    }
-                }).SetToggleState(false, true);
+                        if (val)
+                        {
+                            Murder3.givepatreon = true;
+                            MelonCoroutines.Start(Murder3.GivePatreonTarget(selectedplayer));
+                        }
+                        else
+                        {
+                            Player player = null;
+                            Murder3.givepatreon = false;
+                            MelonCoroutines.Stop(Murder3.GivePatreonTarget(player));
+                            Murder3.CallRevolver("NonPatronSkin");
+                        }
+                    }catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(Murder3QuickMenuButtons, "Auto Kill", null, null, (val) =>
                 {
@@ -346,7 +369,7 @@ namespace JoanpixerClient
                     {
                         PatchManager.player = null;
                     }
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 #endregion
 
@@ -401,6 +424,12 @@ namespace JoanpixerClient
                 LeashValue = new SimpleSingleButton(LeashConfigButtons, $"Current Value:\n {Create.Ini.GetFloat("Values", "Leash Distance")}", null, () => {});
 
                 LeashValue.SetInteractable(false);
+
+                new SimpleSingleButton(quickmenuplayeroptions, "Download VRCA", null, () =>
+                {
+                    Features.VRCA.DownloadVRCA(selectedplayer.prop_ApiAvatar_0);
+                });
+
                 #endregion
 
                 #endregion
@@ -463,8 +492,12 @@ namespace JoanpixerClient
                 new SimpleSingleButton(endingbuttons, "Bystanders Win", "Forces Bystanders to win", () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    MelonCoroutines.Start(Murder4.BWin());
-                    MelonCoroutines.Stop(Murder4.BWin());
+                    try
+                    {
+                        MelonCoroutines.Start(Murder4.BWin());
+                        MelonCoroutines.Stop(Murder4.BWin());
+                    }
+                    catch{}
                 });
 
                 new SimpleSingleButton(endingbuttons, "Murderer Win", "Forces Murderer to win", () =>
@@ -492,7 +525,7 @@ namespace JoanpixerClient
                     {
                         Murder4.doors.SetActive(true);
                     }
-                }, DoorsOffIcon, null).SetToggleState(false, true);
+                }, DoorsOffIcon, null).SetToggleState(false, false);
 
                 new SimpleSingleButton(Murder4Buttons, "Lights On", "Turns Lights On", () =>
                 {
@@ -509,108 +542,138 @@ namespace JoanpixerClient
                 new ToggleButton(annoybuttons, "Lock Doors", "Enable Door Lock", "Disable Door Lock", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Murder4.doorlock = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder4.LockDoors());
+                        Murder4.doorlock = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder4.LockDoors());
+                        }
+                        else
+                        {
+                            MelonCoroutines.Stop(Murder4.LockDoors());
+                        }
                     }
-                    else
-                    {
-                        MelonCoroutines.Stop(Murder4.LockDoors());
-                    }
-                }).SetToggleState(false, true);
+                    catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(annoybuttons, "Lock Drawers", "Enable Drawers Lock", "Disable Drawers Lock", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Murder4.lockdrawers = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder4.LockDrawers());
+                        Murder4.lockdrawers = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder4.LockDrawers());
+                        }
+                        else
+                        {
+                            MelonCoroutines.Stop(Murder4.LockDrawers());
+                        }
                     }
-                    else
-                    {
-                        MelonCoroutines.Stop(Murder4.LockDrawers());
-                    }
-                }).SetToggleState(false, true);
+                    catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(annoybuttons, "Spam Revolver", "Enable Revolver Spam", "Disable Revolver Spam", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Murder4.revolverspam = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder4.Fire());
+                        Murder4.revolverspam = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder4.Fire());
+                        }
+                        else
+                        {
+                            MelonCoroutines.Stop(Murder4.Fire());
+                        }
                     }
-                    else
-                    {
-                        MelonCoroutines.Stop(Murder4.Fire());
-                    }
-                }).SetToggleState(false, true);
+                    catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(annoybuttons, "Lights Off", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Murder4.lightsoff = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder4.TurnLightsOff());
+                        Murder4.lightsoff = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder4.TurnLightsOff());
+                        }
+                        else
+                        {
+                            MelonCoroutines.Stop(Murder4.TurnLightsOff());
+                        }
                     }
-                    else
-                    {
-                        MelonCoroutines.Stop(Murder4.TurnLightsOff());
-                    }
-                }).SetToggleState(false, true);
+                    catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(annoybuttons, "Spam sounds", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Murder4.spamsounds = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder4.SpamSounds(0));
+                        Murder4.spamsounds = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder4.SpamSounds(0));
+                        }
+                        else
+                        {
+                            MelonCoroutines.Stop(Murder4.SpamSounds(0));
+                        }
                     }
-                    else
-                    {
-                        MelonCoroutines.Stop(Murder4.SpamSounds(0));
-                    }
-                }).SetToggleState(false, true);
+                    catch{}
+                }).SetToggleState(false, false);
 
                 #endregion
 
                 new ToggleButton(Murder4Buttons, "Patreon Self", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Murder4.patreonself = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder4.GivePatreonSelf());
+                        Murder4.patreonself = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder4.GivePatreonSelf());
+                        }
+                        else
+                        {
+                            MelonCoroutines.Stop(Murder4.GivePatreonSelf());
+                            Murder4.CallRevolver("NonPatronSkin");
+                        }
                     }
-                    else
-                    {
-                        MelonCoroutines.Stop(Murder4.GivePatreonSelf());
-                        Murder4.CallRevolver("NonPatronSkin");
-                    }
-                }).SetToggleState(false, true);
+                    catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(Murder4Buttons, "Pickup Beartraps", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Murder4.pickupweapontoggle = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder4.PickupBearTraps());
-                        MelonCoroutines.Stop(Murder4.PickupBearTraps());
+                        Murder4.pickupweapontoggle = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder4.PickupBearTraps());
+                            MelonCoroutines.Stop(Murder4.PickupBearTraps());
+                        }
+                        else
+                        {
+                            Murder4.DisablePickupBearTraps();
+                        }
                     }
-                    else
-                    {
-                        Murder4.DisablePickupBearTraps();
-                    }
-                }).SetToggleState(false, true);
+                    catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(Murder4Buttons, "Pickup Weapon in Cooldown", "Allows you to pickup every weapon that's in cooldown", "Allows you to pickup every weapon that's in cooldown", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
+                    try
+                    {
                     Murder4.pickupweapontoggle = val;
                     if (val)
                     {
@@ -620,7 +683,9 @@ namespace JoanpixerClient
                     {
                         MelonCoroutines.Stop(Murder4.PickupWeaponInCooldown());
                     }
-                }).SetToggleState(false, true);
+                    }
+                    catch{}
+                }).SetToggleState(false, false);
 
                 #region Teleports
 
@@ -735,12 +800,12 @@ namespace JoanpixerClient
                             }
                         }
                     }
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 new ToggleButton(Murder4Buttons, "Auto TP Detective", "TP to Detective Room when the game starts", "TP to Detective Room when the game starts", (val) =>
                 {
                     PatchManager.TPDetective = val;
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 new ToggleButton(Murder4Buttons, "Revolver Laser Sight", "Toggles Laser Sight", "Toggles Laser Sight", (val) =>
                 {
@@ -779,8 +844,12 @@ namespace JoanpixerClient
                 new SimpleSingleButton(Murder3Buttons, "Bystanders Win", "Forces Bystanders to win", () =>
                 {
                     if (!Murder3.worldLoaded) return;
-                    MelonCoroutines.Start(Murder3.BWin());
-                    MelonCoroutines.Stop(Murder3.BWin());
+                    try
+                    {
+                        MelonCoroutines.Start(Murder3.BWin());
+                        MelonCoroutines.Stop(Murder3.BWin());
+                    }
+                    catch{}
                 });
 
                 new SimpleSingleButton(Murder3Buttons, "Murderer Win", "Forces Murderer to win", () =>
@@ -804,76 +873,94 @@ namespace JoanpixerClient
                 new ToggleButton(annoy3buttons, "Spam Revolver", "Enable Revolver Spam", "Disable Revolver Spam", (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
-                    Murder3.revolverspam = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder3.Fire());
+                        Murder3.revolverspam = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder3.Fire());
+                        }
+                        else
+                        {
+                            MelonCoroutines.Stop(Murder3.Fire());
+                        }
                     }
-                    else
-                    {
-                        MelonCoroutines.Stop(Murder3.Fire());
-                    }
-                }).SetToggleState(false, true);
+                    catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(annoy3buttons, "Spam sounds", null, null, (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
-                    Murder3.spamsounds = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder3.SpamSounds(0));
+                        Murder3.spamsounds = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder3.SpamSounds(0));
+                        }
+                        else
+                        {
+                            MelonCoroutines.Stop(Murder3.SpamSounds(0));
+                        }
                     }
-                    else
-                    {
-                        MelonCoroutines.Stop(Murder3.SpamSounds(0));
-                    }
-                }).SetToggleState(false, true);
+                    catch{}
+                }).SetToggleState(false, false);
 
                 #endregion
 
                 new ToggleButton(Murder3Buttons, "Patreon Self", null, null, (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
-                    Murder3.patreonself = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder3.GivePatreonSelf());
+                        Murder3.patreonself = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder3.GivePatreonSelf());
+                        }
+                        else
+                        {
+                            MelonCoroutines.Stop(Murder3.GivePatreonSelf());
+                            Murder3.CallRevolver("NonPatronSkin");
+                        }
                     }
-                    else
-                    {
-                        MelonCoroutines.Stop(Murder3.GivePatreonSelf());
-                        Murder3.CallRevolver("NonPatronSkin");
-                    }
-                }).SetToggleState(false, true);
+                    catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(Murder3Buttons, "Pickup Beartraps", null, null, (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
-                    Murder3.pickupweapontoggle = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder3.PickupBearTraps());
-                        MelonCoroutines.Stop(Murder3.PickupBearTraps());
-                    }
-                    else
-                    {
-                        Murder3.DisablePickupBearTraps();
-                    }
-                }).SetToggleState(false, true);
+                        Murder3.pickupweapontoggle = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder3.PickupBearTraps());
+                            MelonCoroutines.Stop(Murder3.PickupBearTraps());
+                        }
+                        else
+                        {
+                            Murder3.DisablePickupBearTraps();
+                        }
+                    }catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(Murder3Buttons, "Pickup Weapon in Cooldown", "Allows you to pickup every weapon that's in cooldown", "Allows you to pickup every weapon that's in cooldown", (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
-                    Murder3.pickupweapontoggle = val;
-                    if (val)
+                    try
                     {
-                        MelonCoroutines.Start(Murder3.PickupWeaponInCooldown());
-                    }
-                    else
-                    {
-                        MelonCoroutines.Stop(Murder3.PickupWeaponInCooldown());
-                    }
-                }).SetToggleState(false, true);
+                        Murder3.pickupweapontoggle = val;
+                        if (val)
+                        {
+                            MelonCoroutines.Start(Murder3.PickupWeaponInCooldown());
+                        }
+                        else
+                        {
+                            MelonCoroutines.Stop(Murder3.PickupWeaponInCooldown());
+                        }
+                    }catch{}
+                }).SetToggleState(false, false);
 
                 new ToggleButton(Murder3Buttons, "Clues ESP", null, null, (val) =>
                 {
@@ -889,12 +976,12 @@ namespace JoanpixerClient
                             }
                         }
                     }
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 new ToggleButton(Murder3Buttons, "Auto TP Detective", "TP to Detective Room when the game starts", "TP to Detective Room when the game starts", (val) =>
                 {
                     PatchManager.TPDetective = val;
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 #endregion
 
@@ -927,7 +1014,7 @@ namespace JoanpixerClient
                 new ToggleButton(GhostButtons, "ESP", null, null, (val) =>
                 {
                     Ghost.ESPToggle(val);
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 #region Fun
                 new SimpleSingleButton(GhostButtons, "Fun", "Fun Functions", () =>
@@ -1147,12 +1234,12 @@ namespace JoanpixerClient
                 new ToggleButton(ProtectionsButtons, "Anti Udon", "Blocks Every Udon Event", "Blocks Every Udon Event", (val) =>
                 {
                     PatchManager.AntiUdon = val;
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 new ToggleButton(ProtectionsButtons, "Portal Walktrough", "Allows you to walk trough Portals", "Allows you to walk trough Portals", (val) =>
                 {
                     PatchManager.PortalWalk = val;
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 QuestSpoofOn = new ToggleButton(ProtectionsButtons, "Quest Spoof", "Enable Quest Spoof (requires restart!)", "Disable Quest Spoof (requires restart!)", (val) => 
                 { 
@@ -1164,17 +1251,17 @@ namespace JoanpixerClient
                 new ToggleButton(ProtectionsButtons, "Log Udon", "Logs all Udon Events onto the MLConsole", "Logs all Udon Events onto the MLConsole", (val) =>
                 {
                     PatchManager.LogUdon = val;
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 new ToggleButton(ProtectionsButtons, "Log Cheaters", "Logs all client users abusing udon events onto the MLConsole", "Logs all client users abusing udon events onto the MLConsole", (val) =>
                 {
                     PatchManager.LogCheaters = val;
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 new ToggleButton(ProtectionsButtons, "Log Cheaters Audio", "Plays an Audio every time a log is triggered", "Plays an Audio every time a log is triggered", (val) =>
                 {
                     PatchManager.playsound = val;
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 new ToggleButton(ProtectionsButtons, "Serialize", "Freezes you for everyone", "Freezes you for everyone", (val) =>
                 {
@@ -1194,20 +1281,21 @@ namespace JoanpixerClient
                     Pickups.OpenMenu();
                 }, false, PickupsIcon);
 
-                new ToggleButton(PickupsButtons, "Auto Drop", "Auto Drop all the Pickups", "Auto Drop all the Pickups",
-                    (val) =>
+                new ToggleButton(PickupsButtons, "Auto Drop", "Drop Pickups for everyone", "Drop Pickups for everyone", (val) =>
                     {
-                        if (val)
+                        try
                         {
-                            Items.AutoDropToggle = val;
-                            MelonCoroutines.Start(Items.AutoDrop());
+                            if (val)
+                            {
+                                MelonCoroutines.Start(Items.AutoDrop());
+                            }
+                            else
+                            {
+                                MelonCoroutines.Stop(Items.AutoDrop());
+                            }
                         }
-                        else
-                        {
-                            Items.AutoDropToggle = val;
-                            MelonCoroutines.Stop(Items.AutoDrop());
-                        }
-                    }).SetToggleState(false, true);
+                        catch{}
+                    }).SetToggleState(false, false);
 
                 new ToggleButton(PickupsButtons, "Thief", "Allows Thief of Pickups", "Allows Thief of Pickups", (val) =>
                 {
@@ -1220,7 +1308,7 @@ namespace JoanpixerClient
                     {
                         Items.DisallowThief();
                     }
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 new SimpleSingleButton(PickupsButtons, "Respawn Pickups", null, () =>
                 {
@@ -1233,12 +1321,20 @@ namespace JoanpixerClient
 
                 new SingleButton(MainMenuButtons, "Kill Self", "Kill Self with Grenade", () =>
                 {
-                    if (Murder4.worldLoaded)
-                        MelonCoroutines.Start(Murder4.KillLocalPlayerFrag());
-                        MelonCoroutines.Stop(Murder4.KillLocalPlayerFrag());
-                    if (Murder3.worldLoaded)
-                        MelonCoroutines.Start(Murder3.KillLocalPlayerFrag());
-                        MelonCoroutines.Stop(Murder3.KillLocalPlayerFrag());
+                    try
+                    {
+                        if (Murder4.worldLoaded)
+                        {
+                            MelonCoroutines.Start(Murder4.KillLocalPlayerFrag());
+                            MelonCoroutines.Stop(Murder4.KillLocalPlayerFrag());
+                        }
+                        else if (Murder3.worldLoaded)
+                        {
+                            MelonCoroutines.Start(Murder3.KillLocalPlayerFrag());
+                            MelonCoroutines.Stop(Murder3.KillLocalPlayerFrag());
+                        }
+                    }
+                    catch{}
                 }, false, KillSelfIcon);
 
                 var GodmodeIcon = (Environment.CurrentDirectory + "\\Joanpixer\\god.png").LoadSpriteFromDisk();
@@ -1246,7 +1342,7 @@ namespace JoanpixerClient
                 new ToggleButton(MainMenuButtons, "GodMode", "Gives you Immortality", "Gives you Immortality", (val) =>
                 {
                     PatchManager.Godmode = val;
-                }, GodmodeIcon, null).SetToggleState(false, true);
+                }, GodmodeIcon, null).SetToggleState(false, false);
 
                 var Movement = new ButtonGroup(mainmenu, "Movement");
 
@@ -1262,7 +1358,7 @@ namespace JoanpixerClient
                         Features.HighlightsComponent.ESPEnabled = false;
                         Features.HighlightsComponent.DisableESP();
                     }
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
                 if (!File.Exists(Environment.CurrentDirectory + "\\Mods\\AbyssLoader.dll"))
                 {
                     Noclip = new ToggleButton(Movement, "Noclip", null, null, (val) =>
@@ -1289,7 +1385,7 @@ namespace JoanpixerClient
                             }
                         }
                     });
-                    Noclip.SetToggleState(false, true);
+                    Noclip.SetToggleState(false, false);
                 }
 
                 Speedhack = new ToggleButton(Movement, "Speedhack", null, null, (val) =>
@@ -1304,7 +1400,7 @@ namespace JoanpixerClient
                     }
                 });
 
-                Speedhack.SetToggleState(false, true);
+                Speedhack.SetToggleState(false, false);
 
                 Jump = new ToggleButton(Movement, "Enable Jump", "Enables Jump in World", "Enables Jump in World", (val) =>
                 {
@@ -1322,7 +1418,7 @@ namespace JoanpixerClient
 
                 Jump.SetToggleState(Create.Ini.GetBool("Toggles", "Jump"));
 
-                new ToggleButton(Movement, "Pickup ESP", "Being Fixed", "Being Fixed", (val) =>
+                new ToggleButton(Movement, "Pickup ESP", "", "", (val) =>
                 {
                     if (val)
                     {
@@ -1333,7 +1429,7 @@ namespace JoanpixerClient
                         JoanpixerMain.PickupESP = val;
                         Features.HighlightsComponent.PickupESP(false);
                     }
-                }).SetToggleState(false, true);
+                }).SetToggleState(false, false);
 
                 new JoanpixerButtonAPI.Controls.Slider(mainmenu, "Speedhack Speed", null, (val) =>
                 {
@@ -1360,7 +1456,6 @@ namespace JoanpixerClient
                     SpeedOn = true;
                 }
             }
-            if (!File.Exists(Environment.CurrentDirectory + "\\Mods\\AbyssLoader")) return;
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyUp(KeyCode.F))
             {
                 if (NoclipOn)

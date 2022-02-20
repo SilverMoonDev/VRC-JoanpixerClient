@@ -2,7 +2,7 @@ using System;
 
 namespace JoanpixerButtonAPI.Misc
 {
-    internal class PriorityAttribute : Attribute
+	internal class PriorityAttribute : Attribute
 	{
 		public readonly int priority;
 
