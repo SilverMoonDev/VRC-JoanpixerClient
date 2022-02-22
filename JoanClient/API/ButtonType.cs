@@ -11,6 +11,7 @@
     {
         UserInfo,
         AvatarMenu,
+        HeaderAvatarMenu,
         SettingsMenu,
         SocialMenu,
         WorldMenu,

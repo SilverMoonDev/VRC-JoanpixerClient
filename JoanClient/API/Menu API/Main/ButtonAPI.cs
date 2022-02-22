@@ -100,6 +100,23 @@ namespace JoanpixerButtonAPI
                 CreateTextPopup();
             });
 
+            new MenuButton(MenuType.HeaderAvatarMenu, MenuButtonType.AvatarFavButton, "Download VRCA", 548, 0, () =>
+            {
+                JoanpixerClient.Features.VRCA.DownloadVRCA(JoanpixerClient.Modules.AvatarFavs.currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0, JoanpixerClient.Modules.AvatarFavs.currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0.thumbnailImageUrl);
+            });
+
+            var uwu = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)/UwU/Horizontal/FavoritesCountSpacingText");
+            var uwu1 = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)/UwU/Horizontal/FavoritesCurrentCountText");
+            var uwu2 = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)/UwU/Horizontal/FavoritesCountDividerText");
+            var uwu3 = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)/UwU/Horizontal/FavoritesMaxAvailableText");
+            var uwu4 = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)/UwU/Icon_VRC+");
+
+            UnityEngine.Object.Destroy(uwu);
+            UnityEngine.Object.Destroy(uwu1);
+            UnityEngine.Object.Destroy(uwu2);
+            UnityEngine.Object.Destroy(uwu3);
+            UnityEngine.Object.Destroy(uwu4);
+
             menuPageBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Dashboard")?.gameObject;
 
             if (menuPageBase == null)

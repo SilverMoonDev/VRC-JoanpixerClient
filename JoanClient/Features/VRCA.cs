@@ -2,30 +2,35 @@
 using System.Net;
 using MelonLoader;
 using VRC.Core;
+using System.IO;
 
 namespace JoanpixerClient.Features
 {
     internal class VRCA
     {
-        public static void DownloadVRCA(ApiAvatar avatar)
+        public static void DownloadVRCA(ApiAvatar avatar, string image)
         {
 			try
 			{
-				string assetUrl = avatar.assetUrl;
-				string imageUrl = avatar.imageUrl;
+				string asset = avatar.assetUrl;
+				if (!Directory.Exists($"Joanpixer\\VRCA\\{avatar.name}"))
+                {
+					Directory.CreateDirectory($"Joanpixer\\VRCA\\{avatar.name}");
+				}
 				using (WebClient webClient = new WebClient())
 				{
-					webClient.DownloadFileAsync(new Uri(assetUrl), "Joanpixer\\VRCA\\" + avatar.name + ".vrca");
+					webClient.Headers.Add("User-Agent: Other");
+					webClient.DownloadFileAsync(new Uri(asset), $"Joanpixer\\VRCA\\{avatar.name}\\" + avatar.name + ".vrca");
 				}
 				using (WebClient webClient2 = new WebClient())
 				{
-					webClient2.DownloadFileAsync(new Uri(imageUrl), "Joanpixer\\VRCA\\" + avatar.name + ".png");
+					webClient2.Headers.Add("User-Agent: Other");
+					webClient2.DownloadFileAsync(new Uri(image), $"Joanpixer\\VRCA\\{avatar.name}\\" + avatar.name + ".png");
 				}
-				MelonLogger.Msg("[VRCA] Downloaded " + avatar.name);
 			}
 			catch (Exception)
 			{
-				MelonLogger.Msg("[VRCA]Download Error");
+				MelonLogger.Msg($"[VRCA] Error Downloading {avatar.name}");
 			}
         }
     }

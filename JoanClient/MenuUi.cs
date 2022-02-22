@@ -427,7 +427,8 @@ namespace JoanpixerClient
 
                 new SimpleSingleButton(quickmenuplayeroptions, "Download VRCA", null, () =>
                 {
-                    Features.VRCA.DownloadVRCA(selectedplayer.prop_ApiAvatar_0);
+                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+                    Features.VRCA.DownloadVRCA(selectedplayer.prop_ApiAvatar_0, selectedplayer.prop_ApiAvatar_0.imageUrl);
                 });
 
                 #endregion

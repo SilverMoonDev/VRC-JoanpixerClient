@@ -100,7 +100,7 @@ namespace JoanpixerClient.Modules
         public static List<AvatarObject> AvatarObjects = new List<AvatarObject>();
         private bool JustOpened = false;
         private static GameObject avatarPage;
-        private static PageAvatar currPageAvatar;
+        public static PageAvatar currPageAvatar;
         private static GameObject PublicAvatarList;
         public AvatarFavs(IntPtr ptr) : base(ptr) { }
     }

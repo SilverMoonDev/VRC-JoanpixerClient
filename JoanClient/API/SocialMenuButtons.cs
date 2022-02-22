@@ -22,6 +22,7 @@ namespace JoanpixerClient.Utility
                 SocialPage = GameObject.Find("UserInterface/MenuContent/Screens/Social");
                 UserInfoPage = GameObject.Find("UserInterface/MenuContent/Screens/UserInfo");
                 AvatarPage = GameObject.Find("UserInterface/MenuContent/Screens/Avatar");
+                HeaderAvatarPage = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)");
                 WorldsPage = GameObject.Find("UserInterface/MenuContent/Screens/Worlds");
                 WorldsInfoPage = GameObject.Find("UserInterface/MenuContent/Screens/WorldInfo");
 
@@ -66,6 +67,10 @@ namespace JoanpixerClient.Utility
 
                     case MenuType.AvatarMenu:
                         Button.transform.SetParent(AvatarPage.transform);
+                        break;
+
+                    case MenuType.HeaderAvatarMenu:
+                        Button.transform.SetParent(HeaderAvatarPage.transform);
                         break;
 
                     case MenuType.SettingsMenu:
@@ -116,6 +121,7 @@ namespace JoanpixerClient.Utility
         public GameObject Button;
         public GameObject UserInfoPage;
         public GameObject AvatarPage;
+        public GameObject HeaderAvatarPage;
         public GameObject SettingsPage;
         public GameObject SocialPage;
         public GameObject WorldsPage;
