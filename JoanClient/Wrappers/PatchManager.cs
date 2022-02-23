@@ -4,6 +4,7 @@ using MelonLoader;
 using System;
 using System.Reflection;
 using ExitGames.Client.Photon;
+using VRC.Udon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -328,6 +329,7 @@ namespace JoanpixerClient
             Murder3.Initialize();
             Ghost.Initialize();
             AmongUs.Initialize();
+            loggedin = true;
             justjoined = true;
             MelonCoroutines.Start(JumpDelay());
         }

@@ -37,7 +37,7 @@ namespace JoanpixerClient.Features.Worlds
             ESP = val;
                 foreach (var _object in Resources.FindObjectsOfTypeAll<Renderer>())
                 {
-                    if (_object.gameObject.name == "Folder_file" && _object.gameObject.transform.parent.gameObject.name.Contains("Clue") && !_object.gameObject.active)
+                    if (_object.gameObject.name.Contains("Folder") && _object.gameObject.transform.parent.gameObject.name.Contains("Clue") && !_object.gameObject.active)
                     {
                         Utils.ToggleOutline(_object, false);
                     }
@@ -49,7 +49,7 @@ namespace JoanpixerClient.Features.Worlds
                     {
                         Utils.ToggleOutline(_object, false);
                     }
-                    if (_object.gameObject.name == "Folder_file" && _object.gameObject.transform.parent.gameObject.name.Contains("Clue") && _object.gameObject.active)
+                    if (_object.gameObject.name.Contains("Folder") && _object.gameObject.transform.parent.gameObject.name.Contains("Clue") && !_object.gameObject.active)
                     {
                         Utils.ToggleOutline(_object, val);
                     }
