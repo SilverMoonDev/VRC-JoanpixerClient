@@ -3,6 +3,7 @@ using JoanpixerButtonAPI.Controls.Grouping;
 using JoanpixerButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 namespace JoanpixerButtonAPI.Controls
@@ -68,7 +69,7 @@ namespace JoanpixerButtonAPI.Controls
             };
 
             sliderTooltip = gameObject.GetComponentInChildren<VRC.UI.Elements.Tooltips.UiTooltip>(true);
-
+            
             if (!string.IsNullOrEmpty(tooltip))
             {
                 sliderTooltip.field_Public_String_0 = tooltip;
@@ -85,6 +86,7 @@ namespace JoanpixerButtonAPI.Controls
         public Slider(MenuPage pge, string text, string tooltip, Action<float> onSliderAdjust, float minValue = 0f, float maxValue = 100f, float defaultValue = 50f, bool floor = false, bool percent = true, bool isGroup = false)
             : this(pge.menuContents, text, tooltip, onSliderAdjust, minValue, maxValue, defaultValue, floor, percent, isGroup)
         {
+            gameObject.GetComponent<LayoutElement>().minHeight = 115;
         }
 
         public Slider(ButtonGroup grp, string text, string tooltip, Action<float> onSliderAdjust, float minValue = 0f, float maxValue = 100f, float defaultValue = 50f, bool floor = false, bool percent = true, bool isGroup = false)

@@ -456,6 +456,7 @@ namespace JoanpixerClient
                     if (!Murder4.worldLoaded) return;
                     if (val)
                     {
+                        Features.HighlightsComponent.CheckMurdererESP();
                         PatchManager.AnnounceMurderer4 = true;
                         Create.Ini.SetBool("Toggles", "Murder4", true);
                         var Murderer = $"Murderer is {Murder4.MurderText.GetComponent<Text>().m_Text}";
@@ -828,6 +829,7 @@ namespace JoanpixerClient
                     if (!Murder3.worldLoaded) return;
                     if (val)
                     {
+                        Features.HighlightsComponent.CheckMurdererESP();
                         PatchManager.AnnounceMurderer3 = true;
                         Create.Ini.SetBool("Toggles", "Murder3", true);
                         var Murderer = $"Murderer is {Murder3.MurderText.GetComponent<Text>().m_Text}";
@@ -1286,6 +1288,7 @@ namespace JoanpixerClient
                     {
                         try
                         {
+                            Items.AutoDropToggle = val;
                             if (val)
                             {
                                 MelonCoroutines.Start(Items.AutoDrop());
@@ -1457,7 +1460,7 @@ namespace JoanpixerClient
                     SpeedOn = true;
                 }
             }
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyUp(KeyCode.F))
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyUp(KeyCode.F) && !File.Exists(Environment.CurrentDirectory + "\\Mods\\AbyssLoader.dll"))
             {
                 if (NoclipOn)
                 {

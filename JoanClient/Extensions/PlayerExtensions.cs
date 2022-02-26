@@ -189,11 +189,6 @@ namespace FlightMod
             return player.prop_VRCPlayer_0;
         }
 
-        public static VRCAvatarManager GetVRCAvatarManager(this VRCPlayer player)
-        {
-            return player.prop_VRCAvatarManager_0;
-        }
-
         public static string GetName(this Player player)
         {
             return player.GetAPIUser().displayName;

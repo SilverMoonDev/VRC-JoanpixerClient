@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
+using VRC.UI.Elements.Notifications;
 using Object = UnityEngine.Object;
 
 namespace JoanpixerButtonAPI.Pages
@@ -17,19 +18,13 @@ namespace JoanpixerButtonAPI.Pages
     {
         private UIPage page;
 
-        private GameObject gameObject;
-
         public Transform menuContents;
 
         private TextMeshProUGUI pageTitleText;
 
         private bool isRoot;
 
-        private GameObject backButtonGameObject;
-
         private GameObject extButtonGameObject;
-
-        private bool preserveColor;
 
         public RectMask2D menuMask;
 
@@ -47,7 +42,7 @@ namespace JoanpixerButtonAPI.Pages
 
             try
             {
-                gameObject = UnityEngine.Object.Instantiate(ButtonAPI.menuPageBase, ButtonAPI.menuPageBase.transform.parent);
+                var gameObject = UnityEngine.Object.Instantiate(ButtonAPI.menuPageBase, ButtonAPI.menuPageBase.transform.parent);
                 gameObject.name = "Menu_" + menuName;
                 gameObject.transform.SetSiblingIndex(5);
                 gameObject.SetActive(false);
@@ -58,7 +53,7 @@ namespace JoanpixerButtonAPI.Pages
                 region++;
                 page.field_Public_String_0 = menuName;
                 page.field_Private_Boolean_1 = true;
-                page.field_Private_MenuStateController_0 = ButtonAPI.GetMenuStateControllerInstance();
+                page.field_Protected_MenuStateController_0 = ButtonAPI.GetMenuStateControllerInstance();
                 page.field_Private_List_1_UIPage_0 = new Il2CppSystem.Collections.Generic.List<UIPage>();
                 page.field_Private_List_1_UIPage_0.Add(page);
                 region++;
@@ -77,12 +72,13 @@ namespace JoanpixerButtonAPI.Pages
                 gameObject.transform.Find("ScrollRect/Viewport/VerticalLayoutGroup").DestroyChildren();
                 region++;
                 menuContents = gameObject.transform.Find("ScrollRect/Viewport/VerticalLayoutGroup");
+                menuContents.GetComponent<VerticalLayoutGroup>().childControlHeight = true;
                 region++;
                 pageTitleText = gameObject.GetComponentInChildren<TextMeshProUGUI>(true);
                 region++;
                 pageTitleText.text = pageTitle;
                 isRoot = root;
-                backButtonGameObject = gameObject.transform.GetChild(0).Find("LeftItemContainer/Button_Back").gameObject;
+                var backButtonGameObject = gameObject.transform.GetChild(0).Find("LeftItemContainer/Button_Back").gameObject;
                 region++;
                 extButtonGameObject = gameObject.transform.GetChild(0).Find("RightItemContainer/Button_QM_Expand").gameObject;
                 region++;
@@ -120,7 +116,6 @@ namespace JoanpixerButtonAPI.Pages
                 }
 
                 region++;
-                this.preserveColor = preserveColor;
                 menuMask = menuContents.parent.gameObject.GetOrAddComponent<RectMask2D>();
                 region++;
                 menuMask.enabled = true;

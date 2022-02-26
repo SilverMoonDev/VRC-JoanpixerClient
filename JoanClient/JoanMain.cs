@@ -43,7 +43,6 @@ namespace JoanpixerClient
             FoldersManager.Create.Initialize();
             PatchManager.InitPatch();
             PatchManager.QuestIni();
-            new Features.ForceInvite().Start();
             JoanpixerButtonAPI.ButtonAPI.UseKeyboardOnlyForText = typeof(VRCInputManager).GetMethods().First(mi => mi.Name.StartsWith("Method_Public_Static_Void_Boolean_0") && mi.GetParameters().Count() == 1);
             ButtonImage = (Environment.CurrentDirectory + "\\Joanpixer\\MainMenu.png").LoadSpriteFromDisk();
             MelonUtils.SetConsoleTitle("Joanpixer Client");
@@ -136,7 +135,6 @@ namespace JoanpixerClient
 
         public override void OnUpdate()
         {
-
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.type == VRC.Core.InstanceAccessType.InvitePlus && Input.GetKeyUp(KeyCode.K) || RoomManager.field_Internal_Static_ApiWorldInstance_0?.type == VRC.Core.InstanceAccessType.InviteOnly && Input.GetKeyUp(KeyCode.K))
             {
                 var uwu = Utils.CurrentUser.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh.blendShapeCount;
@@ -202,7 +200,7 @@ namespace JoanpixerClient
             Process.GetCurrentProcess().Kill();
         }
 
-        private static string ID = "gompo";
+        private static new string ID = "gompo";
 
 
         private IEnumerator WaitForUIInit()

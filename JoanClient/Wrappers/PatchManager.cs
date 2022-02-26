@@ -5,18 +5,15 @@ using System;
 using System.Reflection;
 using ExitGames.Client.Photon;
 using VRC.Udon;
-using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC;
-using System.Net;
-using System.Net.Http;
+using VRC.SDKBase;
 using VRC.Networking;
 using AccessTools = HarmonyLib.AccessTools;
 using HarmonyMethod = HarmonyLib.HarmonyMethod;
 using Player = VRC.Player;
-using System.Threading.Tasks;
 
 namespace JoanpixerClient
 {
@@ -46,7 +43,6 @@ namespace JoanpixerClient
                 Instance.Patch(AccessTools.Property(typeof(Tools), "Platform").GetMethod, null, GetPatch("PlatformSpoof")); 
                 Instance.Patch(typeof(NetworkManager).GetMethod("Method_Public_Void_Player_0"), GetPatch("OnPlayerJoin"), null);
                 Instance.Patch(typeof(NetworkManager).GetMethod("OnJoinedRoom"), GetPatch("OnJoinedRoom"), null);
-                Instance.Patch(typeof(PhotonNetwork).GetMethod("Method_Public_Static_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0"), GetPatch("OpRaiseEvent"), null);
             }
             catch (Exception arg)
             {
@@ -191,10 +187,10 @@ namespace JoanpixerClient
                 MelonCoroutines.Start(Ghost.ShowGhosts());
             }
 
-            if (__0.Contains("Kill") && Godmode || __0.Contains("Damage") && Godmode)
-            {
-                return false;
-            }
+            if (AmongUs.worldLoaded && __0 == "SyncVotedOut" && Godmode) return false;
+
+            if (__0.Contains("Kill") && Godmode || __0.Contains("Damage") && Godmode) return false;
+
 
             return !AntiUdon;
         }

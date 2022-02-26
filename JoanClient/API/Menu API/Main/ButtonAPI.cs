@@ -4,13 +4,12 @@ using System.Linq;
 using MelonLoader;
 using JoanpixerButtonAPI.Misc;
 using UnityEngine;
-using JoanpixerClient;
-using JoanpixerClient.API;
-using JoanpixerClient.Utility;
 using UnityEngine.UI;
 using VRC.UI.Elements;
-using VRC.SDKBase;
+using JoanpixerClient.API;
+using JoanpixerClient.Utility;
 using System.Reflection;
+using VRC.SDKBase;
 using VRC.UI;
 
 namespace JoanpixerButtonAPI
@@ -37,9 +36,9 @@ namespace JoanpixerButtonAPI
 
         public static Sprite xIconSprite;
 
-        public static MethodInfo UseKeyboardOnlyForText;
-
         public static bool HasInit = false;
+
+        public static MethodInfo UseKeyboardOnlyForText;
 
         public static bool PauseInit = false;
 
@@ -88,13 +87,6 @@ namespace JoanpixerButtonAPI
                 MelonLogger.Error("buttonGroupBase == null!");
             }
 
-            buttonGroupHeaderBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Dashboard/ScrollRect/Viewport/VerticalLayoutGroup/Header_QuickActions")?.gameObject;
-
-            if (buttonGroupHeaderBase == null)
-            {
-                MelonLogger.Error("buttonGroupHeaderBase == null!");
-            }
-
             new MenuButton(MenuType.WorldInfoMenu, MenuButtonType.WorldIfoButton, "Custom Tag", 548, -190, () =>
             {
                 CreateTextPopup();
@@ -116,6 +108,13 @@ namespace JoanpixerButtonAPI
             UnityEngine.Object.Destroy(uwu2);
             UnityEngine.Object.Destroy(uwu3);
             UnityEngine.Object.Destroy(uwu4);
+
+            buttonGroupHeaderBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Settings/Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/QM_Foldout_UI_Elements")?.gameObject;
+
+            if (buttonGroupHeaderBase == null)
+            {
+                MelonLogger.Error("buttonGroupHeaderBase == null!");
+            }
 
             menuPageBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Dashboard")?.gameObject;
 
@@ -169,6 +168,7 @@ namespace JoanpixerButtonAPI
 
             HasInit = true;
         }
+
         private static void CreateTextPopup()
         {
             UseKeyboardOnlyForText.Invoke(null, new object[] { true });

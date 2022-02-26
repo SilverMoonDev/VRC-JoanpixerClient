@@ -28,25 +28,18 @@ namespace JoanpixerButtonAPI.Controls.Grouping
                 headerText = headerGameObject.GetComponentInChildren<TextMeshProUGUI>(true);
                 headerText.text = text;
                 headerText.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(915f, 50f);
+
+                headerGameObject.transform.Find("Background_Button").gameObject.SetActive(false);
+                headerGameObject.transform.Find("Arrow").gameObject.SetActive(false);
             }
 
             gameObject = Object.Instantiate(ButtonAPI.buttonGroupBase, parent);
             gameObject.transform.DestroyChildren();
 
-            gameObject.GetOrAddComponent<GridLayoutGroup>().childAlignment = ButtonAlignment;
+            var Layout = gameObject.GetOrAddComponent<GridLayoutGroup>();
+            Layout.childAlignment = ButtonAlignment;
+
             parentMenuMask = parent.parent.GetOrAddComponent<RectMask2D>();
-
-            var Handler = gameObject.GetOrAddComponent<ObjectHandler>();
-
-            Handler.OnUpdateEachSecond += (obj, IsEnabled) =>
-            {
-                if (IsEnabled)
-                {
-                    var rows = (int)Mathf.Ceil((obj.transform.childCount / 4f));
-
-                    obj.GetComponent<RectTransform>().sizeDelta = new Vector2(1024, (208 * rows));
-                }
-            };
         }
 
         public ButtonGroup(MenuPage parent, string text, bool NoText = false, TextAnchor ButtonAlignment = TextAnchor.UpperCenter) : this(parent.menuContents, text, NoText, ButtonAlignment)

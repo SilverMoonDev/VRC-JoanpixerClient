@@ -9,9 +9,8 @@ using VRC.UI.Elements.Controls;
 
 namespace JoanpixerButtonAPI.Controls
 {
-    [Obsolete("PlagueButtonAPI.Controls.Tab is Obselete. Please use PlagueButtonAPI.Controls.WingSingleButton Instead.")]
-    public class Tab : Base_Classes.GenericControl
-    {
+	public class Tab : Base_Classes.GenericControl
+	{
         public readonly MenuTab menuTab;
 
         public readonly Image tabIcon;
@@ -20,7 +19,7 @@ namespace JoanpixerButtonAPI.Controls
 
         public readonly TextMeshProUGUI badgeText;
 
-        public Tab(string menu, string tooltip, Sprite icon = null, Transform parent = null)
+		public Tab(string menu, string tooltip, Sprite icon = null, Transform parent = null)
         {
             if (parent == null)
             {
@@ -59,13 +58,13 @@ namespace JoanpixerButtonAPI.Controls
         {
         }
 
-        public void SetBadge(bool showing = true, string text = "")
-        {
-            if (!(badgeGameObject == null) && !(badgeText == null))
-            {
-                badgeGameObject.SetActive(showing);
-                badgeText.text = text;
-            }
-        }
-    }
+		public void SetBadge(bool showing = true, string text = "")
+		{
+			if (!(badgeGameObject == null) && !(badgeText == null))
+			{
+				badgeGameObject.SetActive(showing);
+				badgeText.text = text;
+			}
+		}
+	}
 }

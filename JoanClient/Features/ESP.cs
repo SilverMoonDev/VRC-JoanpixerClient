@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using VRC;
 using VRC.Core;
+using MelonLoader;
 
 namespace JoanpixerClient.Features
 {
@@ -36,6 +37,25 @@ namespace JoanpixerClient.Features
                 if (Worlds.Murder3.worldLoaded && Worlds.Murder3.MurderText.GetComponent<Text>().text.Contains(apiUser.displayName))
                     return _murdererHighlights;
             return _othersHighlights;
+        }
+
+        public static void CheckMurdererESP()
+        {
+            try
+            {
+                var Murderer = string.Empty;
+                Murderer = $"Murderer is {Worlds.Murder4.MurderText.GetComponent<Text>().m_Text}";
+            
+                if (Worlds.Murder4.worldLoaded && ESPEnabled || Worlds.Murder3.worldLoaded && ESPEnabled)
+                {
+                    DisableESP();
+                    foreach (var player in Utils.GetAllPlayers())
+                    {
+                        ToggleESP(true);
+                    }
+                }
+            }
+            catch{}
         }
 
         public void OnUiManagerInitEarly()

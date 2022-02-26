@@ -15,7 +15,7 @@ namespace JoanpixerClient.Features.Worlds
         #endregion
         public static bool worldLoaded;
         public static bool revolverspam;
-        public static bool doorlock ;
+        public static bool doorlock;
         public static bool lockdrawers;
         public static bool lightsoff;
         public static bool patreonself;
