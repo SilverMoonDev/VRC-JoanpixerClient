@@ -22,21 +22,7 @@ namespace JoanpixerClient
 
         private static SelectedUserMenuQM _selectedUserLocal;
 
-        private static QuickMenu _quickMenuInstance;
-
         public static GameObject Capsule = new GameObject();
-
-        public static QuickMenu Instance
-        {
-            get
-            {
-                if (_quickMenuInstance == null)
-                {
-                    _quickMenuInstance = GameObject.Find("UserInterface").GetComponentInChildren<QuickMenu>(true);
-                }
-                return _quickMenuInstance;
-            }
-        }
 
         public static SelectedUserMenuQM SelectedUserLocal
         {
@@ -44,7 +30,7 @@ namespace JoanpixerClient
             {
                 if (_selectedUserLocal == null)
                 {
-                    _selectedUserLocal = Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_SelectedUser_Local").GetComponent<SelectedUserMenuQM>();
+                    _selectedUserLocal = GameObject.Find("UserInterface/Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_SelectedUser_Local").GetComponent<SelectedUserMenuQM>();
                 }
                 return _selectedUserLocal;
             }
