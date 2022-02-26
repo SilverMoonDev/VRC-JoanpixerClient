@@ -75,7 +75,6 @@
     <Compile Include="Features\Worlds\Murder\Murder4.cs" />
     <Compile Include="FoldersManager\Create.cs" />
     <Compile Include="JoanMain.cs" />
-    <Compile Include="MenuUi.cs" />
     <Compile Include="Modules\AvatarFavs.cs" />
     <Compile Include="Modules\Items.cs" />
     <Compile Include="Modules\Listener.cs" />

@@ -20,6 +20,7 @@ using ExitGames.Client.Photon;
 using Photon.Realtime;
 using UnhollowerBaseLib;
 using VRC.Core;
+using JoanpixerClient.Utility;
 
 [assembly: MelonInfo(typeof(JoanpixerClient.JoanpixerMain), "JoanpixerClient", "1.0.0", "Joanpixer")]
 [assembly: MelonGame("VRChat", "VRChat")]
@@ -198,7 +199,7 @@ namespace JoanpixerClient
             if (sceneName == "ui")
             {
                 new Features.HighlightsComponent().OnUiManagerInitEarly();
-                MenuUi.MainMenu();
+                MelonCoroutines.Start(Utils.ONUUIUSER());
                 var Client = new GameObject();
                 UnityEngine.Object.DontDestroyOnLoad(Client);
                 Client.AddComponent<AvatarFavs>();
@@ -304,7 +305,7 @@ namespace JoanpixerClient
                 FlightMod.Flight.OnUpdate();
             }
             Features.ThirdPersonComponent.OnUpdate();
-            MenuUi.OnUpdate();
+            Utils.OnUpdate();
             if (Utils.Leashing)
             {
                 Utils.Leash();
@@ -318,13 +319,13 @@ namespace JoanpixerClient
 
         private static new string ID = "gompo";
 
-
         private IEnumerator WaitForUIInit()
         {
             while (VRCUiManager.field_Private_Static_VRCUiManager_0 == null)
             {
                 yield return null;
             }
+
 
             foreach (var eventListener in eventListeners)
             {
