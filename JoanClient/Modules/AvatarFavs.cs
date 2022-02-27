@@ -10,7 +10,6 @@ using VRC.UI;
 using JoanpixerClient.Api;
 using JoanpixerClient.Api.Object;
 using System.IO;
-using JoanpixerButtonAPI.Misc;
 using Newtonsoft.Json;
 
 namespace JoanpixerClient.Modules

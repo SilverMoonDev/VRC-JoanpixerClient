@@ -21,7 +21,7 @@ namespace JoanpixerClient.Modules
             while (AutoDropToggle)
             {
                 yield return new WaitForSeconds(1);
-                foreach (var vrc_Pickup in Resources.FindObjectsOfTypeAll<VRC_Pickup>())
+                foreach (var vrc_Pickup in PatchManager.Pickups)
                 {
                     if (vrc_Pickup.IsHeld && GetOwnerOfGameObject(vrc_Pickup.gameObject) != Utils.CurrentUser)
                     {
@@ -33,7 +33,7 @@ namespace JoanpixerClient.Modules
 
         public static void RespawnPickups()
         {
-            foreach (VRC_Pickup vrc_Pickup in Resources.FindObjectsOfTypeAll<VRC_Pickup>())
+            foreach (VRC_Pickup vrc_Pickup in PatchManager.Pickups)
             {
                 TakeOwnershipIfNecessary(vrc_Pickup.gameObject);
                 vrc_Pickup.gameObject.transform.position = new Vector3(0, -1000, 0);
@@ -44,7 +44,7 @@ namespace JoanpixerClient.Modules
 
         public static void AllowThief()
         {
-            foreach (VRC_Pickup vrc_Pickup in Resources.FindObjectsOfTypeAll<VRC_Pickup>())
+            foreach (VRC_Pickup vrc_Pickup in PatchManager.Pickups)
             {
                 vrc_Pickup.DisallowTheft = false;
                 vrc_Pickup.pickupable = true;
@@ -53,7 +53,7 @@ namespace JoanpixerClient.Modules
 
         public static void DisallowThief()
         {
-            foreach (VRC_Pickup vrc_Pickup in Resources.FindObjectsOfTypeAll<VRC_Pickup>())
+            foreach (VRC_Pickup vrc_Pickup in PatchManager.Pickups)
             {
                 vrc_Pickup.DisallowTheft = true;
                 vrc_Pickup.pickupable = true;
@@ -81,7 +81,7 @@ namespace JoanpixerClient.Modules
         }
         public static void ItemsToPlayer(Player player)
         {
-            foreach (VRC_Pickup vrc_Pickup in Resources.FindObjectsOfTypeAll<VRC_Pickup>())
+            foreach (VRC_Pickup vrc_Pickup in PatchManager.Pickups)
             {
                 Networking.SetOwner(Utils.CurrentUser.field_Private_VRCPlayerApi_0, vrc_Pickup.gameObject);
                 vrc_Pickup.transform.rotation = new Quaternion(-0.7f, 0f, 0f, 0.7f);

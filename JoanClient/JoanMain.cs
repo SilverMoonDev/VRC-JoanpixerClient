@@ -20,7 +20,6 @@ using ExitGames.Client.Photon;
 using Photon.Realtime;
 using UnhollowerBaseLib;
 using VRC.Core;
-using JoanpixerClient.Utility;
 
 [assembly: MelonInfo(typeof(JoanpixerClient.JoanpixerMain), "JoanpixerClient", "1.0.0", "Joanpixer")]
 [assembly: MelonGame("VRChat", "VRChat")]
@@ -102,7 +101,6 @@ namespace JoanpixerClient
 
                 var sanitizer = Activator.CreateInstance(t) as ISanitizer;
                 Sanitizers.Add(sanitizer);
-                MelonLogger.Msg($"Added new Sanitizer: {t.Name}");
             }
 
             unsafe

@@ -1,7 +1,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace LoadSprite
+namespace JoanpixerClient
 {
     internal static class LoadSprite
     {

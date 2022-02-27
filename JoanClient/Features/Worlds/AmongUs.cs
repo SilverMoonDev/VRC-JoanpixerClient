@@ -4,6 +4,7 @@ using MelonLoader;
 using VRC.Udon;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace JoanpixerClient.Features.Worlds
 {
@@ -21,6 +22,8 @@ namespace JoanpixerClient.Features.Worlds
             // TODO: Check world ID aswell.
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_dd036610-a246-4f52-bf01-9d7cea3405d7")
             {
+                var AmongUsIcon = (Environment.CurrentDirectory + "\\Joanpixer\\knife.png").LoadSpriteFromDisk();
+                Utils.WorldHacks.SetIcon(AmongUsIcon);
                 gameLogic = GameObject.Find("Game Logic")?.GetComponent<UdonBehaviour>();
                 worldLoaded = true;
             }

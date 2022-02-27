@@ -121,9 +121,10 @@ namespace JoanpixerClient.Features
 
         public static void PickupESP(bool on)
         {
-            foreach (var Pickup in Resources.FindObjectsOfTypeAll<VRC.SDK3.Components.VRCPickup>())
+            foreach (var Pickup in PatchManager.Pickups)
             {
                 Utils.ToggleOutline(Pickup.gameObject.GetComponentInChildren<Renderer>(), on);
+                Utils.ToggleOutline(Pickup.gameObject.GetComponent<Renderer>(), on);
                 Utils.ToggleOutline(Pickup.gameObject.GetComponentInParent<Renderer>(), on);
             }
         }

@@ -4,13 +4,13 @@ using MelonLoader;
 using System;
 using System.Reflection;
 using ExitGames.Client.Photon;
-using VRC.Udon;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC;
-using VRC.SDKBase;
+using System.Collections.Generic;
 using VRC.Networking;
+using VRC.SDKBase;
 using AccessTools = HarmonyLib.AccessTools;
 using HarmonyMethod = HarmonyLib.HarmonyMethod;
 using Player = VRC.Player;
@@ -68,6 +68,7 @@ namespace JoanpixerClient
         public static bool AnnounceGhost = Create.Ini.GetBool("Toggles", "Ghost");
         public static bool InMurder4Game;
         public static string UwU = string.Empty;
+        public static List<VRC_Pickup> Pickups = new List<VRC_Pickup>();
 
         public static void Play()
         {
@@ -325,6 +326,10 @@ namespace JoanpixerClient
             Murder3.Initialize();
             Ghost.Initialize();
             AmongUs.Initialize();
+            foreach (var Pickup in Resources.FindObjectsOfTypeAll<VRC_Pickup>())
+            {
+                Pickups.Add(Pickup);
+            }
             loggedin = true;
             justjoined = true;
             MelonCoroutines.Start(JumpDelay());

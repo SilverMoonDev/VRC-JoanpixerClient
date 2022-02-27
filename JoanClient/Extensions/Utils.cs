@@ -33,6 +33,7 @@ namespace JoanpixerClient
         private static ToggleButton Speedhack;
         private static ToggleButton QuestSpoofOn;
         private static ToggleButton Murderer4;
+        public static SingleButton WorldHacks;
         private static ToggleButton Murderer3;
         private static ToggleButton AnnounceGhost;
         private static SimpleSingleButton LeashValue;
@@ -127,10 +128,10 @@ namespace JoanpixerClient
 
                 #endregion
 
-                new SimpleSingleButton(MainMenuButtons, "Worlds Hacks", "Opens Worlds Exploits Menu", () =>
+                WorldHacks = new SingleButton(MainMenuButtons, "Worlds Hacks", "Opens Worlds Exploits Menu", () =>
                 {
                     if (!Murder3.worldLoaded && !Murder4.worldLoaded && !Ghost.worldLoaded && !AmongUs.worldLoaded)
-                        MelonCoroutines.Start(Utils.Notification("Available Worlds: Murder 3/4, Among Us and Ghost", Color.green));
+                        MelonCoroutines.Start(Notification("Available Worlds: Murder 3/4, Among Us and Ghost", Color.green));
                     if (Murder4.worldLoaded)
                         Murder4Menu.OpenMenu();
                     if (Ghost.worldLoaded)
@@ -139,7 +140,7 @@ namespace JoanpixerClient
                         Murder3Menu.OpenMenu();
                     if (AmongUs.worldLoaded)
                         AmongUsMenu.OpenMenu();
-                });
+                }, false);
 
                 #region Murder4
 
@@ -152,7 +153,7 @@ namespace JoanpixerClient
                         PatchManager.AnnounceMurderer4 = true;
                         Create.Ini.SetBool("Toggles", "Murder4", true);
                         var Murderer = $"Murderer is {Murder4.MurderText.GetComponent<Text>().m_Text}";
-                        MelonCoroutines.Start(Utils.Notification(Murderer, Color.red));
+                        MelonCoroutines.Start(Notification(Murderer, Color.red));
                     }
                     else
                     {
@@ -391,91 +392,91 @@ namespace JoanpixerClient
                 new SimpleSingleButton(teleportsmurder4buttons, "Kitchen", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(-20.8f, 0, 121.6f));
+                    TPLocalPlayer(new Vector3(-20.8f, 0, 121.6f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Lounge", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(-15.9f, 0, 130.1f));
+                    TPLocalPlayer(new Vector3(-15.9f, 0, 130.1f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Dining Room", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(-11.3f, 0, 119.2f));
+                    TPLocalPlayer(new Vector3(-11.3f, 0, 119.2f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Grand Hall", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(0.6f, 0, 116.4f));
+                    TPLocalPlayer(new Vector3(0.6f, 0, 116.4f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Library", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(12.2f, 0, 119.7f));
+                    TPLocalPlayer(new Vector3(12.2f, 0, 119.7f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Piano", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(15.9f, 0, 131.5f));
+                    TPLocalPlayer(new Vector3(15.9f, 0, 131.5f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Garage", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(17.3f, 0, 140.4f));
+                    TPLocalPlayer(new Vector3(17.3f, 0, 140.4f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Outside", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(2.8f, 0, 140.5f));
+                    TPLocalPlayer(new Vector3(2.8f, 0, 140.5f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Conservatory", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(-0.4f, 0, 146));
+                    TPLocalPlayer(new Vector3(-0.4f, 0, 146));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Billard", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(-14.7f, 0, 140.2f));
+                    TPLocalPlayer(new Vector3(-14.7f, 0, 140.2f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Cellar", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(-2.1f, -3, 130.8f));
+                    TPLocalPlayer(new Vector3(-2.1f, -3, 130.8f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Bedroom", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(-9.9f, 3.6f, 129.2f));
+                    TPLocalPlayer(new Vector3(-9.9f, 3.6f, 129.2f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Detective Room", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(5, 3, 122.8f));
+                    TPLocalPlayer(new Vector3(5, 3, 122.8f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Bathroom", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(-0.4f, 3, 133.4f));
+                    TPLocalPlayer(new Vector3(-0.4f, 3, 133.4f));
                 });
 
                 new SimpleSingleButton(teleportsmurder4buttons, "Closet", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
-                    Utils.TPLocalPlayer(new Vector3(0.4673f, 2.995f, 124.234f));
+                    TPLocalPlayer(new Vector3(0.4673f, 2.995f, 124.234f));
                 });
 
                 #endregion
@@ -486,11 +487,11 @@ namespace JoanpixerClient
                     Murder4.CluesESP = val;
                     if (!val)
                     {
-                        foreach (var clue in Resources.FindObjectsOfTypeAll<Renderer>())
+                        foreach (var clue in Murder4.Clues)
                         {
                             if (clue.gameObject.name == "geo" && clue.gameObject.transform.parent.gameObject.name.Contains("Clue"))
                             {
-                                Utils.ToggleOutline(clue, false);
+                                ToggleOutline(clue, false);
                             }
                         }
                     }
@@ -525,7 +526,7 @@ namespace JoanpixerClient
                         PatchManager.AnnounceMurderer3 = true;
                         Create.Ini.SetBool("Toggles", "Murder3", true);
                         var Murderer = $"Murderer is {Murder3.MurderText.GetComponent<Text>().m_Text}";
-                        MelonCoroutines.Start(Utils.Notification(Murderer, Color.red));
+                        MelonCoroutines.Start(Notification(Murderer, Color.red));
                     }
                     else
                     {
@@ -669,7 +670,7 @@ namespace JoanpixerClient
                         {
                             if (clue.gameObject.name == "geo" && clue.gameObject.transform.parent.gameObject.name.Contains("Clue"))
                             {
-                                Utils.ToggleOutline(clue, false);
+                                ToggleOutline(clue, false);
                             }
                         }
                     }
@@ -963,7 +964,7 @@ namespace JoanpixerClient
                 new ToggleButton(ProtectionsButtons, "Serialize", "Freezes you for everyone", "Freezes you for everyone", (val) =>
                 {
                     PatchManager.serialize = val;
-                    Utils.FreezeClone();
+                    FreezeClone();
                 });
 
                 #endregion
@@ -1103,7 +1104,7 @@ namespace JoanpixerClient
                 Jump = new ToggleButton(Movement, "Enable Jump", "Enables Jump in World", "Enables Jump in World", (val) =>
                 {
                     Create.Ini.SetBool("Toggles", "Jump", val);
-                    Utils.EnableJump();
+                    EnableJump();
                 });
 
                 new ToggleButton(Movement, "Infinite Jump", "Infinite Jump", "Infinite Jump", (val) =>
@@ -1161,13 +1162,13 @@ namespace JoanpixerClient
 
                 new SimpleSingleButton(quickmenuplayeroptions, "Teleport", "Teleports to player", () =>
                 {
-                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
-                    Utils.TPLocalPlayer(selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position);
+                    selectedplayer = GetCurrentlySelectedPlayer();
+                    TPLocalPlayer(selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position);
                 });
 
                 new SimpleSingleButton(quickmenuplayeroptions, "Fav/UnFav Avatar", "Favorite/Unfavorites avatar", () =>
                 {
-                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+                    selectedplayer = GetCurrentlySelectedPlayer();
                     if (!AvatarFavs.AvatarObjects.Exists(m => m.id == selectedplayer.prop_ApiAvatar_0.id))
                     {
                         AvatarFavs.FavoriteAvatar(selectedplayer.prop_ApiAvatar_0);
@@ -1405,13 +1406,13 @@ namespace JoanpixerClient
 
                 new SimpleSingleButton(quickmenuplayeroptions, "TP Pickups", "TP all pickups to the target", () =>
                 {
-                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+                    selectedplayer = GetCurrentlySelectedPlayer();
                     Items.ItemsToPlayer(selectedplayer);
                 });
 
                 new SingleButton(quickmenuplayeroptions, "World Hacks", "Open World Target Options", () =>
                 {
-                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+                    selectedplayer = GetCurrentlySelectedPlayer();
                     if (Murder4.worldLoaded)
                     {
                         Murder4QuickMenu.OpenMenu();
@@ -1424,8 +1425,8 @@ namespace JoanpixerClient
 
                 new ToggleButton(quickmenuplayeroptions, "Leash", "Leashes to the target", "Leashes to the target", (val) =>
                 {
-                    Utils.target = Utils.GetCurrentlySelectedPlayer().field_Private_VRCPlayerApi_0;
-                    Utils.Leashing = val;
+                    target = GetCurrentlySelectedPlayer().field_Private_VRCPlayerApi_0;
+                    Leashing = val;
                 });
 
                 new SimpleSingleButton(quickmenuplayeroptions, "Leash Config", null, () =>
@@ -1437,7 +1438,7 @@ namespace JoanpixerClient
                 {
                     var CurrentValue = Create.Ini.GetFloat("Values", "Leash Distance");
                     Create.Ini.SetFloat("Values", "Leash Distance", CurrentValue + 0.1f);
-                    Utils.distance = CurrentValue + 0.1f;
+                    distance = CurrentValue + 0.1f;
                     LeashValue.SetText($"Current Value:\n {Create.Ini.GetFloat("Values", "Leash Distance")}");
                 });
 
@@ -1445,7 +1446,7 @@ namespace JoanpixerClient
                 {
                     var CurrentValue = Create.Ini.GetFloat("Values", "Leash Distance");
                     Create.Ini.SetFloat("Values", "Leash Distance", CurrentValue - 0.1f);
-                    Utils.distance = CurrentValue - 0.1f;
+                    distance = CurrentValue - 0.1f;
                     LeashValue.SetText($"Current Value:\n {Create.Ini.GetFloat("Values", "Leash Distance")}");
                 });
 
@@ -1455,7 +1456,7 @@ namespace JoanpixerClient
 
                 new SimpleSingleButton(quickmenuplayeroptions, "Download VRCA", null, () =>
                 {
-                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+                    selectedplayer = GetCurrentlySelectedPlayer();
                     Features.VRCA.DownloadVRCA(selectedplayer.prop_ApiAvatar_0, selectedplayer.prop_ApiAvatar_0.imageUrl);
                 });
 

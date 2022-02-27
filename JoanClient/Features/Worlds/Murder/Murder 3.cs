@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using JoanpixerClient.Modules;
 using VRC.SDKBase;
+using System;
 
 namespace JoanpixerClient.Features.Worlds
 {
@@ -31,6 +32,8 @@ namespace JoanpixerClient.Features.Worlds
 
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_726c8a44-8222-4858-8b33-49e70d495b62")
             {
+                var Murder3Icon = (Environment.CurrentDirectory + "\\Joanpixer\\knife.png").LoadSpriteFromDisk();
+                Utils.WorldHacks.SetIcon(Murder3Icon);
                 worldLoaded = true;
                 MurderText = GameObject.Find("Game Logic/Game Canvas/Postgame/Murderer Name");
                 Murder4Items.smokebomb = GameObject.Find("Game Logic/Weapons/Unlockables/Smoke (0)");

@@ -5,6 +5,7 @@ using JoanpixerClient.Modules;
 using MelonLoader;
 using UnityEngine.UI;
 using VRC.SDKBase;
+using System;
 
 namespace JoanpixerClient.Features.Worlds
 {
@@ -22,6 +23,8 @@ namespace JoanpixerClient.Features.Worlds
 
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_0ec97c4f-1e84-4a3a-9e3a-fa3075b6c56d")
             {
+                var GhostIcon = (Environment.CurrentDirectory + "\\Joanpixer\\Ghost.png").LoadSpriteFromDisk();
+                Utils.WorldHacks.SetIcon(GhostIcon);
                 worldLoaded = true;
                 Ghosts = GameObject.Find("LobbyManager/MainHUD/GameOverScreen/GhostNameText").GetComponent<Text>();
             }
