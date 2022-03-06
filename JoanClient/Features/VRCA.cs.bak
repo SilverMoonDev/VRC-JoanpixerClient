@@ -14,7 +14,7 @@ namespace JoanpixerClient.Features
 			try
 			{
 				Utils.Notification($"[VRCA] Downloading {avatar.name}", UnityEngine.Color.blue);
-				JoanpixerClient.JoanpixerMain.Logger.Msg(ConsoleColor.Blue, $"[VRCA] Downloading {avatar.name}");
+				JoanpixerClient.Logger.Msg(ConsoleColor.Blue, $"[VRCA] Downloading {avatar.name}");
 				string asset = avatar.assetUrl;
 				if (!Directory.Exists($"Joanpixer\\VRCA\\{avatar.name}"))
                 {
@@ -34,7 +34,7 @@ namespace JoanpixerClient.Features
 			catch (Exception)
 			{
 				Utils.Notification($"[VRCA] Error Downloading {avatar.name}", UnityEngine.Color.red);
-				JoanpixerClient.JoanpixerMain.Logger.Msg(ConsoleColor.Red,$"[VRCA] Error Downloading {avatar.name}");
+				JoanpixerClient.Logger.Msg(ConsoleColor.Red,$"[VRCA] Error Downloading {avatar.name}");
 			}
         }
     }

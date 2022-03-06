@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using MelonLoader;
 using JoanpixerButtonAPI.Controls.Base_Classes;
 using JoanpixerButtonAPI.Controls.Grouping;
 using JoanpixerButtonAPI.Pages;
@@ -9,26 +11,32 @@ namespace JoanpixerButtonAPI.Controls
 {
     public class ToggleButton : Toggle
     {
-        public ToggleButton(Transform parent, string text, string tooltipWhileDisabled, string tooltipWhileEnabled, Action<bool> stateChanged, Sprite OnImage = null, Sprite OffImage = null)
+        public ToggleButton(Transform parent, string text, string tooltipWhileDisabled, string tooltipWhileEnabled, Action<bool> stateChanged, Sprite OnImage = null, Sprite OffImage = null, bool DefaultState = false)
         {
             gameObject = Object.Instantiate(ButtonAPI.toggleButtonBase, parent);
 
             this.text.text = text;
 
             toggle.onValueChanged = new UnityEngine.UI.Toggle.ToggleEvent();
-            toggle.Set(false, false);
 
-            if (stateChanged != null)
+            toggle.onValueChanged.AddListener(new Action<bool>(val =>
             {
-                toggle.onValueChanged.AddListener(stateChanged);
-            }
+                if (AllowUserInvoke)
+                {
+                    stateChanged?.Invoke(val);
+                }
+
+                NextState = val;
+            }));
 
             if (!string.IsNullOrEmpty(tooltipWhileDisabled) && !string.IsNullOrEmpty(tooltipWhileEnabled))
             {
-                if (tooltip.field_Public_String_0.Contains("Show"))
+                if (tooltip.field_Public_String_0.Contains("Hide")) // VRC made their own fucking ui the wrong way round on this tooltip on init, lmfao
                 {
                     tooltip.field_Public_String_0 = tooltipWhileDisabled;
                     tooltip.field_Public_String_1 = tooltipWhileEnabled;
+
+                    ToolTipOne = true;
                 }
                 else
                 {
@@ -60,19 +68,33 @@ namespace JoanpixerButtonAPI.Controls
                 this.OffImage.overrideSprite = OffImage;
             }
 
-            var Init = false;
+            NextState = DefaultState;
 
-            var Handler = gameObject.AddComponent<ObjectHandler>();
+            var Handler = transform.Find("Icon_On").gameObject.AddComponent<ObjectHandler>();
 
             Handler.OnEnabled += obj =>
             {
-                if (!Init)
+                if (NextState != ToggleState) // The User Set This To Be A Different State While The Object Was Inactive
                 {
-                    SetToggleState(ToggleState);
-
-                    Init = true;
+                    SetToggleState(NextState, NextIsInvoke);
                 }
             };
+        }
+
+        //Solely Made This For Users Moving From Other API's, As A CTRL H ReplaceAll Would Work.
+        public ToggleButton(MenuPage pge, string text, string tooltip, Action<bool> stateChanged, bool DefaultState = false)
+            : this(pge.menuContents, text, tooltip, tooltip, stateChanged, null, null, DefaultState)
+        {
+        }
+
+        public ToggleButton(ButtonGroup pge, string text, string tooltip, Action<bool> stateChanged, bool DefaultState = false)
+            : this(pge.gameObject.transform, text, tooltip, tooltip, stateChanged, null, null, DefaultState)
+        {
+        }
+
+        public ToggleButton(CollapsibleButtonGroup pge, string text, string tooltip, Action<bool> stateChanged, bool DefaultState = false)
+            : this(pge.buttonGroup, text, tooltip, tooltip, stateChanged, null, null, DefaultState)
+        {
         }
 
         public ToggleButton(MenuPage pge, string text, string offTooltip, string onTooltip, Action<bool> stateChanged, Sprite OnImage = null, Sprite OffImage = null)
@@ -90,21 +112,54 @@ namespace JoanpixerButtonAPI.Controls
         {
         }
 
+        public ToggleButton(MenuPage pge, string text, string offTooltip, string onTooltip, Action<bool> stateChanged, Sprite OnImage, Sprite OffImage, bool DefaultState)
+            : this(pge.menuContents, text, offTooltip, onTooltip, stateChanged, OnImage, OffImage, DefaultState)
+        {
+        }
+
+        public ToggleButton(ButtonGroup grp, string text, string offTooltip, string onTooltip, Action<bool> stateChanged, Sprite OnImage, Sprite OffImage, bool DefaultState)
+            : this(grp.gameObject.transform, text, offTooltip, onTooltip, stateChanged, OnImage, OffImage, DefaultState)
+        {
+        }
+
+        public ToggleButton(CollapsibleButtonGroup grp, string text, string offTooltip, string onTooltip, Action<bool> stateChanged, Sprite OnImage, Sprite OffImage, bool DefaultState)
+            : this(grp.buttonGroup, text, offTooltip, onTooltip, stateChanged, OnImage, OffImage, DefaultState)
+        {
+        }
+
         [Obsolete]
         public ToggleButton(MenuPage pge, string text, string offTooltip, string onTooltip, Action<bool> stateChanged, Sprite OnImage)
-            : this(pge.menuContents, text, offTooltip, onTooltip, stateChanged, OnImage)
+            : this(pge.menuContents, text, offTooltip, onTooltip, stateChanged, OnImage, null)
         {
         }
 
         [Obsolete]
         public ToggleButton(ButtonGroup grp, string text, string offTooltip, string onTooltip, Action<bool> stateChanged, Sprite OnImage)
-            : this(grp.gameObject.transform, text, offTooltip, onTooltip, stateChanged, OnImage)
+            : this(grp.gameObject.transform, text, offTooltip, onTooltip, stateChanged, OnImage, null)
         {
         }
 
         [Obsolete]
         public ToggleButton(CollapsibleButtonGroup grp, string text, string offTooltip, string onTooltip, Action<bool> stateChanged, Sprite OnImage)
-            : this(grp.buttonGroup, text, offTooltip, onTooltip, stateChanged, OnImage)
+            : this(grp.buttonGroup, text, offTooltip, onTooltip, stateChanged)
+        {
+        }
+
+        [Obsolete]
+        public ToggleButton(MenuPage pge, string text, string offTooltip, string onTooltip, Action<bool> stateChanged, Sprite OnImage, bool DefaultState)
+            : this(pge.menuContents, text, offTooltip, onTooltip, stateChanged, OnImage, null, DefaultState)
+        {
+        }
+
+        [Obsolete]
+        public ToggleButton(ButtonGroup grp, string text, string offTooltip, string onTooltip, Action<bool> stateChanged, Sprite OnImage, bool DefaultState)
+            : this(grp.gameObject.transform, text, offTooltip, onTooltip, stateChanged, OnImage, null, DefaultState)
+        {
+        }
+
+        [Obsolete]
+        public ToggleButton(CollapsibleButtonGroup grp, string text, string offTooltip, string onTooltip, Action<bool> stateChanged, Sprite OnImage, bool DefaultState)
+            : this(grp.buttonGroup, text, offTooltip, onTooltip, stateChanged, OnImage, DefaultState)
         {
         }
     }

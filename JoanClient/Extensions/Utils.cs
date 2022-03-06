@@ -16,7 +16,6 @@ using System;
 using JoanpixerButtonAPI.Pages;
 using JoanpixerClient.Features.Worlds;
 using JoanpixerClient.Modules;
-using LoadSprite;
 using VRC.Udon;
 
 namespace JoanpixerClient
@@ -33,6 +32,14 @@ namespace JoanpixerClient
         private static ToggleButton Speedhack;
         private static ToggleButton QuestSpoofOn;
         private static ToggleButton Murderer4;
+        private static ToggleButton PatreonSelfButton;
+        private static ToggleButton DoorsOffButton;
+        private static ToggleButton Laser;
+        private static ToggleButton WeaponsInCooldown;
+        private static ToggleButton GodMode;
+        private static ToggleButton CluesESP;
+        private static ToggleButton PickupBeartrapsButton;
+        private static ToggleButton ESP;
         public static SingleButton WorldHacks;
         private static ToggleButton Murderer3;
         private static ToggleButton AnnounceGhost;
@@ -130,16 +137,16 @@ namespace JoanpixerClient
 
                 WorldHacks = new SingleButton(MainMenuButtons, "Worlds Hacks", "Opens Worlds Exploits Menu", () =>
                 {
-                    if (!Murder3.worldLoaded && !Murder4.worldLoaded && !Ghost.worldLoaded && !AmongUs.worldLoaded)
-                        MelonCoroutines.Start(Notification("Available Worlds: Murder 3/4, Among Us and Ghost", Color.green));
                     if (Murder4.worldLoaded)
                         Murder4Menu.OpenMenu();
-                    if (Ghost.worldLoaded)
+                    else if (Ghost.worldLoaded)
                         GhostMenu.OpenMenu();
-                    if (Murder3.worldLoaded)
+                    else if (Murder3.worldLoaded)
                         Murder3Menu.OpenMenu();
-                    if (AmongUs.worldLoaded)
+                    else if (AmongUs.worldLoaded)
                         AmongUsMenu.OpenMenu();
+                    else
+                        MelonCoroutines.Start(Notification("Available Worlds: Murder 3/4, Among Us and Ghost", Color.green));
                 }, false);
 
                 #region Murder4
@@ -147,22 +154,23 @@ namespace JoanpixerClient
                 Murderer4 = new ToggleButton(Murder4Buttons, "Announce Murderer", "Shows you the Murderer", "Shows you the Murderer", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
+                    Create.Ini.SetBool("Murder4", "AnnounceMurderer", val);
                     if (val)
                     {
                         Features.HighlightsComponent.CheckMurdererESP();
                         PatchManager.AnnounceMurderer4 = true;
-                        Create.Ini.SetBool("Toggles", "Murder4", true);
+                        Create.Ini.SetBool("Murder4", "AnnounceMurderer", true);
                         var Murderer = $"Murderer is {Murder4.MurderText.GetComponent<Text>().m_Text}";
                         MelonCoroutines.Start(Notification(Murderer, Color.red));
                     }
                     else
                     {
                         PatchManager.AnnounceMurderer4 = false;
-                        Create.Ini.SetBool("Toggles", "Murder4", false);
+                        Create.Ini.SetBool("Murder4", "AnnounceMurderer", false);
                     }
                 });
 
-                Murderer4.SetToggleState(Create.Ini.GetBool("Toggles", "Murder4"));
+                Murderer4.SetToggleState(Create.Ini.GetBool("Murder4", "AnnounceMurderer"));
 
                 var UnlockIcon = (Environment.CurrentDirectory + "\\Joanpixer\\unlock.png").LoadSpriteFromDisk();
 
@@ -209,9 +217,10 @@ namespace JoanpixerClient
 
                 var DoorsOffIcon = (Environment.CurrentDirectory + "\\Joanpixer\\doorsoff.png").LoadSpriteFromDisk();
 
-                new ToggleButton(Murder4Buttons, "Doors Off", "Disable Doors", "Enable Doors", (val) =>
+                DoorsOffButton = new ToggleButton(Murder4Buttons, "Doors Off", "Disable Doors", "Enable Doors", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
+                    Create.Ini.SetBool("Murder4", "DoorsOff", val);
                     if (val)
                     {
                         Murder4.doors.SetActive(false);
@@ -220,7 +229,9 @@ namespace JoanpixerClient
                     {
                         Murder4.doors.SetActive(true);
                     }
-                }, DoorsOffIcon, null).SetToggleState(false, false);
+                }, DoorsOffIcon, null);
+
+                DoorsOffButton.SetToggleState(Create.Ini.GetBool("Murder4", "DoorsOff"));
 
                 new SimpleSingleButton(Murder4Buttons, "Lights On", "Turns Lights On", () =>
                 {
@@ -326,11 +337,12 @@ namespace JoanpixerClient
 
                 #endregion
 
-                new ToggleButton(Murder4Buttons, "Patreon Self", null, null, (val) =>
+                PatreonSelfButton = new ToggleButton(Murder4Buttons, "Patreon Self", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
                     {
+                        Create.Ini.SetBool("Murder4", "PatreonSelf", val);
                         Murder4.patreonself = val;
                         if (val)
                         {
@@ -343,14 +355,16 @@ namespace JoanpixerClient
                         }
                     }
                     catch { }
-                }).SetToggleState(false, false);
+                });
 
-                new ToggleButton(Murder4Buttons, "Pickup Beartraps", null, null, (val) =>
+                PatreonSelfButton.SetToggleState(Create.Ini.GetBool("Murder4", "PatreonSelf"));
+
+                PickupBeartrapsButton = new ToggleButton(Murder4Buttons, "Pickup Beartraps", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
                     {
-                        Murder4.pickupweapontoggle = val;
+                        Create.Ini.SetBool("Murder4", "PickupBeartraps", val);
                         if (val)
                         {
                             MelonCoroutines.Start(Murder4.PickupBearTraps());
@@ -361,15 +375,19 @@ namespace JoanpixerClient
                             Murder4.DisablePickupBearTraps();
                         }
                     }
-                    catch { }
-                }).SetToggleState(false, false);
+                    catch{}
+                });
 
-                new ToggleButton(Murder4Buttons, "Pickup Weapon in Cooldown", "Allows you to pickup every weapon that's in cooldown", "Allows you to pickup every weapon that's in cooldown", (val) =>
+                PickupBeartrapsButton.SetToggleState(Create.Ini.GetBool("Murder4", "PickupBeartraps"));
+
+
+                WeaponsInCooldown = new ToggleButton(Murder4Buttons, "Pickup Weapon in Cooldown", "Allows you to pickup every weapon that's in cooldown", "Allows you to pickup every weapon that's in cooldown", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
                     {
                         Murder4.pickupweapontoggle = val;
+                        Create.Ini.SetBool("Murder4", "WeaponsInCooldown", val);
                         if (val)
                         {
                             MelonCoroutines.Start(Murder4.PickupWeaponInCooldown());
@@ -380,7 +398,10 @@ namespace JoanpixerClient
                         }
                     }
                     catch { }
-                }).SetToggleState(false, false);
+                });
+
+                WeaponsInCooldown.SetToggleState(Create.Ini.GetBool("Murder4", "WeaponsInCooldown"));
+
 
                 #region Teleports
 
@@ -481,32 +502,35 @@ namespace JoanpixerClient
 
                 #endregion
 
-                new ToggleButton(Murder4Buttons, "Clues ESP", null, null, (val) =>
+                CluesESP = new ToggleButton(Murder4Buttons, "Clues ESP", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Murder4.CluesESP = val;
+                    Create.Ini.SetBool("Murder4", "CluesESP", val);
                     if (!val)
                     {
                         foreach (var clue in Murder4.Clues)
                         {
-                            if (clue.gameObject.name == "geo" && clue.gameObject.transform.parent.gameObject.name.Contains("Clue"))
-                            {
-                                ToggleOutline(clue, false);
-                            }
+                            ToggleOutline(clue, false);
                         }
                     }
-                }).SetToggleState(false, false);
+                });
+
+                CluesESP.SetToggleState(Create.Ini.GetBool("Murder4", "CluesESP"));
 
                 new ToggleButton(Murder4Buttons, "Auto TP Detective", "TP to Detective Room when the game starts", "TP to Detective Room when the game starts", (val) =>
                 {
                     PatchManager.TPDetective = val;
                 }).SetToggleState(false, false);
 
-                new ToggleButton(Murder4Buttons, "Revolver Laser Sight", "Toggles Laser Sight", "Toggles Laser Sight", (val) =>
+                Laser = new ToggleButton(Murder4Buttons, "Revolver Laser Sight", "Toggles Laser Sight", "Toggles Laser Sight", (val) =>
                 {
+                    Create.Ini.SetBool("Murder4", "LaserSight", val);
                     Murder4.LaserSight = val;
                     GameObject.Find("Game Logic/Weapons/Revolver/Recoil Anim/Recoil/Laser Sight").active = val;
-                }).SetToggleState(false);
+                });
+
+                Laser.SetToggleState(Create.Ini.GetBool("Murder4", "LaserSight"));
 
                 new ToggleButton(Murder4Buttons, "Anti Set Role Exploit", "Avoids Set Role Exploit", "Avoids Set Role Exploit", (val) =>
                 {
@@ -793,13 +817,13 @@ namespace JoanpixerClient
                 new SimpleSingleButton(EndingsButtons, "Crewmates\nWin", "Forces Crewmates to win", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncVictoryB");
+                    AmongUs.CallUdonEvent("SyncVictoryC");
                 });
 
                 new SimpleSingleButton(EndingsButtons, "Imposters\nWin", "Forces Imposters to win", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("SyncVictoryM");
+                    AmongUs.CallUdonEvent("SyncVictoryI");
                 });
 
                 new SimpleSingleButton(EndingsButtons, "Abort Game", "Aborts Game", () =>
@@ -910,14 +934,6 @@ namespace JoanpixerClient
                     AmongUs.CallUdonEvent("AdminScan");
                 });
 
-                new SimpleSingleButton(AmongUsButtons, "Kill Sound", "Global Kill Sound", () =>
-                {
-                    if (!AmongUs.worldLoaded) return;
-                    AmongUs.CallUdonEvent("OnLocalPlayerKillsOther");
-                });
-
-
-
                 #endregion
 
                 #region Protections
@@ -965,6 +981,11 @@ namespace JoanpixerClient
                 {
                     PatchManager.serialize = val;
                     FreezeClone();
+                });
+
+                new ToggleButton(ProtectionsButtons, "Lock Instance", "Ability to Lock the instance so noone can join", "Ability to Lock the instance so noone can join", (val) =>
+                {
+                    PatchManager.LockInstance = val;
                 });
 
                 #endregion
@@ -1038,15 +1059,20 @@ namespace JoanpixerClient
 
                 var GodmodeIcon = (Environment.CurrentDirectory + "\\Joanpixer\\god.png").LoadSpriteFromDisk();
 
-                new ToggleButton(MainMenuButtons, "GodMode", "Gives you Immortality", "Gives you Immortality", (val) =>
+                GodMode = new ToggleButton(MainMenuButtons, "GodMode", "Gives you Immortality", "Gives you Immortality", (val) =>
                 {
+                    Create.Ini.SetBool("Toggles", "GodMode", val);
                     PatchManager.Godmode = val;
-                }, GodmodeIcon, null).SetToggleState(false, false);
+                }, GodmodeIcon, null);
+
+                GodMode.SetToggleState(Create.Ini.GetBool("Toggles", "GodMode"));
+
 
                 var Movement = new ButtonGroup(mainmenu, "Movement");
 
-                new ToggleButton(Movement, "ESP", "Allows you to see players through walls", "Allows you to see players through walls", (val) =>
+                ESP = new ToggleButton(Movement, "ESP", "Allows you to see players through walls", "Allows you to see players through walls", (val) =>
                 {
+                    Create.Ini.SetBool("Toggles", "ESP", val);
                     if (val)
                     {
                         Features.HighlightsComponent.ESPEnabled = true;
@@ -1057,15 +1083,17 @@ namespace JoanpixerClient
                         Features.HighlightsComponent.ESPEnabled = false;
                         Features.HighlightsComponent.DisableESP();
                     }
-                }).SetToggleState(false, false);
+                });
+
+                ESP.SetToggleState(Create.Ini.GetBool("Toggles", "ESP"));
+
                 if (!System.IO.File.Exists(Environment.CurrentDirectory + "\\Mods\\AbyssLoader.dll"))
                 {
                     Noclip = new ToggleButton(Movement, "Noclip", null, null, (val) =>
                     {
                         if (val)
                         {
-                            FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>()
-                                .enabled = false;
+                            FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = false;
                             FlightMod.Flight.player = FlightMod.PlayerExtensions.LocalPlayer.gameObject;
                             FlightMod.Flight.flying = true;
                             NoclipOn = true;
@@ -1074,8 +1102,7 @@ namespace JoanpixerClient
                         {
                             try
                             {
-                                FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>()
-                                    .enabled = true;
+                                FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = true;
                                 FlightMod.Flight.flying = false;
                                 NoclipOn = false;
                             }
@@ -1472,25 +1499,33 @@ namespace JoanpixerClient
             {
                 if (SpeedOn)
                 {
-                    Speedhack.SetToggleState(false, true);
+                    Speedhack.SetToggleState(false, false);
                     SpeedOn = false;
+                    Features.Speedhack.speedEnabled = false;
                 }
                 else
                 {
-                    Speedhack.SetToggleState(true, true);
+                    Speedhack.SetToggleState(true, false);
                     SpeedOn = true;
+                    Features.Speedhack.speedEnabled = true;
                 }
             }
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyUp(KeyCode.F) && !System.IO.File.Exists(Environment.CurrentDirectory + "\\Mods\\AbyssLoader.dll"))
             {
                 if (NoclipOn)
                 {
-                    Noclip.SetToggleState(false, true);
+                    Noclip.SetToggleState(false, false);
+                    FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = true;
+                    FlightMod.Flight.player = FlightMod.PlayerExtensions.LocalPlayer.gameObject;
+                    FlightMod.Flight.flying = false;
                     NoclipOn = false;
                 }
                 else
                 {
-                    Noclip.SetToggleState(true, true);
+                    FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = false;
+                    FlightMod.Flight.player = FlightMod.PlayerExtensions.LocalPlayer.gameObject;
+                    FlightMod.Flight.flying = true;
+                    Noclip.SetToggleState(true, false);
                     NoclipOn = true;
                 }
             }

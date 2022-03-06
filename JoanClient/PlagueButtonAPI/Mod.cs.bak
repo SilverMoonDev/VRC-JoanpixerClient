@@ -29,7 +29,7 @@ namespace PlagueButtonAPI
                 }
                 catch (Exception ex)
                 {
-                    JoanpixerClient.JoanpixerMain.Logger.Error("Encountered an exception while running OnApplicationStart of \"" + eventListener.GetType().FullName + "\":\n" + ex);
+                    JoanpixerClient.Logger.Error("Encountered an exception while running OnApplicationStart of \"" + eventListener.GetType().FullName + "\":\n" + ex);
                 }
             }
 
@@ -46,7 +46,7 @@ namespace PlagueButtonAPI
                 }
                 catch (Exception ex)
                 {
-                    JoanpixerClient.JoanpixerMain.Logger.Error("Encountered an exception while running OnSceneInit of \"" + eventListener.GetType().FullName + "\":\n" + ex);
+                    JoanpixerClient.Logger.Error("Encountered an exception while running OnSceneInit of \"" + eventListener.GetType().FullName + "\":\n" + ex);
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace PlagueButtonAPI
                 }
                 catch (Exception ex)
                 {
-                    JoanpixerClient.JoanpixerMain.Logger.Error("Encountered an exception while running OnSceneLoad of \"" + eventListener.GetType().FullName + "\":\n" + ex);
+                    JoanpixerClient.Logger.Error("Encountered an exception while running OnSceneLoad of \"" + eventListener.GetType().FullName + "\":\n" + ex);
                 }
             }
         }
@@ -76,7 +76,7 @@ namespace PlagueButtonAPI
                 }
                 catch (Exception ex)
                 {
-                    JoanpixerClient.JoanpixerMain.Logger.Error("Encountered an exception while running OnSceneUnload of \"" + eventListener.GetType().FullName + "\":\n" + ex);
+                    JoanpixerClient.Logger.Error("Encountered an exception while running OnSceneUnload of \"" + eventListener.GetType().FullName + "\":\n" + ex);
                 }
             }
         }
@@ -96,7 +96,7 @@ namespace PlagueButtonAPI
                 }
                 catch (Exception ex)
                 {
-                    JoanpixerClient.JoanpixerMain.Logger.Error("Encountered an exception while running UiManagerInit of \"" + eventListener.GetType().FullName + "\":\n" + ex);
+                    JoanpixerClient.Logger.Error("Encountered an exception while running UiManagerInit of \"" + eventListener.GetType().FullName + "\":\n" + ex);
                 }
             }
 

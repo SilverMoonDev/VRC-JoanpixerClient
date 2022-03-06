@@ -34,7 +34,7 @@ namespace JoanpixerButtonAPI.Pages
         {
             if (ButtonAPI.menuPageBase == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("Fatal Error: ButtonAPI.menuPageBase Is Null!");
+                JoanpixerClient.Logger.Error("Fatal Error: ButtonAPI.menuPageBase Is Null!");
                 return;
             }
 
@@ -149,7 +149,7 @@ namespace JoanpixerButtonAPI.Pages
             }
             catch (Exception ex)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("Exception Caught When Making Page At Region: " + region + "\n\n" + ex);
+                JoanpixerClient.Logger.Error("Exception Caught When Making Page At Region: " + region + "\n\n" + ex);
             }
         }
 

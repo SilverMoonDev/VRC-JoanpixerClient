@@ -15,7 +15,7 @@ namespace JoanpixerClient.Features
 
         public static void Toggle()
         {
-            // JoanpixerClient.JoanpixerMain.Logger.Msg("Speedhack toggled.");
+            // JoanpixerClient.Logger.Msg("Speedhack toggled.");
             speedEnabled = !speedEnabled;
         }
 
@@ -64,7 +64,7 @@ namespace JoanpixerClient.Features
             catch (Exception e)
             {
                 // SHUT THE FUCK UP NULL REFERENCE EXCEPTION.
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Swallowing caught exception in Speedhack.Main(). ->\n" + e.ToString());
+                JoanpixerClient.Logger.Msg("Swallowing caught exception in Speedhack.Main(). ->\n" + e.ToString());
             }
 
         }

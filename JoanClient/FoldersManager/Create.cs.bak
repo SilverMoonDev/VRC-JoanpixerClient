@@ -37,21 +37,21 @@ namespace JoanpixerClient.FoldersManager
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\doorsoff.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading doorsoff.png");
+                JoanpixerClient.Logger.Msg("Downloading doorsoff.png");
                 client.DownloadFile(new Uri($"{url}doorsoff.png"), "Joanpixer\\doorsoff.png");
             }
 
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\god.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading god.png");
+                JoanpixerClient.Logger.Msg("Downloading god.png");
                 client.DownloadFile(new Uri($"{url}god.png"), "Joanpixer\\god.png");
             }
 
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\Ghost.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading Ghost.png");
+                JoanpixerClient.Logger.Msg("Downloading Ghost.png");
                 client.DownloadFile(new Uri($"{url}Ghost.png"), "Joanpixer\\Ghost.png");
             }
 
@@ -64,49 +64,49 @@ namespace JoanpixerClient.FoldersManager
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\amongus.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading amongus.png");
+                JoanpixerClient.Logger.Msg("Downloading amongus.png");
                 client.DownloadFile(new Uri($"{url}amongus.png"), "Joanpixer\\amongus.png");
             }
 
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\killself.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading killself.png");
+                JoanpixerClient.Logger.Msg("Downloading killself.png");
                 client.DownloadFile(new Uri($"{url}killself.png"), "Joanpixer\\killself.png");
             }
 
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\Protections Icon.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading Protections Icon.png");
+                JoanpixerClient.Logger.Msg("Downloading Protections Icon.png");
                 client.DownloadFile(new Uri($"{url}Protections%20Icon.png"), "Joanpixer\\Protections Icon.png");
             }
 
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\knife.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading knife.png");
+                JoanpixerClient.Logger.Msg("Downloading knife.png");
                 client.DownloadFile(new Uri($"{url}knife.png"), "Joanpixer\\knife.png");
             }
 
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\pickup.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading pickup.png");
+                JoanpixerClient.Logger.Msg("Downloading pickup.png");
                 client.DownloadFile(new Uri($"{url}pickup.png"), "Joanpixer\\pickup.png");
             }
 
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\unlock.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading unlock.png");
+                JoanpixerClient.Logger.Msg("Downloading unlock.png");
                 client.DownloadFile(new Uri($"{url}unlock.png"), "Joanpixer\\unlock.png");
             }
 
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\sound.wav"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading sound.wav");
+                JoanpixerClient.Logger.Msg("Downloading sound.wav");
                 client.DownloadFile(new Uri($"{url}sound.wav"), "Joanpixer\\sound.wav");
             }
 

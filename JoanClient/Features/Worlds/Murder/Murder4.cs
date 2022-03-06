@@ -5,6 +5,7 @@ using JoanpixerClient.Modules;
 using VRC.SDKBase;
 using System.Collections.Generic;
 using System;
+using JoanpixerClient.FoldersManager;
 
 namespace JoanpixerClient.Features.Worlds
 {
@@ -18,11 +19,11 @@ namespace JoanpixerClient.Features.Worlds
         public static bool doorlock;
         public static bool lockdrawers;
         public static bool lightsoff;
-        public static bool patreonself;
+        public static bool patreonself = Create.Ini.GetBool("Murder4", "PatreonSelf");
         public static bool givepatreon;
-        public static bool pickupweapontoggle;
-        public static bool CluesESP;
-        public static bool LaserSight;
+        public static bool pickupweapontoggle = Create.Ini.GetBool("Murder4", "WeaponsInCooldown");
+        public static bool CluesESP = Create.Ini.GetBool("Murder4", "CluesESP");
+        public static bool LaserSight = Create.Ini.GetBool("Murder4", "LaserSight");
         public static bool spamsounds;
         public static GameObject doors;
         public static GameObject MurderText;
@@ -35,7 +36,6 @@ namespace JoanpixerClient.Features.Worlds
         private static List<UdonBehaviour> Doors = new List<UdonBehaviour>();
         private static List<UdonBehaviour> Drawers = new List<UdonBehaviour>();
         public static List<Renderer> Clues = new List<Renderer>();
-        private static GameObject nonpatronobject = GameObject.Find("Game Logic/Weapons/Revolver/Recoil Anim/Recoil/geo");
         private static List<VRC_Pickup> Pickups = new List<VRC_Pickup>();
 
 
@@ -46,6 +46,14 @@ namespace JoanpixerClient.Features.Worlds
             #endregion
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_858dfdfc-1b48-4e1e-8a43-f0edc611e5fe")
             {
+                if (Create.Ini.GetBool("Murder4", "LaserSight"))
+                {
+                    GameObject.Find("Game Logic/Weapons/Revolver/Recoil Anim/Recoil/Laser Sight").active = true;
+                }
+                if (Create.Ini.GetBool("Murder4", "PatreonSelf"))
+                {
+                    MelonLoader.MelonCoroutines.Start(GivePatreonSelf());
+                }
                 worldLoaded = true;
                 var Murder4Icon = (Environment.CurrentDirectory + "\\Joanpixer\\knife.png").LoadSpriteFromDisk();
                 Utils.WorldHacks.SetIcon(Murder4Icon);
@@ -69,6 +77,7 @@ namespace JoanpixerClient.Features.Worlds
                 UdonBehaviour door1 = GameObject.Find(doors + "/Door")?.GetComponent<UdonBehaviour>();
                 Doors.Add(door1);
                 //Sounds
+                SoundsBehaviours.Clear();
                 foreach (var sounds in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                 {
                     if (sounds._eventTable.ContainsKey("Play"))
@@ -77,6 +86,7 @@ namespace JoanpixerClient.Features.Worlds
                     }
                 }
                 //Switchboxes
+                SwitchsBehaviours.Clear();
                 foreach (var switchboxes in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                 {
                     if (switchboxes.gameObject.name.Contains("Switchbox ("))
@@ -85,11 +95,13 @@ namespace JoanpixerClient.Features.Worlds
                     }
                 }
                 //Pickups
+                Pickups.Clear();
                 foreach (VRC_Pickup Pickupsuwu in Resources.FindObjectsOfTypeAll<VRC_Pickup>())
                 {
                     Pickups.Add(Pickupsuwu);
                 }
                 //Doors
+                Doors.Clear();
                 foreach (var door in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                 {
                     if (door.gameObject.name.Contains("Door ("))
@@ -98,6 +110,7 @@ namespace JoanpixerClient.Features.Worlds
                     }
                 }
                 //Drawers
+                Drawers.Clear();
                 foreach (var drawers in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                 {
                     if (drawers.gameObject.name.Contains("Drawer"))
@@ -110,6 +123,7 @@ namespace JoanpixerClient.Features.Worlds
                     }
                 }
                 //Clues
+                Clues.Clear();
                 foreach (var clue in Resources.FindObjectsOfTypeAll<Renderer>())
                 {
                     if (clue.gameObject.name == "geo" && clue.gameObject.transform.parent.gameObject.name.Contains("Clue"))
@@ -117,6 +131,8 @@ namespace JoanpixerClient.Features.Worlds
                         Clues.Add(clue);
                     }
                 }
+                if (Create.Ini.GetBool("Murder4", "DoorsOff"))
+                    doors.SetActive(false);
             }
             else
             {
@@ -234,11 +250,10 @@ namespace JoanpixerClient.Features.Worlds
         {
             foreach (var clue in Clues)
             {
-                Utils.ToggleOutline(clue, false);
+                if (!clue.gameObject.active)
+                    Utils.ToggleOutline(clue, false);
                 if (clue.gameObject.active)
-                {
                     Utils.ToggleOutline(clue, true);
-                }
             }
         }
 
@@ -276,14 +291,13 @@ namespace JoanpixerClient.Features.Worlds
                 yield return new WaitForSeconds(0.2f);
                 try
                 {
+                    var nonpatronobject = GameObject.Find("Game Logic/Weapons/Revolver/Recoil Anim/Recoil/geo");
                     if (revolverpickup.currentPlayer.playerId == Utils.CurrentUser.field_Private_VRCPlayerApi_0.playerId && nonpatronobject.active)
                     {
                         CallRevolver("PatronSkin");
                     }
                 }
-                catch
-                {
-                }
+                catch {}
             }
         }
 
@@ -297,14 +311,13 @@ namespace JoanpixerClient.Features.Worlds
                 yield return new WaitForSeconds(0.2f);
                 try
                 {
+                    var nonpatronobject = GameObject.Find("Game Logic/Weapons/Revolver/Recoil Anim/Recoil/geo");
                     if (revolverpickup.currentPlayer.playerId == player.prop_VRCPlayerApi_0.playerId && nonpatronobject.active)
                     {
                         CallRevolver("PatronSkin");
                     }
                 }
-                catch
-                {
-                }
+                catch{}
             }
         }
 
@@ -322,7 +335,7 @@ namespace JoanpixerClient.Features.Worlds
 
         public static IEnumerator PickupWeaponInCooldown()
         {
-            while (pickupweapontoggle)
+            while (pickupweapontoggle && worldLoaded)
             {
                 foreach (VRC_Pickup PickupCooldown in Pickups)
                 {
@@ -330,6 +343,7 @@ namespace JoanpixerClient.Features.Worlds
                     yield return new WaitForSeconds(0.1f);
                 }
             }
+            yield return null;
         }
 
         public static void TurnLightsOn()

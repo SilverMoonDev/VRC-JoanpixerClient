@@ -225,7 +225,7 @@ namespace JoanpixerButtonAPI.Misc
                 }
                 catch (Exception ex)
                 {
-                    JoanpixerClient.JoanpixerMain.Logger.Error("Error while executing delegate:\n" + ex);
+                    JoanpixerClient.JoanpixerClient.Logger.Error("Error while executing delegate:\n" + ex);
                 }
             }
         }

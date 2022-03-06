@@ -70,21 +70,21 @@ namespace JoanpixerButtonAPI
 
             if (singleButtonBase == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("singleButtonBase == null!");
+                JoanpixerClient.Logger.Error("singleButtonBase == null!");
             }
 
             toggleButtonBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Settings/Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/Buttons_UI_Elements_Row_1/Button_ToggleQMInfo")?.gameObject;
 
             if (toggleButtonBase == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("toggleButtonBase == null!");
+                JoanpixerClient.Logger.Error("toggleButtonBase == null!");
             }
 
             buttonGroupBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Dashboard/ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions")?.gameObject;
 
             if (buttonGroupBase == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("buttonGroupBase == null!");
+                JoanpixerClient.Logger.Error("buttonGroupBase == null!");
             }
 
             new MenuButton(MenuType.WorldInfoMenu, MenuButtonType.WorldIfoButton, "Custom Tag", 548, -190, () =>
@@ -92,48 +92,56 @@ namespace JoanpixerButtonAPI
                 CreateTextPopup();
             });
 
-            new MenuButton(MenuType.AvatarMenu, MenuButtonType.AvatarButton, "Download VRCA", -561, -230, () =>
+            new MenuButton(MenuType.HeaderAvatarMenu, MenuButtonType.AvatarFavButton, "Download VRCA", 548, 0, () =>
             {
                 JoanpixerClient.Features.VRCA.DownloadVRCA(JoanpixerClient.Modules.AvatarFavs.currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0, JoanpixerClient.Modules.AvatarFavs.currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0.thumbnailImageUrl);
             });
 
-            var uwu = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Download VRCA/PlatformAnyIcon");
+            var uwu = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)/UwU/Horizontal/FavoritesCountSpacingText");
+            var uwu1 = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)/UwU/Horizontal/FavoritesCurrentCountText");
+            var uwu2 = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)/UwU/Horizontal/FavoritesCountDividerText");
+            var uwu3 = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)/UwU/Horizontal/FavoritesMaxAvailableText");
+            var uwu4 = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)/UwU/Icon_VRC+");
 
             UnityEngine.Object.Destroy(uwu);
+            UnityEngine.Object.Destroy(uwu1);
+            UnityEngine.Object.Destroy(uwu2);
+            UnityEngine.Object.Destroy(uwu3);
+            UnityEngine.Object.Destroy(uwu4);
 
             buttonGroupHeaderBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Settings/Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/QM_Foldout_UI_Elements")?.gameObject;
 
             if (buttonGroupHeaderBase == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("buttonGroupHeaderBase == null!");
+                JoanpixerClient.Logger.Error("buttonGroupHeaderBase == null!");
             }
 
             menuPageBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Dashboard")?.gameObject;
 
             if (menuPageBase == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("menuPageBase == null!");
+                JoanpixerClient.Logger.Error("menuPageBase == null!");
             }
 
             menuTabBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings")?.gameObject;
 
             if (menuTabBase == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("menuTabBase == null!");
+                JoanpixerClient.Logger.Error("menuTabBase == null!");
             }
 
             wingSingleButtonBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/Wing_Left/Container/InnerContainer/WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore")?.gameObject;
 
             if (wingSingleButtonBase == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("wingSingleButtonBase == null!");
+                JoanpixerClient.Logger.Error("wingSingleButtonBase == null!");
             }
 
             sliderBase = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_AudioSettings/Content/Audio/VolumeSlider_Master")?.gameObject;
 
             if (sliderBase == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("sliderBase == null!");
+                JoanpixerClient.Logger.Error("sliderBase == null!");
             }
 
             //For Toggles
@@ -141,14 +149,14 @@ namespace JoanpixerButtonAPI
 
             if (onIconSprite == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("onIconSprite == null!");
+                JoanpixerClient.Logger.Error("onIconSprite == null!");
             }
 
             xIconSprite = GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Here/ScrollRect/Viewport/VerticalLayoutGroup/Buttons_WorldActions/Button_FavoriteWorld/Icon_Secondary")?.GetComponent<Image>()?.sprite;
 
             if (xIconSprite == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("xIconSprite == null!");
+                JoanpixerClient.Logger.Error("xIconSprite == null!");
             }
 
             while (PauseInit)

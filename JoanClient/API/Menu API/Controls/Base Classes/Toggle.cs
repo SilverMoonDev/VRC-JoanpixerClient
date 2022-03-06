@@ -27,6 +27,9 @@ namespace JoanpixerButtonAPI.Controls.Base_Classes
 
         public bool ToggleState => toggle?.isOn ?? false;
 
+        public bool NextState = false;
+        public bool NextIsInvoke = false;
+
         public void SetAction(Action<bool> newAction)
         {
             toggle.onValueChanged = new UnityEngine.UI.Toggle.ToggleEvent();
@@ -41,41 +44,46 @@ namespace JoanpixerButtonAPI.Controls.Base_Classes
             toggle.interactable = val;
         }
 
-        private static MethodInfo SetIconToggledStateMethod = null;
-        private void SetIconToggledState(bool val)
-        {
-            if (SetIconToggledStateMethod == null)
-            {
-                SetIconToggledStateMethod = typeof(ToggleIcon).GetMethods().First(m => m.Name.Contains("_Void_Boolean_") && m.GetParameters().Length == 1 && XrefScanner.XrefScan(m).Any(jt => jt.Type == XrefType.Global && jt.ReadAsObject() != null && jt.ReadAsObject().ToString() == "Toggled"));
-            }
-
-            SetIconToggledStateMethod.Invoke(gameObject.GetComponent<ToggleIcon>(), new object[] { val });
-        }
+        public bool AllowUserInvoke = true;
 
         public void SetToggleState(bool newState, bool invoke = false)
         {
-            var onValueChanged = toggle.onValueChanged;
-            toggle.onValueChanged = new UnityEngine.UI.Toggle.ToggleEvent();
-            toggle.isOn = newState;
-            toggle.onValueChanged = onValueChanged;
+            NextState = newState;
+            NextIsInvoke = invoke;
 
-            SetIconToggledState(newState);
-
-            if (tooltip != null)
+            if (gameObject.active)
             {
-                tooltip.field_Private_Boolean_1 = !newState;
-            }
+                AllowUserInvoke = false;
 
-            if (invoke)
-            {
-                toggle.onValueChanged.Invoke(newState);
+                toggle.isOn = newState;
+
+                AllowUserInvoke = true;
+
+                if (tooltip != null)
+                {
+                    tooltip.field_Private_Boolean_1 = !newState;
+                }
+
+                if (invoke)
+                {
+                    toggle.onValueChanged.Invoke(newState);
+                }
             }
         }
 
+        public bool ToolTipOne = false;
         public void SetTooltip(string newOffTooltip, string newOnTooltip)
         {
-            tooltip.field_Public_String_0 = newOnTooltip;
-            tooltip.field_Public_String_1 = newOffTooltip;
+            if (!ToolTipOne)
+            {
+                tooltip.field_Public_String_0 = newOnTooltip;
+                tooltip.field_Public_String_1 = newOffTooltip;
+            }
+            else
+            {
+                tooltip.field_Public_String_0 = newOffTooltip;
+                tooltip.field_Public_String_1 = newOnTooltip;
+            }
         }
 
         public void SetOnIcon(Sprite newIcon)

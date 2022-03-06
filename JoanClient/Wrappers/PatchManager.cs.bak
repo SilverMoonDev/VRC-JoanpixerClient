@@ -14,7 +14,6 @@ using VRC.SDKBase;
 using AccessTools = HarmonyLib.AccessTools;
 using HarmonyMethod = HarmonyLib.HarmonyMethod;
 using Player = VRC.Player;
-using static JoanpixerClient.Utils;
 
 namespace JoanpixerClient
 {
@@ -44,13 +43,10 @@ namespace JoanpixerClient
                 Instance.Patch(AccessTools.Property(typeof(Tools), "Platform").GetMethod, null, GetPatch("PlatformSpoof")); 
                 Instance.Patch(typeof(NetworkManager).GetMethod("Method_Public_Void_Player_0"), GetPatch("OnPlayerJoin"), null);
                 Instance.Patch(typeof(NetworkManager).GetMethod("OnJoinedRoom"), GetPatch("OnJoinedRoom"), null);
-                Instance.Patch(typeof(VRC_Pickup).GetMethod(nameof(VRC_Pickup.Awake)), GetPatch("Pickupsuwu"), null);
-                Instance.Patch(typeof(VRC_Interactable).GetMethod(nameof(VRC_Interactable.Awake)), GetPatch("Triggers"), null);
-                Instance.Patch(typeof(LoadBalancingClient).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0"), GetPatch("OpRaiseEventPrefix"), null, null);
             }
             catch (Exception arg)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Msg(ConsoleColor.Green, string.Format("Failed Patching {0}\n", arg));
+                JoanpixerClient.Logger.Msg(ConsoleColor.Green, string.Format("Failed Patching {0}\n", arg));
             }
         }
 
@@ -64,14 +60,13 @@ namespace JoanpixerClient
         public static bool LogCheaters;
         public static bool playsound;
         public static bool loggedin;
-        public static bool LockInstance;
         public static bool justjoined;
         public static bool serialize;
         public static bool AntiSetRoleExploit = true;
         public static bool AnnounceMurderer4 = Create.Ini.GetBool("Murder4", "AnnounceMurderer");
         public static bool AnnounceMurderer3 = Create.Ini.GetBool("Toggles", "Murder3");
         public static bool AnnounceGhost = Create.Ini.GetBool("Toggles", "Ghost");
-        public static bool InMurderGame;
+        public static bool InMurder4Game;
         public static string UwU = string.Empty;
         public static List<VRC_Pickup> Pickups = new List<VRC_Pickup>();
 
@@ -82,16 +77,6 @@ namespace JoanpixerClient
                 System.Media.SoundPlayer player = new System.Media.SoundPlayer(Environment.CurrentDirectory + "\\Joanpixer\\sound.wav");
                 player.Play();
             }
-        }
-
-        private static void Pickupsuwu(ref VRC_Pickup __instance)
-        {
-            __instance.proximity = float.MaxValue;
-        }
-
-        private static void Triggers(ref VRC_Interactable __instance)
-        {
-            __instance.proximity = float.MaxValue;
         }
 
         private static bool UdonSyncPatch(string __0, Player __1)
@@ -110,14 +95,14 @@ namespace JoanpixerClient
                 if (__0.Contains("Abort") && !__1.field_Private_VRCPlayerApi_0.isMaster ||
                     __0.Contains("SyncVictory") && !__1.field_Private_VRCPlayerApi_0.isMaster)
                 {
-                    JoanpixerClient.JoanpixerMain.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} finished the game while not being the Master");
+                    JoanpixerClient.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} finished the game while not being the Master");
                     Play();
                 }
 
                 if (__0.Contains("Assign") && !__1.field_Private_VRCPlayerApi_0.isMaster)
                 {
 
-                    JoanpixerClient.JoanpixerMain.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is giving roles while not being the Master");
+                    JoanpixerClient.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is giving roles while not being the Master");
                     Play();
                 }
 
@@ -131,7 +116,7 @@ namespace JoanpixerClient
                         }
                         else
                         {
-                            JoanpixerClient.JoanpixerMain.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
+                            JoanpixerClient.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
                             Play();
                         }
                     }
@@ -143,7 +128,7 @@ namespace JoanpixerClient
                         }
                         else
                         {
-                            JoanpixerClient.JoanpixerMain.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} released the snake while not being the murderer");
+                            JoanpixerClient.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} released the snake while not being the murderer");
                             Play();
                         }
                     }
@@ -155,13 +140,13 @@ namespace JoanpixerClient
                         }
                         else
                         {
-                            JoanpixerClient.JoanpixerMain.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
+                            JoanpixerClient.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is turning the lights off while not being the murderer");
                             Play();
                         }
                     }
                     if (__0 == "Play")
                     {
-                        JoanpixerClient.JoanpixerMain.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is spamming sounds");
+                        JoanpixerClient.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is spamming sounds");
                         Play();
                     }
                 }
@@ -176,28 +161,28 @@ namespace JoanpixerClient
                         }
                         else
                         {
-                            JoanpixerClient.JoanpixerMain.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
+                            JoanpixerClient.Logger.Msg(ConsoleColor.Yellow, $"[Cheater]: {__1.field_Private_VRCPlayerApi_0.displayName} is killing with a knife while not being the murderer");
                             Play();
                         }
                     }
                 }
             }
             
-            if (Murder4.worldLoaded && AntiSetRoleExploit && !__1.field_Private_VRCPlayerApi_0.isMaster)
+            if (Murder4.worldLoaded && AntiSetRoleExploit && InMurder4Game || Murder4.worldLoaded && AntiSetRoleExploit && !__1.field_Private_VRCPlayerApi_0.isMaster)
             {
                 if (__0.Contains("Assign")) return false;
             }
             if (Murder4.worldLoaded || Murder3.worldLoaded)
             {
-                if (__0.Contains("AssignM") && !InMurderGame)
+                if (__0.Contains("AssignM"))
                 {
-                        InMurderGame = true;
-                        MelonCoroutines.Start(ShowMurderer());
+                    InMurder4Game = true;
+                    MelonCoroutines.Start(ShowMurderer());
                 }
             }
 
-            if (Murder4.worldLoaded && __0.Contains("Abort") || Murder4.worldLoaded && __0.Contains("SyncVictory") || Murder3.worldLoaded && __0.Contains("Abort") || Murder3.worldLoaded && __0.Contains("SyncVictory"))
-                InMurderGame = false;
+            if (Murder4.worldLoaded && __0.Contains("Abort") || Murder4.worldLoaded && __0.Contains("SyncVictory"))
+                InMurder4Game = false;
 
             if (Ghost.worldLoaded && __0 == "Local_ReadyStartGame" && AnnounceGhost)
             {
@@ -205,9 +190,9 @@ namespace JoanpixerClient
             }
             try
             {
-                if (AmongUs.worldLoaded && __0 == "SyncVotedOut" && Godmode && Utils.IsWorldLoaded) return false;
+                if (AmongUs.worldLoaded && __0 == "SyncVotedOut" && Godmode) return false;
 
-                if (__0.Contains("Kill") && Godmode && Utils.IsWorldLoaded || Ghost.worldLoaded && __0.Contains("Damage") && Godmode && Utils.IsWorldLoaded) return false;
+                if (__0.Contains("Kill") && Godmode || Ghost.worldLoaded && __0.Contains("Damage") && Godmode) return false;
             }
             catch{}
 
@@ -218,7 +203,7 @@ namespace JoanpixerClient
         private static System.Collections.IEnumerator ShowMurderer()
         {
             var Murderer = "";
-            yield return new WaitForSeconds(0);
+            yield return new WaitForSeconds(0.3f);
             try
             {
                 justjoined = false;
@@ -233,13 +218,15 @@ namespace JoanpixerClient
                 if (Murder3.worldLoaded)
                 {
                     Murderer = $"Murderer is {Murder3.MurderText.GetComponent<Text>().m_Text}";
-                    if (TPDetective && Murder3.MurderText.GetComponent<Text>().m_Text != Utils.CurrentUser.field_Private_VRCPlayerApi_0.displayName)
+                    if (TPDetective && Murder3.MurderText.GetComponent<Text>().m_Text !=
+                        Utils.CurrentUser.field_Private_VRCPlayerApi_0.displayName)
                     {
                         Utils.TPLocalPlayer(GameObject.Find("Game Logic/Detective Spawn").transform.position);
                     }
                 }
             }
             catch { }
+            yield return new WaitForSeconds(0.7f);
             try
             {
                 if (Create.Ini.GetBool("Murder4", "WeaponsInCooldown"))
@@ -285,27 +272,15 @@ namespace JoanpixerClient
             return !PortalWalk;
         }
 
-        private static bool OpRaiseEventPrefix(ref byte __0, ref Il2CppSystem.Object __1, ref RaiseEventOptions __2, ref SendOptions __3)
+        private static bool OpRaiseEvent(ref byte __0, ref Il2CppSystem.Object __1, ref RaiseEventOptions __2, ref SendOptions __3)
         {
-            try
+            if (serialize)
             {
-                switch (__0)
+                if (__0 == 7 || __0 == 33)
                 {
-                    case 7:
-                        return !serialize;
-                    case 206:
-                        return !serialize;
-                    case 201:
-                        return !serialize;
-                    case 4:
-                        return !LockInstance;
-                    case 5:
-                        return !LockInstance;
-                    default:
-                        break;
+                    return false;
                 }
             }
-            catch { }
             return true;
         }
 
@@ -328,12 +303,12 @@ namespace JoanpixerClient
             loggedin = true;
             if (UnityEngine.XR.XRDevice.isPresent)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Quest Spoofed");
+                JoanpixerClient.Logger.Msg("Quest Spoofed");
             }
             else
             {
                 yield return new WaitForSeconds(13);
-                JoanpixerClient.JoanpixerMain.Logger.Error("Spoofing Quest In Desktop!");
+                JoanpixerClient.Logger.Error("Spoofing Quest In Desktop!");
                 MelonCoroutines.Start(Utils.Notification("Warning: Spoofing Quest In Desktop!", Color.red));
                 yield return new WaitForSeconds(1);
                 Play();
@@ -360,14 +335,14 @@ namespace JoanpixerClient
             Murder3.Initialize();
             Ghost.Initialize();
             AmongUs.Initialize();
-            loggedin = true;
-            justjoined = true;
             MelonCoroutines.Start(JumpDelay());
             Pickups.Clear();
             foreach (var Pickup in Resources.FindObjectsOfTypeAll<VRC.SDK3.Components.VRCPickup>())
             {
                 Pickups.Add(Pickup);
             }
+            loggedin = true;
+            justjoined = true;
             var block = (Environment.CurrentDirectory + "\\Joanpixer\\block.png").LoadSpriteFromDisk();
             if (Murder3.worldLoaded || Murder4.worldLoaded || Ghost.worldLoaded || AmongUs.worldLoaded) return;
             else Utils.WorldHacks.SetIcon(block);
@@ -380,10 +355,6 @@ namespace JoanpixerClient
                 Utils.EnableJump();
             if (Modules.Items.AllowThiefenabled)
                 Modules.Items.AllowThief();
-            if (Create.Ini.GetBool("Murder4", "WeaponsInCooldown") && Murder4.worldLoaded)
-            {
-                MelonLoader.MelonCoroutines.Start(Murder4.PickupWeaponInCooldown());
-            }
         }
 
         private static void OnPlayerJoin(Player __0)

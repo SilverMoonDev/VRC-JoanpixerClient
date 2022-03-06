@@ -67,7 +67,7 @@ namespace JoanpixerClient.Photon
 
             if (string.IsNullOrEmpty(decodeMethodName))
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("Unable to determine target method name, you'll be unprotected against photon exploits.");
+                JoanpixerClient.Logger.Error("Unable to determine target method name, you'll be unprotected against photon exploits.");
                 return;
             }
 

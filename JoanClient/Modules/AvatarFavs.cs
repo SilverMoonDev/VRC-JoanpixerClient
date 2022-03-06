@@ -62,7 +62,6 @@ namespace JoanpixerClient.Modules
             GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/Button/TitleText").GetComponent<Text>().text = $"Joanpixer Favorites ({AvatarObjects.Count})";
             yield break;
         }
-
         internal static void FavoriteAvatar(ApiAvatar avatar)
         {
             if (!AvatarObjects.Exists(avi => avi.id == avatar.id))

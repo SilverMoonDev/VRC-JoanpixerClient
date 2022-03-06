@@ -29,7 +29,6 @@ namespace JoanpixerClient.Utility
             }
             catch
             {
-                MelonLogger.Msg("MomGay");
             }
             try
             {
@@ -46,6 +45,10 @@ namespace JoanpixerClient.Utility
                     case MenuButtonType.AvatarFavButton:
                         GameObject gameObject = GameObject.Find("/UserInterface/MenuContent/Screens/Avatar/Favorite Button");
                         Button = Object.Instantiate(gameObject, gameObject.transform.parent);
+                        break;
+                    case MenuButtonType.AvatarButton:
+                        GameObject avatar = GameObject.Find("/UserInterface/MenuContent/Screens/Avatar/Change Button");
+                        Button = Object.Instantiate(avatar, avatar.transform.parent);
                         break;
                     case MenuButtonType.ReportButton:
                         GameObject bigbutton = GameObject.Find("/UserInterface/MenuContent/Screens/WorldInfo/FavoriteButton");
@@ -97,7 +100,7 @@ namespace JoanpixerClient.Utility
             {
                 // this.Button.GetComponentInChildren<Image>().gameObject.active = false;
                 Button.GetComponentInChildren<Text>().text = text;
-                Button.name = "UwU";
+                Button.name = text;
                 Button.SetActive(true);
                 Button.GetComponentInChildren<Button>().onClick = new Button.ButtonClickedEvent();
                 Button.GetComponentInChildren<Button>().onClick.AddListener(listener);

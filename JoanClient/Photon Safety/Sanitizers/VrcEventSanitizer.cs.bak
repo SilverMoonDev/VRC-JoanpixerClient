@@ -92,7 +92,7 @@ namespace JoanpixerClient.Photon
                             catch (Exception ex)
                             {
                                 originalDelegate(thisPtr, eventDataPtr, nativeMethodInfo);
-                                JoanpixerClient.JoanpixerMain.Logger.Error(ex.Message);
+                                JoanpixerClient.Logger.Error(ex.Message);
                             }
                         }
 

@@ -145,7 +145,7 @@ namespace PlagueButtonAPI.Misc
 				}
 				catch (Exception ex)
 				{
-					JoanpixerClient.JoanpixerMain.Logger.Error("Error while executing delegate:\n" + ex.ToString());
+					JoanpixerClient.Logger.Error("Error while executing delegate:\n" + ex.ToString());
 				}
 			}
 		}

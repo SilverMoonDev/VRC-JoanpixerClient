@@ -4,6 +4,7 @@
     {
         PlaylistButton,
         AvatarFavButton,
+        AvatarButton,
         ReportButton,
         WorldIfoButton
     }

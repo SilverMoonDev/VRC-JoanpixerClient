@@ -66,6 +66,7 @@ namespace JoanpixerClient.Api.Object
         public string description { get; set; }
         //public string unityVersion { get; set; }
         public int version { get; set; }
+
         //public bool featured { get; set; }
         public ApiAvatar ToApiAvatar()
         {
@@ -128,7 +129,7 @@ namespace JoanpixerClient.Api.Object
             supportedPlatforms = "All";
             description = avtr["description"].ToString();
             releaseStatus = avtr["releaseStatus"].ToString();
-            //unityVersion = avtr.unityVersion;
+            //unityVersion = avtr.unityVersion 
         }
         public AvatarObject()
         {
