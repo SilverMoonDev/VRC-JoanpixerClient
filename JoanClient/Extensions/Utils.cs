@@ -1514,7 +1514,7 @@ namespace JoanpixerClient
             {
                 if (NoclipOn)
                 {
-                    Noclip.SetToggleState(false, false);
+                    Noclip.SetToggleState(false, true);
                     FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = true;
                     FlightMod.Flight.player = FlightMod.PlayerExtensions.LocalPlayer.gameObject;
                     FlightMod.Flight.flying = false;
@@ -1525,7 +1525,7 @@ namespace JoanpixerClient
                     FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = false;
                     FlightMod.Flight.player = FlightMod.PlayerExtensions.LocalPlayer.gameObject;
                     FlightMod.Flight.flying = true;
-                    Noclip.SetToggleState(true, false);
+                    Noclip.SetToggleState(true, true);
                     NoclipOn = true;
                 }
             }
