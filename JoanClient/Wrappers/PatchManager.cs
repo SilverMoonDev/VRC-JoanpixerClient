@@ -7,14 +7,14 @@ using ExitGames.Client.Photon;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
-using VRC;
+using VRC.Udon;
 using System.Collections.Generic;
 using VRC.Networking;
 using VRC.SDKBase;
 using AccessTools = HarmonyLib.AccessTools;
 using HarmonyMethod = HarmonyLib.HarmonyMethod;
 using Player = VRC.Player;
-using static JoanpixerClient.Utils;
+using static VRC.SDKBase.VRC_EventHandler;
 
 namespace JoanpixerClient
 {
@@ -41,7 +41,6 @@ namespace JoanpixerClient
             {
                 Instance.Patch(typeof(PortalTrigger).GetMethod(nameof(PortalTrigger.OnTriggerEnter), BindingFlags.Public | BindingFlags.Instance), GetPatch("EnterPortal"), null, null);
                 Instance.Patch(typeof(UdonSync).GetMethod(nameof(UdonSync.UdonSyncRunProgramAsRPC)), GetPatch("UdonSyncPatch"), null);
-                Instance.Patch(AccessTools.Property(typeof(Tools), "Platform").GetMethod, null, GetPatch("PlatformSpoof")); 
                 Instance.Patch(typeof(NetworkManager).GetMethod("Method_Public_Void_Player_0"), GetPatch("OnPlayerJoin"), null);
                 Instance.Patch(typeof(NetworkManager).GetMethod("OnJoinedRoom"), GetPatch("OnJoinedRoom"), null);
                 Instance.Patch(typeof(VRC_Pickup).GetMethod(nameof(VRC_Pickup.Awake)), GetPatch("Pickupsuwu"), null);
@@ -373,7 +372,7 @@ namespace JoanpixerClient
             else Utils.WorldHacks.SetIcon(block);
         }
 
-        public static System.Collections.IEnumerator JumpDelay()
+        private static System.Collections.IEnumerator JumpDelay()
         {
             yield return new WaitForSeconds(5);
             if (Create.Ini.GetBool("Toggles", "Jump"))
@@ -384,12 +383,21 @@ namespace JoanpixerClient
             {
                 MelonLoader.MelonCoroutines.Start(Murder4.PickupWeaponInCooldown());
             }
+            if (Features.HighlightsComponent.ESPEnabled)
+                Features.HighlightsComponent.ToggleESP(true);
         }
 
-        private static void OnPlayerJoin(Player __0)
+        private static System.Collections.IEnumerator OnJoinedDelay()
+        {
+            yield return new WaitForSeconds(5);
+            Features.HighlightsComponent.ToggleESP(false);
+            Features.HighlightsComponent.ToggleESP(true);
+        }
+
+        private static void OnPlayerJoin()
         {
             if (Features.HighlightsComponent.ESPEnabled)
-                Features.HighlightsComponent.HighlightPlayer(__0, true);
+                MelonCoroutines.Start(OnJoinedDelay());
         }
     }
 }

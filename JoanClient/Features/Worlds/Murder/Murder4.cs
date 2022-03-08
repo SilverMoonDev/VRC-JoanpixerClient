@@ -54,7 +54,6 @@ namespace JoanpixerClient.Features.Worlds
                 {
                     MelonLoader.MelonCoroutines.Start(GivePatreonSelf());
                 }
-                worldLoaded = true;
                 var Murder4Icon = (Environment.CurrentDirectory + "\\Joanpixer\\knife.png").LoadSpriteFromDisk();
                 Utils.WorldHacks.SetIcon(Murder4Icon);
                 GameObject.Find("Game Logic/Player HUD/Blind HUD Anim").GetComponent<Animator>().enabled = false;
@@ -133,6 +132,7 @@ namespace JoanpixerClient.Features.Worlds
                 }
                 if (Create.Ini.GetBool("Murder4", "DoorsOff"))
                     doors.SetActive(false);
+                worldLoaded = true;
             }
             else
             {
@@ -251,9 +251,9 @@ namespace JoanpixerClient.Features.Worlds
             foreach (var clue in Clues)
             {
                 if (!clue.gameObject.active)
-                    Utils.ToggleOutline(clue, false);
+                    Features.HighlightsComponent._cluesHighlights.Method_Public_Void_Renderer_Boolean_0(clue, false);
                 if (clue.gameObject.active)
-                    Utils.ToggleOutline(clue, true);
+                    Features.HighlightsComponent._cluesHighlights.Method_Public_Void_Renderer_Boolean_0(clue, true);
             }
         }
 

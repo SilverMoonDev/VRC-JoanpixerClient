@@ -15,6 +15,8 @@ namespace JoanpixerClient.Features
         private static HighlightsFXStandalone _friendsHighlights;
         private static HighlightsFXStandalone _othersHighlights;
         private static HighlightsFXStandalone _murdererHighlights;
+        public static HighlightsFXStandalone _cluesHighlights;
+        public static HighlightsFXStandalone _pickupHighlights;
         private static HighlightsFXStandalone GetHighlightsFX(APIUser apiUser)
         {
             if (PatchManager.AnnounceMurderer4)
@@ -65,6 +67,10 @@ namespace JoanpixerClient.Features
             _othersHighlights.highlightColor = Color.magenta;
             _murdererHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
             _murdererHighlights.highlightColor = Color.red;
+            _cluesHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _cluesHighlights.highlightColor = Color.yellow;
+            _pickupHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _pickupHighlights.highlightColor = Color.blue;
         }
         public static void ToggleESP(bool enabled)
         {
@@ -120,9 +126,9 @@ namespace JoanpixerClient.Features
         {
             foreach (var Pickup in PatchManager.Pickups)
             {
-                Utils.ToggleOutline(Pickup.gameObject.GetComponentInChildren<Renderer>(), on);
-                Utils.ToggleOutline(Pickup.gameObject.GetComponent<Renderer>(), on);
-                Utils.ToggleOutline(Pickup.gameObject.GetComponentInParent<Renderer>(), on);
+                _pickupHighlights.Method_Public_Void_Renderer_Boolean_0(Pickup.gameObject.GetComponentInChildren<Renderer>(), on);
+                _pickupHighlights.Method_Public_Void_Renderer_Boolean_0(Pickup.gameObject.GetComponent<Renderer>(), on);
+                _pickupHighlights.Method_Public_Void_Renderer_Boolean_0(Pickup.gameObject.GetComponentInParent<Renderer>(), on);
             }
         }
     }

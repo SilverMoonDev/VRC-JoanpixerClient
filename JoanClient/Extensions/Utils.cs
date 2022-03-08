@@ -511,7 +511,7 @@ namespace JoanpixerClient
                     {
                         foreach (var clue in Murder4.Clues)
                         {
-                            ToggleOutline(clue, false);
+                            Features.HighlightsComponent._cluesHighlights.Method_Public_Void_Renderer_Boolean_0(clue, false);
                         }
                     }
                 });
@@ -1445,9 +1445,13 @@ namespace JoanpixerClient
                         Murder4QuickMenu.OpenMenu();
                         Murder4QuickMenu.SetTitle(selectedplayer.prop_VRCPlayerApi_0.displayName);
                     }
-                    if (!Murder3.worldLoaded) return;
-                    Murder3QuickMenu.OpenMenu();
-                    Murder3QuickMenu.SetTitle(selectedplayer.prop_VRCPlayerApi_0.displayName);
+                    else if (Murder3.worldLoaded)
+                    {
+                        Murder3QuickMenu.OpenMenu();
+                        Murder3QuickMenu.SetTitle(selectedplayer.prop_VRCPlayerApi_0.displayName);
+                    }
+                    else
+                        MelonCoroutines.Start(Notification("Available Worlds: Murder 3 and Murder 4", Color.green));
                 }, false, Murder4Icon);
 
                 new ToggleButton(quickmenuplayeroptions, "Leash", "Leashes to the target", "Leashes to the target", (val) =>

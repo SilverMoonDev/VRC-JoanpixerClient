@@ -31,7 +31,7 @@ namespace JoanpixerButtonAPI.Controls
 
             if (!string.IsNullOrEmpty(tooltipWhileDisabled) && !string.IsNullOrEmpty(tooltipWhileEnabled))
             {
-                if (tooltip.field_Public_String_0.Contains("Hide")) // VRC made their own fucking ui the wrong way round on this tooltip on init, lmfao
+                if (tooltip.field_Public_String_0.Contains("Show")) // VRC made their own fucking ui the wrong way round on this tooltip on init, lmfao
                 {
                     tooltip.field_Public_String_0 = tooltipWhileDisabled;
                     tooltip.field_Public_String_1 = tooltipWhileEnabled;

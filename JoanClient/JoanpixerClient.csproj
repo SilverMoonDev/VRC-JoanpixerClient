@@ -73,7 +73,7 @@
     <Compile Include="Features\Worlds\Ghost.cs" />
     <Compile Include="Features\Worlds\Murder\Murder Items.cs" />
     <Compile Include="Features\Worlds\Murder\Murder4.cs" />
-    <Compile Include="FoldersManager\Create.cs" />
+    <Compile Include="FoldersManager\FolderManager.cs" />
     <Compile Include="JoanMain.cs" />
     <Compile Include="Modules\AvatarFavs.cs" />
     <Compile Include="Modules\Items.cs" />
