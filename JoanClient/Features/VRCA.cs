@@ -34,7 +34,7 @@ namespace JoanpixerClient.Features
 			catch (Exception)
 			{
 				Utils.Notification($"[VRCA] Error Downloading {avatar.name}", UnityEngine.Color.red);
-				JoanpixerClient.JoanpixerMain.Logger.Msg(ConsoleColor.Red,$"[VRCA] Error Downloading {avatar.name}");
+				JoanpixerMain.Logger.Msg(ConsoleColor.Red,$"[VRCA] Error Downloading {avatar.name}");
 			}
         }
     }

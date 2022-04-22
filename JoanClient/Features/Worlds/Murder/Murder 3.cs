@@ -4,6 +4,7 @@ using System.Collections;
 using JoanpixerClient.Modules;
 using VRC.SDKBase;
 using System;
+using UnityEngine.UI;
 
 namespace JoanpixerClient.Features.Worlds
 {
@@ -34,6 +35,7 @@ namespace JoanpixerClient.Features.Worlds
             {
                 var Murder3Icon = (Environment.CurrentDirectory + "\\Joanpixer\\knife.png").LoadSpriteFromDisk();
                 Utils.WorldHacks.SetIcon(Murder3Icon);
+                Utils.WorldHacks.SetText("Murder 3");
                 worldLoaded = true;
                 MurderText = GameObject.Find("Game Logic/Game Canvas/Postgame/Murderer Name");
                 Murder4Items.smokebomb = GameObject.Find("Game Logic/Weapons/Unlockables/Smoke (0)");
@@ -47,48 +49,16 @@ namespace JoanpixerClient.Features.Worlds
                 gameLogic = GameObject.Find("Game Logic")?.GetComponent<UdonBehaviour>();
                 revolver = GameObject.Find("Game Logic/Weapons/Revolver")?.GetComponent<UdonBehaviour>();
                 revolverpickup = Murder4Items.revolverobject.GetComponent<VRC_Pickup>();
+                Murder4.PlayerEntrys.Clear();
+                foreach (GameObject entry in Resources.FindObjectsOfTypeAll<GameObject>())
+                {
+                    if (entry.gameObject.name.Contains("Player Entry")) Murder4.PlayerEntrys.Add(entry);
+                }
             }
             else
             {
                 worldLoaded = false;
             }
-        }
-        public static IEnumerator KillSelectedPlayerKnife(VRC.Player player)
-        {
-            if (!player.field_Private_VRCPlayerApi_0.gameObject) yield break;
-            if (!Murder4Items.knife) yield break;
-            var knifeoriginalpos = Murder4Items.knife.transform.position;
-            Items.TakeOwnershipIfNecessary(Murder4Items.knife);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(-0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(-0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(-0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(-0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(-0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(-0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(-0.2f, 1, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.knife.transform.position = knifeoriginalpos;
         }
         public static IEnumerator KillSelectedPlayerFrag(VRC.Player player)
         {
@@ -248,9 +218,16 @@ namespace JoanpixerClient.Features.Worlds
 
         public static IEnumerator BWin()
         {
+            var uwu = Utils.GetAllPlayers();
+            VRC.Player iwi = null;
+            foreach (var awa in uwu)
+            {
+                if (Murder4.MurderText.GetComponent<Text>().m_Text == awa.field_Private_VRCPlayerApi_0.displayName) iwi = awa;
+            }
             CallRevolver("SyncFire");
             yield return new WaitForSeconds(1);
-            CallGameLogic("SyncVictoryB");
+            Utils.SetRole(iwi, "Kill");
+            yield break;
         }
 
         /// <summary>

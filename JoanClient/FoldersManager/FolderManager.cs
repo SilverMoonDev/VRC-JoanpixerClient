@@ -41,11 +41,25 @@ namespace JoanpixerClient.FoldersManager
                 client.DownloadFile(new Uri($"{url}doorsoff.png"), "Joanpixer\\doorsoff.png");
             }
 
+            if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\prison.png"))
+            {
+                client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading prison.png");
+                client.DownloadFile(new Uri($"{url}prison.png"), "Joanpixer\\prison.png");
+            }
+
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\god.png"))
             {
                 client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
                 JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading god.png");
                 client.DownloadFile(new Uri($"{url}god.png"), "Joanpixer\\god.png");
+            }
+
+            if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\JustBClub.png"))
+            {
+                client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+                JoanpixerClient.JoanpixerMain.Logger.Msg("Downloading god.png");
+                client.DownloadFile(new Uri($"{url}JustBClub.png"), "Joanpixer\\JustBClub.png");
             }
 
             if (!File.Exists(Environment.CurrentDirectory + "\\Joanpixer\\Ghost.png"))
@@ -114,7 +128,7 @@ namespace JoanpixerClient.FoldersManager
             {
                 File.Create("Joanpixer\\Config.ini");
                 Ini = new IniFile("Joanpixer\\Config.ini");
-                Ini.SetBool("Toggles", "QuestSpoof", false);
+                //Ini.SetBool("Toggles", "QuestSpoof", false);
                 Ini.SetBool("Toggles", "Jump", true);
                 Ini.SetBool("Toggles", "Murder4", false);
                 Ini.SetBool("Toggles", "Murder3", false);

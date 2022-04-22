@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using MelonLoader;
-using UnhollowerRuntimeLib.XrefScans;
 using UnityEngine;
 using UnityEngine.UI;
-using VRC.UI.Elements.Controls;
 using VRC.UI.Elements.Tooltips;
 
 namespace JoanpixerButtonAPI.Controls.Base_Classes
@@ -25,10 +17,9 @@ namespace JoanpixerButtonAPI.Controls.Base_Classes
         public Image OnImage => transform?.Find("Icon_On")?.GetComponentInChildren<Image>(true);
         public Image OffImage => transform?.Find("Icon_Off")?.GetComponentInChildren<Image>(true);
 
-        public bool ToggleState => toggle?.isOn ?? false;
+        public bool? ToggleState => toggle?.isOn;
 
-        public bool NextState = false;
-        public bool NextIsInvoke = false;
+        internal bool NextState = false;
 
         public void SetAction(Action<bool> newAction)
         {
@@ -44,12 +35,11 @@ namespace JoanpixerButtonAPI.Controls.Base_Classes
             toggle.interactable = val;
         }
 
-        public bool AllowUserInvoke = true;
+        internal bool AllowUserInvoke = true;
 
         public void SetToggleState(bool newState, bool invoke = false)
         {
             NextState = newState;
-            NextIsInvoke = invoke;
 
             if (gameObject.active)
             {
@@ -63,15 +53,15 @@ namespace JoanpixerButtonAPI.Controls.Base_Classes
                 {
                     tooltip.field_Private_Boolean_1 = !newState;
                 }
+            }
 
-                if (invoke)
-                {
-                    toggle.onValueChanged.Invoke(newState);
-                }
+            if (invoke)
+            {
+                toggle.onValueChanged.Invoke(newState);
             }
         }
 
-        public bool ToolTipOne = false;
+        internal bool ToolTipOne = false;
         public void SetTooltip(string newOffTooltip, string newOnTooltip)
         {
             if (!ToolTipOne)

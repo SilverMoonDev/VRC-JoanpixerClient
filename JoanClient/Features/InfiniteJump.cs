@@ -17,7 +17,7 @@ namespace JoanpixerClient.Features
                     velocity.y = 4;
                     Networking.LocalPlayer.SetVelocity(velocity);
                 }
-                catch { }
+                catch {}
             }
         }
     }

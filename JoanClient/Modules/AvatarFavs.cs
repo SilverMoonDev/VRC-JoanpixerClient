@@ -22,9 +22,9 @@ namespace JoanpixerClient.Modules
         public void Start()
         {
             avatarPage = GameObject.Find("UserInterface/MenuContent/Screens/Avatar");
-            PublicAvatarList = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Favorite Avatar List");
+            PublicAvatarList = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/FavoriteListTemplate");
             currPageAvatar = avatarPage.GetComponent<PageAvatar>();
-            AvatarList = new VRCList(PublicAvatarList.transform.parent, "Joanpixer Favorites", 0);
+            AvatarList = new VRCList(PublicAvatarList.transform.parent, "Joanpixer Favorites");
             AvatarObjects = JsonConvert.DeserializeObject<List<AvatarObject>>(File.ReadAllText("Joanpixer\\AvatarFavorites.json"));
             GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites").SetActive(true);
             GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites/MoreFavoritesButton").GetComponent<Image>().color = Color.magenta;
@@ -36,6 +36,7 @@ namespace JoanpixerClient.Modules
             GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites/MoreFavoritesButton").name = "Fav/UnFav Button Color";
             GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites").name = "Fav/UnFav Button";
             GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/Button/TitleText").GetComponent<Text>().text = $"Joanpixer Favorites ({AvatarObjects.Count})";
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/Expired").active = false;
         }
 
         public void Update()
@@ -59,10 +60,10 @@ namespace JoanpixerClient.Modules
             var avilist = new Il2CppSystem.Collections.Generic.List<ApiAvatar>();
             AvatarObjects.ForEach(avi => avilist.Add(avi.ToApiAvatar()));
             AvatarList.RenderElement(avilist);
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/Button/TitleText").GetComponent<Text>().text = $"Joanpixer Favorites ({AvatarObjects.Count})";
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/Button/TitleText").GetComponent<Text>().text = $"Joanpixer Favourites ({AvatarObjects.Count})";
             yield break;
         }
-        internal static void FavoriteAvatar(ApiAvatar avatar)
+        internal static void FavouriteAvatar(ApiAvatar avatar)
         {
             if (!AvatarObjects.Exists(avi => avi.id == avatar.id))
                 AvatarObjects.Insert(0, new AvatarObject(avatar));
@@ -70,7 +71,7 @@ namespace JoanpixerClient.Modules
             string contents = JsonConvert.SerializeObject(AvatarObjects, Formatting.Indented);
             File.WriteAllText("Joanpixer\\AvatarFavorites.json", contents);
         }
-        internal static void UnfavoriteAvatar(ApiAvatar avatar)
+        internal static void UnfavouriteAvatar(ApiAvatar avatar)
         {
             if (AvatarObjects.Exists(avi => avi.id == avatar.id))
             {
@@ -85,11 +86,11 @@ namespace JoanpixerClient.Modules
         {
             if (!AvatarObjects.Exists(m => m.id == currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0.id))
             {
-                FavoriteAvatar(currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0);
+                FavouriteAvatar(currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0);
             }
             else
             {
-                UnfavoriteAvatar(currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0);
+                UnfavouriteAvatar(currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0);
             }
             MelonCoroutines.Start(RefreshMenu(1));
         }

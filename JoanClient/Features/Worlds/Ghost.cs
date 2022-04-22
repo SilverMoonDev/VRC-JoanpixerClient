@@ -25,6 +25,7 @@ namespace JoanpixerClient.Features.Worlds
             {
                 var GhostIcon = (Environment.CurrentDirectory + "\\Joanpixer\\Ghost.png").LoadSpriteFromDisk();
                 Utils.WorldHacks.SetIcon(GhostIcon);
+                Utils.WorldHacks.SetText("Ghost");
                 worldLoaded = true;
                 Ghosts = GameObject.Find("LobbyManager/MainHUD/GameOverScreen/GhostNameText").GetComponent<Text>();
             }

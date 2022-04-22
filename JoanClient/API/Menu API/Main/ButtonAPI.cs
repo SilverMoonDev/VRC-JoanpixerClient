@@ -11,6 +11,7 @@ using JoanpixerClient.Utility;
 using System.Reflection;
 using VRC.SDKBase;
 using VRC.UI;
+using JoanpixerClient.Modules;
 
 namespace JoanpixerButtonAPI
 {

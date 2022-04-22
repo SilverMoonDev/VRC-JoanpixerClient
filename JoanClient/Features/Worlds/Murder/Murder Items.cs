@@ -13,6 +13,7 @@ namespace JoanpixerClient.Features.Worlds
         public static GameObject shotgun = null;
         public static GameObject frag = null;
         public static GameObject Beartrap = null;
+        public static LineRenderer revolverline = null;
         public static GameObject knife = null;
         public static GameObject smokebomb = null;
         public static UdonBehaviour snakedispenser = null;

@@ -1,5 +1,9 @@
 using System;
 using System.Collections;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net;
 using MelonLoader;
 using JoanpixerButtonAPI.Controls.Base_Classes;
 using JoanpixerButtonAPI.Controls.Grouping;
@@ -13,6 +17,7 @@ namespace JoanpixerButtonAPI.Controls
     {
         public ToggleButton(Transform parent, string text, string tooltipWhileDisabled, string tooltipWhileEnabled, Action<bool> stateChanged, Sprite OnImage = null, Sprite OffImage = null, bool DefaultState = false)
         {
+
             gameObject = Object.Instantiate(ButtonAPI.toggleButtonBase, parent);
 
             this.text.text = text;
@@ -21,17 +26,17 @@ namespace JoanpixerButtonAPI.Controls
 
             toggle.onValueChanged.AddListener(new Action<bool>(val =>
             {
+                NextState = val;
+
                 if (AllowUserInvoke)
                 {
                     stateChanged?.Invoke(val);
                 }
-
-                NextState = val;
             }));
 
             if (!string.IsNullOrEmpty(tooltipWhileDisabled) && !string.IsNullOrEmpty(tooltipWhileEnabled))
             {
-                if (tooltip.field_Public_String_0.Contains("Show")) // VRC made their own fucking ui the wrong way round on this tooltip on init, lmfao
+                if (tooltip.field_Public_String_0.Contains("Show")) // VRC Needs To Stop Silently Changing This
                 {
                     tooltip.field_Public_String_0 = tooltipWhileDisabled;
                     tooltip.field_Public_String_1 = tooltipWhileEnabled;
@@ -74,9 +79,9 @@ namespace JoanpixerButtonAPI.Controls
 
             Handler.OnEnabled += obj =>
             {
-                if (NextState != ToggleState) // The User Set This To Be A Different State While The Object Was Inactive
+                if (ToggleState != null && NextState != ToggleState) // The User Set This To Be A Different State While The Object Was Inactive
                 {
-                    SetToggleState(NextState, NextIsInvoke);
+                    SetToggleState(NextState);
                 }
             };
         }

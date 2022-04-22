@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using VRC;
 using VRC.Core;
-using MelonLoader;
 
 namespace JoanpixerClient.Features
 {
@@ -13,7 +12,13 @@ namespace JoanpixerClient.Features
         #endregion
         public static bool ESPEnabled = FoldersManager.Create.Ini.GetBool("Toggles", "ESP");
         private static HighlightsFXStandalone _friendsHighlights;
-        private static HighlightsFXStandalone _othersHighlights;
+        private static HighlightsFXStandalone _trustedHighlights;
+        private static HighlightsFXStandalone _knownHighlights;
+        private static HighlightsFXStandalone _userHighlights;
+        private static HighlightsFXStandalone _newHighlights;
+        private static HighlightsFXStandalone _visitorHighlights;
+        private static HighlightsFXStandalone _nuisanceHighlights;
+        private static HighlightsFXStandalone _uwu;
         private static HighlightsFXStandalone _murdererHighlights;
         public static HighlightsFXStandalone _cluesHighlights;
         public static HighlightsFXStandalone _pickupHighlights;
@@ -38,7 +43,35 @@ namespace JoanpixerClient.Features
             if (PatchManager.AnnounceMurderer3)
                 if (Worlds.Murder3.worldLoaded && Worlds.Murder3.MurderText.GetComponent<Text>().text.Contains(apiUser.displayName))
                     return _murdererHighlights;
-            return _othersHighlights;
+            var Rank = Utils.GetRank(apiUser).ToLower();
+            switch (Rank)
+            {
+                case "user":
+                    return _userHighlights;
+                    break;
+                case "known":
+                    return _knownHighlights;
+                    break;
+                case "negativetrust":
+                    return _nuisanceHighlights;
+                    break;
+                case "new user":
+                    return _newHighlights;
+                    break;
+                case "verynegativetrust":
+                    return _nuisanceHighlights;
+                    break;
+                case "visitor":
+                    return _visitorHighlights;
+                    break;
+                case "trusted":
+                    return _trustedHighlights;
+                    break;
+                default:
+                    return _uwu;
+                    break;
+            }
+            
         }
 
         public static void CheckMurdererESP()
@@ -47,10 +80,10 @@ namespace JoanpixerClient.Features
             {
                 if (Worlds.Murder4.worldLoaded && ESPEnabled)
                 {
-                    Features.HighlightsComponent.DisableESP();
+                    DisableESP();
                     foreach (var player in Utils.GetAllPlayers())
                     {
-                        Features.HighlightsComponent.ToggleESP(true);
+                        ToggleESP(true);
                     }
                 }
             }
@@ -63,14 +96,24 @@ namespace JoanpixerClient.Features
 
             _friendsHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
             _friendsHighlights.highlightColor = Color.green;
-            _othersHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
-            _othersHighlights.highlightColor = Color.magenta;
+            _trustedHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _trustedHighlights.highlightColor = Color.magenta;
+            _knownHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _knownHighlights.highlightColor = Color.yellow;
+            _userHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _userHighlights.highlightColor = Color.cyan;
+            _newHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _newHighlights.highlightColor = Color.blue;
+            _visitorHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _visitorHighlights.highlightColor = Color.grey;
+            _nuisanceHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
+            _nuisanceHighlights.highlightColor = Color.black;
             _murdererHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
             _murdererHighlights.highlightColor = Color.red;
             _cluesHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
             _cluesHighlights.highlightColor = Color.yellow;
             _pickupHighlights = highlightsFx.gameObject.AddComponent<HighlightsFXStandalone>();
-            _pickupHighlights.highlightColor = Color.blue;
+            _pickupHighlights.highlightColor = Color.cyan;
         }
         public static void ToggleESP(bool enabled)
         {
@@ -105,8 +148,13 @@ namespace JoanpixerClient.Features
             if (selectRegion == null)
                 return;
 
-            _othersHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
             _friendsHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
+            _trustedHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
+            _knownHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
+            _userHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
+            _newHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
+            _visitorHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
+            _nuisanceHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
             _murdererHighlights.Method_Public_Void_Renderer_Boolean_0(selectRegion.GetComponent<Renderer>(), false);
         }
 

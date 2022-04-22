@@ -1,9 +1,5 @@
-﻿using AvatarCapture;
-using Il2CppSystem.Collections.Generic;
-using MelonLoader;
-using VRC.Udon;
+﻿using VRC.Udon;
 using UnityEngine;
-using UnityEngine.UI;
 using System;
 
 namespace JoanpixerClient.Features.Worlds
@@ -24,7 +20,13 @@ namespace JoanpixerClient.Features.Worlds
             {
                 var AmongUsIcon = (Environment.CurrentDirectory + "\\Joanpixer\\amongus.png").LoadSpriteFromDisk();
                 Utils.WorldHacks.SetIcon(AmongUsIcon);
+                Utils.WorldHacks.SetText("Among Us");
                 gameLogic = GameObject.Find("Game Logic")?.GetComponent<UdonBehaviour>();
+                Murder4.PlayerEntrys.Clear();
+                foreach (GameObject entry in Resources.FindObjectsOfTypeAll<GameObject>())
+                {
+                    if (entry.gameObject.name.Contains("Player Entry")) Murder4.PlayerEntrys.Add(entry);
+                }
                 worldLoaded = true;
             }
             else

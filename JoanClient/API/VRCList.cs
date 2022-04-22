@@ -12,21 +12,21 @@ namespace JoanpixerClient.Api
 
         public VRCList(Transform parent, string name, int Position = 0)
         {
-            GameObject = UnityEngine.Object.Instantiate(PublicAvatarList.gameObject, parent);
-            GameObject.GetComponent<UiAvatarList>().field_Public_Category_0 = UiAvatarList.Category.SpecificList;
-            UiVRCList = GameObject.GetComponent<UiVRCList>();
-            Text = GameObject.transform.Find("Button").GetComponentInChildren<Text>();
-            GameObject.transform.SetSiblingIndex(Position);
+                GameObject = UnityEngine.Object.Instantiate(PublicAvatarList.gameObject, GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content").transform);
+                GameObject.GetComponent<UiAvatarList>().field_Public_Category_0 = UiAvatarList.Category.SpecificList;
+                UiVRCList = GameObject.GetComponent<UiVRCList>();
+                Text = GameObject.transform.Find("Button").GetComponentInChildren<Text>();
+                GameObject.transform.SetSiblingIndex(Position);
 
-            UiVRCList.clearUnseenListOnCollapse = false;
-            UiVRCList.usePagination = false;
-            UiVRCList.hideElementsWhenContracted = false;
-            UiVRCList.hideWhenEmpty = false;
-            UiVRCList.field_Protected_Dictionary_2_Int32_List_1_ApiModel_0.Clear();
+                UiVRCList.clearUnseenListOnCollapse = false;
+                UiVRCList.usePagination = false;
+                UiVRCList.hideElementsWhenContracted = false;
+                UiVRCList.hideWhenEmpty = false;
+                UiVRCList.field_Protected_Dictionary_2_Int32_List_1_ApiModel_0.Clear();
 
-            GameObject.SetActive(true);
-            GameObject.name = name;
-            Text.text = name;
+                GameObject.SetActive(true);
+                GameObject.name = name;
+                Text.text = name;
         }
         public GameObject GameObject;
         public UiVRCList UiVRCList;
@@ -44,6 +44,6 @@ namespace JoanpixerClient.Api
         //    UiVRCList.Method_Protected_Void_List_1_T_Int32_Boolean_VRCUiContentButton_0<APIUser>(UserList, 0, true);
         //}
 
-        private static GameObject PublicAvatarList = GameObject.Find("/UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Favorite Avatar List");
+        private static GameObject PublicAvatarList = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/FavoriteListTemplate");
     }
 }
