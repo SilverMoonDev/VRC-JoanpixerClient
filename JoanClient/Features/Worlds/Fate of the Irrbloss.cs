@@ -21,10 +21,10 @@ namespace ForbiddenClient.Features.Worlds
         {
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_f276af30-d347-408c-b24d-9514293cb4d5")
             {
-                var fate = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\fate.png").LoadSpriteFromDisk();
+                var fate = ForbiddenClient.Resources.IconsVars.FateIrbloss.LoadSprite();
                 MenuUI.WorldHacks.SetIcon(fate);
                 MenuUI.WorldHacks.SetText("Fate Of The Irrbloss");
-                foreach (var udon in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                foreach (var udon in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                 {
                     Udons.Add(udon);
                 }

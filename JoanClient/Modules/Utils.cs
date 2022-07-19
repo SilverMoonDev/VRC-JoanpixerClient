@@ -509,11 +509,11 @@ namespace ForbiddenClient
         {
             if (state)
             {
-                pedal.SetPedalTypeIcon((Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOn.png").LoadTextureFromDisk());
+                pedal.SetPedalTypeIcon(Resources.IconsVars.ActionOn.LoadTexture());
             }
             else
             {
-                pedal.SetPedalTypeIcon((Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOff.png").LoadTextureFromDisk());
+                pedal.SetPedalTypeIcon(Resources.IconsVars.ActionOff.LoadTexture());
             }
         }
 
@@ -1295,7 +1295,7 @@ namespace ForbiddenClient
             text.verticalOverflow = VerticalWrapMode.Overflow;
             text.alignment = TextAnchor.MiddleCenter;
             text.fontSize = 34;
-            text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            text.font = UnityEngine.Resources.GetBuiltinResource<Font>("Arial.ttf");
             text.supportRichText = true;
             text.color = colour;
             gameObject.SetActive(true);

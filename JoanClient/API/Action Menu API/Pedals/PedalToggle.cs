@@ -20,9 +20,9 @@ namespace ForbiddenButtonAPI.Pedals
                 //MelonLogger.Msg($"Old state: {this.toggled}, New state: {!this.toggled}");
                 this.toggled = !this.toggled;
                 if (this.toggled)
-                    pedal.SetPedalTypeIcon((Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOn.png").LoadTextureFromDisk());
+                    pedal.SetPedalTypeIcon(ForbiddenClient.Resources.IconsVars.ActionOn.LoadTexture());
                 else
-                    pedal.SetPedalTypeIcon((Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOff.png").LoadTextureFromDisk());
+                    pedal.SetPedalTypeIcon(ForbiddenClient.Resources.IconsVars.ActionOff.LoadTexture());
                 onToggle.Invoke(toggled);
             };
             Type = PedalType.Toggle;

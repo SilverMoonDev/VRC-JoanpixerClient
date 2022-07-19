@@ -20,10 +20,10 @@ namespace ForbiddenClient.Features.Worlds
             #endregion
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_32402c8f-f897-4ed6-8266-cd22fdce3313")
             {
-                var infested = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\infested.png").LoadSpriteFromDisk();
+                var infested = ForbiddenClient.Resources.IconsVars.Infested.LoadSprite();
                 MenuUI.WorldHacks.SetIcon(infested);
                 MenuUI.WorldHacks.SetText("Infested");
-                foreach (var moneyobject in Resources.FindObjectsOfTypeAll<UdonBehaviour>().Where(udon => udon.gameObject.name.Contains("Money")))
+                foreach (var moneyobject in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>().Where(udon => udon.gameObject.name.Contains("Money")))
                 {
                     money.Add(moneyobject);
                 }

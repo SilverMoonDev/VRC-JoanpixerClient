@@ -55,7 +55,7 @@ namespace ForbiddenClient
 
         public static readonly MelonLogger.Instance Logger = new("Forbidden", ConsoleColor.DarkMagenta);
 
-        internal static Sprite ButtonImage = null;
+        internal static readonly Sprite ButtonImage = Resources.IconsVars.MainMenu.LoadSprite();
         internal static bool PickupESP = false;
         internal static string Devs = string.Empty;
         internal static Sprite Background;
@@ -460,7 +460,7 @@ namespace ForbiddenClient
                 OnUpdateRoutineDelay = Time.time + 5f;
                 if (Ghost.ESP && Ghost.worldLoaded && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Main_House"))
                 {
-                    foreach (var _object in Resources.FindObjectsOfTypeAll<Renderer>())
+                    foreach (var _object in UnityEngine.Resources.FindObjectsOfTypeAll<Renderer>())
                     {
                         if (_object.gameObject.name.Contains("Folder") && _object.gameObject.transform.parent.gameObject.name.Contains("Clue") && !_object.gameObject.active)
                         {

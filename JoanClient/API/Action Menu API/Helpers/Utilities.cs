@@ -106,9 +106,9 @@ namespace ForbiddenButtonAPI.Helpers
                     case PedalType.Toggle:
                         var pedalToggle = (PedalToggle) pedalStruct;
                         if (pedalToggle.toggled)
-                            pedalOption.SetPedalTypeIcon((Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOn.png").LoadTextureFromDisk());
+                            pedalOption.SetPedalTypeIcon(ForbiddenClient.Resources.IconsVars.ActionOn.LoadTexture());
                         else
-                            pedalOption.SetPedalTypeIcon((Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOff.png").LoadTextureFromDisk());
+                            pedalOption.SetPedalTypeIcon(ForbiddenClient.Resources.IconsVars.ActionOff.LoadTexture());
                         pedalToggle.pedal = pedalOption;
                         pedalOption.SetBackgroundIcon(pedalStruct.icon);
                         break;

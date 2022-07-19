@@ -33,7 +33,7 @@ namespace ForbiddenClient.Features
                     catch { }
                 }
 
-                foreach (var buttons in Resources.FindObjectsOfTypeAll<Button>())
+                foreach (var buttons in UnityEngine.Resources.FindObjectsOfTypeAll<Button>())
                 {
                     if (buttons.gameObject.scene.name == "DontDestroyOnLoad")
                     {
@@ -50,7 +50,7 @@ namespace ForbiddenClient.Features
                     }
                 }
 
-                foreach (var settings in Resources.FindObjectsOfTypeAll<Image>())
+                foreach (var settings in UnityEngine.Resources.FindObjectsOfTypeAll<Image>())
                 {
                     if (settings.gameObject.scene.name == "DontDestroyOnLoad")
                     {
@@ -127,7 +127,7 @@ namespace ForbiddenClient.Features
                     catch { }
                 }
 
-                foreach (var buttons in Resources.FindObjectsOfTypeAll<Button>())
+                foreach (var buttons in UnityEngine.Resources.FindObjectsOfTypeAll<Button>())
                 {
                     if (buttons.gameObject.scene.name == "DontDestroyOnLoad")
                     {
@@ -144,7 +144,7 @@ namespace ForbiddenClient.Features
                     }
                 }
 
-                foreach (var settings in Resources.FindObjectsOfTypeAll<Image>())
+                foreach (var settings in UnityEngine.Resources.FindObjectsOfTypeAll<Image>())
                 {
                     if (settings.gameObject.scene.name == "DontDestroyOnLoad")
                     {
@@ -209,7 +209,7 @@ namespace ForbiddenClient.Features
                 {
                     try
                     {
-                        foreach (var buttons in Resources.FindObjectsOfTypeAll<Button>())
+                        foreach (var buttons in UnityEngine.Resources.FindObjectsOfTypeAll<Button>())
                         {
                             if (buttons.gameObject.scene.name == "DontDestroyOnLoad")
                             {
@@ -226,7 +226,7 @@ namespace ForbiddenClient.Features
                             }
                         }
 
-                        foreach (var settings in Resources.FindObjectsOfTypeAll<Image>())
+                        foreach (var settings in UnityEngine.Resources.FindObjectsOfTypeAll<Image>())
                         {
                             if (settings.gameObject.scene.name == "DontDestroyOnLoad")
                             {
@@ -286,7 +286,7 @@ namespace ForbiddenClient.Features
                 {
                     try
                     {
-                        foreach (var buttons in Resources.FindObjectsOfTypeAll<Button>())
+                        foreach (var buttons in UnityEngine.Resources.FindObjectsOfTypeAll<Button>())
                         {
                             if (buttons.gameObject.scene.name == "DontDestroyOnLoad")
                             {
@@ -303,7 +303,7 @@ namespace ForbiddenClient.Features
                             }
                         }
 
-                        foreach (var settings in Resources.FindObjectsOfTypeAll<Image>())
+                        foreach (var settings in UnityEngine.Resources.FindObjectsOfTypeAll<Image>())
                         {
                             if (settings.gameObject.scene.name == "DontDestroyOnLoad")
                             {

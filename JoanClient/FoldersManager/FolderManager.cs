@@ -5,6 +5,7 @@ using System.Net;
 using Newtonsoft.Json;
 using ForbiddenClient.Api.Object;
 using System.Collections.Generic;
+using ForbiddenClient.Resources;
 
 namespace ForbiddenClient.FoldersManager
 {
@@ -33,51 +34,9 @@ namespace ForbiddenClient.FoldersManager
                 Directory.CreateDirectory("Forbidden");
             }
 
-            if (!Directory.Exists("Forbidden\\Resources"))
+            if (Directory.Exists("Forbidden\\Resources"))
             {
-                Directory.CreateDirectory("Forbidden\\Resources");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\addimage.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}addimage.png"), "Forbidden\\Resources\\addimage.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\fate.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}fate.png"), "Forbidden\\Resources\\fate.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\UIColour.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}UIColour.png"), "Forbidden\\Resources\\UIColour.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\UICustomize.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}UICustomize.png"), "Forbidden\\Resources\\UICustomize.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\Settings.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}Settings.png"), "Forbidden\\Resources\\Settings.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\QuickMenu.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}QuickMenu.png"), "Forbidden\\QuickMenu.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\restart.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}restart.png"), "Forbidden\\Resources\\restart.png");
+                Directory.Delete("Forbidden\\Resources", true);
             }
 
             if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Console.png"))
@@ -91,56 +50,6 @@ namespace ForbiddenClient.FoldersManager
                 client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
                 client.DownloadFile(new Uri($"{url}Welcome.wav"), "Forbidden\\Welcome.wav");
             }
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\Player.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}Player.png"), "Forbidden\\Resources\\Player.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\MainMenu.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}MainMenu.png"), "Forbidden\\Resources\\MainMenu.png");
-                ForbiddenMain.ButtonImage = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\MainMenu.png").LoadSpriteFromDisk();
-            }
-            else
-            {
-                if (new API.ImageHash().GetHash(Environment.CurrentDirectory + "\\Forbidden\\Resources\\MainMenu.png") == "58e9ec6a0ef41f35e745143022fe4ed6")
-                {
-                    ForbiddenMain.ButtonImage = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\MainMenu.png").LoadSpriteFromDisk();
-                }
-                else
-                {
-                    client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                    client.DownloadFile(new Uri($"{url}MainMenu.png"), "Forbidden\\Resources\\MainMenu.png");
-                    ForbiddenMain.ButtonImage = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\MainMenu.png").LoadSpriteFromDisk();
-                }
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\ToggleOn.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}ToggleOn.png"), "Forbidden\\Resources\\ToggleOn.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOn.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}ActionOn.png"), "Forbidden\\Resources\\ActionOn.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOff.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}ActionOff.png"), "Forbidden\\Resources\\ActionOff.png");
-            }
-
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\doorsoff.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}doorsoff.png"), "Forbidden\\Resources\\doorsoff.png");
-            }
 
             if (File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Background.png"))
             {
@@ -152,72 +61,6 @@ namespace ForbiddenClient.FoldersManager
                 client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
                 client.DownloadFile(new Uri($"{url}Background.png"), "Forbidden\\Background.png");
                 ForbiddenMain.Background = TextureHandler.LoadSpriteFromDisk($"{Environment.CurrentDirectory}\\Forbidden\\Background.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\prison.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}prison.png"), "Forbidden\\Resources\\prison.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\JustBClub.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}JustBClub.png"), "Forbidden\\Resources\\JustBClub.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\Ghost.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}Ghost.png"), "Forbidden\\Resources\\Ghost.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\block.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}block.png"), "Forbidden\\Resources\\block.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\amongus.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}amongus.png"), "Forbidden\\Resources\\amongus.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\killself.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}killself.png"), "Forbidden\\Resources\\killself.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\Protections Icon.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}Protections%20Icon.png"), "Forbidden\\Resources\\Protections Icon.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\knife.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}knife.png"), "Forbidden\\Resources\\knife.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\pickup.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}pickup.png"), "Forbidden\\Resources\\pickup.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\unlock.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}unlock.png"), "Forbidden\\Resources\\unlock.png");
-            }
-
-            if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\Resources\\infested.png"))
-            {
-                client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
-                client.DownloadFile(new Uri($"{url}infested.png"), "Forbidden\\Resources\\infested.png");
             }
 
             if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\sound.wav"))

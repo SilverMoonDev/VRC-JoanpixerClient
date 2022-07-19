@@ -45,7 +45,7 @@ namespace ForbiddenClient.Features.Worlds
             #endregion
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_14750dd6-26a1-4edb-ae67-cac5bcd9ed6a")
             {
-                var prison = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\prison.png").LoadSpriteFromDisk();
+                var prison = ForbiddenClient.Resources.IconsVars.PrisonEscape.LoadSprite();
                 MenuUI.WorldHacks.SetIcon(prison);
                 MenuUI.WorldHacksPlayer.SetIcon(prison);
                 MenuUI.WorldHacks.SetText("Prison Escape");

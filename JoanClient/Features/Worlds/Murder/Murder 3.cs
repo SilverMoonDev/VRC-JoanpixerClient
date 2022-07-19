@@ -35,7 +35,7 @@ namespace ForbiddenClient.Features.Worlds
 
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_726c8a44-8222-4858-8b33-49e70d495b62")
             {
-                var Murder3Icon = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\knife.png").LoadSpriteFromDisk();
+                var Murder3Icon = ForbiddenClient.Resources.IconsVars.Knife.LoadSprite();
                 MenuUI.WorldHacks.SetIcon(Murder3Icon);
                 MenuUI.WorldHacks.SetText("Murder 3");
                 worldLoaded = true;
@@ -54,7 +54,7 @@ namespace ForbiddenClient.Features.Worlds
                 revolver = GameObject.Find("Game Logic/Weapons/Revolver")?.GetComponent<UdonBehaviour>();
                 revolverpickup = Murder4Items.revolverobject.GetComponent<VRC_Pickup>();
                 Murder4.PlayerEntrys.Clear();
-                foreach (GameObject entry in Resources.FindObjectsOfTypeAll<GameObject>())
+                foreach (GameObject entry in UnityEngine.Resources.FindObjectsOfTypeAll<GameObject>())
                 {
                     if (entry.gameObject.name.Contains("Player Entry")) Murder4.PlayerEntrys.Add(entry);
                 }
@@ -89,7 +89,7 @@ namespace ForbiddenClient.Features.Worlds
         {
             while (spamsounds)
             {
-                foreach (var sounds in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                foreach (var sounds in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                 {
                     if (sounds.gameObject.name.Contains("sound"))
                     {
@@ -102,7 +102,7 @@ namespace ForbiddenClient.Features.Worlds
 
         public static void CluesESPCoro()
         {
-            foreach (var clue in Resources.FindObjectsOfTypeAll<Renderer>())
+            foreach (var clue in UnityEngine.Resources.FindObjectsOfTypeAll<Renderer>())
             {
                 if (clue.gameObject.name == "geo" && clue.gameObject.transform.parent.gameObject.name.Contains("Clue"))
                 {
@@ -117,7 +117,7 @@ namespace ForbiddenClient.Features.Worlds
 
         public static IEnumerator PickupBearTraps()
         {
-            foreach (var beartrap in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+            foreach (var beartrap in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
             {
                 if (beartrap.gameObject.name.Contains("Bear Trap"))
                 {
@@ -130,7 +130,7 @@ namespace ForbiddenClient.Features.Worlds
 
         public static void DisablePickupBearTraps()
         {
-            foreach (var beartrap in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+            foreach (var beartrap in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
             {
                 if (beartrap.gameObject.name.Contains("Bear Trap"))
                 {
@@ -191,7 +191,7 @@ namespace ForbiddenClient.Features.Worlds
         {
             while (pickupweapontoggle)
             {
-                foreach (VRC_Pickup PickupCooldown in Resources.FindObjectsOfTypeAll<VRC_Pickup>())
+                foreach (VRC_Pickup PickupCooldown in UnityEngine.Resources.FindObjectsOfTypeAll<VRC_Pickup>())
                 {
                     PickupCooldown.pickupable = true;
                     yield return new WaitForSeconds(0.1f);

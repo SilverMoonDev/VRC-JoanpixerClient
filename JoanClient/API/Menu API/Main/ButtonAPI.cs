@@ -138,7 +138,7 @@ namespace ForbiddenButtonAPI
             }
 
             //For Toggles
-            onIconSprite = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\ToggleOn.png").LoadSpriteFromDisk();
+            onIconSprite = ForbiddenClient.Resources.IconsVars.ToggleOn.LoadSprite();
 
             if (onIconSprite == null)
             {

@@ -23,13 +23,13 @@ namespace ForbiddenClient.Features.Worlds
             // TODO: Check world ID aswell.
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_dd036610-a246-4f52-bf01-9d7cea3405d7")
             {
-                var AmongUsIcon = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\amongus.png").LoadSpriteFromDisk();
+                var AmongUsIcon = Resources.IconsVars.AmongUs.LoadSprite();
                 MenuUI.WorldHacks.SetIcon(AmongUsIcon);
                 MenuUI.WorldHacks.SetText("Among Us");
                 gameLogic = GameObject.Find("Game Logic")?.GetComponent<UdonBehaviour>();
                 startgametext = GameObject.Find("Game Logic/Game Canvas/Pregame");
                 Murder4.PlayerEntrys.Clear();
-                foreach (GameObject entry in Resources.FindObjectsOfTypeAll<GameObject>())
+                foreach (GameObject entry in UnityEngine.Resources.FindObjectsOfTypeAll<GameObject>())
                 {
                     if (entry.gameObject.name.Contains("Player Entry")) Murder4.PlayerEntrys.Add(entry);
                 }

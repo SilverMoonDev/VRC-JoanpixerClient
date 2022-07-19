@@ -212,17 +212,17 @@ namespace ForbiddenButtonAPI.Api
             var pedalOption = actionMenuOpener.GetActionMenu().AddOption();
             pedalOption.SetText(text);
             pedalOption.SetBackgroundIcon(icon);
-            if (startingState) pedalOption.SetPedalTypeIcon((Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOn.png").LoadTextureFromDisk());
-            else pedalOption.SetPedalTypeIcon((Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOff.png").LoadTextureFromDisk());
+            if (startingState) pedalOption.SetPedalTypeIcon(ForbiddenClient.Resources.IconsVars.ActionOn.LoadTexture());
+            else pedalOption.SetPedalTypeIcon(ForbiddenClient.Resources.IconsVars.ActionOff.LoadTexture());
             if (!locked)
                 pedalOption.SetPedalAction(
                     delegate
                     {
                         startingState = !startingState;
                         if (startingState)
-                            pedalOption.SetPedalTypeIcon((Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOn.png").LoadTextureFromDisk());
+                            pedalOption.SetPedalTypeIcon(ForbiddenClient.Resources.IconsVars.ActionOn.LoadTexture());
                         else
-                            pedalOption.SetPedalTypeIcon((Environment.CurrentDirectory + "\\Forbidden\\Resources\\ActionOff.png").LoadTextureFromDisk());
+                            pedalOption.SetPedalTypeIcon(ForbiddenClient.Resources.IconsVars.ActionOff.LoadTexture());
                         onToggle.Invoke(startingState);
                     }
                 );

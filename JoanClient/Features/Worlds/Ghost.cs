@@ -23,7 +23,7 @@ namespace ForbiddenClient.Features.Worlds
 
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_0ec97c4f-1e84-4a3a-9e3a-fa3075b6c56d")
             {
-                var GhostIcon = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\Ghost.png").LoadSpriteFromDisk();
+                var GhostIcon = ForbiddenClient.Resources.IconsVars.Ghost.LoadSprite();
                 MenuUI.WorldHacks.SetIcon(GhostIcon);
                 MenuUI.WorldHacks.SetText("Ghost");
                 worldLoaded = true;
@@ -39,7 +39,7 @@ namespace ForbiddenClient.Features.Worlds
         {
             if (!worldLoaded) return;
             ESP = val;
-                foreach (var _object in Resources.FindObjectsOfTypeAll<Renderer>())
+                foreach (var _object in UnityEngine.Resources.FindObjectsOfTypeAll<Renderer>())
                 {
                     if (_object.gameObject.name.Contains("Folder") && _object.gameObject.transform.parent.gameObject.name.Contains("Clue") && !_object.gameObject.active)
                     {
@@ -73,7 +73,7 @@ namespace ForbiddenClient.Features.Worlds
             yield return new WaitForSeconds(21);
             try
             {
-                foreach (var UpdateGhost in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                foreach (var UpdateGhost in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                 {
                     if (UpdateGhost._eventTable.ContainsKey("UpdateGhostName"))
                     {
@@ -97,7 +97,7 @@ namespace ForbiddenClient.Features.Worlds
 
         public static void OpenLockedDoor()
         {
-            foreach (var doors in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+            foreach (var doors in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
             {
                 if (doors.gameObject.name == "LockDoor")
                 {
@@ -112,7 +112,7 @@ namespace ForbiddenClient.Features.Worlds
 
         public static void CraftAll()
         {
-            foreach (var Crafts in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+            foreach (var Crafts in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
             {
                 if (Crafts._eventTable.ContainsKey("Local_StartCraft"))
                 {

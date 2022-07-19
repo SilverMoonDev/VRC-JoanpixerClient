@@ -23,7 +23,7 @@ namespace ForbiddenClient.Features.Worlds
         {
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_1b3b3259-0a1f-4311-984e-826abab6f481")
             {
-                var JustBClub = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\JustBClub.png").LoadSpriteFromDisk();
+                var JustBClub = ForbiddenClient.Resources.IconsVars.JustBClub.LoadSprite();
                 MenuUI.WorldHacks.SetIcon(JustBClub);
                 MenuUI.WorldHacks.SetText("Just B Club");
                 Bedroom1 = GameObject.Find("Bedrooms/Bedroom 1");
@@ -48,7 +48,7 @@ namespace ForbiddenClient.Features.Worlds
         #endregion
             if (freeze)
             {
-                foreach (var item in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                foreach (var item in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                 {
                     if (item._eventTable.ContainsKey("OnDesktopTopDownViewStart"))
                         Udon.CallUdonEvent(item, "OnDesktopTopDownViewStart");
@@ -56,7 +56,7 @@ namespace ForbiddenClient.Features.Worlds
             }
             else
             {
-                foreach (var item in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                foreach (var item in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                 {
                     if (item._eventTable.ContainsKey("OnPutDownCueLocally"))
                         Udon.CallUdonEvent(item, "OnPutDownCueLocally");

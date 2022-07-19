@@ -33,7 +33,7 @@ namespace ForbiddenClient
                         "No",
                         () => API.VRCUiManagerEx.Instance.HideScreen("POPUP")
                         );
-                }, TextureHandler.LoadTextureFromDisk(Environment.CurrentDirectory + "\\Forbidden\\Resources\\restart.png"));
+                }, ForbiddenClient.Resources.IconsVars.Restart.LoadTexture());
                 CustomSubMenu.AddSubMenu("Player", () =>
                 {
                     Headlight = CustomSubMenu.AddToggle("Headlight", Utils.LightState, (val) =>
@@ -88,7 +88,7 @@ namespace ForbiddenClient
                         });
                     });
                         
-                }, TextureHandler.LoadTextureFromDisk(Environment.CurrentDirectory + "\\Forbidden\\Resources\\Player.png"));
+                }, ForbiddenClient.Resources.IconsVars.Player.LoadTexture());
 
                 #region Murder4
 
@@ -138,7 +138,7 @@ namespace ForbiddenClient
                                 Utils.SetRole(Utils.CurrentUser.prop_Player_0, "Murderer");
                             });
                         });
-                    }, TextureHandler.LoadTextureFromDisk(Environment.CurrentDirectory + "\\Forbidden\\Resources\\knife.png"));
+                    }, ForbiddenClient.Resources.IconsVars.Knife.LoadTexture());
                 }
                 #endregion
 
@@ -219,7 +219,7 @@ namespace ForbiddenClient
                                 AmongUs.CallGameLogic("CancelAllSabotage");
                             });
                         });
-                    }, TextureHandler.LoadTextureFromDisk(Environment.CurrentDirectory + "\\Forbidden\\Resources\\amongus.png"));
+                    }, ForbiddenClient.Resources.IconsVars.AmongUs.LoadTexture());
                 }
                 #endregion
 
@@ -259,11 +259,11 @@ namespace ForbiddenClient
                                 MelonLoader.MelonCoroutines.Start(Prison.GetMny());
                             });
                         }
-                    }, TextureHandler.LoadTextureFromDisk(Environment.CurrentDirectory + "\\Forbidden\\Resources\\prison.png"));
+                    }, ForbiddenClient.Resources.IconsVars.PrisonEscape.LoadTexture());
                 }
                 #endregion
 
-            }, TextureHandler.LoadTextureFromDisk(Environment.CurrentDirectory + "\\Forbidden\\Resources\\MainMenu.png"));
+            }, ForbiddenClient.Resources.IconsVars.MainMenu.LoadTexture());
         }
     }
 }

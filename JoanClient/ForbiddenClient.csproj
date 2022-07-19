@@ -127,6 +127,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\Udon.cs" />
     <Compile Include="Patches\PatchManager.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -345,6 +351,81 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ActionOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ActionOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\amongus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\block.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\doorsoff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ghost.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\infested.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\JustBClub.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\killself.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\knife.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MainMenu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pickup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Player.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\prison.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Protections Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\restart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ToggleOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UIColour.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UICustomize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\unlock.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

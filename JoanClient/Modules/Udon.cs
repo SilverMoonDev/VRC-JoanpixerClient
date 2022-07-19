@@ -15,7 +15,7 @@ namespace ForbiddenClient
         /// </summary>
         public static List<GameObject> GetUdonBehaviourGameObjects()
         {
-            GameObject[] gameObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+            GameObject[] gameObjects = UnityEngine.Resources.FindObjectsOfTypeAll<GameObject>();
             List<GameObject> udonBehaviours = new List<GameObject>();
 
             foreach (GameObject gameObject in gameObjects)

@@ -336,7 +336,7 @@ namespace ForbiddenClient
                 #endregion
 
                 #endregion
-                var block = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\block.png").LoadSpriteFromDisk();
+                var block = ForbiddenClient.Resources.IconsVars.blockicon.LoadSprite();
                 WorldHacks = new SingleButton(MainMenuButtons, "Worlds Hacks", "Opens Worlds Exploits Menu", () =>
                 {
                     if (Murder4.worldLoaded)
@@ -411,7 +411,7 @@ namespace ForbiddenClient
 
                 Murderer4.SetToggleState(Create.Ini.GetBool("Murder4", "AnnounceMurderer"));
 
-                var UnlockIcon = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\unlock.png").LoadSpriteFromDisk();
+                var UnlockIcon = ForbiddenClient.Resources.IconsVars.Unlock.LoadSprite();
 
                 new SimpleSingleButton(Murder4Buttons, "Start Game", "Forces Start Game", () =>
                 {
@@ -453,7 +453,7 @@ namespace ForbiddenClient
                     Murder4.UnLockDoors();
                 }, false, UnlockIcon);
 
-                var DoorsOffIcon = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\doorsoff.png").LoadSpriteFromDisk();
+                var DoorsOffIcon = ForbiddenClient.Resources.IconsVars.DoorsOff.LoadSprite();
 
                 DoorsOffButton = new ToggleButton(Murder4Buttons, "Doors Off", "Disable Doors", "Enable Doors", (val) =>
                 {
@@ -475,7 +475,7 @@ namespace ForbiddenClient
                 new SingleButton(Murder4Buttons, "Pickups", null, () =>
                 {
                     Murder4Pickups.OpenMenu();
-                }, true, (Environment.CurrentDirectory + "\\Forbidden\\Resources\\pickup.png").LoadSpriteFromDisk());
+                }, true, ForbiddenClient.Resources.IconsVars.pickups.LoadSprite());
 
                 WeaponsInCooldown = new ToggleButton(Murder4PickupsButtons, "Pickup Weapon in Cooldown", "Allows you to pickup every weapon that's in cooldown", "Allows you to pickup every weapon that's in cooldown", (val) =>
                 {
@@ -968,7 +968,7 @@ namespace ForbiddenClient
                     Murder3.CluesESP = val;
                     if (!val)
                     {
-                        foreach (var clue in Resources.FindObjectsOfTypeAll<Renderer>())
+                        foreach (var clue in UnityEngine.Resources.FindObjectsOfTypeAll<Renderer>())
                         {
                             if (clue.gameObject.name == "geo" && clue.gameObject.transform.parent.gameObject.name.Contains("Clue"))
                             {
@@ -1025,7 +1025,7 @@ namespace ForbiddenClient
                 new SimpleSingleButton(FunButtons, "Give Money To All", "Gives 999 Money To All", () =>
                 {
                     if (!Ghost.worldLoaded) return;
-                    foreach (var Events in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                    foreach (var Events in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                     {
                         if (Events._eventTable.ContainsKey("OnStabKill"))
                         {
@@ -1063,7 +1063,7 @@ namespace ForbiddenClient
                 new SimpleSingleButton(FunButtons, "Open All Lockers", "Opens All Lockers on the Map", () =>
                 {
                     if (!Ghost.worldLoaded) return;
-                    foreach (var Events in Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                    foreach (var Events in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
                     {
                         if (Events._eventTable.ContainsKey("Local_Unlock"))
                         {
@@ -2335,14 +2335,14 @@ namespace ForbiddenClient
                         FateOfTheIrrbloss.ChangeSong("i5");
                     });
 
-                    #endregion
+                #endregion
 
-                    #endregion
-                
+                #endregion
+
 
                 #region Protections
 
-                var ProtectionsIcon = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\Protections Icon.png").LoadSpriteFromDisk();
+                var ProtectionsIcon = ForbiddenClient.Resources.IconsVars.Protections.LoadSprite();
 
                 new SingleButton(MainMenuButtons, "Protections", "Opens Protections Menu", () =>
                 {
@@ -2476,7 +2476,7 @@ namespace ForbiddenClient
 
                 #region Pickups
 
-                var PickupsIcon = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\pickup.png").LoadSpriteFromDisk();
+                var PickupsIcon = ForbiddenClient.Resources.IconsVars.pickups.LoadSprite();
 
 
                 new SingleButton(MainMenuButtons, "Pickups", "Opens Pickup Menu", () =>
@@ -2588,7 +2588,7 @@ namespace ForbiddenClient
 
                 #endregion
 
-                var KillSelfIcon = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\killself.png").LoadSpriteFromDisk();
+                var KillSelfIcon = ForbiddenClient.Resources.IconsVars.KillSelf.LoadSprite();
 
                 KillSelf = new SingleButton(MainMenuButtons, "Kill Self", "Kill Self with Grenade", () =>
                 {
@@ -2841,7 +2841,7 @@ namespace ForbiddenClient
                         new SimpleSingleButton(Murder4PatronButtons, Utils.GetPlayerFromPlayeridInLobby(patrons).field_Private_VRCPlayerApi_0.displayName, "Delete from patrons", () =>
                         {
                             Murder4.Patrons.Remove(patrons);
-                            foreach (var buttons in Resources.FindObjectsOfTypeAll<TextMeshProUGUI>())
+                            foreach (var buttons in UnityEngine.Resources.FindObjectsOfTypeAll<TextMeshProUGUI>())
                             {
                                 if (buttons.text == Utils.GetPlayerFromPlayeridInLobby(patrons).field_Private_VRCPlayerApi_0.displayName && Utils.GetGameObjectPath(buttons.gameObject).Contains("Murder4Patron"))
                                 {
@@ -2862,7 +2862,7 @@ namespace ForbiddenClient
                 new SingleButton(Miscellaneous, "Player", "Local Player Settings", () =>
                 {
                     PlayerMenu.OpenMenu();
-                }, false, (Environment.CurrentDirectory + "\\Forbidden\\Resources\\Player.png").LoadSpriteFromDisk());
+                }, false, ForbiddenClient.Resources.IconsVars.Player.LoadSprite());
 
                 #region PlayerLocal
 
@@ -2985,13 +2985,13 @@ namespace ForbiddenClient
                 new SingleButton(Miscellaneous, "Settings", null, () =>
                 {
                     UIMenu.OpenMenu();
-                }, false, (Environment.CurrentDirectory + "\\Forbidden\\Resources\\Settings.png").LoadSpriteFromDisk());
+                }, false, ForbiddenClient.Resources.IconsVars.Settings.LoadSprite());
 
                 #region QuickMenu
                 new SingleButton(UIMenuButtons, "Quick Menu", null, () =>
                 {
                     QuickMenuSettings.OpenMenu();
-                }, false, (Environment.CurrentDirectory + "\\Forbidden\\Resources\\UICustomize.png").LoadSpriteFromDisk());
+                }, false, ForbiddenClient.Resources.IconsVars.UICustomize.LoadSprite());
 
                 QuickMenuImage = new ToggleButton(QuickMenuSettingsButtons, "Quick Menu Background", null, null, (val) =>
                 {
@@ -3042,7 +3042,7 @@ namespace ForbiddenClient
                             Utils.Notification("[Warning]: Image cannot be found!", Color.red);
                         }
                     }, () => { ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { false }); }, "Image Location:", true, null, false);
-                }, false, (Environment.CurrentDirectory + "\\Forbidden\\Resources\\addimage.png").LoadSpriteFromDisk());
+                }, false, ForbiddenClient.Resources.IconsVars.plusimage.LoadSprite());
                 #endregion
 
                 #region UIColour
@@ -3050,7 +3050,7 @@ namespace ForbiddenClient
                 new SingleButton(UIMenuButtons, "UI Colour", null, () =>
                 {
                     UIColour.OpenMenu();
-                }, false, (Environment.CurrentDirectory + "\\Forbidden\\Resources\\UIColour.png").LoadSpriteFromDisk());
+                }, false, ForbiddenClient.Resources.IconsVars.UIColour.LoadSprite());
 
                 RedColour = new ForbiddenButtonAPI.Controls.Slider(UIColour, "Red", null, (val) =>
                 {
@@ -3565,7 +3565,7 @@ namespace ForbiddenClient
 
             #endregion
 
-            var Murder4Icon = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\knife.png").LoadSpriteFromDisk();
+            var Murder4Icon = ForbiddenClient.Resources.IconsVars.Knife.LoadSprite();
 
             new SimpleSingleButton(quickmenuplayeroptions, "TP Pickups", "TP all pickups to the target", () =>
             {
