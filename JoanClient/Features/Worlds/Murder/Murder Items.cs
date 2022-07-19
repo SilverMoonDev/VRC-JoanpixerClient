@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using VRC.Udon;
 
-namespace JoanpixerClient.Features.Worlds
+namespace ForbiddenClient.Features.Worlds
 {
     internal class Murder4Items
     {
@@ -10,6 +10,7 @@ namespace JoanpixerClient.Features.Worlds
         #endregion
         public static GameObject revolverobject = null;
         public static GameObject luger = null;
+        public static GameObject camera = null;
         public static GameObject shotgun = null;
         public static GameObject frag = null;
         public static GameObject Beartrap = null;

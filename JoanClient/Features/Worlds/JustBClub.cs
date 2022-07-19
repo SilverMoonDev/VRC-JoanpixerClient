@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using MelonLoader;
 using System.Collections.Generic;
 
-namespace JoanpixerClient.Features.Worlds
+namespace ForbiddenClient.Features.Worlds
 {
     class JustBClub
     {
@@ -96,7 +96,7 @@ namespace JoanpixerClient.Features.Worlds
             catch (Exception e)
             {
                 GameObject.Find("Penthouse").SetActive(true);
-                JoanpixerClient.JoanpixerMain.Logger.Error($"Exception caught in JustBClub.CalculateRoomScore!\nMessage: {e.Message}\nSource: {e.Source}\n\nSTACKTRACE:\n{e.StackTrace}\n");
+                ForbiddenClient.Utils.ConsoleLog(Utils.ConsoleLogType.Error, $"Exception caught in JustBClub.CalculateRoomScore!\nMessage: {e.Message}\nSource: {e.Source}\n\nSTACKTRACE:\n{e.StackTrace}\n");
                 return -1;
             }
         }
@@ -133,7 +133,7 @@ namespace JoanpixerClient.Features.Worlds
 
                 if (bedroomObject == null)
                 {
-                    JoanpixerClient.JoanpixerMain.Logger.Msg("bedroomObject is null!");
+                    ForbiddenClient.Utils.ConsoleLog("Msg", "bedroomObject is null!");
                     return;
                 }
 
@@ -154,7 +154,7 @@ namespace JoanpixerClient.Features.Worlds
             }
             catch (Exception e)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error($"Exception caught in JustBClub.InitializeRooms!\nMessage: {e.Message}\nSource: {e.Source}\n\nSTACKTRACE:\n{e.StackTrace}\n");
+                ForbiddenClient.Utils.ConsoleLog(Utils.ConsoleLogType.Error, $"Exception caught in JustBClub.InitializeRooms!\nMessage: {e.Message}\nSource: {e.Source}\n\nSTACKTRACE:\n{e.StackTrace}\n");
             }
         }
     }

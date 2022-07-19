@@ -2,10 +2,10 @@
 using VRC.Core;
 using MelonLoader;
 using UnityEngine;
-using JoanpixerClient.Features.Worlds;
+using ForbiddenClient.Features.Worlds;
 using Il2CppSystem.Collections.Generic;
 
-namespace JoanpixerClient
+namespace ForbiddenClient
 {
     class Menu
     {
@@ -21,7 +21,7 @@ namespace JoanpixerClient
 
         public static void ToggleMenu()
         {
-            JoanpixerClient.JoanpixerMain.Logger.Msg("Toggling menu.");
+            ForbiddenClient.Utils.ConsoleLog("Msg", "Toggling menu.");
             showMenu = !showMenu;
         }
 
@@ -161,7 +161,7 @@ namespace JoanpixerClient
 
                     if (GUI.Button(new Rect(20, yOffset, 300, 20), $"{player?.prop_APIUser_0.displayName}"))
                     {
-                        JoanpixerClient.JoanpixerMain.Logger.Msg($"Selecting player {player?.prop_APIUser_0.displayName}.");
+                        ForbiddenClient.Utils.ConsoleLog("Msg", $"Selecting player {player?.prop_APIUser_0.displayName}.");
                         selectedPlayer = player;
                     }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using VRC.Core;
 
-namespace JoanpixerClient.Api.Object
+namespace ForbiddenClient.Api.Object
 {
     public class Platforms
     {
@@ -64,7 +64,7 @@ namespace JoanpixerClient.Api.Object
         public string supportedPlatforms { get; set; }
         public string releaseStatus { get; set; }
         public string description { get; set; }
-        //public string unityVersion { get; set; }
+        public string unityVersion { get; set; }
         public int version { get; set; }
 
         //public bool featured { get; set; }
@@ -78,12 +78,12 @@ namespace JoanpixerClient.Api.Object
                 authorName = authorName,
                 assetUrl = assetUrl,
                 thumbnailImageUrl = thumbnailImageUrl,
-                supportedPlatforms = supportedPlatforms == "All " ? ApiModel.SupportedPlatforms.All : ApiModel.SupportedPlatforms.StandaloneWindows,
+                supportedPlatforms = supportedPlatforms == "StandaloneWindows" ? ApiModel.SupportedPlatforms.StandaloneWindows : ApiModel.SupportedPlatforms.All,
                 description = description,
                 releaseStatus = releaseStatus,
                 version = version,
-                //unityVersion = unityVersion,
-                //assetVersion = new AssetVersion(unityVersion, 0),
+                unityVersion = unityVersion,
+                assetVersion = new AssetVersion(unityVersion, 0),
             };
         }
         public static ApiAvatar ApiAvatar(AvatarObject avatar)
@@ -96,12 +96,12 @@ namespace JoanpixerClient.Api.Object
                 authorName = avatar.authorName,
                 assetUrl = avatar.assetUrl,
                 thumbnailImageUrl = avatar.thumbnailImageUrl,
-                supportedPlatforms = avatar.supportedPlatforms == "All" ? ApiModel.SupportedPlatforms.All : ApiModel.SupportedPlatforms.StandaloneWindows,
+                supportedPlatforms = avatar.supportedPlatforms == "StandaloneWindows" ? ApiModel.SupportedPlatforms.StandaloneWindows : ApiModel.SupportedPlatforms.All,
                 description = avatar.description,
                 releaseStatus = avatar.releaseStatus,
                 version = avatar.version,
-                //unityVersion = unityVersion,
-                //assetVersion = new AssetVersion(unityVersion, 0),
+                unityVersion = avatar.unityVersion,
+                assetVersion = new AssetVersion(avatar.unityVersion, 0),
             };
         }
         public AvatarObject(ApiAvatar avtr)
@@ -116,7 +116,7 @@ namespace JoanpixerClient.Api.Object
             description = avtr.description;
             releaseStatus = avtr.releaseStatus;
             version = avtr.version;
-            //unityVersion = avtr.unityVersion;
+            unityVersion = avtr.unityVersion;
         }
         public AvatarObject(Il2CppSystem.Collections.Generic.Dictionary<string, Il2CppSystem.Object> avtr)
         {
@@ -126,10 +126,10 @@ namespace JoanpixerClient.Api.Object
             authorName = avtr["authorName"].ToString();
             assetUrl = avtr["assetUrl"].ToString();
             thumbnailImageUrl = avtr["thumbnailImageUrl"].ToString();
-            supportedPlatforms = "All";
+            supportedPlatforms = avtr["supportedPlatforms"].ToString();
             description = avtr["description"].ToString();
             releaseStatus = avtr["releaseStatus"].ToString();
-            //unityVersion = avtr.unityVersion 
+            unityVersion = avtr["unityVersion"].ToString();
         }
         public AvatarObject()
         {

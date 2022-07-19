@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections;
 using MelonLoader;
-using JoanpixerButtonAPI.Controls.Grouping;
-using JoanpixerButtonAPI.Misc;
-using JoanpixerButtonAPI.Pages;
+using ForbiddenButtonAPI.Controls.Grouping;
+using ForbiddenButtonAPI.Misc;
+using ForbiddenButtonAPI.Pages;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Core.Styles;
 
-namespace JoanpixerButtonAPI.Controls
+namespace ForbiddenButtonAPI.Controls
 {
     public class Label
     {

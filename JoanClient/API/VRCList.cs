@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using VRC.Core;
 
-namespace JoanpixerClient.Api
+namespace ForbiddenClient.Api
 {
     public class VRCList
     {

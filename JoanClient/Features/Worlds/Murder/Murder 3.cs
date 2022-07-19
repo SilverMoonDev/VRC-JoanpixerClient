@@ -1,12 +1,12 @@
 ﻿using VRC.Udon;
 using UnityEngine;
 using System.Collections;
-using JoanpixerClient.Modules;
+using ForbiddenClient.Modules;
 using VRC.SDKBase;
 using System;
 using UnityEngine.UI;
 
-namespace JoanpixerClient.Features.Worlds
+namespace ForbiddenClient.Features.Worlds
 {
     class Murder3
     {
@@ -21,6 +21,8 @@ namespace JoanpixerClient.Features.Worlds
         public static bool CluesESP = false; 
         public static bool spamsounds = false;
         public static GameObject MurderText = null;
+        public static GameObject patrons = null;
+        public static GameObject nonpatronobject = null;
         public static UdonBehaviour gameLogic = null;
         public static UdonBehaviour fragudon = null;
         public static UdonBehaviour revolver = null;
@@ -33,15 +35,17 @@ namespace JoanpixerClient.Features.Worlds
 
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_726c8a44-8222-4858-8b33-49e70d495b62")
             {
-                var Murder3Icon = (Environment.CurrentDirectory + "\\Joanpixer\\knife.png").LoadSpriteFromDisk();
-                Utils.WorldHacks.SetIcon(Murder3Icon);
-                Utils.WorldHacks.SetText("Murder 3");
+                var Murder3Icon = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\knife.png").LoadSpriteFromDisk();
+                MenuUI.WorldHacks.SetIcon(Murder3Icon);
+                MenuUI.WorldHacks.SetText("Murder 3");
                 worldLoaded = true;
                 MurderText = GameObject.Find("Game Logic/Game Canvas/Postgame/Murderer Name");
                 Murder4Items.smokebomb = GameObject.Find("Game Logic/Weapons/Unlockables/Smoke (0)");
                 Murder4Items.Beartrap = GameObject.Find("Game Logic/Weapons/Bear Trap (0)");
                 Murder4Items.knife = GameObject.Find("Game Logic/Weapons/Sickle (0)");
                 Murder4Items.revolverobject = GameObject.Find("Game Logic/Weapons/Revolver");
+                patrons = GameObject.Find("Patreon Canvas/Background/Static Frame/Present Frame/PresentNames");
+                nonpatronobject = GameObject.Find("Game Logic/Weapons/Revolver/Recoil Anim/Recoil/geo");
                 Murder4Items.luger = GameObject.Find("Game Logic/Weapons/Unlockables/Luger (0)");
                 Murder4Items.shotgun = GameObject.Find("Game Logic/Weapons/Unlockables/Shotgun (0)");
                 Murder4Items.frag = GameObject.Find("Game Logic/Weapons/Unlockables/Frag (0)");
@@ -64,16 +68,10 @@ namespace JoanpixerClient.Features.Worlds
         {
             if (!Murder4Items.frag) yield break;
             Items.TakeOwnershipIfNecessary(Murder4Items.frag);
-            Udon.CallUdonEvent(fragudon, "SyncArm");
-            yield return new WaitForSeconds(0.1f);
             Murder4Items.frag.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0.1f, 0.1f, 0);
             yield return new WaitForSeconds(0.1f);
-            Murder4Items.frag.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0.1f, 0.1f, 0);
             Udon.CallUdonEvent(fragudon, "Explode");
-            yield return new WaitForSeconds(0.1f);
-            Udon.CallUdonEvent(fragudon, "_Reset");
-            yield return new WaitForSeconds(0.1f);
-            Udon.CallUdonEvent(fragudon, "Respawn");
+            yield break;
         }
 
         public static IEnumerator KillLocalPlayerFrag()
@@ -81,16 +79,10 @@ namespace JoanpixerClient.Features.Worlds
             if (!Murder4Items.frag) yield break;
             var player = Utils.CurrentUser;
             Items.TakeOwnershipIfNecessary(Murder4Items.frag);
-            Udon.CallUdonEvent(fragudon, "SyncArm");
+            Murder4Items.frag.transform.position = player.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0.1f, 0.1f, 0);
             yield return new WaitForSeconds(0.1f);
-            Murder4Items.frag.transform.position = Utils.CurrentUser.gameObject.transform.position + new Vector3(0.1f, 0.1f, 0);
-            yield return new WaitForSeconds(0.1f);
-            Murder4Items.frag.transform.position = Utils.CurrentUser.gameObject.transform.position + new Vector3(0.1f, 0.1f, 0);
             Udon.CallUdonEvent(fragudon, "Explode");
-            yield return new WaitForSeconds(0.1f);
-            Udon.CallUdonEvent(fragudon, "_Reset");
-            yield return new WaitForSeconds(0.1f);
-            Udon.CallUdonEvent(fragudon, "Respawn");
+            yield break;
         }
 
         public static IEnumerator SpamSounds(float delay)

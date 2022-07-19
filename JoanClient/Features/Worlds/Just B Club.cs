@@ -2,7 +2,7 @@
 using UnityEngine;
 using VRC.Udon;
 
-namespace JoanpixerClient.Features.Worlds
+namespace ForbiddenClient.Features.Worlds
 {
     class Just_B_Club
     {
@@ -23,9 +23,9 @@ namespace JoanpixerClient.Features.Worlds
         {
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_1b3b3259-0a1f-4311-984e-826abab6f481")
             {
-                var JustBClub = (Environment.CurrentDirectory + "\\Joanpixer\\JustBClub.png").LoadSpriteFromDisk();
-                Utils.WorldHacks.SetIcon(JustBClub);
-                Utils.WorldHacks.SetText("Just B Club");
+                var JustBClub = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\JustBClub.png").LoadSpriteFromDisk();
+                MenuUI.WorldHacks.SetIcon(JustBClub);
+                MenuUI.WorldHacks.SetText("Just B Club");
                 Bedroom1 = GameObject.Find("Bedrooms/Bedroom 1");
                 Bedroom2 = GameObject.Find("Bedrooms/Bedroom 2");
                 Bedroom3 = GameObject.Find("Bedrooms/Bedroom 3");

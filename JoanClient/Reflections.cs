@@ -4,7 +4,7 @@ using VRC.Animation;
 using UnityEngine;
 using System.Linq;
 
-namespace JoanpixerClient
+namespace ForbiddenClient
 {
     public static class Reflections
     {

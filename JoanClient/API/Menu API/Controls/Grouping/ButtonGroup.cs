@@ -1,12 +1,12 @@
 using MelonLoader;
-using JoanpixerButtonAPI.Misc;
-using JoanpixerButtonAPI.Pages;
+using ForbiddenButtonAPI.Misc;
+using ForbiddenButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace JoanpixerButtonAPI.Controls.Grouping
+namespace ForbiddenButtonAPI.Controls.Grouping
 {
     public class ButtonGroup : Base_Classes.GenericControl
     {

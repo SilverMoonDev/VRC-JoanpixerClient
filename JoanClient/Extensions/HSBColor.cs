@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace JoanpixerClient.Extensions
+namespace ForbiddenClient.Extensions
 {
     [Serializable]
     public struct HSBColor

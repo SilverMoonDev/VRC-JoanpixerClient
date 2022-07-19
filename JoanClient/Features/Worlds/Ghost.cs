@@ -1,13 +1,13 @@
 ﻿using VRC.Udon;
 using UnityEngine;
 using System.Collections;
-using JoanpixerClient.Modules;
+using ForbiddenClient.Modules;
 using MelonLoader;
 using UnityEngine.UI;
 using VRC.SDKBase;
 using System;
 
-namespace JoanpixerClient.Features.Worlds
+namespace ForbiddenClient.Features.Worlds
 {
     class Ghost
     {
@@ -23,9 +23,9 @@ namespace JoanpixerClient.Features.Worlds
 
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_0ec97c4f-1e84-4a3a-9e3a-fa3075b6c56d")
             {
-                var GhostIcon = (Environment.CurrentDirectory + "\\Joanpixer\\Ghost.png").LoadSpriteFromDisk();
-                Utils.WorldHacks.SetIcon(GhostIcon);
-                Utils.WorldHacks.SetText("Ghost");
+                var GhostIcon = (Environment.CurrentDirectory + "\\Forbidden\\Resources\\Ghost.png").LoadSpriteFromDisk();
+                MenuUI.WorldHacks.SetIcon(GhostIcon);
+                MenuUI.WorldHacks.SetText("Ghost");
                 worldLoaded = true;
                 Ghosts = GameObject.Find("LobbyManager/MainHUD/GameOverScreen/GhostNameText").GetComponent<Text>();
             }
@@ -80,15 +80,15 @@ namespace JoanpixerClient.Features.Worlds
                         Udon.CallUdonEvent(UpdateGhost, "UpdateGhostName");
                     }
                 }
-                MelonCoroutines.Start(Utils.Notification($"Ghosts: \n{Ghosts.text}", Color.red));
+                Utils.Notification($"Ghosts: \n{Ghosts.text}", Color.red);
                 if (ESP)
                     ESPToggle(true);
-                if (worldLoaded && HighlightsComponent.ESPEnabled)
+                if (worldLoaded && Features.ESP.ESPEnabled)
                 {
-                    HighlightsComponent.DisableESP();
+                    Features.ESP.DisableESP();
                     foreach (var player in Utils.GetAllPlayers())
                     {
-                        HighlightsComponent.ToggleESP(true);
+                        Features.ESP.ToggleESP(true);
                     }
                 }
             }

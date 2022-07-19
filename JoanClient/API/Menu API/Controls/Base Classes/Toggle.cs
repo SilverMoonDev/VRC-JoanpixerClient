@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Elements.Tooltips;
 
-namespace JoanpixerButtonAPI.Controls.Base_Classes
+namespace ForbiddenButtonAPI.Controls.Base_Classes
 {
     public class Toggle : ControlWithText
     {

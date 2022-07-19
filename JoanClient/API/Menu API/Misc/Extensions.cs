@@ -8,9 +8,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Elements.Controls;
 using Object = UnityEngine.Object;
-using JoanpixerClient;
+using ForbiddenClient;
 
-namespace JoanpixerButtonAPI.Misc
+namespace ForbiddenButtonAPI.Misc
 {
     public static class Extensions
     {
@@ -225,7 +225,7 @@ namespace JoanpixerButtonAPI.Misc
                 }
                 catch (Exception ex)
                 {
-                    JoanpixerClient.JoanpixerMain.Logger.Error("Error while executing delegate:\n" + ex);
+                    ForbiddenClient.Utils.ConsoleLog(Utils.ConsoleLogType.Error, "Error while executing delegate:\n" + ex);
                 }
             }
         }

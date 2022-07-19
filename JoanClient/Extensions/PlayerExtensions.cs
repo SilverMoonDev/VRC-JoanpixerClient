@@ -97,11 +97,11 @@ namespace FlightMod
             return player.GetAPIUser().IsOnMobile;
         }
 
-        public static void SendVRCEvent(VRC_EventHandler.VrcEvent vrcEvent, VRC_EventHandler.VrcBroadcastType type, GameObject instagator)
+        public static void SendVRCEvent(VRC_EventHandler.VrcEvent vrcEvent, VRC_EventHandler.VrcBroadcastType type, GameObject instagator = null)
         {
             if (PlayerExtensions.handler == null)
             {
-                PlayerExtensions.handler = Resources.FindObjectsOfTypeAll<VRC_EventHandler>().FirstOrDefault<VRC_EventHandler>();
+                PlayerExtensions.handler = Resources.FindObjectsOfTypeAll<VRC_EventHandler>().FirstOrDefault();
             }
             vrcEvent.ParameterObject = Player.prop_Player_0.prop_USpeaker_0.gameObject;
             PlayerExtensions.handler.TriggerEvent(vrcEvent, type, instagator, 0f);
@@ -110,11 +110,6 @@ namespace FlightMod
         public static GameObject InstantiatePrefab(string PrefabNAME, Vector3 position, Quaternion rotation)
         {
             return Networking.Instantiate(VRC_EventHandler.VrcBroadcastType.Always, PrefabNAME, position, rotation);
-        }
-
-        public static void Mute(bool toggle)
-        {
-            DefaultTalkController.field_Private_Static_Boolean_0 = toggle;
         }
         public static void SetVolume(this Player player, float vol)
         {

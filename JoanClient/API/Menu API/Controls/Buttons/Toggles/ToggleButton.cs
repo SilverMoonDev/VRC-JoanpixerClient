@@ -5,13 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using MelonLoader;
-using JoanpixerButtonAPI.Controls.Base_Classes;
-using JoanpixerButtonAPI.Controls.Grouping;
-using JoanpixerButtonAPI.Pages;
+using ForbiddenButtonAPI.Controls.Base_Classes;
+using ForbiddenButtonAPI.Controls.Grouping;
+using ForbiddenButtonAPI.Pages;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using TMPro;
 
-namespace JoanpixerButtonAPI.Controls
+namespace ForbiddenButtonAPI.Controls
 {
     public class ToggleButton : Toggle
     {
@@ -21,6 +22,10 @@ namespace JoanpixerButtonAPI.Controls
             gameObject = Object.Instantiate(ButtonAPI.toggleButtonBase, parent);
 
             this.text.text = text;
+
+            this.text.fontStyle = FontStyles.Bold;
+
+            buttonBackground.color = new(0.1176f, 0.1176f, 0.1176f, 0.7f);
 
             toggle.onValueChanged = new UnityEngine.UI.Toggle.ToggleEvent();
 
@@ -60,14 +65,20 @@ namespace JoanpixerButtonAPI.Controls
             {
                 this.OnImage.sprite = OnImage;
                 this.OnImage.overrideSprite = OnImage;
+                this.OnImage.gameObject.transform.localPosition = new Vector3(2.56f, 65, 0);
             }
             else
             {
                 this.OnImage.sprite = ButtonAPI.onIconSprite;
                 this.OnImage.overrideSprite = ButtonAPI.onIconSprite;
+                this.OnImage.gameObject.transform.localPosition = new Vector3(2.56f, 65, 0);
             }
 
-            if (OffImage != null)
+            if (OffImage == null)
+            {
+                Object.Destroy(this.OffImage);
+            }
+            else
             {
                 this.OffImage.sprite = OffImage;
                 this.OffImage.overrideSprite = OffImage;

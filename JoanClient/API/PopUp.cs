@@ -3,7 +3,7 @@ using Il2CppSystem.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace JoanpixerClient.API
+namespace ForbiddenClient.API
 {
     public static class BuiltinUiUtils
     {

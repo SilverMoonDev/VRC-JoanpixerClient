@@ -1,18 +1,18 @@
-﻿using System;
+﻿using ForbiddenClient.Api;
+using ForbiddenClient.Api.Object;
+using MelonLoader;
+using Newtonsoft.Json;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using MelonLoader;
-using System.Collections;
 using VRC.Core;
 using VRC.UI;
-using JoanpixerClient.Api;
-using JoanpixerClient.Api.Object;
-using System.IO;
-using Newtonsoft.Json;
 
-namespace JoanpixerClient.Modules
+namespace ForbiddenClient.Modules
 {
     class AvatarFavs : MonoBehaviour
     {
@@ -24,19 +24,20 @@ namespace JoanpixerClient.Modules
             avatarPage = GameObject.Find("UserInterface/MenuContent/Screens/Avatar");
             PublicAvatarList = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/FavoriteListTemplate");
             currPageAvatar = avatarPage.GetComponent<PageAvatar>();
-            AvatarList = new VRCList(PublicAvatarList.transform.parent, "Joanpixer Favorites");
-            AvatarObjects = JsonConvert.DeserializeObject<List<AvatarObject>>(File.ReadAllText("Joanpixer\\AvatarFavorites.json"));
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites").SetActive(true);
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites/MoreFavoritesButton").GetComponent<Image>().color = Color.magenta;
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites").GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites").GetComponent<Button>().onClick.AddListener(new Action(() => { FavButton_OnClick(); })); 
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites/MoreFavoritesText").GetComponent<Text>().text = " Fav/UnFav Avatar";
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites/MoreFavoritesText").GetComponent<Text>().color = Color.white;
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites/MoreFavoritesText").name = "Fav/UnFav Text";
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites/MoreFavoritesButton").name = "Fav/UnFav Button Color";
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/GetMoreFavorites").name = "Fav/UnFav Button";
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/Button/TitleText").GetComponent<Text>().text = $"Joanpixer Favorites ({AvatarObjects.Count})";
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/Expired").active = false;
+            AvatarList = new VRCList(PublicAvatarList.transform.parent, "Forbidden Favorites");
+            AvatarObjects = JsonConvert.DeserializeObject<List<AvatarObject>>(File.ReadAllText("Forbidden\\AvatarFavorites.json"));
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").SetActive(true);
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesButton").GetComponent<Image>().color = Color.magenta;
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").GetComponent<Button>().onClick.AddListener(new Action(() => { FavButton_OnClick(); })); 
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").GetComponent<Text>().text = "Fav/UnFav Avatar";
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").GetComponent<Text>().color = Color.white;
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").name = "Fav/UnFav Text";
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesButton").name = "Fav/UnFav Button Color";
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").name = "Fav Button";
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/Button/TitleText").GetComponent<Text>().text = $"Forbidden Favorites ({AvatarObjects.Count})";
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/Expired").active = false;
         }
 
         public void Update()
@@ -60,17 +61,20 @@ namespace JoanpixerClient.Modules
             var avilist = new Il2CppSystem.Collections.Generic.List<ApiAvatar>();
             AvatarObjects.ForEach(avi => avilist.Add(avi.ToApiAvatar()));
             AvatarList.RenderElement(avilist);
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Joanpixer Favorites/Button/TitleText").GetComponent<Text>().text = $"Joanpixer Favourites ({AvatarObjects.Count})";
+            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/Button/TitleText").GetComponent<Text>().text = $"Forbidden Favourites ({AvatarObjects.Count})";
             yield break;
         }
+
         internal static void FavouriteAvatar(ApiAvatar avatar)
         {
             if (!AvatarObjects.Exists(avi => avi.id == avatar.id))
                 AvatarObjects.Insert(0, new AvatarObject(avatar));
             MelonCoroutines.Start(RefreshMenu(1f));
             string contents = JsonConvert.SerializeObject(AvatarObjects, Formatting.Indented);
-            File.WriteAllText("Joanpixer\\AvatarFavorites.json", contents);
+            File.WriteAllText("Forbidden\\AvatarFavorites.json", contents);
         }
+
+
         internal static void UnfavouriteAvatar(ApiAvatar avatar)
         {
             if (AvatarObjects.Exists(avi => avi.id == avatar.id))
@@ -79,7 +83,7 @@ namespace JoanpixerClient.Modules
             }
             MelonCoroutines.Start(RefreshMenu(1f));
             string contents = JsonConvert.SerializeObject(AvatarObjects, Formatting.Indented);
-            File.WriteAllText("Joanpixer\\AvatarFavorites.json", contents);
+            File.WriteAllText("Forbidden\\AvatarFavorites.json", contents);
         }
 
         void FavButton_OnClick()
@@ -94,6 +98,7 @@ namespace JoanpixerClient.Modules
             }
             MelonCoroutines.Start(RefreshMenu(1));
         }
+
 
         private static VRCList AvatarList;
         public static List<AvatarObject> AvatarObjects = new List<AvatarObject>();

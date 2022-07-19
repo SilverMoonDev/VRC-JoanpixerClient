@@ -2,7 +2,7 @@
 using MelonLoader;
 using VRC.SDKBase;
 
-namespace JoanpixerClient.Features
+namespace ForbiddenClient.Features
 {
     class Speedhack
     {
@@ -15,7 +15,7 @@ namespace JoanpixerClient.Features
 
         public static void Toggle()
         {
-            // JoanpixerClient.JoanpixerMain.Logger.Msg("Speedhack toggled.");
+            // ForbiddenClient.Utils.ConsoleLog("Msg", "Speedhack toggled.");
             speedEnabled = !speedEnabled;
         }
 
@@ -64,7 +64,7 @@ namespace JoanpixerClient.Features
             catch (Exception e)
             {
                 // SHUT THE FUCK UP NULL REFERENCE EXCEPTION.
-                JoanpixerClient.JoanpixerMain.Logger.Msg("Swallowing caught exception in Speedhack.Main(). ->\n" + e.ToString());
+                ForbiddenClient.Utils.ConsoleLog(Utils.ConsoleLogType.Msg, "Swallowing caught exception in Speedhack.Main(). ->\n" + e.ToString());
             }
 
         }

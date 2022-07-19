@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using MelonLoader;
-using JoanpixerButtonAPI.Misc;
+using ForbiddenButtonAPI.Misc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +12,7 @@ using VRC.UI.Elements.Menus;
 using VRC.UI.Elements.Notifications;
 using Object = UnityEngine.Object;
 
-namespace JoanpixerButtonAPI.Pages
+namespace ForbiddenButtonAPI.Pages
 {
     public class MenuPage
     {
@@ -34,7 +34,7 @@ namespace JoanpixerButtonAPI.Pages
         {
             if (ButtonAPI.menuPageBase == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("Fatal Error: ButtonAPI.menuPageBase Is Null!");
+                ForbiddenClient.Utils.ConsoleLog(ForbiddenClient.Utils.ConsoleLogType.Error, "Fatal Error: ButtonAPI.menuPageBase Is Null!");
                 return;
             }
 
@@ -89,7 +89,7 @@ namespace JoanpixerButtonAPI.Pages
                 {
                     if (isRoot)
                     {
-                        ButtonAPI.GetMenuStateControllerInstance().Method_Public_Void_String_Boolean_0("QuickMenuDashboard");
+                        ButtonAPI.GetMenuStateControllerInstance().Method_Public_Void_String_UIContext_Boolean_TransitionType_0("QuickMenuDashboard", null, false, UIPage.TransitionType.Right);
                     }
                     else
                     {
@@ -149,7 +149,7 @@ namespace JoanpixerButtonAPI.Pages
             }
             catch (Exception ex)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("Exception Caught When Making Page At Region: " + region + "\n\n" + ex);
+                ForbiddenClient.Utils.ConsoleLog(ForbiddenClient.Utils.ConsoleLogType.Error, "Exception Caught When Making Page At Region: " + region + "\n\n" + ex);
             }
         }
 
@@ -171,14 +171,7 @@ namespace JoanpixerButtonAPI.Pages
 
         public void OpenMenu()
         {
-            if (isRoot)
-            {
-                ButtonAPI.GetMenuStateControllerInstance().Method_Public_Void_String_UIContext_Boolean_0(page.field_Public_String_0);
-            }
-            else
-            {
-                ButtonAPI.GetMenuStateControllerInstance().Method_Public_Void_String_UIContext_Boolean_0(page.field_Public_String_0);
-            }
+                ButtonAPI.GetMenuStateControllerInstance().Method_Public_Void_String_UIContext_Boolean_TransitionType_0(page.field_Public_String_0, null, false, UIPage.TransitionType.Right);
         }
 
         public void CloseMenu()

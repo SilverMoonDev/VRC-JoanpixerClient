@@ -1,12 +1,12 @@
 using System;
-using JoanpixerButtonAPI.Controls.Grouping;
-using JoanpixerButtonAPI.Pages;
+using ForbiddenButtonAPI.Controls.Grouping;
+using ForbiddenButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace JoanpixerButtonAPI.Controls
+namespace ForbiddenButtonAPI.Controls
 {
     public class Slider : Base_Classes.GenericControl
     {

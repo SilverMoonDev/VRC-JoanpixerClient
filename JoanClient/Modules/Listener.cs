@@ -4,7 +4,7 @@ using UnityEngine;
 
 #nullable enable
 
-namespace JoanpixerClient.Modules
+namespace ForbiddenClient.Modules
 {
     public class EnableDisableListener : MonoBehaviour
     {
@@ -14,6 +14,9 @@ namespace JoanpixerClient.Modules
 
         [method: HideFromIl2Cpp]
         public event Action? OnDisabled;
+
+        [method: HideFromIl2Cpp]
+        public event Action? OnUpdate;
 
         public EnableDisableListener(IntPtr obj0) : base(obj0)
         {
@@ -27,6 +30,11 @@ namespace JoanpixerClient.Modules
         private void OnDisable()
         {
             OnDisabled?.Invoke();
+        }
+
+        private void Update()
+        {
+            OnUpdate?.Invoke();
         }
     }
 }

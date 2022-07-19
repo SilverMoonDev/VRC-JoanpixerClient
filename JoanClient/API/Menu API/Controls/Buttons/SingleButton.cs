@@ -1,13 +1,13 @@
 using System;
-using JoanpixerButtonAPI.Misc;
-using JoanpixerButtonAPI.Controls.Grouping;
-using JoanpixerButtonAPI.Pages;
+using ForbiddenButtonAPI.Misc;
+using ForbiddenButtonAPI.Controls.Grouping;
+using ForbiddenButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Core.Styles;
 
-namespace JoanpixerButtonAPI.Controls
+namespace ForbiddenButtonAPI.Controls
 {
     public class SingleButton : Base_Classes.Button
     {
@@ -17,6 +17,8 @@ namespace JoanpixerButtonAPI.Controls
 
             this.text.text = text;
             this.text.alignment = TextAlignment;
+            this.text.fontStyle = FontStyles.Bold;
+            buttonBackground.color = new(0.1176f, 0.1176f, 0.1176f, 0.7f);
 
             button.onClick = new Button.ButtonClickedEvent();
 
@@ -27,11 +29,17 @@ namespace JoanpixerButtonAPI.Controls
 
             if (!string.IsNullOrEmpty(tooltip))
             {
-                this.tooltip.field_Public_String_0 = tooltip;
+                foreach (VRC.UI.Elements.Tooltips.UiTooltip tooltips in gameObject?.GetComponentsInChildren<VRC.UI.Elements.Tooltips.UiTooltip>(true))
+                {
+                    tooltips.field_Public_String_0 = tooltip;
+                }
             }
             else
             {
-                this.tooltip.enabled = false;
+                foreach (VRC.UI.Elements.Tooltips.UiTooltip tooltips in gameObject?.GetComponentsInChildren<VRC.UI.Elements.Tooltips.UiTooltip>(true))
+                {
+                    tooltips.enabled = false;
+                }
             }
 
             if (icon != null)
@@ -40,6 +48,8 @@ namespace JoanpixerButtonAPI.Controls
                 buttonImage.overrideSprite = icon;
 
                 buttonImage.gameObject.SetActive(true);
+
+                buttonImage.color = new Color(0.4157f, 0.8902f, 0.9765f, 0.5f);
 
                 if (preserveColor)
                 {

@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Linq;
 using MelonLoader;
-using JoanpixerButtonAPI.Misc;
-using JoanpixerButtonAPI.Pages;
+using ForbiddenButtonAPI.Misc;
+using ForbiddenButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +11,7 @@ using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using Object = UnityEngine.Object;
 
-namespace JoanpixerButtonAPI.Controls.Grouping
+namespace ForbiddenButtonAPI.Controls.Grouping
 {
     public class CollapsibleButtonGroup
     {
@@ -28,7 +28,7 @@ namespace JoanpixerButtonAPI.Controls.Grouping
 
             var foldout = buttonGroup.headerGameObject.GetComponent<QMFoldout>();
 
-            foldout.field_Private_String_0 = "JoanpixerButtons";
+            foldout.field_Private_String_0 = "ForbiddenButtons";
 
             foldout.field_Private_Action_1_Boolean_0 = new Action<bool>(val =>
             {

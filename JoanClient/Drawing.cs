@@ -2,7 +2,7 @@
 using UnityEngine;
 using MelonLoader;
 
-namespace JoanpixerClient
+namespace ForbiddenClient
 {
     class Drawing
     {
@@ -12,7 +12,7 @@ namespace JoanpixerClient
         {
             if (lineMaterial != null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("Tried to create line material when it exists!");
+                ForbiddenClient.Utils.ConsoleLog(Utils.ConsoleLogType.Error, "Tried to create line material when it exists!");
                 return;
             }
 
@@ -43,7 +43,7 @@ namespace JoanpixerClient
             // https://docs.unity3d.com/2018.4/Documentation/ScriptReference/GL.html
             if (lineMaterial == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("lineMaterial is null!");
+                ForbiddenClient.Utils.ConsoleLog(Utils.ConsoleLogType.Error, "lineMaterial is null!");
                 return;
             }
 
@@ -74,7 +74,7 @@ namespace JoanpixerClient
 
             if (lineMaterial == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("lineMaterial is null!");
+                ForbiddenClient.Utils.ConsoleLog(Utils.ConsoleLogType.Error, "lineMaterial is null!");
                 return;
             }
 
@@ -82,7 +82,7 @@ namespace JoanpixerClient
 
             if (localCamera == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Msg("localCamera is null!");
+                ForbiddenClient.Utils.ConsoleLog("Msg", "localCamera is null!");
                 return;
             }
 
@@ -119,7 +119,7 @@ namespace JoanpixerClient
         {
             if (lineMaterial == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Error("lineMaterial is null!");
+                ForbiddenClient.Utils.ConsoleLog(Utils.ConsoleLogType.Error, "lineMaterial is null!");
                 return;
             }
 
@@ -127,7 +127,7 @@ namespace JoanpixerClient
 
             if (localCamera == null)
             {
-                JoanpixerClient.JoanpixerMain.Logger.Msg("localCamera is null!");
+                ForbiddenClient.Utils.ConsoleLog("Msg", "localCamera is null!");
                 return;
             }
 

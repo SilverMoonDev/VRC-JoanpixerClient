@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace JoanpixerButtonAPI.Controls.Base_Classes
+namespace ForbiddenButtonAPI.Controls.Base_Classes
 {
     public class Button : ControlWithText
     {

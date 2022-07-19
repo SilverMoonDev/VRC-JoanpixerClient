@@ -6,7 +6,7 @@ using UnhollowerBaseLib;
 using UnhollowerRuntimeLib;
 using Object = UnityEngine.Object;
 
-namespace JoanpixerClient.Utility
+namespace ForbiddenClient.Utility
 {
     class MenuButton
     {

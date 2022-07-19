@@ -1,4 +1,4 @@
-﻿namespace JoanpixerClient.Utility
+﻿namespace ForbiddenClient.Utility
 {
     enum MenuButtonType
     {

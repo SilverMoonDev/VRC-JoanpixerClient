@@ -1,13 +1,13 @@
 using System;
-using JoanpixerButtonAPI.Misc;
-using JoanpixerButtonAPI.Controls.Grouping;
-using JoanpixerButtonAPI.Pages;
+using ForbiddenButtonAPI.Misc;
+using ForbiddenButtonAPI.Controls.Grouping;
+using ForbiddenButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Core.Styles;
 
-namespace JoanpixerButtonAPI.Controls
+namespace ForbiddenButtonAPI.Controls
 {
     public class WingSingleButton : Base_Classes.Button
     {

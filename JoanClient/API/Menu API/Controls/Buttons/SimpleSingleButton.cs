@@ -1,11 +1,11 @@
-using JoanpixerButtonAPI.Controls.Grouping;
-using JoanpixerButtonAPI.Pages;
+using ForbiddenButtonAPI.Controls.Grouping;
+using ForbiddenButtonAPI.Pages;
 using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace JoanpixerButtonAPI.Controls
+namespace ForbiddenButtonAPI.Controls
 {
     public class SimpleSingleButton : Base_Classes.Button
     {
@@ -14,9 +14,11 @@ namespace JoanpixerButtonAPI.Controls
             gameObject = UnityEngine.Object.Instantiate(ButtonAPI.singleButtonBase, parent);
 
             this.text.text = text;
+            this.text.fontStyle = FontStyles.Bold;
             this.text.fontSize = 28f;
             this.text.transform.localPosition = new Vector3(0f, -19f, 0f);
             this.text.color = new Color(0.9f, 0.9f, 0.9f);
+            buttonBackground.color = new(0.1176f, 0.1176f, 0.1176f, 0.7f);
 
             button.onClick = new Button.ButtonClickedEvent();
 
@@ -27,11 +29,17 @@ namespace JoanpixerButtonAPI.Controls
 
             if (!string.IsNullOrEmpty(tooltip))
             {
-                this.tooltip.field_Public_String_0 = tooltip;
+                foreach (VRC.UI.Elements.Tooltips.UiTooltip tooltips in gameObject?.GetComponentsInChildren<VRC.UI.Elements.Tooltips.UiTooltip>(true))
+                {
+                    tooltips.field_Public_String_0 = tooltip;
+                }
             }
             else
             {
-                this.tooltip.enabled = false;
+                foreach (VRC.UI.Elements.Tooltips.UiTooltip tooltips in gameObject?.GetComponentsInChildren<VRC.UI.Elements.Tooltips.UiTooltip>(true))
+                {
+                    tooltips.enabled = false;
+                }
             }
 
             UnityEngine.Object.Destroy(gameObject.transform.Find("Icon").gameObject);

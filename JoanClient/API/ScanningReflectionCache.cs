@@ -6,7 +6,7 @@ using UnhollowerRuntimeLib.XrefScans;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace JoanpixerClient
+namespace ForbiddenClient
 {
     internal static class ScanningReflectionCache
     {

@@ -1,13 +1,13 @@
 using System;
-using JoanpixerButtonAPI.Misc;
-using JoanpixerButtonAPI.Pages;
+using ForbiddenButtonAPI.Misc;
+using ForbiddenButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements.Controls;
 
-namespace JoanpixerButtonAPI.Controls
+namespace ForbiddenButtonAPI.Controls
 {
 	public class Tab : Base_Classes.GenericControl
 	{
