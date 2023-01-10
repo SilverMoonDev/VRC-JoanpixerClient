@@ -31,16 +31,16 @@ namespace ForbiddenClient.Features
             CheckForStupidClientsLikeEMM();
             if (PatchManager.AnnounceMurderer4)
             {
-                    if (APIUser.IsFriendsWith(apiUser.id) && Worlds.Murder4.worldLoaded && PatchManager.Murderers.Contains(apiUser.displayName))
+                    if (APIUser.IsFriendsWith(apiUser.id) && Worlds.Murder4.worldLoaded && PatchManager.Murderers.ContainsKey(apiUser.displayName))
                         return _murdererHighlights;
-                    if (Worlds.Murder4.worldLoaded && PatchManager.Murderers.Contains(apiUser.displayName) && !APIUser.IsFriendsWith(apiUser.id))
+                    if (Worlds.Murder4.worldLoaded && PatchManager.Murderers.ContainsKey(apiUser.displayName) && !APIUser.IsFriendsWith(apiUser.id))
                         return _murdererHighlights;
             }
             if (PatchManager.AnnounceImposters)
             {
-                    if (APIUser.IsFriendsWith(apiUser.id) && Worlds.AmongUs.worldLoaded && PatchManager.Imposters.Contains(apiUser.displayName))
+                    if (APIUser.IsFriendsWith(apiUser.id) && Worlds.AmongUs.worldLoaded && PatchManager.Imposters.ContainsKey(apiUser.displayName))
                         return _murdererHighlights;
-                    if (Worlds.AmongUs.worldLoaded && PatchManager.Imposters.Contains(apiUser.displayName) && !APIUser.IsFriendsWith(apiUser.id))
+                    if (Worlds.AmongUs.worldLoaded && PatchManager.Imposters.ContainsKey(apiUser.displayName) && !APIUser.IsFriendsWith(apiUser.id))
                         return _murdererHighlights;
             }
             if (PatchManager.AnnounceGhost)
@@ -134,7 +134,6 @@ namespace ForbiddenClient.Features
             {
                 return "Guard";
             }
-            return null;
         }
 
         public static void CheckMurdererESP()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using ForbiddenButtonAPI;
 
 namespace ForbiddenClient.Features
 {
@@ -23,11 +24,11 @@ namespace ForbiddenClient.Features
                 {
                     try
                     {
-                        if (GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").gameObject.scene.name == "DontDestroyOnLoad")
+                        if (ButtonAPI.userinterface.transform.Find("MenuContent/Backdrop/Backdrop/Background").gameObject.scene.name == "DontDestroyOnLoad")
                         {
-                            GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().sprite = ForbiddenMain.Background;
-                            GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().overrideSprite = ForbiddenMain.Background;
-                            GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().color = new Color(0.02f, 0.26f, 1, 0.473f);
+                            ButtonAPI.userinterface.transform.Find("MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().sprite = ForbiddenMain.Background;
+                            ButtonAPI.userinterface.transform.Find("MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().overrideSprite = ForbiddenMain.Background;
+                            ButtonAPI.userinterface.transform.Find("MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().color = new Color(0.02f, 0.26f, 1, 0.473f);
                         }
                     }
                     catch { }
@@ -37,8 +38,9 @@ namespace ForbiddenClient.Features
                 {
                     if (buttons.gameObject.scene.name == "DontDestroyOnLoad")
                     {
-                        if (Utils.GetGameObjectPath(buttons.gameObject).Contains("UserInterface") && !Utils.GetGameObjectPath(buttons.gameObject).Contains("Canvas_QuickMenu(Clone)"))
+                        if (Utils.GetGameObjectPath(buttons.gameObject).StartsWith("/UserInterface") && Utils.GetGameObjectPath(buttons.gameObject).Contains("Menu_Dashboard"))
                         {
+                            ForbiddenMain.Logger.Msg(Utils.GetGameObjectPath(buttons.gameObject));
                             ColorBlock cb = buttons.colors;
                             cb.m_NormalColor = Color.magenta;
                             cb.m_PressedColor = new Color(1, 0, 1, 0.2f);
@@ -82,7 +84,7 @@ namespace ForbiddenClient.Features
                             {
                             }
 
-                            GameObject.Find("UserInterface/MenuContent/Screens/Settings/UserVolumeOptions")
+                            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Settings/UserVolumeOptions")
                                 .GetComponent<Image>().color = new Color(0, 0, 0, 0.5725f);
                             if (settings.gameObject.name == "Checkmark")
                             {
@@ -117,11 +119,11 @@ namespace ForbiddenClient.Features
                 {
                     try
                     {
-                        if (GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").gameObject.scene.name == "DontDestroyOnLoad")
+                        if (ButtonAPI.userinterface.transform.Find("MenuContent/Backdrop/Backdrop/Background").gameObject.scene.name == "DontDestroyOnLoad")
                         {
-                            GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().sprite = ForbiddenMain.Background;
-                            GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().overrideSprite = ForbiddenMain.Background;
-                            GameObject.Find("UserInterface/MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().color = new Color(0.02f, 0.26f, 1, 0.473f);
+                            ButtonAPI.userinterface.transform.Find("MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().sprite = ForbiddenMain.Background;
+                            ButtonAPI.userinterface.transform.Find("MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().overrideSprite = ForbiddenMain.Background;
+                            ButtonAPI.userinterface.transform.Find("MenuContent/Backdrop/Backdrop/Background").GetComponent<Image>().color = new Color(0.02f, 0.26f, 1, 0.473f);
                         }
                     }
                     catch { }
@@ -131,8 +133,9 @@ namespace ForbiddenClient.Features
                 {
                     if (buttons.gameObject.scene.name == "DontDestroyOnLoad")
                     {
-                        if (Utils.GetGameObjectPath(buttons.gameObject).Contains("UserInterface") && !Utils.GetGameObjectPath(buttons.gameObject).Contains("Canvas_QuickMenu(Clone)"))
+                        if (Utils.GetGameObjectPath(buttons.gameObject).StartsWith("/UserInterface") && Utils.GetGameObjectPath(buttons.gameObject).Contains("Menu_Dashboard"))
                         {
+                            ForbiddenMain.Logger.Msg(Utils.GetGameObjectPath(buttons.gameObject));
                             ColorBlock cb = buttons.colors;
                             cb.m_NormalColor = new Color(Red, Green, Blue, 1);
                             cb.m_PressedColor = new Color(Red, Green, Blue, 0.2f);
@@ -176,7 +179,7 @@ namespace ForbiddenClient.Features
                             {
                             }
 
-                            GameObject.Find("UserInterface/MenuContent/Screens/Settings/UserVolumeOptions").GetComponent<Image>().color = new Color(0, 0, 0, 0.5725f);
+                            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Settings/UserVolumeOptions").GetComponent<Image>().color = new Color(0, 0, 0, 0.5725f);
                             if (settings.gameObject.name == "Checkmark")
                             {
                                 settings.color = new Color(0, 0, 0, 1);
@@ -213,9 +216,10 @@ namespace ForbiddenClient.Features
                         {
                             if (buttons.gameObject.scene.name == "DontDestroyOnLoad")
                             {
-                                if (Utils.GetGameObjectPath(buttons.gameObject).Contains("UserInterface"))
+                                if (Utils.GetGameObjectPath(buttons.gameObject).StartsWith("/UserInterface"))
                                 {
-                                    ColorBlock cb = buttons.colors;
+                                ForbiddenMain.Logger.Msg(Utils.GetGameObjectPath(buttons.gameObject));
+                                ColorBlock cb = buttons.colors;
                                     cb.m_NormalColor = new Color(Red, Green, Blue, 1);
                                     cb.m_PressedColor = new Color(Red, Green, Blue, 0.2f);
                                     cb.m_HighlightedColor = new Color(Red, Green, Blue, 0.5f);
@@ -256,7 +260,7 @@ namespace ForbiddenClient.Features
                                     }
                                     catch { }
 
-                                    GameObject.Find("UserInterface/MenuContent/Screens/Settings/UserVolumeOptions").GetComponent<Image>().color = new Color(0, 0, 0, 0.5725f);
+                                    ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Settings/UserVolumeOptions").GetComponent<Image>().color = new Color(0, 0, 0, 0.5725f);
                                     if (settings.gameObject.name == "Checkmark")
                                     {
                                         settings.color = new Color(0, 0, 0, 1);
@@ -290,9 +294,11 @@ namespace ForbiddenClient.Features
                         {
                             if (buttons.gameObject.scene.name == "DontDestroyOnLoad")
                             {
-                                if (Utils.GetGameObjectPath(buttons.gameObject).Contains("UserInterface") && !Utils.GetGameObjectPath(buttons.gameObject).Contains("Canvas_QuickMenu(Clone)"))
+                                if (Utils.GetGameObjectPath(buttons.gameObject).StartsWith("/UserInterface") && Utils.GetGameObjectPath(buttons.gameObject).Contains("Menu_Dashboard"))
                                 {
-                                    ColorBlock cb = buttons.colors;
+                                ForbiddenMain.Logger.Msg(Utils.GetGameObjectPath(buttons.gameObject));
+
+                                ColorBlock cb = buttons.colors;
                                     cb.m_NormalColor = Color.magenta;
                                     cb.m_PressedColor = new Color(1, 0, 1, 0.2f);
                                     cb.m_HighlightedColor = new Color(1, 0, 1, 0.5f);
@@ -335,7 +341,7 @@ namespace ForbiddenClient.Features
                                     {
                                     }
 
-                                    GameObject.Find("UserInterface/MenuContent/Screens/Settings/UserVolumeOptions")
+                                    ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Settings/UserVolumeOptions")
                                         .GetComponent<Image>().color = new Color(0, 0, 0, 0.5725f);
                                     if (settings.gameObject.name == "Checkmark")
                                     {

@@ -9,6 +9,7 @@ using ForbiddenClient.FoldersManager;
 using UnityEngine.UI;
 using VRC;
 using VRC.Udon.Common.Interfaces;
+using MelonLoader;
 
 namespace ForbiddenClient.Features.Worlds
 {
@@ -65,11 +66,11 @@ namespace ForbiddenClient.Features.Worlds
             {
                 if (Create.Ini.GetBool("Murder4", "LaserSight"))
                 {
-                    GameObject.Find("Game Logic/Weapons/Revolver/Recoil Anim/Recoil/Laser Sight").active = true;
+                GameObject.Find("Game Logic/Weapons/Revolver/Recoil Anim/Recoil/Laser Sight").active = true;
                 }
                 if (Create.Ini.GetBool("Murder4", "PatreonSelf"))
                 {
-                    MelonLoader.MelonCoroutines.Start(GivePatreonSelf());
+                    MelonCoroutines.Start(GivePatreonSelf());
                 }
                 var Murder4Icon = ForbiddenClient.Resources.IconsVars.Knife.LoadSprite();
                 MenuUI.WorldHacks.SetIcon(Murder4Icon);
@@ -121,7 +122,10 @@ namespace ForbiddenClient.Features.Worlds
                 Pickups.Clear();
                 foreach (VRC_Pickup Pickupsuwu in UnityEngine.Resources.FindObjectsOfTypeAll<VRC_Pickup>())
                 {
-                    Pickups.Add(Pickupsuwu);
+                    if (Pickupsuwu.gameObject.scene.name != "DontDestroyOnLoad")
+                    {
+                        Pickups.Add(Pickupsuwu);
+                    }
                 }
                 PlayerEntrys.Clear();
                 foreach (GameObject entry in UnityEngine.Resources.FindObjectsOfTypeAll<GameObject>())
@@ -167,6 +171,7 @@ namespace ForbiddenClient.Features.Worlds
             {
                 worldLoaded = false;
             }
+
         }
         public static IEnumerator KillSelectedPlayerFrag(VRC.Player player)
         {
@@ -183,12 +188,18 @@ namespace ForbiddenClient.Features.Worlds
 
         internal static IEnumerator RespawnAnnoy(Player player)
         {
-            while (player != null && respawnannoy)
+            
+            if (player != null)
             {
-                Utils.SetRole(player, "Bystander");
-                yield return new WaitForSeconds(0.1f);
-                Utils.SetRole(player, "Kill");
+                UdonBehaviour respawnplayer = Utils.GetPlayerNodeFromPlayer(player).GetComponent<UdonBehaviour>();
+                while (player != null && respawnannoy)
+                {
+                    Udon.CallUdonEvent(respawnplayer, "SyncAssignB");
+                    yield return new WaitForSeconds(0.1f);
+                    Udon.CallUdonEvent(respawnplayer, "SyncKill");
+                }
             }
+            respawnannoy = false;
             yield break;
         }
 
@@ -429,7 +440,7 @@ namespace ForbiddenClient.Features.Worlds
                         CallRevolver("PatronSkin");
                     }
                 }
-                catch {}
+                catch { }
             }
         }
 

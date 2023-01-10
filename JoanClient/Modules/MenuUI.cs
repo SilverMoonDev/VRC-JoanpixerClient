@@ -3,7 +3,6 @@ using System.Linq;
 using ForbiddenButtonAPI;
 using ForbiddenButtonAPI.Controls;
 using ForbiddenButtonAPI.Controls.Grouping;
-using ForbiddenButtonAPI.Helpers;
 using ForbiddenButtonAPI.Pages;
 using ForbiddenClient.API;
 using ForbiddenClient.Features.Worlds;
@@ -23,25 +22,26 @@ using System.Threading;
 using VRC.Core;
 using ForbiddenButtonAPI.Misc;
 using VRC.UI.Elements.Menus;
+using ForbiddenButtonAPI.External_Libraries;
 
 namespace ForbiddenClient
 {
     internal class MenuUI
     {
+
+        //internal static ForbiddenButtonAPI.Controls.Slider RedColour;
+        //internal static ForbiddenButtonAPI.Controls.Slider GreenColour;
+        //internal static ForbiddenButtonAPI.Controls.Slider BlueColour;
+        //internal static SimpleSingleButton ApplyUiColour;
+        //internal static SimpleSingleButton ResetUIColour;
+        //internal static Transform awa;
         internal static ToggleButton Noclip;
-        internal static ForbiddenButtonAPI.Controls.Slider RedColour;
-        internal static ForbiddenButtonAPI.Controls.Slider GreenColour;
-        internal static ForbiddenButtonAPI.Controls.Slider BlueColour;
-        internal static SimpleSingleButton ApplyUiColour;
-        internal static SimpleSingleButton ResetUIColour;
         internal static ToggleButton Speedhack;
-        internal static Transform awa;
         private static ToggleButton Murderer4;
         private static ToggleButton CrateESPPrison;
         private static ToggleButton ESPPrison;
         private static ToggleButton ChangeStatus;
         private static ToggleButton AntiVoteOut;
-        private static ToggleButton QuestSpoof;
         private static ToggleButton AntiBlock;
         private static ToggleButton PreventAvatarChange;
         private static ToggleButton PatronSelfMurder;
@@ -53,7 +53,6 @@ namespace ForbiddenClient
         private static ToggleButton PatronSelfPrisonPurple;
         private static ToggleButton PatronSelfPrisonRed;
         private static ToggleButton PatronSelfPrisonRainbow;
-        private static ToggleButton QuickMenuImage;
         private static ToggleButton DoorsOffButton;
         internal static ToggleButton Headlight;
         private static ToggleButton Laser;
@@ -72,8 +71,6 @@ namespace ForbiddenClient
         private static ToggleButton LogKills;
         private static ToggleButton OneClickOpenDoor;
         private static ToggleButton AnnounceGhost;
-        private static ToggleButton Antiinstancelock;
-        private static SimpleSingleButton LeashValue;
         internal static ToggleButton Aimbot;
         internal static SimpleSingleButton PatronList;
         internal static SimpleSingleButton PrivatePrisonEscapeStuff;
@@ -112,232 +109,225 @@ namespace ForbiddenClient
                 #region Menus
 
                 //Menus
-                var mainmenu = new MenuPage("MainMenu", "Forbidden Client", true, false);
+                var mainmenu = MenuPage.CreatePage("MainMenu", "Forbidden Client", true, false);
 
                 new Tab(mainmenu, "Forbidden Client", ForbiddenMain.ButtonImage);
 
                 #region Main Menu
-                var MainMenuButtons = new ButtonGroup(mainmenu, "World");
+                var MainMenuButtons = mainmenu.AddButtonGroup("World");
 
-                var UdonEventsMenu = new MenuPage("UdonEvents", "Udon Events", false);
+                var UdonEventsMenu = MenuPage.CreatePage("UdonEvents", "Udon Events", false);
 
-                var Miscellaneous = new ButtonGroup(mainmenu, "Miscellaneous");
+                var Miscellaneous = mainmenu.AddButtonGroup("Miscellaneous");
 
-                var PlayerMenu = new MenuPage("Player", "Local Player", false);
+                var PlayerMenu = MenuPage.CreatePage("Player", "Local Player", false);
 
-                var PlayerMenuLocal = new ButtonGroup(PlayerMenu, "Local");
+                var PlayerMenuLocal = PlayerMenu.AddButtonGroup("Local");
 
-                var PlayerMenuMovement = new ButtonGroup(PlayerMenu, "Movement");
+                var PlayerMenuMovement = PlayerMenu.AddButtonGroup("Movement");
 
-                var UdonEventsButtons = new ButtonGroup(UdonEventsMenu, null);
+                var UdonEventsButtons = UdonEventsMenu.AddButtonGroup(null);
 
-                var UdonEventMenu = new MenuPage("Event", "", false);
+                var UdonEventMenu = MenuPage.CreatePage("Event", null, false);
 
-                var UdonEventButtons = new ButtonGroup(UdonEventMenu, null);
+                var UdonEventButtons = UdonEventMenu.AddButtonGroup(null);
 
                 #region Protections
 
-                var Protections = new MenuPage("Protections", "Protections", false);
-                var ProtectionsButtons = new ButtonGroup(Protections, null);
+                var Protections = MenuPage.CreatePage("Protections", "Protections", false);
+                var ProtectionsButtons = Protections.AddButtonGroup(null);
 
-                var LogCheaters = new MenuPage("LogCheaters", "Log Cheaters", false);
-                var LogCheatersButtons = new ButtonGroup(LogCheaters, null);
-
-                #endregion
-
-                var TouchSystemMenu = new MenuPage("TouchSystem", "Touch System", false);
-                var TouchSystemButtons = new ButtonGroup(TouchSystemMenu, null);
-
-                var Pickups = new MenuPage("Pickups", "Pickups", false);
-                var PickupsButtons = new ButtonGroup(Pickups, null);
-                var PickupsLag = new MenuPage("Pickups Exploits", "PickupsExp", false);
-                var PickupsLagButtons = new ButtonGroup(PickupsLag, null);
+                var LogCheaters = MenuPage.CreatePage("LogCheaters", "Log Cheaters", false);
+                var LogCheatersButtons = LogCheaters.AddButtonGroup(null);
 
                 #endregion
 
-                #region Settings
+                var TouchSystemMenu = MenuPage.CreatePage("TouchSystem", "Touch System", false);
+                var TouchSystemButtons = TouchSystemMenu.AddButtonGroup(null);
 
-                var SettingsMenu = new MenuPage("Settings", "Settings", false);
-
-                var SettingsMenuButtons = new ButtonGroup(SettingsMenu, null);
-
-                var UIMenu = new MenuPage("UI", "UI Settings", false);
-
-                var UIMenuButtons = new ButtonGroup(UIMenu, null);
-
-                var QuickMenuSettings = new MenuPage("QuickMenu", "QuickMenu Settings", false);
-
-                var QuickMenuSettingsButtons = new ButtonGroup(QuickMenuSettings, null);
-
-                var UIColour = new MenuPage("UIColour", "UI Colour", false);
-
-                var UIColourButtons = new ButtonGroup(UIColour, null);
+                var Pickups = MenuPage.CreatePage("Pickups", "Pickups", false);
+                var PickupsButtons = Pickups.AddButtonGroup(null);
+                var PickupsLag = MenuPage.CreatePage("Pickups Exploits", "PickupsExp", false);
+                var PickupsLagButtons = PickupsLag.AddButtonGroup(null);
 
                 #endregion
 
                 #region JustBClub
 
-                var JustBClubMenu = new MenuPage("JustBClub", "Just B Club", false);
+                var JustBClubMenu = MenuPage.CreatePage("JustBClub", "Just B Club", false);
 
-                var JustBClubButtons = new ButtonGroup(JustBClubMenu, null);
+                var JustBClubButtons = JustBClubMenu.AddButtonGroup(null);
 
-                var JustBClubRoomsMenu = new MenuPage("JustBClubRooms", "Just B Club Rooms", false);
+                var JustBClubRoomsMenu = MenuPage.CreatePage("JustBClubRooms", "Just B Club Rooms", false);
 
-                var JustBClubRoomsButtons = new ButtonGroup(JustBClubRoomsMenu, null);
-
-                var JustBClubFunMenu = new MenuPage("JustBClubFun", "Just B Club Fun", false);
-
-                var JustBClubFunButtons = new ButtonGroup(JustBClubFunMenu, null);
+                var JustBClubRoomsButtons = JustBClubRoomsMenu.AddButtonGroup(null);
 
                 #endregion
 
                 #region Murder4
 
-                var Murder4Menu = new MenuPage("Murder4", "Murder 4", false);
+                var Murder4Menu = MenuPage.CreatePage("Murder4", "Murder 4", false);
 
-                var Murder4Buttons = new ButtonGroup(Murder4Menu, null);
+                var Murder4Buttons = Murder4Menu.AddButtonGroup(null);
 
-                var Murder4Pickups = new MenuPage("Murder4Pickups", "Murder 4 Pickups", false);
+                var Murder4Pickups = MenuPage.CreatePage("Murder4Pickups", "Murder 4 Pickups", false);
 
-                var Murder4PickupsButtons = new ButtonGroup(Murder4Pickups, null);
+                var Murder4PickupsButtons = Murder4Pickups.AddButtonGroup(null);
 
-                var Murder4Patron = new MenuPage("Murder4Patron", "Murder 4 Patrons", false);
+                var Murder4Patron = MenuPage.CreatePage("Murder4Patron", "Murder 4 Patrons", false);
 
-                var Murder4PatronButtons = new ButtonGroup(Murder4Patron, null);
+                var Murder4PatronButtons = Murder4Patron.AddButtonGroup(null);
 
-                var annoy = new MenuPage("Annoy", "Annoy Functions", false);
+                var annoy = MenuPage.CreatePage("Annoy", "Annoy Functions", false);
 
-                var annoybuttons = new ButtonGroup(annoy, null);
+                var annoybuttons = annoy.AddButtonGroup(null);
 
-                var ending = new MenuPage("Endings", "End Game Functions", false);
+                var ending = MenuPage.CreatePage("Endings", "End Game Functions", false);
 
-                var endingbuttons = new ButtonGroup(ending, null);
+                var endingbuttons = ending.AddButtonGroup(null);
 
-                var teleportsmurder4 = new MenuPage("TeleportsM4", "Locations Menu", false);
+                var teleportsmurder4 = MenuPage.CreatePage("TeleportsM4", "Locations Menu", false);
 
-                var teleportsmurder4buttons = new ButtonGroup(teleportsmurder4, null);
+                var teleportsmurder4buttons = teleportsmurder4.AddButtonGroup(null);
 
                 #endregion
 
+                //#region Settings
+
+                //var SettingsMenu = MenuPage.CreatePage("Settings", "Settings", false);
+
+                //var SettingsMenuButtons = SettingsMenu.AddButtonGroup(null);
+
+                //var UIMenu = MenuPage.CreatePage("UI", "UI Settings", false);
+
+                //var UIMenuButtons = UIMenu.AddButtonGroup(null);
+
+
+                //var UIColour = MenuPage.CreatePage("UIColour", "UI Colour", false);
+
+                //var UIColourButtons = UIColour.AddButtonGroup(null);
+
+                //#endregion
+
                 #region Ghost
 
-                var GhostMenu = new MenuPage("Ghost", "Ghost", false);
+                var GhostMenu = MenuPage.CreatePage("Ghost", "Ghost", false);
 
-                var GhostButtons = new ButtonGroup(GhostMenu, null);
+                var GhostButtons = GhostMenu.AddButtonGroup(null);
 
-                var FunMenu = new MenuPage("Fun", "Ghost Fun", false);
+                var FunMenu = MenuPage.CreatePage("Fun", "Ghost Fun", false);
 
-                var FunButtons = new ButtonGroup(FunMenu, null);
+                var FunButtons = FunMenu.AddButtonGroup(null);
 
                 #endregion
 
                 #region AmongUs
 
-                var AmongUsMenu = new MenuPage("AmongUs", "Among Us", false);
+                var AmongUsMenu = MenuPage.CreatePage("AmongUs", "Among Us", false);
 
-                var AmongUsButtons = new ButtonGroup(AmongUsMenu, null);
+                var AmongUsButtons = AmongUsMenu.AddButtonGroup(null);
 
-                var EndingsMenu = new MenuPage("EndingsAmong Us", "Among Us", false);
+                var EndingsMenu = MenuPage.CreatePage("EndingsAmong Us", "Among Us", false);
 
-                var EndingsButtons = new ButtonGroup(EndingsMenu, null);
+                var EndingsButtons = EndingsMenu.AddButtonGroup(null);
 
-                var AmongUsSabotagesMenu = new MenuPage("AmongUsSabotages", "Sabotages", false);
+                var AmongUsSabotagesMenu = MenuPage.CreatePage("AmongUsSabotages", "Sabotages", false);
 
-                var AmongUsSabotagesButtons = new ButtonGroup(AmongUsSabotagesMenu, null);
+                var AmongUsSabotagesButtons = AmongUsSabotagesMenu.AddButtonGroup(null);
 
-                var VotingMenu = new MenuPage("Voting", "Voting Functions", false);
+                var VotingMenu = MenuPage.CreatePage("Voting", "Voting Functions", false);
 
-                var VotingButtons = new ButtonGroup(VotingMenu, null);
+                var VotingButtons = VotingMenu.AddButtonGroup(null);
 
                 #endregion
 
                 #region Murder3
 
-                var Murder3Menu = new MenuPage("Murder3", "Murder 3", false);
+                var Murder3Menu = MenuPage.CreatePage("Murder3", "Murder 3", false);
 
-                var Murder3Buttons = new ButtonGroup(Murder3Menu, null);
+                var Murder3Buttons = Murder3Menu.AddButtonGroup(null);
 
-                var annoy3 = new MenuPage("Annoy3", "Annoy Functions", false);
+                var annoy3 = MenuPage.CreatePage("Annoy3", "Annoy Functions", false);
 
-                var annoy3buttons = new ButtonGroup(annoy3, null);
+                var annoy3buttons = annoy3.AddButtonGroup(null);
 
                 #endregion
 
                 #region Prison Escape
 
-                var PrisonMenu = new MenuPage("PrisonEscape", "Prison Escape", false);
+                var PrisonMenu = MenuPage.CreatePage("PrisonEscape", "Prison Escape", false);
 
-                var PrisonButtons = new ButtonGroup(PrisonMenu, null);
+                var PrisonButtons = PrisonMenu.AddButtonGroup(null);
 
-                var PrisonPatronMenu = new MenuPage("PrisonEscapePatron", "Patreon Colours", false);
+                var PrisonPatronMenu = MenuPage.CreatePage("PrisonEscapePatron", "Patreon Colours", false);
 
-                var PrisonPatronButtons = new ButtonGroup(PrisonPatronMenu, null);
+                var PrisonPatronButtons = PrisonPatronMenu.AddButtonGroup(null);
 
-                var PrisonTpMenu = new MenuPage("Teleports", "Prison Tp", false);
+                var PrisonTpMenu = MenuPage.CreatePage("Teleports", "Prison Tp", false);
 
-                var PrisonTpButtons = new ButtonGroup(PrisonTpMenu, null);
+                var PrisonTpButtons = PrisonTpMenu.AddButtonGroup(null);
 
-                var PrisonPrivStuffMenu = new MenuPage("PrisonEscapePatr3on", "Private Stuff", false);
+                var PrisonPrivStuffMenu = MenuPage.CreatePage("PrisonEscapePatr3on", "Private Stuff", false);
 
-                var PrisonPrivStuffButtons = new ButtonGroup(PrisonPrivStuffMenu, null);
+                var PrisonPrivStuffButtons = PrisonPrivStuffMenu.AddButtonGroup(null);
 
-                var PrisonMoneyMenu = new MenuPage("PrisonEscapeMny", "Money", false);
+                var PrisonMoneyMenu = MenuPage.CreatePage("PrisonEscapeMny", "Money", false);
 
-                var PrisonMoneyButtons = new ButtonGroup(PrisonMoneyMenu, null);
+                var PrisonMoneyButtons = PrisonMoneyMenu.AddButtonGroup(null);
 
-                var PrisonWantedMenu = new MenuPage("PrisonEscapeWanted", "Get Wanted", false);
+                var PrisonWantedMenu = MenuPage.CreatePage("PrisonEscapeWanted", "Get Wanted", false);
 
-                var PrisonWantedButtons = new ButtonGroup(PrisonWantedMenu, null);
+                var PrisonWantedButtons = PrisonWantedMenu.AddButtonGroup(null);
 
                 #endregion
 
                 #region Fate of the Irrbloss
 
-                var IrrblossMenu = new MenuPage("FateoftheIrrbloss", "Fate of the Irrbloss", false);
+                var IrrblossMenu = MenuPage.CreatePage("FateoftheIrrbloss", "Fate of the Irrbloss", false);
 
-                var IrrblossButtons = new ButtonGroup(IrrblossMenu, null);
+                var IrrblossButtons = IrrblossMenu.AddButtonGroup(null);
 
-                var IrrblossPreGameMenu = new MenuPage("FateoftheIrrblossPreGame", "Pregame", false);
+                var IrrblossPreGameMenu = MenuPage.CreatePage("FateoftheIrrblossPreGame", "Pregame", false);
 
-                var IrrblossPreGameButtons = new ButtonGroup(IrrblossPreGameMenu, null);
+                var IrrblossPreGameButtons = IrrblossPreGameMenu.AddButtonGroup(null);
 
-                var IrrblossInGameMenu = new MenuPage("FateoftheIrrblossInGame", "InGame", false);
+                var IrrblossInGameMenu = MenuPage.CreatePage("FateoftheIrrblossInGame", "InGame", false);
 
-                var IrrblossInGameButtons = new ButtonGroup(IrrblossInGameMenu, null);
+                var IrrblossInGameButtons = IrrblossInGameMenu.AddButtonGroup(null);
 
-                var IrrblossInGameShipMenu = new MenuPage("FateoftheIrrblossInGameShip", "Ship", false);
+                var IrrblossInGameShipMenu = MenuPage.CreatePage("FateoftheIrrblossInGameShip", "Ship", false);
 
-                var IrrblossInGameShipButtons = new ButtonGroup(IrrblossInGameShipMenu, null);
+                var IrrblossInGameShipButtons = IrrblossInGameShipMenu.AddButtonGroup(null);
 
-                var IrrblossInGameUpgradesMenu = new MenuPage("FateoftheIrrblossInGameUpgrades", "Upgrades", false);
+                var IrrblossInGameUpgradesMenu = MenuPage.CreatePage("FateoftheIrrblossInGameUpgrades", "Upgrades", false);
 
-                var IrrblossInGameUpgradesButtons = new ButtonGroup(IrrblossInGameUpgradesMenu, null);
+                var IrrblossInGameUpgradesButtons = IrrblossInGameUpgradesMenu.AddButtonGroup(null);
 
-                var IrrblossInGameDoorsMenu = new MenuPage("FateoftheIrrblossInGameDoors", "Doors", false);
+                var IrrblossInGameDoorsMenu = MenuPage.CreatePage("FateoftheIrrblossInGameDoors", "Doors", false);
 
-                var IrrblossInGameDoorsButtons = new ButtonGroup(IrrblossInGameDoorsMenu, null);
+                var IrrblossInGameDoorsButtons = IrrblossInGameDoorsMenu.AddButtonGroup(null);
 
-                var IrrblossInGameEnemyShipMenu = new MenuPage("FateoftheIrrblossInGameEnemyShip", "Enemy Ship", false);
+                var IrrblossInGameEnemyShipMenu = MenuPage.CreatePage("FateoftheIrrblossInGameEnemyShip", "Enemy Ship", false);
 
-                var IrrblossInGameEnemyShipButtons = new ButtonGroup(IrrblossInGameEnemyShipMenu, null);
+                var IrrblossInGameEnemyShipButtons = IrrblossInGameEnemyShipMenu.AddButtonGroup(null);
 
-                var IrrblossMusicMenu = new MenuPage("FateoftheIrrblossMusic", "Music", false);
+                var IrrblossMusicMenu = MenuPage.CreatePage("FateoftheIrrblossMusic", "Music", false);
 
-                var IrrblossMusicButtons = new ButtonGroup(IrrblossMusicMenu, null);
+                var IrrblossMusicButtons = IrrblossMusicMenu.AddButtonGroup(null);
 
                 #endregion
 
                 #region Ghost
 
-                var InfestedMenu = new MenuPage("Infection", "Infection", false);
+                var InfestedMenu = MenuPage.CreatePage("Infection", "Infection", false);
 
-                var InfestedButtons = new ButtonGroup(InfestedMenu, null);
+                var InfestedButtons = InfestedMenu.AddButtonGroup(null);
 
                 #endregion
 
                 #endregion
                 var block = ForbiddenClient.Resources.IconsVars.blockicon.LoadSprite();
-                WorldHacks = new SingleButton(MainMenuButtons, "Worlds Hacks", "Opens Worlds Exploits Menu", () =>
+                WorldHacks = MainMenuButtons.AddSingleButton("Worlds Hacks", "Opens Worlds Exploits Menu", () =>
                 {
                     if (Murder4.worldLoaded)
                         Murder4Menu.OpenMenu();
@@ -359,11 +349,11 @@ namespace ForbiddenClient
                         Utils.Notification("Available Worlds: Murder 3/4, Among Us, Ghost, \nJust B Club, Prison Escape and Fate Of The Irrbloss", Color.green);
                     else
                         Utils.Notification("Available Worlds: Murder 3/4, Among Us, Ghost, \nJust B Club and Prison Escape", Color.green);
-                }, false, block);
+                }, true, block);
 
                 #region Murder4
 
-                Murderer4 = new ToggleButton(Murder4Buttons, "Announce Murderer", "Shows you the Murderer", "Shows you the Murderer", (val) =>
+                Murderer4 = Murder4Buttons.AddToggleButton("Announce Murderer", "Shows you the Murderer", "Shows you the Murderer", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Create.Ini.SetBool("Murder4", "AnnounceMurderer", val);
@@ -371,7 +361,7 @@ namespace ForbiddenClient
                     {
                         try
                         {
-                            foreach (var uwu in PatchManager.Murderers)
+                            foreach (var uwu in PatchManager.Murderers.Keys)
                             {
                                 MelonCoroutines.Start(Utils.MurdererNameplate(Utils.GetPlayerFromNameInLobby(uwu)));
                             }
@@ -384,24 +374,24 @@ namespace ForbiddenClient
                         {
                             if (PatchManager.Murderers.Count == 1)
                             {
-                                Utils.Notification($"Murderer: {String.Join("", PatchManager.Murderers)}", Color.red);
-                                Utils.ConsoleLog(Utils.ConsoleLogType.Msg, $"Murderer: {String.Join("", PatchManager.Murderers)}", ConsoleColor.Red);
+                                Utils.Notification($"Murderer: {String.Join("", PatchManager.Murderers.Keys)}", Color.red);
+                                Utils.ConsoleLog(Utils.ConsoleLogType.Msg, $"Murderer: {String.Join("", PatchManager.Murderers.Keys)}", ConsoleColor.Red);
                             }
                             else
                             {
-                                Utils.Notification($"Murderers: {String.Join(", ", PatchManager.Murderers)}", Color.red);
-                                Utils.ConsoleLog(Utils.ConsoleLogType.Msg, $"Murderers: {String.Join(", ", PatchManager.Murderers)}", ConsoleColor.Red);
+                                Utils.Notification($"Murderers: {String.Join(", ", PatchManager.Murderers.Keys)}", Color.red);
+                                Utils.ConsoleLog(Utils.ConsoleLogType.Msg, $"Murderers: {String.Join(", ", PatchManager.Murderers.Keys)}", ConsoleColor.Red);
                             }
                         }
                     }
                     else
                     {
                         PatchManager.AnnounceMurderer4 = false;
-                        foreach (var uwu in Utils.GetAllPlayers())
+                        foreach (var murderer in PatchManager.Murderers.Values)
                         {
                             try
                             {
-                                UnityEngine.Object.DestroyImmediate(uwu.field_Private_VRCPlayerApi_0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Imposter Nameplate").gameObject);
+                                UnityEngine.Object.DestroyImmediate(murderer.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Imposter Nameplate").gameObject);
                             }
                             catch { }
                         }
@@ -413,19 +403,19 @@ namespace ForbiddenClient
 
                 var UnlockIcon = ForbiddenClient.Resources.IconsVars.Unlock.LoadSprite();
 
-                new SimpleSingleButton(Murder4Buttons, "Start Game", "Forces Start Game", () =>
+                Murder4Buttons.AddSimpleSingleButton( "Start Game", "Forces Start Game", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Murder4.CallGameLogic("SyncStart");
                 });
 
-                new SimpleSingleButton(Murder4Buttons, "Endings", "Open Endings of the game", () =>
+                Murder4Buttons.AddSimpleSingleButton( "Endings", "Open Endings of the game", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     ending.OpenMenu();
                 }, true);
 
-                new SimpleSingleButton(endingbuttons, "Bystanders Win", "Forces Bystanders to win", () =>
+                endingbuttons.AddSimpleSingleButton("Bystanders Win", "Forces Bystanders to win", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
@@ -435,19 +425,19 @@ namespace ForbiddenClient
                     catch { }
                 });
 
-                new SimpleSingleButton(endingbuttons, "Murderer Win", "Forces Murderer to win", () =>
+                endingbuttons.AddSimpleSingleButton("Murderer Win", "Forces Murderer to win", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Murder4.CallGameLogic("SyncVictoryM");
                 });
 
-                new SimpleSingleButton(endingbuttons, "Abort Game", "Aborts Game", () =>
+                endingbuttons.AddSimpleSingleButton("Abort Game", "Aborts Game", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Murder4.CallGameLogic("SyncAbort");
                 });
 
-                new SingleButton(Murder4Buttons, "Unlock Doors", "Unlocks all doors", () =>
+                Murder4Buttons.AddSingleButton("Unlock Doors", "Unlocks all doors", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Murder4.UnLockDoors();
@@ -455,7 +445,7 @@ namespace ForbiddenClient
 
                 var DoorsOffIcon = ForbiddenClient.Resources.IconsVars.DoorsOff.LoadSprite();
 
-                DoorsOffButton = new ToggleButton(Murder4Buttons, "Doors Off", "Disable Doors", "Enable Doors", (val) =>
+                DoorsOffButton = Murder4Buttons.AddToggleButton("Doors Off", "Disable Doors", "Enable Doors", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Create.Ini.SetBool("Murder4", "DoorsOff", val);
@@ -472,12 +462,12 @@ namespace ForbiddenClient
                 DoorsOffButton.SetToggleState(Create.Ini.GetBool("Murder4", "DoorsOff"));
 
                 #region Pickups
-                new SingleButton(Murder4Buttons, "Pickups", null, () =>
+                Murder4Buttons.AddSingleButton("Pickups", null, () =>
                 {
                     Murder4Pickups.OpenMenu();
                 }, true, ForbiddenClient.Resources.IconsVars.pickups.LoadSprite());
 
-                WeaponsInCooldown = new ToggleButton(Murder4PickupsButtons, "Pickup Weapon in Cooldown", "Allows you to pickup every weapon that's in cooldown", "Allows you to pickup every weapon that's in cooldown", (val) =>
+                WeaponsInCooldown = Murder4PickupsButtons.AddToggleButton("Pickup Weapon in Cooldown", "Allows you to pickup every weapon that's in cooldown", "Allows you to pickup every weapon that's in cooldown", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
@@ -494,7 +484,7 @@ namespace ForbiddenClient
 
                 WeaponsInCooldown.SetToggleState(Create.Ini.GetBool("Murder4", "WeaponsInCooldown"));
 
-                PickupBeartrapsButton = new ToggleButton(Murder4PickupsButtons, "Pickup Beartraps", null, null, (val) =>
+                PickupBeartrapsButton = Murder4PickupsButtons.AddToggleButton("Pickup Beartraps", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
@@ -515,19 +505,19 @@ namespace ForbiddenClient
                 PickupBeartrapsButton.SetToggleState(Create.Ini.GetBool("Murder4", "PickupBeartraps"));
                 #endregion
 
-                new SimpleSingleButton(Murder4Buttons, "Lights On", "Turns Lights On", () =>
+                Murder4Buttons.AddSimpleSingleButton( "Lights On", "Turns Lights On", () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Murder4.TurnLightsOn();
                 });
 
                 #region Annoy
-                new SimpleSingleButton(Murder4Buttons, "Annoy", "Annoy Functions", () =>
+                Murder4Buttons.AddSimpleSingleButton("Annoy", "Annoy Functions", () =>
                 {
                     annoy.OpenMenu();
                 }, true);
 
-                new ToggleButton(annoybuttons, "Lock Doors", "Enable Door Lock", "Disable Door Lock", (val) =>
+                annoybuttons.AddToggleButton("Lock Doors", "Enable Door Lock", "Disable Door Lock", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
@@ -541,7 +531,7 @@ namespace ForbiddenClient
                     catch { }
                 }).SetToggleState(false, false);
 
-                new ToggleButton(annoybuttons, "Lock Drawers", "Enable Drawers Lock", "Disable Drawers Lock", (val) =>
+                annoybuttons.AddToggleButton("Lock Drawers", "Enable Drawers Lock", "Disable Drawers Lock", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
@@ -555,7 +545,7 @@ namespace ForbiddenClient
                     catch { }
                 }).SetToggleState(false, false);
 
-                new ToggleButton(annoybuttons, "Spam Revolver", "Enable Revolver Spam", "Disable Revolver Spam", (val) =>
+                annoybuttons.AddToggleButton("Spam Revolver", "Enable Revolver Spam", "Disable Revolver Spam", (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
@@ -569,7 +559,7 @@ namespace ForbiddenClient
                     catch { }
                 }).SetToggleState(false, false);
 
-                new ToggleButton(annoybuttons, "Lights Off", null, null, (val) =>
+                annoybuttons.AddToggleButton("Lights Off", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
@@ -583,7 +573,7 @@ namespace ForbiddenClient
                     catch { }
                 }).SetToggleState(false, false);
 
-                new ToggleButton(annoybuttons, "Spam sounds", null, null, (val) =>
+                annoybuttons.AddToggleButton("Spam sounds", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
@@ -597,7 +587,7 @@ namespace ForbiddenClient
                     catch { }
                 }).SetToggleState(false, false);
 
-                new ToggleButton(annoybuttons, "Walking Bomb", null, null, (val) =>
+                annoybuttons.AddToggleButton("Walking Bomb", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     PatchManager.WalkingBomb = val;
@@ -613,7 +603,7 @@ namespace ForbiddenClient
 
                 #endregion
 
-                PatronSelfMurder = new ToggleButton(Murder4Buttons, "Patreon Self", null, null, (val) =>
+                PatronSelfMurder = Murder4Buttons.AddToggleButton("Patreon Self", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
@@ -633,7 +623,7 @@ namespace ForbiddenClient
                     catch { }
                 });
 
-                new ToggleButton(Murder4Buttons, "Disable Patreon", null, null, (val) =>
+                Murder4Buttons.AddToggleButton("Disable Patreon", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     try
@@ -655,96 +645,96 @@ namespace ForbiddenClient
 
                 #region Teleports
 
-                new SimpleSingleButton(Murder4Buttons, "Teleport Locations", null, () =>
+                Murder4Buttons.AddSimpleSingleButton( "Teleport Locations", null, () =>
                 {
                     teleportsmurder4.OpenMenu();
                 }, true);
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Kitchen", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Kitchen", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(-20.8f, 0, 121.6f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Lounge", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Lounge", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(-15.9f, 0, 130.1f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Dining Room", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Dining Room", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(-11.3f, 0, 119.2f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Grand Hall", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Grand Hall", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(0.6f, 0, 116.4f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Library", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Library", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(12.2f, 0, 119.7f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Piano", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Piano", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(15.9f, 0, 131.5f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Garage", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Garage", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(17.3f, 0, 140.4f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Outside", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Outside", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(2.8f, 0, 140.5f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Conservatory", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Conservatory", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(-0.4f, 0, 146));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Billard", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Billard", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(-14.7f, 0, 140.2f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Cellar", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Cellar", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(-2.1f, -3, 130.8f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Bedroom", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Bedroom", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(-9.9f, 3.6f, 129.2f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Detective Room", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Detective Room", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(5, 3, 122.8f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Bathroom", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Bathroom", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(-0.4f, 3, 133.4f));
                 });
 
-                new SimpleSingleButton(teleportsmurder4buttons, "Closet", null, () =>
+                teleportsmurder4buttons.AddSimpleSingleButton("Closet", null, () =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Utils.TPLocalPlayer(new Vector3(0.4673f, 2.995f, 124.234f));
@@ -752,7 +742,7 @@ namespace ForbiddenClient
 
                 #endregion
 
-                CluesESP = new ToggleButton(Murder4Buttons, "Clues ESP", null, null, (val) =>
+                CluesESP = Murder4Buttons.AddToggleButton("Clues ESP", null, null, (val) =>
                 {
                     if (!Murder4.worldLoaded) return;
                     Murder4.CluesESP = val;
@@ -768,12 +758,12 @@ namespace ForbiddenClient
 
                 CluesESP.SetToggleState(Create.Ini.GetBool("Murder4", "CluesESP"));
 
-                new ToggleButton(Murder4Buttons, "Auto TP Detective Room", "TP to Detective Room when the game starts", "TP to Detective Room when the game starts", (val) =>
+                Murder4Buttons.AddToggleButton("Auto TP Detective Room", "TP to Detective Room when the game starts", "TP to Detective Room when the game starts", (val) =>
                 {
                     PatchManager.TPDetective = val;
                 }).SetToggleState(false, false);
 
-                Laser = new ToggleButton(Murder4Buttons, "Revolver Laser Sight", "Toggles Laser Sight", "Toggles Laser Sight", (val) =>
+                Laser = Murder4Buttons.AddToggleButton("Revolver Laser Sight", "Toggles Laser Sight", "Toggles Laser Sight", (val) =>
                 {
                     Create.Ini.SetBool("Murder4", "LaserSight", val);
                     Murder4.LaserSight = val;
@@ -782,12 +772,12 @@ namespace ForbiddenClient
 
                 Laser.SetToggleState(Create.Ini.GetBool("Murder4", "LaserSight"));
 
-                new ToggleButton(Murder4Buttons, "Anti Set Role Exploit", "Avoids Set Role Exploit", "Avoids Set Role Exploit", (val) =>
+                Murder4Buttons.AddToggleButton("Anti Set Role Exploit", "Avoids Set Role Exploit", "Avoids Set Role Exploit", (val) =>
                 {
                     PatchManager.AntiSetRoleExploit = val;
                 }).SetToggleState(true, true);
 
-                NoCooldownGuns = new ToggleButton(Murder4Buttons, "No Cooldown", "Allows you to shoot any gun with no delay", "Allows you to shoot any gun with no delay", (val) =>
+                NoCooldownGuns = Murder4Buttons.AddToggleButton("No Cooldown", "Allows you to shoot any gun with no delay", "Allows you to shoot any gun with no delay", (val) =>
                 {
                     Murder4.nocooldown = val;
                     Create.Ini.SetBool("Murder4", "NoCooldown", val);
@@ -799,7 +789,7 @@ namespace ForbiddenClient
 
                 NoCooldownGuns.SetToggleState(Create.Ini.GetBool("Murder4", "NoCooldown"));
 
-                Snake = new ToggleButton(Murder4Buttons, "Auto Dispense Snake", "Dispenses Snake when being the murderer", "Dispenses Snake when being the murderer", (val) =>
+                Snake = Murder4Buttons.AddToggleButton("Auto Dispense Snake", "Dispenses Snake when being the murderer", "Dispenses Snake when being the murderer", (val) =>
                 {
                     PatchManager.snake = val;
                     Create.Ini.SetBool("Murder4", "Snake", val);
@@ -807,7 +797,7 @@ namespace ForbiddenClient
 
                 Snake.SetToggleState(Create.Ini.GetBool("Murder4", "Snake"));
 
-                OneClickOpenDoor = new ToggleButton(Murder4Buttons, "One Click Open Door", "Open Doors with one Click", "Open Doors with one Click", (val) =>
+                OneClickOpenDoor = Murder4Buttons.AddToggleButton("One Click Open Door", "Open Doors with one Click", "Open Doors with one Click", (val) =>
                 {
                     PatchManager.OneClickDoor = val;
                     Create.Ini.SetBool("Murder4", "OneClickOpen", val);
@@ -819,7 +809,7 @@ namespace ForbiddenClient
 
                 #region Murder3
 
-                Murderer3 = new ToggleButton(Murder3Buttons, "Announce Murderer", "Shows you the Murderer", "Shows you the Murderer", (val) =>
+                Murderer3 = Murder3Buttons.AddToggleButton("Announce Murderer", "Shows you the Murderer", "Shows you the Murderer", (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
                     if (val)
@@ -839,7 +829,7 @@ namespace ForbiddenClient
 
                 Murderer3.SetToggleState(Create.Ini.GetBool("Toggles", "Murder3"));
 
-                new SimpleSingleButton(Murder3Buttons, "Bystanders Win", "Forces Bystanders to win", () =>
+                Murder3Buttons.AddSimpleSingleButton("Bystanders Win", "Forces Bystanders to win", () =>
                 {
                     if (!Murder3.worldLoaded) return;
                     try
@@ -850,25 +840,25 @@ namespace ForbiddenClient
                     catch { }
                 });
 
-                new SimpleSingleButton(Murder3Buttons, "Murderer Win", "Forces Murderer to win", () =>
+                Murder3Buttons.AddSimpleSingleButton("Murderer Win", "Forces Murderer to win", () =>
                 {
                     if (!Murder3.worldLoaded) return;
                     Murder3.CallGameLogic("SyncVictoryM");
                 });
 
-                new SimpleSingleButton(Murder3Buttons, "Abort Game", "Aborts Game", () =>
+                Murder3Buttons.AddSimpleSingleButton("Abort Game", "Aborts Game", () =>
                 {
                     if (!Murder3.worldLoaded) return;
                     Murder4.CallGameLogic("SyncAbort");
                 });
 
                 #region Annoy
-                new SimpleSingleButton(Murder3Buttons, "Annoy", "Annoy Functions", () =>
+                Murder3Buttons.AddSimpleSingleButton("Annoy", "Annoy Functions", () =>
                 {
                     annoy3.OpenMenu();
-                });
+                }, true);
 
-                new ToggleButton(annoy3buttons, "Spam Revolver", "Enable Revolver Spam", "Disable Revolver Spam", (val) =>
+                annoy3buttons.AddToggleButton("Spam Revolver", "Enable Revolver Spam", "Disable Revolver Spam", (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
                     try
@@ -886,7 +876,7 @@ namespace ForbiddenClient
                     catch { }
                 }).SetToggleState(false, false);
 
-                new ToggleButton(annoy3buttons, "Spam sounds", null, null, (val) =>
+                annoy3buttons.AddToggleButton("Spam sounds", null, null, (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
                     try
@@ -906,7 +896,7 @@ namespace ForbiddenClient
 
                 #endregion
 
-                new ToggleButton(Murder3Buttons, "Patreon Self", null, null, (val) =>
+                Murder3Buttons.AddToggleButton("Patreon Self", null, null, (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
                     try
@@ -925,7 +915,7 @@ namespace ForbiddenClient
                     catch { }
                 }).SetToggleState(false, false);
 
-                new ToggleButton(Murder3Buttons, "Pickup Beartraps", null, null, (val) =>
+                Murder3Buttons.AddToggleButton("Pickup Beartraps", null, null, (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
                     try
@@ -944,7 +934,7 @@ namespace ForbiddenClient
                     catch { }
                 }).SetToggleState(false, false);
 
-                new ToggleButton(Murder3Buttons, "Pickup Weapon in Cooldown", "Allows you to pickup every weapon that's in cooldown", "Allows you to pickup every weapon that's in cooldown", (val) =>
+                Murder3Buttons.AddToggleButton("Pickup Weapon in Cooldown", "Allows you to pickup every weapon that's in cooldown", "Allows you to pickup every weapon that's in cooldown", (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
                     try
@@ -962,7 +952,7 @@ namespace ForbiddenClient
                     catch { }
                 }).SetToggleState(false, false);
 
-                new ToggleButton(Murder3Buttons, "Clues ESP", null, null, (val) =>
+                Murder3Buttons.AddToggleButton("Clues ESP", null, null, (val) =>
                 {
                     if (!Murder3.worldLoaded) return;
                     Murder3.CluesESP = val;
@@ -978,7 +968,7 @@ namespace ForbiddenClient
                     }
                 }).SetToggleState(false, false);
 
-                new ToggleButton(Murder3Buttons, "Auto TP Detective", "TP to Detective Room when the game starts", "TP to Detective Room when the game starts", (val) =>
+                Murder3Buttons.AddToggleButton("Auto TP Detective", "TP to Detective Room when the game starts", "TP to Detective Room when the game starts", (val) =>
                 {
                     PatchManager.TPDetective = val;
                 }).SetToggleState(false, false);
@@ -987,7 +977,7 @@ namespace ForbiddenClient
 
                 #region Ghost
 
-                AnnounceGhost = new ToggleButton(GhostButtons, "Announce Ghosts", "Shows you the Ghosts", "Shows you the Ghosts", (val) =>
+                AnnounceGhost = GhostButtons.AddToggleButton("Announce Ghosts", "Shows you the Ghosts", "Shows you the Ghosts", (val) =>
                 {
                     if (!Ghost.worldLoaded) return;
                     if (val)
@@ -1005,24 +995,24 @@ namespace ForbiddenClient
 
                 AnnounceGhost.SetToggleState(Create.Ini.GetBool("Toggles", "Ghost"));
 
-                new SingleButton(GhostButtons, "Unlock 5 Keys Door", "Unlocks a Door Next To The Clues Office", () =>
+                GhostButtons.AddSingleButton("Unlock 5 Keys Door", "Unlocks a Door Next To The Clues Office", () =>
                 {
                     if (!Ghost.worldLoaded) return;
                     Ghost.OpenLockedDoor();
                 }, false, UnlockIcon);
 
-                new ToggleButton(GhostButtons, "ESP", null, null, (val) =>
+                GhostButtons.AddToggleButton("ESP", null, null, (val) =>
                 {
                     Ghost.ESPToggle(val);
                 }).SetToggleState(false, false);
 
                 #region Fun
-                new SimpleSingleButton(GhostButtons, "Fun", "Fun Functions", () =>
+                GhostButtons.AddSimpleSingleButton("Fun", "Fun Functions", () =>
                 {
                     FunMenu.OpenMenu();
                 }, true);
 
-                new SimpleSingleButton(FunButtons, "Give Money To All", "Gives 999 Money To All", () =>
+                FunButtons.AddSimpleSingleButton("Give Money To All", "Gives 999 Money To All", () =>
                 {
                     if (!Ghost.worldLoaded) return;
                     foreach (var Events in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
@@ -1054,13 +1044,13 @@ namespace ForbiddenClient
                     }
                 });
 
-                new SimpleSingleButton(FunButtons, "Craft All", "Crafts Every Weapon in the Game", () =>
+                FunButtons.AddSimpleSingleButton("Craft All", "Crafts Every Weapon in the Game", () =>
                 {
                     if (!Ghost.worldLoaded) return;
                     Ghost.CraftAll();
                 });
 
-                new SimpleSingleButton(FunButtons, "Open All Lockers", "Opens All Lockers on the Map", () =>
+                FunButtons.AddSimpleSingleButton("Open All Lockers", "Opens All Lockers on the Map", () =>
                 {
                     if (!Ghost.worldLoaded) return;
                     foreach (var Events in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
@@ -1078,7 +1068,7 @@ namespace ForbiddenClient
 
                 #region Infested
 
-                new SimpleSingleButton(InfestedButtons, "Get Money", "Get all money in the map", () =>
+                InfestedButtons.AddSimpleSingleButton("Get Money", "Get all money in the map", () =>
                 {
                     if (!Infested.worldLoaded) return;
                     Infested.GetMoney();
@@ -1088,9 +1078,9 @@ namespace ForbiddenClient
 
                 #region AmongUs
 
-                AnnounceImposters = new ToggleButton(AmongUsButtons, "Announce Imposters", null, null, (val) =>
+                AnnounceImposters = AmongUsButtons.AddToggleButton("Announce Imposters", null, null, (val) =>
                 {
-                    foreach (var uwu in PatchManager.Imposters)
+                    foreach (var uwu in PatchManager.Imposters.Keys)
                     {
                         MelonCoroutines.Start(Utils.ImposterNameplate(Utils.GetPlayerFromNameInLobby(uwu)));
                     }
@@ -1112,7 +1102,7 @@ namespace ForbiddenClient
 
                 AnnounceImposters.SetToggleState(Create.Ini.GetBool("AmongUs", "AnnounceImposters"), false);
 
-                new SimpleSingleButton(AmongUsButtons, "Start Game", "Starts Game", () =>
+                AmongUsButtons.AddSimpleSingleButton("Start Game", "Starts Game", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncStart");
@@ -1120,25 +1110,25 @@ namespace ForbiddenClient
 
                 #region Endings
 
-                new SimpleSingleButton(AmongUsButtons, "Endings", "Endings Functions", () =>
+                AmongUsButtons.AddSimpleSingleButton("Endings", "Endings Functions", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     EndingsMenu.OpenMenu();
                 }, true);
 
-                new SimpleSingleButton(EndingsButtons, "Crewmates\nWin", "Forces Crewmates to win", () =>
+                EndingsButtons.AddSimpleSingleButton("Crewmates\nWin", "Forces Crewmates to win", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncVictoryC");
                 });
 
-                new SimpleSingleButton(EndingsButtons, "Imposters\nWin", "Forces Imposters to win", () =>
+                EndingsButtons.AddSimpleSingleButton("Imposters\nWin", "Forces Imposters to win", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncVictoryI");
                 });
 
-                new SimpleSingleButton(EndingsButtons, "Abort Game", "Aborts Game", () =>
+                EndingsButtons.AddSimpleSingleButton("Abort Game", "Aborts Game", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncAbort");
@@ -1148,20 +1138,20 @@ namespace ForbiddenClient
 
                 #region Voting
 
-                new SimpleSingleButton(AmongUsButtons, "Voting", "Fun Functions", () =>
+                AmongUsButtons.AddSimpleSingleButton("Voting", "Fun Functions", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     VotingMenu.OpenMenu();
                 }, true);
 
-                new SimpleSingleButton(VotingButtons, "Skip Vote", "Fun Functions", () =>
+                VotingButtons.AddSimpleSingleButton("Skip Vote", "Fun Functions", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncVoteResultSkip");
                     AmongUs.CallGameLogic("SyncEndVotingPhase");
                 });
 
-                AntiVoteOut = new ToggleButton(VotingButtons, "Anti Vote Out", "Makes so you can't get voted out", "Makes so you can't get voted out", (val) =>
+                AntiVoteOut = VotingButtons.AddToggleButton("Anti Vote Out", "Makes so you can't get voted out", "Makes so you can't get voted out", (val) =>
                 {
                     Create.Ini.SetBool("AmongUs", "AntiVoteOut", val);
                     PatchManager.AntiVoteout = val;
@@ -1173,13 +1163,13 @@ namespace ForbiddenClient
 
                 #region Sabotages
 
-                new SimpleSingleButton(AmongUsButtons, "Sabotages", "Sabotages", () =>
+                AmongUsButtons.AddSimpleSingleButton("Sabotages", "Sabotages", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUsSabotagesMenu.OpenMenu();
                 }, true);
 
-                new SimpleSingleButton(AmongUsSabotagesButtons, "Sabotage All Doors", "Sabotages All Doors", () =>
+                AmongUsSabotagesButtons.AddSimpleSingleButton("Sabotage All Doors", "Sabotages All Doors", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncDoSabotageDoorsElectrical");
@@ -1191,7 +1181,7 @@ namespace ForbiddenClient
                     AmongUs.CallGameLogic("SyncDoSabotageDoorsCafeteria");
                 });
 
-                new SimpleSingleButton(AmongUsSabotagesButtons, "Sabotage All", "Sabotages All", () =>
+                AmongUsSabotagesButtons.AddSimpleSingleButton("Sabotage All", "Sabotages All", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncDoSabotageLights");
@@ -1200,7 +1190,7 @@ namespace ForbiddenClient
                     AmongUs.CallGameLogic("SyncDoSabotageOxygen");
                 });
 
-                new SimpleSingleButton(AmongUsSabotagesButtons, "Sabotage All + Doors", "Sabotages All and doors", () =>
+                AmongUsSabotagesButtons.AddSimpleSingleButton("Sabotage All + Doors", "Sabotages All and doors", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncDoSabotageDoorsElectrical");
@@ -1216,31 +1206,31 @@ namespace ForbiddenClient
                     AmongUs.CallGameLogic("SyncDoSabotageOxygen");
                 });
 
-                new SimpleSingleButton(AmongUsSabotagesButtons, "Sabotage Lights", "Sabotage Lights", () =>
+                AmongUsSabotagesButtons.AddSimpleSingleButton("Sabotage Lights", "Sabotage Lights", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncDoSabotageLights");
                 });
 
-                new SimpleSingleButton(AmongUsSabotagesButtons, "Sabotage Comms", "Sabotage Comms", () =>
+                AmongUsSabotagesButtons.AddSimpleSingleButton("Sabotage Comms", "Sabotage Comms", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncDoSabotageComms");
                 });
 
-                new SimpleSingleButton(AmongUsSabotagesButtons, "Sabotage Reactor", "Sabotage Reactor", () =>
+                AmongUsSabotagesButtons.AddSimpleSingleButton("Sabotage Reactor", "Sabotage Reactor", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncDoSabotageReactor");
                 });
 
-                new SimpleSingleButton(AmongUsSabotagesButtons, "Sabotage Oxygen", "Sabotage Oxygen", () =>
+                AmongUsSabotagesButtons.AddSimpleSingleButton("Sabotage Oxygen", "Sabotage Oxygen", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("SyncDoSabotageOxygen");
                 });
 
-                new SimpleSingleButton(AmongUsSabotagesButtons, "Repair All", "Repairs All", () =>
+                AmongUsSabotagesButtons.AddSimpleSingleButton("Repair All", "Repairs All", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("CancelAllSabotage");
@@ -1248,13 +1238,13 @@ namespace ForbiddenClient
 
                 #endregion
 
-                new SimpleSingleButton(AmongUsButtons, "Start Admin Scan", "Starts Admin Scan", () =>
+                AmongUsButtons.AddSimpleSingleButton("Start Admin Scan", "Starts Admin Scan", () =>
                 {
                     if (!AmongUs.worldLoaded) return;
                     AmongUs.CallGameLogic("AdminScan");
                 });
 
-                LogKills = new ToggleButton(AmongUsButtons, "Log Kills", "Logs when someone kills", "Logs when someone kills", (val) =>
+                LogKills = AmongUsButtons.AddToggleButton("Log Kills", "Logs when someone kills", "Logs when someone kills", (val) =>
                 {
                     PatchManager.LogKillsAmongUs = val;
                     Create.Ini.SetBool("AmongUs", "LogKills", val);
@@ -1267,12 +1257,12 @@ namespace ForbiddenClient
                 #region Just B Club
 
                 #region Rooms
-                new SimpleSingleButton(JustBClubButtons, "Rooms", null, () =>
+                JustBClubButtons.AddSimpleSingleButton("Rooms", null, () =>
                 {
                     JustBClubRoomsMenu.OpenMenu();
                 }, true);
 
-                new SimpleSingleButton(JustBClubRoomsButtons, "1", null, () =>
+                JustBClubRoomsButtons.AddSimpleSingleButton("1", null, () =>
                 {
                     Just_B_Club.Bedroom1.SetActive(true);
                     Just_B_Club.Bedroom2.SetActive(false);
@@ -1284,7 +1274,7 @@ namespace ForbiddenClient
                     Utils.TPLocalPlayer(new Vector3(-217.7101f, -11.755f, 151.0652f));
                 });
 
-                new SimpleSingleButton(JustBClubRoomsButtons, "2", null, () =>
+                JustBClubRoomsButtons.AddSimpleSingleButton("2", null, () =>
                 {
                     Just_B_Club.Bedroom1.SetActive(false);
                     Just_B_Club.Bedroom2.SetActive(true);
@@ -1296,7 +1286,7 @@ namespace ForbiddenClient
                     Utils.TPLocalPlayer(new Vector3(-217.3516f, 55.245f, -91.66356f));
                 });
 
-                new SimpleSingleButton(JustBClubRoomsButtons, "3", null, () =>
+                JustBClubRoomsButtons.AddSimpleSingleButton("3", null, () =>
                 {
                     Just_B_Club.Bedroom1.SetActive(false);
                     Just_B_Club.Bedroom2.SetActive(false);
@@ -1308,7 +1298,7 @@ namespace ForbiddenClient
                     Utils.TPLocalPlayer(new Vector3(-119.0256f, -11.755f, 151.1068f));
                 });
 
-                new SimpleSingleButton(JustBClubRoomsButtons, "4", null, () =>
+                JustBClubRoomsButtons.AddSimpleSingleButton("4", null, () =>
                 {
                     Just_B_Club.Bedroom1.SetActive(false);
                     Just_B_Club.Bedroom2.SetActive(false);
@@ -1320,7 +1310,7 @@ namespace ForbiddenClient
                     Utils.TPLocalPlayer(new Vector3(-116.8698f, 55.245f, -91.59067f));
                 });
 
-                new SimpleSingleButton(JustBClubRoomsButtons, "5", null, () =>
+                JustBClubRoomsButtons.AddSimpleSingleButton("5", null, () =>
                 {
                     Just_B_Club.Bedroom1.SetActive(false);
                     Just_B_Club.Bedroom2.SetActive(false);
@@ -1332,7 +1322,7 @@ namespace ForbiddenClient
                     Utils.TPLocalPlayer(new Vector3(-18.62112f, -11.755f, 150.9862f));
                 });
 
-                new SimpleSingleButton(JustBClubRoomsButtons, "6", null, () =>
+                JustBClubRoomsButtons.AddSimpleSingleButton("6", null, () =>
                 {
                     Just_B_Club.Bedroom1.SetActive(false);
                     Just_B_Club.Bedroom2.SetActive(false);
@@ -1344,7 +1334,7 @@ namespace ForbiddenClient
                     Utils.TPLocalPlayer(new Vector3(-17.56843f, 55.245f, -91.55622f));
                 });
 
-                new SimpleSingleButton(JustBClubRoomsButtons, "VIP Room", null, () =>
+                JustBClubRoomsButtons.AddSimpleSingleButton("VIP Room", null, () =>
                 {
                     Just_B_Club.Bedroom1.SetActive(false);
                     Just_B_Club.Bedroom2.SetActive(false);
@@ -1358,12 +1348,8 @@ namespace ForbiddenClient
                 #endregion
 
                 #region Fun
-                new SimpleSingleButton(JustBClubButtons, "Fun", null, () =>
-                {
-                    JustBClubFunMenu.OpenMenu();
-                }, true);
 
-                new ToggleButton(JustBClubFunButtons, "Freeze All", null, null, (val) =>
+                JustBClubButtons.AddToggleButton("Freeze All", null, null, (val) =>
                 {
                     Just_B_Club.freeze = val;
                     Just_B_Club.FreezeAll();
@@ -1375,19 +1361,19 @@ namespace ForbiddenClient
 
                 #region Prison Escape
 
-                new SimpleSingleButton(PrisonButtons, "Start Game", "", () =>
+                PrisonButtons.AddSimpleSingleButton("Start Game", "", () =>
                 {
                     Prison.gamestate.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "StartGameCountdown");
                 });
 
                 #region Patreon
 
-                new SimpleSingleButton(PrisonButtons, "Patreon", "", () =>
+                PrisonButtons.AddSimpleSingleButton("Patreon", "", () =>
                 {
                     PrisonPatronMenu.OpenMenu();
                 }, true);
 
-                PatronSelfPrisonGold = new ToggleButton(PrisonPatronButtons, "Gold", "Gives Patron to yourself", "", (val) =>
+                PatronSelfPrisonGold = PrisonPatronButtons.AddToggleButton("Gold", "Gives Patron to yourself", "", (val) =>
                 {
                     if (val)
                     {
@@ -1432,7 +1418,7 @@ namespace ForbiddenClient
                     PatronSelfPrisonGold.SetToggleState(true);
                 }
 
-                PatronSelfPrisonGreen = new ToggleButton(PrisonPatronButtons, "Green", "Gives Patron to yourself", "", (val) =>
+                PatronSelfPrisonGreen = PrisonPatronButtons.AddToggleButton("Green", "Gives Patron to yourself", "", (val) =>
                 {
                     if (val)
                     {
@@ -1477,7 +1463,7 @@ namespace ForbiddenClient
                     PatronSelfPrisonGreen.SetToggleState(true);
                 }
 
-                PatronSelfPrisonBlue = new ToggleButton(PrisonPatronButtons, "Blue", "Gives Patron to yourself", "", (val) =>
+                PatronSelfPrisonBlue = PrisonPatronButtons.AddToggleButton("Blue", "Gives Patron to yourself", "", (val) =>
                 {
                     if (val)
                     {
@@ -1523,7 +1509,7 @@ namespace ForbiddenClient
                 }
 
 
-                PatronSelfPrisonPurple = new ToggleButton(PrisonPatronButtons, "Purple", "Gives Patron to yourself", "", (val) =>
+                PatronSelfPrisonPurple = PrisonPatronButtons.AddToggleButton("Purple", "Gives Patron to yourself", "", (val) =>
                 {
                     if (val)
                     {
@@ -1568,7 +1554,7 @@ namespace ForbiddenClient
                     PatronSelfPrisonPurple.SetToggleState(true);
                 }
 
-                PatronSelfPrisonRed = new ToggleButton(PrisonPatronButtons, "Red", "Gives Patron to yourself", "", (val) =>
+                PatronSelfPrisonRed = PrisonPatronButtons.AddToggleButton("Red", "Gives Patron to yourself", "", (val) =>
                 {
                     if (val)
                     {
@@ -1612,7 +1598,7 @@ namespace ForbiddenClient
                 {
                     PatronSelfPrisonRed.SetToggleState(true);
                 }
-                PatronSelfPrisonRainbow = new ToggleButton(PrisonPatronButtons, "Rainbow", "Gives Patron to yourself", "", (val) =>
+                PatronSelfPrisonRainbow = PrisonPatronButtons.AddToggleButton("Rainbow", "Gives Patron to yourself", "", (val) =>
                 {
                     if (val)
                     {
@@ -1661,18 +1647,18 @@ namespace ForbiddenClient
                 #endregion
 
 
-                new ToggleButton(PrisonButtons, "One Shot", "OneShot ppl", "OneShot ppl", (val) =>
+                PrisonButtons.AddToggleButton("One Shot", "OneShot ppl", "OneShot ppl", (val) =>
                 {
                     Prison.OneShot = val;
                 });
 
-                new ToggleButton(PrisonButtons, "No Cooldown on Smoke & Duck", "", "", (val) =>
+                PrisonButtons.AddToggleButton("No Cooldown on Smoke & Duck", "", "", (val) =>
                 {
                     Prison.smoke = val;
                     MelonCoroutines.Start(Prison.NoCooldownSmoke());
                 });
 
-                new SimpleSingleButton(PrisonButtons, "Kill All", "", () =>
+                PrisonButtons.AddSimpleSingleButton("Kill All", "", () =>
                 {
                     foreach (var playerdata in Prison.PlayerData)
                     {
@@ -1683,7 +1669,7 @@ namespace ForbiddenClient
                     }
                 });
 
-                new SimpleSingleButton(PrisonButtons, "Bypass Avatar Height", "", () =>
+                PrisonButtons.AddSimpleSingleButton("Bypass Avatar Height", "", () =>
                 {
                     var sign = GameObject.Find("Spawn Area/Avatar Warning Sign");
                     UnityEngine.Object.Destroy(sign);
@@ -1692,37 +1678,37 @@ namespace ForbiddenClient
 
                 #region Locations
 
-                new SimpleSingleButton(PrisonButtons, "Locations", "Teleport to locations on the map", () =>
+                PrisonButtons.AddSimpleSingleButton("Locations", "Teleport to locations on the map", () =>
                 {
                     PrisonTpMenu.OpenMenu();
                 }, true);
 
-                new SimpleSingleButton(PrisonTpButtons, "Right Tower", "Right Tower", () =>
+                PrisonTpButtons.AddSimpleSingleButton( "Right Tower", "Right Tower", () =>
                 {
                     Utils.TPLocalPlayer(new Vector3(60.8f, 10.5f, 281.4f));
                 });
 
-                new SimpleSingleButton(PrisonTpButtons, "Left Tower", "Left Tower", () =>
+                PrisonTpButtons.AddSimpleSingleButton( "Left Tower", "Left Tower", () =>
                 {
                     Utils.TPLocalPlayer(new Vector3(61.2f, 10.5f, 318.7f));
                 });
 
-                new SimpleSingleButton(PrisonTpButtons, "Guards Spawn", "Tp to Armory", () =>
+                PrisonTpButtons.AddSimpleSingleButton( "Guards Spawn", "Tp to Armory", () =>
                 {
                     Utils.TPLocalPlayer(new Vector3(25.4f, 4.0f, 303.2f));
                 });
 
-                new SimpleSingleButton(PrisonTpButtons, "Outside", "Tp to ouside next to the gate", () =>
+                PrisonTpButtons.AddSimpleSingleButton( "Outside", "Tp to ouside next to the gate", () =>
                 {
                     Utils.TPLocalPlayer(new Vector3(55.9f, -0.1f, 297.4f));
                 });
 
-                new SimpleSingleButton(PrisonTpButtons, "Gate Control", "Tp to gate control room", () =>
+                PrisonTpButtons.AddSimpleSingleButton( "Gate Control", "Tp to gate control room", () =>
                 {
                     Utils.TPLocalPlayer(new Vector3(57.7f, 0.0f, 293.0f));
                 });
 
-                new SimpleSingleButton(PrisonTpButtons, "Exit", "Tp to exit", () =>
+                PrisonTpButtons.AddSimpleSingleButton( "Exit", "Tp to exit", () =>
                 {
                     Utils.TPLocalPlayer(new Vector3(98.1f, -0.1f, 300.4f));
                 });
@@ -1730,7 +1716,7 @@ namespace ForbiddenClient
 
                 #region Private Stuff
 
-                PrivatePrisonEscapeStuff = new SimpleSingleButton(PrisonButtons, "Private Stuff", "", () =>
+                PrivatePrisonEscapeStuff = PrisonButtons.AddSimpleSingleButton("Private Stuff", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     PrisonPrivStuffMenu.OpenMenu();
@@ -1738,19 +1724,19 @@ namespace ForbiddenClient
 
                 PrivatePrisonEscapeStuff.SetActive(false);
 
-                new SimpleSingleButton(PrisonPrivStuffButtons, "Take Keycard", "Literally Takes a Keycard", () =>
+                PrisonPrivStuffButtons.AddSimpleSingleButton("Take Keycard", "Literally Takes a Keycard", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     Prison.gamemanager.SendCustomEvent("_TakeKeycard");
                 });
 
-                new SimpleSingleButton(PrisonPrivStuffButtons, "Respawn In Game", "Literally Spawns you In Game u have to be in the spectator list", () =>
+                PrisonPrivStuffButtons.AddSimpleSingleButton("Respawn In Game", "Literally Spawns you In Game u have to be in the spectator list", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     Prison.gamemanager.SendCustomEvent("_SpawnPlayer");
                 });
 
-                new SimpleSingleButton(PrisonPrivStuffButtons, "Get Wanted x Times", "", () =>
+                PrisonPrivStuffButtons.AddSimpleSingleButton("Get Wanted x Times", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     PrisonWantedMenu.OpenMenu();
@@ -1762,7 +1748,7 @@ namespace ForbiddenClient
 
                 bool spawningame = true;
 
-                var Wanted = new SimpleSingleButton(PrisonWantedButtons, "Get Wanted 1 Time", "", () =>
+                var Wanted = PrisonWantedButtons.AddSimpleSingleButton("Get Wanted 1 Time", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     if (times != 0)
@@ -1771,12 +1757,9 @@ namespace ForbiddenClient
                     }
                 });
 
-                new ToggleButton(PrisonWantedButtons, "Spawn In Game After Finishing", "", "", (val) =>
-                {
-                    spawningame = val;
-                }).SetToggleState(spawningame);
+                PrisonWantedButtons.AddToggleButton("Spawn In Game After Finishing", "", "", (val) => { spawningame = val; }).SetToggleState(spawningame);
 
-                new ForbiddenButtonAPI.Controls.Slider(PrisonWantedMenu, "Times", null, (val) =>
+                PrisonWantedMenu.AddSlider("Times", null, (val) =>
                 {
                     times = (int)val;
                     if (times == 1)
@@ -1791,13 +1774,13 @@ namespace ForbiddenClient
 
                 #endregion
 
-                new SimpleSingleButton(PrisonPrivStuffButtons, "Money Menu", "Literally A Menu for Giving you Money ", () =>
+                PrisonPrivStuffButtons.AddSimpleSingleButton("Money Menu", "Literally A Menu for Giving you Money ", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     PrisonMoneyMenu.OpenMenu();
                 }, true);
 
-                ESPPrison = new ToggleButton(PrisonPrivStuffButtons, "Team ESP", "", "", (val) =>
+                ESPPrison = PrisonPrivStuffButtons.AddToggleButton("Team ESP", "", "", (val) =>
                 {
                     Prison.specialesp = val;
                     Create.Ini.SetBool("PrisonEscape", "TeamESP", val);
@@ -1817,9 +1800,9 @@ namespace ForbiddenClient
                 });
 
                 ESPPrison.SetToggleState(Create.Ini.GetBool("PrisonEscape", "TeamESP"));
-                
-                
-                new ToggleButton(PrisonPrivStuffButtons, "Inf Ammo", "", "", (val) =>
+
+
+                PrisonPrivStuffButtons.AddToggleButton("Inf Ammo", "", "", (val) =>
                 {
                     Prison.infammo = val;
                     if (Prison.infammo)
@@ -1830,7 +1813,7 @@ namespace ForbiddenClient
 
                 #region Money
 
-                new SimpleSingleButton(PrisonMoneyButtons, "Get 50 Bucks", "", () =>
+                PrisonMoneyButtons.AddSimpleSingleButton("Get 50 Bucks", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     if (GameObject.Find("Scripts/Game Effects/Canvas HUD/Points Canvas/Points Changed Panel/Text Points Changed").GetComponent<TextMeshProUGUI>().text != "+50")
@@ -1840,12 +1823,12 @@ namespace ForbiddenClient
                     }
                     else
                     {
-                        Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints");
+                        Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints");
                         GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard");
                     }
                 });
 
-                new SimpleSingleButton(PrisonMoneyButtons, "Get 100 Bucks", "", () =>
+                PrisonMoneyButtons.AddSimpleSingleButton("Get 100 Bucks", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     if (GameObject.Find("Scripts/Game Effects/Canvas HUD/Points Canvas/Points Changed Panel/Text Points Changed").GetComponent<TextMeshProUGUI>().text != "+50")
@@ -1857,16 +1840,16 @@ namespace ForbiddenClient
                         }
                         finally
                         {
-                            Utils.ExecuteCodeMultipleTimes(1, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                            Utils.ExecuteCodeMultipleTimes(1, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                         }
                     }
                     else
                     {
-                        Utils.ExecuteCodeMultipleTimes(2, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                        Utils.ExecuteCodeMultipleTimes(2, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                     }
                 });
 
-                new SimpleSingleButton(PrisonMoneyButtons, "Get 150 Bucks", "", () =>
+                PrisonMoneyButtons.AddSimpleSingleButton("Get 150 Bucks", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     if (GameObject.Find("Scripts/Game Effects/Canvas HUD/Points Canvas/Points Changed Panel/Text Points Changed").GetComponent<TextMeshProUGUI>().text != "+50")
@@ -1878,16 +1861,16 @@ namespace ForbiddenClient
                         }
                         finally
                         {
-                            Utils.ExecuteCodeMultipleTimes(2, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                            Utils.ExecuteCodeMultipleTimes(2, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                         }
                     }
                     else
                     {
-                        Utils.ExecuteCodeMultipleTimes(3, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                        Utils.ExecuteCodeMultipleTimes(3, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                     }
                 });
 
-                new SimpleSingleButton(PrisonMoneyButtons, "Get 200 Bucks", "", () =>
+                PrisonMoneyButtons.AddSimpleSingleButton("Get 200 Bucks", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     if (GameObject.Find("Scripts/Game Effects/Canvas HUD/Points Canvas/Points Changed Panel/Text Points Changed").GetComponent<TextMeshProUGUI>().text != "+50")
@@ -1899,16 +1882,16 @@ namespace ForbiddenClient
                         }
                         finally
                         {
-                            Utils.ExecuteCodeMultipleTimes(3, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                            Utils.ExecuteCodeMultipleTimes(3, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                         }
                     }
                     else
                     {
-                        Utils.ExecuteCodeMultipleTimes(4, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                        Utils.ExecuteCodeMultipleTimes(4, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                     }
                 });
 
-                new SimpleSingleButton(PrisonMoneyButtons, "Get 250 Bucks", "", () =>
+                PrisonMoneyButtons.AddSimpleSingleButton("Get 250 Bucks", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     if (GameObject.Find("Scripts/Game Effects/Canvas HUD/Points Canvas/Points Changed Panel/Text Points Changed").GetComponent<TextMeshProUGUI>().text != "+50")
@@ -1920,16 +1903,16 @@ namespace ForbiddenClient
                         }
                         finally
                         {
-                            Utils.ExecuteCodeMultipleTimes(4, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                            Utils.ExecuteCodeMultipleTimes(4, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                         }
                     }
                     else
                     {
-                        Utils.ExecuteCodeMultipleTimes(5, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                        Utils.ExecuteCodeMultipleTimes(5, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                     }
                 });
 
-                new SimpleSingleButton(PrisonMoneyButtons, "Get 300 Bucks", "", () =>
+                PrisonMoneyButtons.AddSimpleSingleButton("Get 300 Bucks", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     if (GameObject.Find("Scripts/Game Effects/Canvas HUD/Points Canvas/Points Changed Panel/Text Points Changed").GetComponent<TextMeshProUGUI>().text != "+50")
@@ -1941,16 +1924,16 @@ namespace ForbiddenClient
                         }
                         finally
                         {
-                            Utils.ExecuteCodeMultipleTimes(5, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                            Utils.ExecuteCodeMultipleTimes(5, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                         }
                     }
                     else
                     {
-                        Utils.ExecuteCodeMultipleTimes(6, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                        Utils.ExecuteCodeMultipleTimes(6, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                     }
                 });
 
-                new SimpleSingleButton(PrisonMoneyButtons, "Get 350 Bucks", "", () =>
+                PrisonMoneyButtons.AddSimpleSingleButton("Get 350 Bucks", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     if (GameObject.Find("Scripts/Game Effects/Canvas HUD/Points Canvas/Points Changed Panel/Text Points Changed").GetComponent<TextMeshProUGUI>().text != "+50")
@@ -1962,16 +1945,16 @@ namespace ForbiddenClient
                         }
                         finally
                         {
-                            Utils.ExecuteCodeMultipleTimes(6, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                            Utils.ExecuteCodeMultipleTimes(6, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                         }
                     }
                     else
                     {
-                        Utils.ExecuteCodeMultipleTimes(7, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                        Utils.ExecuteCodeMultipleTimes(7, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                     }
                 });
 
-                new SimpleSingleButton(PrisonMoneyButtons, "Get 400 Bucks", "", () =>
+                PrisonMoneyButtons.AddSimpleSingleButton("Get 400 Bucks", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     if (GameObject.Find("Scripts/Game Effects/Canvas HUD/Points Canvas/Points Changed Panel/Text Points Changed").GetComponent<TextMeshProUGUI>().text != "+50")
@@ -1983,16 +1966,16 @@ namespace ForbiddenClient
                         }
                         finally
                         {
-                            Utils.ExecuteCodeMultipleTimes(7, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                            Utils.ExecuteCodeMultipleTimes(7, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                         }
                     }
                     else
                     {
-                        Utils.ExecuteCodeMultipleTimes(8, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                        Utils.ExecuteCodeMultipleTimes(8, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                     }
                 });
 
-                new SimpleSingleButton(PrisonMoneyButtons, "Get 450 Bucks", "", () =>
+                PrisonMoneyButtons.AddSimpleSingleButton("Get 450 Bucks", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     if (GameObject.Find("Scripts/Game Effects/Canvas HUD/Points Canvas/Points Changed Panel/Text Points Changed").GetComponent<TextMeshProUGUI>().text != "+50")
@@ -2004,16 +1987,16 @@ namespace ForbiddenClient
                         }
                         finally
                         {
-                            Utils.ExecuteCodeMultipleTimes(8, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                            Utils.ExecuteCodeMultipleTimes(8, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                         }
                     }
                     else
                     {
-                        Utils.ExecuteCodeMultipleTimes(9, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                        Utils.ExecuteCodeMultipleTimes(9, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                     }
                 });
 
-                new SimpleSingleButton(PrisonMoneyButtons, "Get 500 Bucks", "", () =>
+                PrisonMoneyButtons.AddSimpleSingleButton("Get 500 Bucks", "", () =>
                 {
                     if (!Prison.worldLoaded) return;
                     if (GameObject.Find("Scripts/Game Effects/Canvas HUD/Points Canvas/Points Changed Panel/Text Points Changed").GetComponent<TextMeshProUGUI>().text != "+50")
@@ -2025,12 +2008,12 @@ namespace ForbiddenClient
                         }
                         finally
                         {
-                            Utils.ExecuteCodeMultipleTimes(9, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                            Utils.ExecuteCodeMultipleTimes(9, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                         }
                     }
                     else
                     {
-                        Utils.ExecuteCodeMultipleTimes(10, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
+                        Utils.ExecuteCodeMultipleTimes(10, () => Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints"), () => GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard"));
                     }
                 });
 
@@ -2038,7 +2021,7 @@ namespace ForbiddenClient
 
                 #endregion
 
-                CrateESPPrison = new ToggleButton(PrisonButtons, "Crate ESP", "", "", (val) =>
+                CrateESPPrison = PrisonButtons.AddToggleButton("Crate ESP", "", "", (val) =>
                 {
                     Prison.crateesp = val;
                     Create.Ini.SetBool("PrisonEscape", "CrateESP", val);
@@ -2050,6 +2033,12 @@ namespace ForbiddenClient
 
                 CrateESPPrison.SetToggleState(Create.Ini.GetBool("PrisonEscape", "CrateESP"));
 
+                PrisonButtons.AddSimpleSingleButton("Make Everyone Drop their Keycard", null, () =>
+                {
+                    if (!Prison.worldLoaded) return;
+                    Prison.EveryoneDropKeycard();
+                }, false);
+
                 #endregion
 
 
@@ -2057,12 +2046,12 @@ namespace ForbiddenClient
 
                 #region PreGame
 
-                new SimpleSingleButton(IrrblossButtons, "Pre-Game", "", () =>
-                    {
-                        IrrblossPreGameMenu.OpenMenu();
-                    }, true);
+                IrrblossButtons.AddSimpleSingleButton("Pre-Game", "", () =>
+                {
+                    IrrblossPreGameMenu.OpenMenu();
+                }, true);
 
-                    new SimpleSingleButton(IrrblossPreGameButtons, "Become All Players", "", () =>
+                IrrblossPreGameButtons.AddSimpleSingleButton("Become All Players", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon.gameObject.name.StartsWith("PL select")))
                         {
@@ -2071,7 +2060,7 @@ namespace ForbiddenClient
                         }
                     });
 
-                    IrrblossSongVersion1 = new ToggleButton(IrrblossPreGameButtons, "Play Song v1", "", "", (val) =>
+                    IrrblossSongVersion1 = IrrblossPreGameButtons.AddToggleButton("Play Song v1", "", "", (val) =>
                     {
                         try
                         {
@@ -2094,7 +2083,7 @@ namespace ForbiddenClient
                         catch { }
                     });
 
-                    IrrblossSongVersion2 = new ToggleButton(IrrblossPreGameButtons, "Play Song v2", "", "", (val) =>
+                    IrrblossSongVersion2 = IrrblossPreGameButtons.AddToggleButton("Play Song v2", "", "", (val) =>
                     {
                         try
                         {
@@ -2117,30 +2106,30 @@ namespace ForbiddenClient
                         catch { }
                     });
 
-                    #endregion
+                #endregion
 
-                    #region InGame
+                #region InGame
 
-                    new SimpleSingleButton(IrrblossButtons, "In-Game", "", () =>
+                IrrblossButtons.AddSimpleSingleButton("In-Game", "", () =>
                     {
                         IrrblossInGameMenu.OpenMenu();
                     }, true);
 
-                    #region Ship
+                #region Ship
 
-                    new SimpleSingleButton(IrrblossInGameButtons, "Ship", "", () =>
+                IrrblossInGameButtons.AddSimpleSingleButton("Ship", "", () =>
                     {
                         IrrblossInGameShipMenu.OpenMenu();
                     }, true);
 
-                    #region Doors
+                #region Doors
 
-                    new SimpleSingleButton(IrrblossInGameShipButtons, "Doors", "", () =>
+                IrrblossInGameShipButtons.AddSimpleSingleButton("Doors", "", () =>
                     {
                         IrrblossInGameDoorsMenu.OpenMenu();
                     }, true);
 
-                    new SimpleSingleButton(IrrblossInGameDoorsButtons, "Open All Doors", "", () =>
+                IrrblossInGameDoorsButtons.AddSimpleSingleButton("Open All Doors", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon.gameObject.name.Equals("Open all")))
                         {
@@ -2149,7 +2138,7 @@ namespace ForbiddenClient
                         }
                     });
 
-                    new SimpleSingleButton(IrrblossInGameDoorsButtons, "Close All Doors", "", () =>
+                IrrblossInGameDoorsButtons.AddSimpleSingleButton("Close All Doors", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon.gameObject.name.Equals("Close all")))
                         {
@@ -2158,7 +2147,7 @@ namespace ForbiddenClient
                         }
                     });
 
-                    new SimpleSingleButton(IrrblossInGameDoorsButtons, "Repair All Doors", "", () =>
+                IrrblossInGameDoorsButtons.AddSimpleSingleButton("Repair All Doors", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon._eventTable.ContainsKey("Sysdamrep") && udon.name.ToLower().Contains("door")))
                         {
@@ -2166,9 +2155,9 @@ namespace ForbiddenClient
                         }
                     });
 
-                    #endregion
+                #endregion
 
-                    new SimpleSingleButton(IrrblossInGameShipButtons, "Repair All", "", () =>
+                IrrblossInGameShipButtons.AddSimpleSingleButton("Repair All", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon._eventTable.ContainsKey("Sysdamrep")))
                         {
@@ -2188,7 +2177,7 @@ namespace ForbiddenClient
                         }
                     });
 
-                    new SimpleSingleButton(IrrblossInGameShipButtons, "Heal Ship", "", () =>
+                IrrblossInGameShipButtons.AddSimpleSingleButton("Heal Ship", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon.name.Equals("Pilotvariables")))
                         {
@@ -2196,7 +2185,7 @@ namespace ForbiddenClient
                         }
                     });
 
-                    new SimpleSingleButton(IrrblossInGameShipButtons, "Fully Heal Ship", "", () =>
+                IrrblossInGameShipButtons.AddSimpleSingleButton("Fully Heal Ship", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon.name.Equals("Pilotvariables")))
                         {
@@ -2204,16 +2193,16 @@ namespace ForbiddenClient
                         }
                     });
 
-                    #endregion
+                #endregion
 
-                    #region Enemy Ship
+                #region Enemy Ship
 
-                    new SimpleSingleButton(IrrblossInGameButtons, "Enemy Ship", "", () =>
+                IrrblossInGameButtons.AddSimpleSingleButton("Enemy Ship", "", () =>
                     {
                         IrrblossInGameEnemyShipMenu.OpenMenu();
                     }, true);
 
-                    new SimpleSingleButton(IrrblossInGameEnemyShipButtons, "Hack Engine", "", () =>
+                IrrblossInGameEnemyShipButtons.AddSimpleSingleButton("Hack Engine", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon.gameObject.name.Equals("Enemy engine")))
                         {
@@ -2221,7 +2210,7 @@ namespace ForbiddenClient
                         }
                     });
 
-                    new SimpleSingleButton(IrrblossInGameEnemyShipButtons, "Hack Pilot", "", () =>
+                IrrblossInGameEnemyShipButtons.AddSimpleSingleButton("Hack Pilot", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon.gameObject.name.Equals("Enemy pilot")))
                         {
@@ -2229,7 +2218,7 @@ namespace ForbiddenClient
                         }
                     });
 
-                    new SimpleSingleButton(IrrblossInGameEnemyShipButtons, "Hack Weapons", "", () =>
+                IrrblossInGameEnemyShipButtons.AddSimpleSingleButton("Hack Weapons", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon.gameObject.name.Equals("Weapon slots") && udon.transform.parent.gameObject.name.Equals("Enemy Ship")))
                         {
@@ -2237,7 +2226,7 @@ namespace ForbiddenClient
                         }
                     });
 
-                    new SimpleSingleButton(IrrblossInGameEnemyShipButtons, "Hack Shields", "", () =>
+                IrrblossInGameEnemyShipButtons.AddSimpleSingleButton("Hack Shields", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon.gameObject.name.Equals("Enemyhealth")))
                         {
@@ -2245,7 +2234,7 @@ namespace ForbiddenClient
                         }
                     });
 
-                    new SimpleSingleButton(IrrblossInGameEnemyShipButtons, "Kill", "", () =>
+                IrrblossInGameEnemyShipButtons.AddSimpleSingleButton("Kill", "", () =>
                     {
                         foreach (var udon in FateOfTheIrrbloss.Udons.Where(udon => udon.gameObject.name.Equals("Enemyhealth")))
                         {
@@ -2253,84 +2242,84 @@ namespace ForbiddenClient
                         }
                     });
 
-                    #endregion
+                #endregion
 
-                    new ToggleButton(IrrblossInGameButtons, "No Cooldown", "", "", (val) =>
+                IrrblossInGameButtons.AddToggleButton("No Cooldown", "", "", (val) =>
                     {
                         FateOfTheIrrbloss.nocooldown = val;
                         MelonCoroutines.Start(FateOfTheIrrbloss.NoCooldown());
                     });
 
-                    new ToggleButton(IrrblossInGameButtons, "Welder Insta Repair", "", "", (val) =>
+                IrrblossInGameButtons.AddToggleButton("Welder Insta Repair", "", "", (val) =>
                     {
                         FateOfTheIrrbloss.instarepair = val;
                     });
 
-                    new ToggleButton(IrrblossInGameButtons, "Fire Extinguisher Insta Extinguish", "", "", (val) =>
+                IrrblossInGameButtons.AddToggleButton("Fire Extinguisher Insta Extinguish", "", "", (val) =>
                     {
                         FateOfTheIrrbloss.instaextinguish = val;
                     });
 
-                    #endregion
+                #endregion
 
-                    #region Music
+                #region Music
 
-                    new SimpleSingleButton(IrrblossButtons, "Music", "", () =>
+                IrrblossButtons.AddSimpleSingleButton("Music", "", () =>
                     {
                         IrrblossMusicMenu.OpenMenu();
                     }, true);
 
-                    new SimpleSingleButton(IrrblossMusicButtons, "New Sector", "", () =>
+                IrrblossMusicButtons.AddSimpleSingleButton("New Sector", "", () =>
                     {
                         FateOfTheIrrbloss.ChangeSong("newsect");
                     });
 
-                    new SimpleSingleButton(IrrblossMusicButtons, "Chill", "", () =>
+                    IrrblossMusicButtons.AddSimpleSingleButton("Chill", "", () =>
                     {
                         FateOfTheIrrbloss.ChangeSong("newsong");
                     });
 
-                    new SimpleSingleButton(IrrblossMusicButtons, "Intro", "", () =>
+                    IrrblossMusicButtons.AddSimpleSingleButton("Intro", "", () =>
                     {
                         FateOfTheIrrbloss.ChangeSong("intro");
                     });
 
-                    new SimpleSingleButton(IrrblossMusicButtons, "Boss 1", "", () =>
+                    IrrblossMusicButtons.AddSimpleSingleButton("Boss 1", "", () =>
                     {
                         FateOfTheIrrbloss.ChangeSong("boss1");
                     });
 
-                    new SimpleSingleButton(IrrblossMusicButtons, "Boss 2", "", () =>
+                    IrrblossMusicButtons.AddSimpleSingleButton("Boss 2", "", () =>
                     {
                         FateOfTheIrrbloss.ChangeSong("boss2");
                     });
 
-                    new SimpleSingleButton(IrrblossMusicButtons, "Boss 3", "", () =>
+                    IrrblossMusicButtons.AddSimpleSingleButton("Boss 3", "", () =>
                     {
                         FateOfTheIrrbloss.ChangeSong("boss3");
                     });
 
-                    new SimpleSingleButton(IrrblossMusicButtons, "Flying Dialog 1", "", () =>
+                    IrrblossMusicButtons.AddSimpleSingleButton("Flying Dialog 1", "", () =>
                     {
                         FateOfTheIrrbloss.ChangeSong("i1");
                     });
 
-                    new SimpleSingleButton(IrrblossMusicButtons, "Flying Dialog 2", "", () =>
+                    IrrblossMusicButtons.AddSimpleSingleButton("Flying Dialog 2", "", () =>
                     {
                         FateOfTheIrrbloss.ChangeSong("i2");
                     });
 
-                    new SimpleSingleButton(IrrblossMusicButtons, "Flying Dialog 3", "", () =>
+                    IrrblossMusicButtons.AddSimpleSingleButton("Flying Dialog 3", "", () =>
                     {
                         FateOfTheIrrbloss.ChangeSong("i3");
                     });
 
-                    new SimpleSingleButton(IrrblossMusicButtons, "Flying Dialog 4", "", () =>
+                    IrrblossMusicButtons.AddSimpleSingleButton("Flying Dialog 4", "", () =>
                     {
                         FateOfTheIrrbloss.ChangeSong("i4");
                     });
 
-                    new SimpleSingleButton(IrrblossMusicButtons, "Flying Dialog 5", "", () =>
+                    IrrblossMusicButtons.AddSimpleSingleButton("Flying Dialog 5", "", () =>
                     {
                         FateOfTheIrrbloss.ChangeSong("i5");
                     });
@@ -2344,34 +2333,34 @@ namespace ForbiddenClient
 
                 var ProtectionsIcon = ForbiddenClient.Resources.IconsVars.Protections.LoadSprite();
 
-                new SingleButton(MainMenuButtons, "Protections", "Opens Protections Menu", () =>
+                MainMenuButtons.AddSingleButton("Protections", "Opens Protections Menu", () =>
                 {
                     Protections.OpenMenu();
-                }, false, ProtectionsIcon);
+                }, true, ProtectionsIcon);
 
-                new ToggleButton(ProtectionsButtons, "Anti Udon", "Blocks Every Udon Event", "Blocks Every Udon Event", (val) =>
+                ProtectionsButtons.AddToggleButton("Anti Udon", "Blocks Every Udon Event", "Blocks Every Udon Event", (val) =>
                 {
                     PatchManager.AntiUdon = val;
                 }).SetToggleState(false, false);
 
-                new ToggleButton(ProtectionsButtons, "Portal Walktrough", "Allows you to walk trough Portals", "Allows you to walk trough Portals", (val) =>
+                ProtectionsButtons.AddToggleButton("Portal Walktrough", "Allows you to walk trough Portals", "Allows you to walk trough Portals", (val) =>
                 {
                     PatchManager.PortalWalk = val;
                 }).SetToggleState(false, false);
 
-                new ToggleButton(ProtectionsButtons, "Log Udon", "Logs all Udon Events onto the MLConsole", "Logs all Udon Events onto the MLConsole", (val) =>
+                ProtectionsButtons.AddToggleButton("Log Udon", "Logs all Udon Events onto the MLConsole", "Logs all Udon Events onto the MLConsole", (val) =>
                 {
                     PatchManager.LogUdon = val;
                 }).SetToggleState(false, false);
 
                 #region Log Cheaters
 
-                new SimpleSingleButton(ProtectionsButtons, "Log Cheaters", "Opens Log Cheaters Menu", () =>
+                ProtectionsButtons.AddSimpleSingleButton("Log Cheaters", "Opens Log Cheaters Menu", () =>
                 {
                     LogCheaters.OpenMenu();
                 }, true);
 
-                LogCheatersa = new ToggleButton(LogCheatersButtons, "Log Cheaters", "Logs all client users abusing udon events onto the MLConsole", "Logs all client users abusing udon events onto the MLConsole", (val) =>
+                LogCheatersa = LogCheatersButtons.AddToggleButton("Log Cheaters", "Logs all client users abusing udon events onto the MLConsole", "Logs all client users abusing udon events onto the MLConsole", (val) =>
                 {
                     Create.Ini.SetBool("LogCheaters", "LogCheaters", val);
                     PatchManager.LogCheaters = val;
@@ -2379,7 +2368,7 @@ namespace ForbiddenClient
 
                 LogCheatersa.SetToggleState(Create.Ini.GetBool("LogCheaters", "LogCheaters"), false);
 
-                Audio = new ToggleButton(LogCheatersButtons, "Audio", "Plays an Audio every time a log is triggered", "Plays an Audio every time a log is triggered", (val) =>
+                Audio = LogCheatersButtons.AddToggleButton("Audio", "Plays an Audio every time a log is triggered", "Plays an Audio every time a log is triggered", (val) =>
                 {
                     Create.Ini.SetBool("LogCheaters", "Audio", val);
                     PatchManager.playsound = val;
@@ -2387,7 +2376,7 @@ namespace ForbiddenClient
 
                 Audio.SetToggleState(Create.Ini.GetBool("LogCheaters", "Audio"), false);
 
-                HUD = new ToggleButton(LogCheatersButtons, "HUD Notifications", "Logs the cheaters in the HUD", "Logs the cheaters in the HUD", (val) =>
+                HUD = LogCheatersButtons.AddToggleButton("HUD Notifications", "Logs the cheaters in the HUD", "Logs the cheaters in the HUD", (val) =>
                 {
                     Create.Ini.SetBool("LogCheaters", "HUD", val);
                     PatchManager.HUD = val;
@@ -2395,7 +2384,7 @@ namespace ForbiddenClient
 
                 HUD.SetToggleState(Create.Ini.GetBool("LogCheaters", "HUD"), false);
 
-                ChangeStatus = new ToggleButton(LogCheatersButtons, "Change Status", "Change your status to the cheater name", "Change your status to the cheater name", (val) =>
+                ChangeStatus = LogCheatersButtons.AddToggleButton("Change Status", "Change your status to the cheater name", "Change your status to the cheater name", (val) =>
                 {
                     Create.Ini.SetBool("LogCheaters", "ChangeStatus", val);
                     PatchManager.changestatus = val;
@@ -2403,7 +2392,7 @@ namespace ForbiddenClient
 
                 ChangeStatus.SetToggleState(Create.Ini.GetBool("LogCheaters", "ChangeStatus"), false);
 
-                new SimpleSingleButton(LogCheatersButtons, "Reset Status", "Changes your status to the original you had", () =>
+                LogCheatersButtons.AddSimpleSingleButton("Reset Status", "Changes your status to the original you had", () =>
                 {
                     if (!string.IsNullOrEmpty(Utils.originaldescription))
                     {
@@ -2414,49 +2403,34 @@ namespace ForbiddenClient
 
                 #endregion
 
-                new ToggleButton(ProtectionsButtons, "Serialize", "Freezes you for everyone", "Freezes you for everyone", (val) =>
+                ProtectionsButtons.AddToggleButton("Serialize", "Freezes you for everyone", "Freezes you for everyone", (val) =>
                 {
                     PatchManager.serialize = val;
                     Utils.FreezeClone();
                 });
 
-                new ToggleButton(ProtectionsButtons, "Lock Instance", "Ability to Lock the instance so no one can join", "Ability to Lock the instance so no one can join", (val) =>
+                ProtectionsButtons.AddToggleButton("Lock Instance", "Ability to Lock the instance so no one can join", "Ability to Lock the instance so no one can join", (val) =>
                 {
                     PatchManager.LockInstance = val;
                 });
 
-                Antiinstancelock = new ToggleButton(ProtectionsButtons, "Anti Instance Lock", "Ability to Bypass Lock Instance Exploits", "Ability to Bypass Lock Instance Exploits", (val) =>
-                {
-                    Create.Ini.SetBool("Toggles", "AntiInstanceLock", val);
-                    PatchManager.antiinstancelock = val;
-                });
+                //AntiBlock = ProtectionsButtons.AddToggleButton("Anti Block", "Allows you to see people that blocked you", "Allows you to see people that blocked you", (val) =>
+                //{
+                //    PatchManager.antiblock = val;
+                //    Create.Ini.SetBool("Toggles", "AntiBlock", val);
+                //});
 
-                Antiinstancelock.SetToggleState(Create.Ini.GetBool("Toggles", "AntiInstanceLock"));
+                //AntiBlock.SetToggleState(Create.Ini.GetBool("Toggles", "AntiBlock"));
 
-                QuestSpoof = new ToggleButton(ProtectionsButtons, "Quest Spoof", "Spoofs you as Quest", "Spoofs you as Quest", (val) =>
-                {
-                    Create.Ini.SetBool("Toggles", "QuestSpoof", val);
-                });
+                //PreventAvatarChange = ProtectionsButtons.AddToggleButton("Prevent Avatar Change From Blocked Users", "Blocks Avatar Changes From Blocked Users", "Blocks Avatar Changes From Blocked Users", (val) =>
+                //{
+                //    PatchManager.preventavatarchangefromblockedusers = val;
+                //    Create.Ini.SetBool("Toggles", "PreventAvatarChange", val);
+                //});
 
-                QuestSpoof.SetToggleState(Create.Ini.GetBool("Toggles", "QuestSpoof"));
+                //PreventAvatarChange.SetToggleState(Create.Ini.GetBool("Toggles", "PreventAvatarChange"));
 
-                AntiBlock = new ToggleButton(ProtectionsButtons, "Anti Block", "Allows you to see people that blocked you", "Allows you to see people that blocked you", (val) =>
-                {
-                    PatchManager.antiblock = val;
-                    Create.Ini.SetBool("Toggles", "AntiBlock", val);
-                });
-
-                AntiBlock.SetToggleState(Create.Ini.GetBool("Toggles", "AntiBlock"));
-
-                PreventAvatarChange = new ToggleButton(ProtectionsButtons, "Prevent Avatar Change From Blocked Users", "Blocks Avatar Changes From Blocked Users", "Blocks Avatar Changes From Blocked Users", (val) =>
-                {
-                    PatchManager.preventavatarchangefromblockedusers = val;
-                    Create.Ini.SetBool("Toggles", "PreventAvatarChange", val);
-                });
-
-                PreventAvatarChange.SetToggleState(Create.Ini.GetBool("Toggles", "PreventAvatarChange"));
-
-                var spoofcamera = new ToggleButton(ProtectionsButtons, "Spoof Camera", "Makes so ppl can't see that u have the camera on", "Makes so ppl can't see that u have the camera on", (val) =>
+                var spoofcamera = ProtectionsButtons.AddToggleButton("Spoof Camera", "Makes so ppl can't see that u have the camera on", "Makes so ppl can't see that u have the camera on", (val) =>
                 {
                     PatchManager.spoofcam = val;
                     Create.Ini.SetBool("Toggles", "SpoofCamera", val);
@@ -2464,7 +2438,7 @@ namespace ForbiddenClient
 
                 spoofcamera.SetToggleState(Create.Ini.GetBool("Toggles", "SpoofCamera"));
 
-                var hardwarespoof = new ToggleButton(ProtectionsButtons, "Spoof All Hardware", "Spoofs All Hardware", "Spoofs All Hardware", (val) =>
+                var hardwarespoof = ProtectionsButtons.AddToggleButton("Spoof All Hardware", "Spoofs All Hardware", "Spoofs All Hardware", (val) =>
                 {
                     PatchManager.SpoofAllHardware = val;
                     Create.Ini.SetBool("Toggles", "Hardware", val);
@@ -2479,12 +2453,12 @@ namespace ForbiddenClient
                 var PickupsIcon = ForbiddenClient.Resources.IconsVars.pickups.LoadSprite();
 
 
-                new SingleButton(MainMenuButtons, "Pickups", "Opens Pickup Menu", () =>
+                MainMenuButtons.AddSingleButton("Pickups", "Opens Pickup Menu", () =>
                 {
                     Pickups.OpenMenu();
-                }, false, PickupsIcon);
+                }, true, PickupsIcon);
 
-                new ToggleButton(PickupsButtons, "Auto Drop", "Drop Pickups for everyone", "Drop Pickups for everyone", (val) =>
+                PickupsButtons.AddToggleButton("Auto Drop", "Drop Pickups for everyone", "Drop Pickups for everyone", (val) =>
                 {
                     try
                     {
@@ -2501,7 +2475,7 @@ namespace ForbiddenClient
                     catch { }
                 }).SetToggleState(false, false);
 
-                new ToggleButton(PickupsButtons, "Thief", "Allows Thief of Pickups", "Allows Thief of Pickups", (val) =>
+                PickupsButtons.AddToggleButton("Thief", "Allows Thief of Pickups", "Allows Thief of Pickups", (val) =>
                 {
                     Items.AllowThiefenabled = val;
                     if (val)
@@ -2514,7 +2488,7 @@ namespace ForbiddenClient
                     }
                 }).SetToggleState(false, false);
 
-                AntiTheftuwu = new ToggleButton(PickupsButtons, "Anti Theft", "No one can steal your pickups", "No one can steal your pickups", (val) =>
+                AntiTheftuwu = PickupsButtons.AddToggleButton("Anti Theft", "No one can steal your pickups", "No one can steal your pickups", (val) =>
                 {
                     Create.Ini.SetBool("Toggles", "AntiTheft", val);
                     Items.antitheft = val;
@@ -2526,19 +2500,19 @@ namespace ForbiddenClient
 
                 AntiTheftuwu.SetToggleState(Create.Ini.GetBool("Toggles", "AntiTheft"));
 
-                ButterKnife = new ToggleButton(PickupsButtons, "Butter Knife", "The knife is like a butter knife", "The knife is like a butter knife", (val) =>
+                ButterKnife = PickupsButtons.AddToggleButton("Butter Knife", "The knife is like a butter knife", "The knife is like a butter knife", (val) =>
                 {
                     PatchManager.butterknife = val;
                 });
 
                 ButterKnife.SetActive(false);
 
-                new SimpleSingleButton(PickupsButtons, "Respawn Pickups", null, () =>
+                PickupsButtons.AddSimpleSingleButton("Respawn Pickups", null, () =>
                 {
                     Items.RespawnPickups();
                 });
 
-                new ToggleButton(PickupsButtons, "Disable Pickups", "", "", (val) =>
+                PickupsButtons.AddToggleButton("Disable Pickups", "", "", (val) =>
                 {
                     Items.pickupsenabled = !val;
                     foreach (var pickup in PatchManager.Pickups)
@@ -2553,12 +2527,12 @@ namespace ForbiddenClient
 
                 #region ItemLag
 
-                new SimpleSingleButton(PickupsButtons, "Item Lag", null, () =>
+                PickupsButtons.AddSimpleSingleButton("Item Lag", null, () =>
                 {
                     PickupsLag.OpenMenu();
                 }, true);
 
-                new ToggleButton(PickupsLagButtons, "Item Lag", "", "", (val) =>
+                PickupsLagButtons.AddToggleButton("Item Lag", "", "", (val) =>
                 {
                     if (val)
                     {
@@ -2571,7 +2545,7 @@ namespace ForbiddenClient
                     }
                 });
 
-                new ToggleButton(PickupsLagButtons, "Item Lag 2", "", "", (val) =>
+                PickupsLagButtons.AddToggleButton("Item Lag 2", "", "", (val) =>
                 {
                     if (val)
                     {
@@ -2590,7 +2564,7 @@ namespace ForbiddenClient
 
                 var KillSelfIcon = ForbiddenClient.Resources.IconsVars.KillSelf.LoadSprite();
 
-                KillSelf = new SingleButton(MainMenuButtons, "Kill Self", "Kill Self with Grenade", () =>
+                KillSelf = MainMenuButtons.AddSingleButton("Kill Self", "Kill Self with Grenade", () =>
                 {
                     try
                     {
@@ -2612,7 +2586,7 @@ namespace ForbiddenClient
 
                 KillSelf.SetActive(false);
 
-                GodMode = new ToggleButton(MainMenuButtons, "GodMode", "Gives you Immortality", "Gives you Immortality", (val) =>
+                GodMode = MainMenuButtons.AddToggleButton("GodMode", "Gives you Immortality", "Gives you Immortality", (val) =>
                 {
                     Create.Ini.SetBool("Toggles", "GodMode", val);
                     PatchManager.Godmode = val;
@@ -2623,14 +2597,14 @@ namespace ForbiddenClient
                 UdonTransform = UdonEventsButtons.gameObject.transform;
 
                 //Udon
-                new SimpleSingleButton(MainMenuButtons, "Udon Events", null, () =>
+                MainMenuButtons.AddSimpleSingleButton("Udon Events", null, () =>
                 {
                     UdonEventsMenu.OpenMenu();
                     if (!cached)
                     {
                         foreach (var events in Udon.GetUdonBehaviourGameObjects())
                         {
-                            new SimpleSingleButton(UdonEventsButtons, events.gameObject.name, null, () =>
+                            UdonEventsButtons.AddSimpleSingleButton(events.gameObject.name, null, () =>
                             {
                                 UdonEventButtons.gameObject.transform.DestroyChildren();
                                 UdonEventMenu.OpenMenu();
@@ -2639,14 +2613,14 @@ namespace ForbiddenClient
                                 {
                                 if (uwu.Key.StartsWith("_"))
                                     {
-                                        new SimpleSingleButton(UdonEventButtons, uwu.Key, null, () =>
+                                        UdonEventButtons.AddSimpleSingleButton(uwu.Key, null, () =>
                                         {
                                             events.GetComponent<UdonBehaviour>().SendCustomEvent(uwu.Key);
                                         });
                                     }
                                     else
                                     {
-                                        new SimpleSingleButton(UdonEventButtons, uwu.Key, null, () =>
+                                        UdonEventButtons.AddSimpleSingleButton(uwu.Key, null, () =>
                                         {
                                             events.GetComponent<UdonBehaviour>().SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, uwu.Key);
                                         });
@@ -2657,18 +2631,18 @@ namespace ForbiddenClient
                         }
                     }
                     cached = true;
-                });
+                }, true);
 
                 #region TouchSystem
 
-                Touch = new SimpleSingleButton(MainMenuButtons, "Touch System", "", () =>
+                Touch = MainMenuButtons.AddSimpleSingleButton("Touch System", "", () =>
                 {
                     TouchSystemMenu.OpenMenu();
-                });
+                }, true);
 
                 Touch.SetActive(false);
 
-                TouchBystander = new ToggleButton(TouchSystemButtons, "Give Bystander", "Gives Bystander when you close your fist next to someone (Use K in Desktop)", "Gives Bystander when you close your fist next to someone (Use K in Desktop)", (val) =>
+                TouchBystander = TouchSystemButtons.AddToggleButton("Give Bystander", "Gives Bystander when you close your fist next to someone (Use K in Desktop)", "Gives Bystander when you close your fist next to someone (Use K in Desktop)", (val) =>
                 {
                     touchsystoggle = "Bystander";
                     MelonCoroutines.Start(Utils.TouchSysAll());
@@ -2684,7 +2658,7 @@ namespace ForbiddenClient
                     if (!val) touchsystoggle = string.Empty;
                 });
 
-                TouchDetective = new ToggleButton(TouchSystemButtons, "Give Detective", "Gives Detective when you close your fist next to someone (Use K in Desktop)", "Gives Detective when you close your fist next to someone (Use K in Desktop)", (val) =>
+                TouchDetective = TouchSystemButtons.AddToggleButton("Give Detective", "Gives Detective when you close your fist next to someone (Use K in Desktop)", "Gives Detective when you close your fist next to someone (Use K in Desktop)", (val) =>
                 {
                     touchsystoggle = "Detective";
                     MelonCoroutines.Start(Utils.TouchSysAll());
@@ -2700,7 +2674,7 @@ namespace ForbiddenClient
                     if (!val) touchsystoggle = string.Empty;
                 });
 
-                TouchMurderer = new ToggleButton(TouchSystemButtons, "Give Murderer", "Gives Murderer when you close your fist next to someone (Use K in Desktop)", "Gives Murderer when you close your fist next to someone (Use K in Desktop)", (val) =>
+                TouchMurderer = TouchSystemButtons.AddToggleButton("Give Murderer", "Gives Murderer when you close your fist next to someone (Use K in Desktop)", "Gives Murderer when you close your fist next to someone (Use K in Desktop)", (val) =>
                 {
                     touchsystoggle = "Murderer";
                     MelonCoroutines.Start(Utils.TouchSysAll());
@@ -2716,7 +2690,7 @@ namespace ForbiddenClient
                     if (!val) touchsystoggle = string.Empty;
                 });
 
-                TouchFlash = new ToggleButton(TouchSystemButtons, "Flash", "Flashes when you close your fist next to someone (Use K in Desktop)", "Flashes when you close your fist next to someone (Use K in Desktop)", (val) =>
+                TouchFlash = TouchSystemButtons.AddToggleButton("Flash", "Flashes when you close your fist next to someone (Use K in Desktop)", "Flashes when you close your fist next to someone (Use K in Desktop)", (val) =>
                 {
                     touchsystoggle = "SyncFlashbang";
                     MelonCoroutines.Start(Utils.TouchSysAll());
@@ -2732,7 +2706,7 @@ namespace ForbiddenClient
                     if (!val) touchsystoggle = string.Empty;
                 });
 
-                TouchKill = new ToggleButton(TouchSystemButtons, "Kill", "Kills when you close your fist next to someone (Use K in Desktop)", "Kills when you close your fist next to someone (Use K in Desktop)", (val) =>
+                TouchKill = TouchSystemButtons.AddToggleButton("Kill", "Kills when you close your fist next to someone (Use K in Desktop)", "Kills when you close your fist next to someone (Use K in Desktop)", (val) =>
                 {
                     touchsystoggle = "Kill";
                     MelonCoroutines.Start(Utils.TouchSysAll());
@@ -2748,7 +2722,7 @@ namespace ForbiddenClient
                     if (!val) touchsystoggle = string.Empty;
                 });
 
-                TouchCooldown = new ToggleButton(TouchSystemButtons, "Cooldown", "Cooldowns when you close your fist next to someone (Use K in Desktop)", "Gives Murderer when you close your fist next to someone (Use K in Desktop)", (val) =>
+                TouchCooldown = TouchSystemButtons.AddToggleButton("Cooldown", "Cooldowns when you close your fist next to someone (Use K in Desktop)", "Gives Murderer when you close your fist next to someone (Use K in Desktop)", (val) =>
                 {
                     touchsystoggle = "SyncFriendlyStab";
                     MelonCoroutines.Start(Utils.TouchSysAll());
@@ -2764,7 +2738,7 @@ namespace ForbiddenClient
                     if (!val) touchsystoggle = string.Empty;
                 });
 
-                TouchClues = new ToggleButton(TouchSystemButtons, "Give Clues", "Gives Clues when you close your fist next to someone (Use K in Desktop)", "Gives Murderer when you close your fist next to someone (Use K in Desktop)", (val) =>
+                TouchClues = TouchSystemButtons.AddToggleButton("Give Clues", "Gives Clues when you close your fist next to someone (Use K in Desktop)", "Gives Murderer when you close your fist next to someone (Use K in Desktop)", (val) =>
                 {
                     touchsystoggle = "Clues";
                     MelonCoroutines.Start(Utils.TouchSysAll());
@@ -2780,7 +2754,7 @@ namespace ForbiddenClient
                     if (!val) touchsystoggle = string.Empty;
                 });
 
-                TouchGrenade = new ToggleButton(TouchSystemButtons, "Explode Grenade", "Explode a Grenade when you close your fist next to someone (Use K in Desktop)", "Explode a Grenadep when you close your fist next to someone (Use K in Desktop)", (val) =>
+                TouchGrenade = TouchSystemButtons.AddToggleButton("Explode Grenade", "Explode a Grenade when you close your fist next to someone (Use K in Desktop)", "Explode a Grenadep when you close your fist next to someone (Use K in Desktop)", (val) =>
                 {
                     touchsystoggle = "Grenade";
                     MelonCoroutines.Start(Utils.TouchSysAll());
@@ -2796,7 +2770,7 @@ namespace ForbiddenClient
                     if (!val) touchsystoggle = string.Empty;
                 });
 
-                TouchBeartrap = new ToggleButton(TouchSystemButtons, "Spawn Beartrap", "Spawns Beartrap when you close your fist next to someone (Use K in Desktop)", "Spawns a Beartrap when you close your fist next to someone (Use K in Desktop)", (val) =>
+                TouchBeartrap = TouchSystemButtons.AddToggleButton("Spawn Beartrap", "Spawns Beartrap when you close your fist next to someone (Use K in Desktop)", "Spawns a Beartrap when you close your fist next to someone (Use K in Desktop)", (val) =>
                 {
                     touchsystoggle = "Beartrap";
                     MelonCoroutines.Start(Utils.TouchSysAll());
@@ -2812,7 +2786,7 @@ namespace ForbiddenClient
                     if (!val) touchsystoggle = string.Empty;
                 });
 
-                TouchVoteOut = new ToggleButton(TouchSystemButtons, "Vote Out", "Get the player out of the map when you close your fist next to someone (Use K in Desktop)", "Get the player out of the map when you close your fist next to someone (Use K in Desktop)", (val) =>
+                TouchVoteOut = TouchSystemButtons.AddToggleButton("Vote Out", "Get the player out of the map when you close your fist next to someone (Use K in Desktop)", "Get the player out of the map when you close your fist next to someone (Use K in Desktop)", (val) =>
                 {
                     touchsystoggle = "SyncVotedOut";
                     MelonCoroutines.Start(Utils.TouchSysAll());
@@ -2832,13 +2806,13 @@ namespace ForbiddenClient
 
                 #region PatronList
 
-                PatronList = new SimpleSingleButton(MainMenuButtons, "Patrons List", "", () =>
+                PatronList = MainMenuButtons.AddSimpleSingleButton("Patrons List", "", () =>
                 {
                     Murder4Patron.OpenMenu();
                     Murder4PatronButtons.gameObject.transform.DestroyChildren();
                     foreach (var patrons in Murder4.Patrons)
                     {
-                        new SimpleSingleButton(Murder4PatronButtons, Utils.GetPlayerFromPlayeridInLobby(patrons).field_Private_VRCPlayerApi_0.displayName, "Delete from patrons", () =>
+                        Murder4PatronButtons.AddSimpleSingleButton(Utils.GetPlayerFromPlayeridInLobby(patrons).field_Private_VRCPlayerApi_0.displayName, "Delete from patrons", () =>
                         {
                             Murder4.Patrons.Remove(patrons);
                             foreach (var buttons in UnityEngine.Resources.FindObjectsOfTypeAll<TextMeshProUGUI>())
@@ -2851,7 +2825,7 @@ namespace ForbiddenClient
                             if (Murder4.Patrons.Count == 0) givepatreon = false;
                         });
                     }
-                });
+                }, true);
 
                 PatronList.SetActive(false);
 
@@ -2859,31 +2833,23 @@ namespace ForbiddenClient
 
                 #region Player
 
-                new SingleButton(Miscellaneous, "Player", "Local Player Settings", () =>
+                Miscellaneous.AddSingleButton("Player", "Local Player Settings", () =>
                 {
                     PlayerMenu.OpenMenu();
-                }, false, ForbiddenClient.Resources.IconsVars.Player.LoadSprite());
+                }, true, ForbiddenClient.Resources.IconsVars.Player.LoadSprite());
 
                 #region PlayerLocal
 
-                Headlight = new ToggleButton(PlayerMenuLocal, "Headlight", "Local Headlight", "Local Headlight", (val) =>
+                Headlight = PlayerMenuLocal.AddToggleButton("Headlight", "Local Headlight", "Local Headlight", (val) =>
                 {
                     Utils.ToggleHeadLight(!Utils.LightState);
-                    if (Utils.LightState)
-                    {
-                        if (ActionMenu.Headlight != null) ActionMenu.Headlight.TogglePedal(true);
-                    }
-                    else
-                    {
-                        if (ActionMenu.Headlight != null) ActionMenu.Headlight.TogglePedal(false);
-                    }
                 });
 
                 #endregion
 
                 #region PlayerMovement
 
-                Noclip = new ToggleButton(PlayerMenuMovement, "Noclip", null, null, (val) =>
+                Noclip = PlayerMenuMovement.AddToggleButton("Noclip", null, null, (val) =>
                 {
                     if (val)
                     {
@@ -2891,7 +2857,6 @@ namespace ForbiddenClient
                         FlightMod.Flight.player = FlightMod.PlayerExtensions.LocalPlayer.gameObject;
                         FlightMod.Flight.flying = true;
                         NoclipOn = true;
-                        if (ActionMenu.Noclip != null) ActionMenu.Noclip.TogglePedal(true);
                     }
                     else
                     {
@@ -2900,7 +2865,6 @@ namespace ForbiddenClient
                             FlightMod.PlayerExtensions.LocalPlayer.gameObject.GetComponent<CharacterController>().enabled = true;
                             FlightMod.Flight.flying = false;
                             NoclipOn = false;
-                            if (ActionMenu.Noclip != null) ActionMenu.Noclip.TogglePedal(false);
                         }
                         catch
                         {
@@ -2909,40 +2873,31 @@ namespace ForbiddenClient
                 });
                 Noclip.SetToggleState(false, false);
 
-                Speedhack = new ToggleButton(PlayerMenuMovement, "Speedhack", null, null, (val) =>
+                Speedhack = PlayerMenuMovement.AddToggleButton("Speedhack", null, null, (val) =>
                 {
-                    if (val)
-                    {
-                        Features.Speedhack.speedEnabled = true;
-                        if (ActionMenu.Speedhack != null) ActionMenu.Speedhack.TogglePedal(true);
-                    }
-                    else
-                    {
-                        Features.Speedhack.speedEnabled = false;
-                        if (ActionMenu.Speedhack != null) ActionMenu.Speedhack.TogglePedal(false);
-                    }
+                    Features.Speedhack.speedEnabled = val;
                 });
 
                 Speedhack.SetToggleState(false, false);
 
-                Jump = new ToggleButton(PlayerMenuMovement, "Enable Jump", "Enables Jump in World", "Enables Jump in World", (val) =>
+                Jump = PlayerMenuMovement.AddToggleButton("Enable Jump", "Enables Jump in World", "Enables Jump in World", (val) =>
                 {
                     Create.Ini.SetBool("Toggles", "Jump", val);
                     Utils.EnableJump();
                 });
                 Jump.SetToggleState(Create.Ini.GetBool("Toggles", "Jump"));
 
-                new ToggleButton(PlayerMenuMovement, "Infinite Jump", "Infinite Jump", "Infinite Jump", (val) =>
+                PlayerMenuMovement.AddToggleButton("Infinite Jump", "Infinite Jump", "Infinite Jump", (val) =>
                 {
                     Features.InfiniteJump.InfJumpEnabled = val;
                 });
 
-                new ToggleButton(PlayerMenuMovement, "Auto BHOP", "Auto BHOP", "Auto BHOP", (val) =>
+                PlayerMenuMovement.AddToggleButton("Auto BHOP", "Auto BHOP", "Auto BHOP", (val) =>
                 {
                     Features.InfiniteJump.BHOP = val;
                 });
 
-                new ForbiddenButtonAPI.Controls.Slider(PlayerMenu, "Speedhack Speed", null, (val) =>
+                PlayerMenu.AddSlider("Speedhack Speed", null, (val) =>
                 {
                     Features.Speedhack.speedMultiplier = val;
                     FlightMod.Flight.flySpeed = val;
@@ -2950,7 +2905,7 @@ namespace ForbiddenClient
 
                 #endregion
 
-                ESP = new ToggleButton(Miscellaneous, "ESP", "Allows you to see players through walls", "Allows you to see players through walls", (val) =>
+                ESP = Miscellaneous.AddToggleButton("ESP", "Allows you to see players through walls", "Allows you to see players through walls", (val) =>
                 {
                     Create.Ini.SetBool("Toggles", "ESP", val);
                     if (val)
@@ -2967,7 +2922,7 @@ namespace ForbiddenClient
 
                 ESP.SetToggleState(Create.Ini.GetBool("Toggles", "ESP"));
 
-                new ToggleButton(Miscellaneous, "Pickup ESP", "", "", (val) =>
+                Miscellaneous.AddToggleButton("Pickup ESP", "", "", (val) =>
                 {
                     if (val)
                     {
@@ -2980,194 +2935,132 @@ namespace ForbiddenClient
                     }
                 }).SetToggleState(false, false);
 
-                #region Settings
-
-                new SingleButton(Miscellaneous, "Settings", null, () =>
-                {
-                    UIMenu.OpenMenu();
-                }, false, ForbiddenClient.Resources.IconsVars.Settings.LoadSprite());
-
-                #region QuickMenu
-                new SingleButton(UIMenuButtons, "Quick Menu", null, () =>
-                {
-                    QuickMenuSettings.OpenMenu();
-                }, false, ForbiddenClient.Resources.IconsVars.UICustomize.LoadSprite());
-
-                QuickMenuImage = new ToggleButton(QuickMenuSettingsButtons, "Quick Menu Background", null, null, (val) =>
-                {
-                    if (val)
-                    {
-                        Create.Ini.SetBool("UI", "QuickMenuBackground", true);
-                        GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/BackgroundLayer01").GetComponent<Image>().sprite = ForbiddenMain.QuickMenuPic;
-                        GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/BackgroundLayer01").GetComponent<Image>().color = new Color(0.1321f, 0.3774f, 0.5283f, 1);
-                        GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/BackgroundLayer02").gameObject.active = false; 
-                    }
-                    else
-                    {
-                        Create.Ini.SetBool("UI", "QuickMenuBackground", false);
-                        GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/BackgroundLayer01").GetComponent<Image>().sprite = PatchManager.originalQuickMenu;
-                        GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/BackgroundLayer01").GetComponent<Image>().color = new Color(1, 1, 1, 1);
-                        GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/BackgroundLayer02").gameObject.active = true;
-                    }
-                });
-
-
-                QuickMenuImage.SetToggleState(Create.Ini.GetBool("UI", "QuickMenuBackground"));
-
-                new SingleButton(QuickMenuSettingsButtons, "Change Background", null, () =>
-                {
-                    ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { true });
-
-                    API.BuiltinUiUtils.ShowInputPopup("Change Quick Menu Background", null, InputField.InputType.Standard, false, "Change", (message, _, _2) =>
-                    {
-                        ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { false });
-                        if (System.IO.File.Exists(message))
-                        {
-                            ForbiddenMain.QuickMenuPic = message.LoadSpriteFromDisk();
-                            Create.Ini.SetString("UI", "QuickMenuBackgroundLocation", message);
-                            ForbiddenMain.QuickMenuPic = Create.Ini.GetString("UI", "QuickMenuBackgroundLocation").LoadSpriteFromDisk();
-                            Create.Ini.SetBool("UI", "UsingCustomBackground", true);
-                            if (Create.Ini.GetBool("UI", "QuickMenuBackground"))
-                            {
-                                GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/BackgroundLayer01").GetComponent<Image>().sprite = ForbiddenMain.QuickMenuPic;
-                                GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/BackgroundLayer01").GetComponent<Image>().color = new Color(0.1321f, 0.3774f, 0.5283f, 1);
-                                GameObject.Find("UserInterface").transform.Find("Canvas_QuickMenu(Clone)/Container/Window/QMParent/BackgroundLayer02").gameObject.active = false;
-                            }
-                            Utils.ConsoleLog(Utils.ConsoleLogType.Msg, "Succesfully Changed Quick Menu Image!", ConsoleColor.White, API.ConsoleUtils.Type.LogsType.Info);
-                            PatchManager.AlreadyWarned = false;
-                        }
-                        else
-                        {
-                            Utils.ConsoleLog(Utils.ConsoleLogType.Warning, "Image cannot be found!", ConsoleColor.White, API.ConsoleUtils.Type.LogsType.Warn);
-                            Utils.Notification("[Warning]: Image cannot be found!", Color.red);
-                        }
-                    }, () => { ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { false }); }, "Image Location:", true, null, false);
-                }, false, ForbiddenClient.Resources.IconsVars.plusimage.LoadSprite());
                 #endregion
 
-                #region UIColour
+                //#region Settings
 
-                new SingleButton(UIMenuButtons, "UI Colour", null, () =>
-                {
-                    UIColour.OpenMenu();
-                }, false, ForbiddenClient.Resources.IconsVars.UIColour.LoadSprite());
+                //Miscellaneous.AddSingleButton("Settings", null, () =>
+                //{
+                //    UIMenu.OpenMenu();
+                //}, true, ForbiddenClient.Resources.IconsVars.Settings.LoadSprite());
 
-                RedColour = new ForbiddenButtonAPI.Controls.Slider(UIColour, "Red", null, (val) =>
-                {
-                    Create.Ini.SetFloat("UIColour", "Red", val / 255);
-                    Features.UIColor.Red = val / 255;
-                    awa.transform.Find("Background").GetComponent<Image>().color = new Color(UIColor.Red, UIColor.Green, UIColor.Blue, 1);
-                }, 0, 255, Create.Ini.GetFloat("UIColour", "Red") * 255, false, false);
+                //#region UIColour
 
-                RedColour.SetValue(Create.Ini.GetFloat("UIColour", "Red") * 255);
-                
-                GreenColour = new ForbiddenButtonAPI.Controls.Slider(UIColour, "Green", null, (val) =>
-                {
-                    Create.Ini.SetFloat("UIColour", "Green", val / 255);
-                    Features.UIColor.Green = val / 255;
-                    awa.transform.Find("Background").GetComponent<Image>().color = new Color(UIColor.Red, UIColor.Green, UIColor.Blue, 1);
-                }, 0, 255, Create.Ini.GetFloat("UIColour", "Green") * 255, false, false);
+                //UIMenuButtons.AddSingleButton("UI Colour", null, () =>
+                //{
+                //    UIColour.OpenMenu();
+                //}, true, ForbiddenClient.Resources.IconsVars.UIColour.LoadSprite());
 
-                GreenColour.SetValue(Create.Ini.GetFloat("UIColour", "Green") * 255);
+                //RedColour = UIColour.AddSlider("Red", null, (val) =>
+                //{
+                //    Create.Ini.SetFloat("UIColour", "Red", val / 255);
+                //    Features.UIColor.Red = val / 255;
+                //    awa.transform.Find("Background").GetComponent<Image>().color = new Color(UIColor.Red, UIColor.Green, UIColor.Blue, 1);
+                //}, 0, 255, Create.Ini.GetFloat("UIColour", "Red") * 255, false, false);
 
-                BlueColour = new ForbiddenButtonAPI.Controls.Slider(UIColour, "Blue", null, (val) =>
-                {
-                    Create.Ini.SetFloat("UIColour", "Blue", val / 255);
-                    UIColor.Blue = val / 255;
-                    awa.transform.Find("Background").GetComponent<Image>().color = new Color(UIColor.Red, UIColor.Green, UIColor.Blue, 1);
-                }, 0, 255, Create.Ini.GetFloat("UIColour", "Blue") * 255, false, false);
+                //RedColour.SetValue(Create.Ini.GetFloat("UIColour", "Red") * 255);
 
-                BlueColour.SetValue(Create.Ini.GetFloat("UIColour", "Blue"));
+                //GreenColour = UIColour.AddSlider("Green", null, (val) =>
+                //{
+                //    Create.Ini.SetFloat("UIColour", "Green", val / 255);
+                //    Features.UIColor.Green = val / 255;
+                //    awa.transform.Find("Background").GetComponent<Image>().color = new Color(UIColor.Red, UIColor.Green, UIColor.Blue, 1);
+                //}, 0, 255, Create.Ini.GetFloat("UIColour", "Green") * 255, false, false);
 
-                ApplyUiColour = new SimpleSingleButton(UIColourButtons, "Apply", null, () =>
-                {
-                    UIColor.action = "Apply";
-                    UIColor.Thread();
-                });
+                //GreenColour.SetValue(Create.Ini.GetFloat("UIColour", "Green") * 255);
 
-                ResetUIColour = new SimpleSingleButton(UIColourButtons, "Reset", null, () =>
-                {
-                    awa.transform.Find("Background").gameObject.GetComponent<Image>().color = new Color(1, 0, 1, 1);
-                    UIColor.action = "Reset";
-                    UIColor.Thread();
-                });
+                //BlueColour = UIColour.AddSlider("Blue", null, (val) =>
+                //{
+                //    Create.Ini.SetFloat("UIColour", "Blue", val / 255);
+                //    UIColor.Blue = val / 255;
+                //    awa.transform.Find("Background").GetComponent<Image>().color = new Color(UIColor.Red, UIColor.Green, UIColor.Blue, 1);
+                //}, 0, 255, Create.Ini.GetFloat("UIColour", "Blue") * 255, false, false);
 
-                awa = UnityEngine.Object.Instantiate<Transform>(ResetUIColour.transform, UIColourButtons.transform);
-                awa.name = "Preview";
-                awa.transform.Find("Text_H4").gameObject.active = false;
-                awa.GetComponent<StyleElement>().enabled = false;
-                awa.GetComponent<Button>().enabled = false;
-                awa.GetComponent<CanvasGroup>().enabled = false;
-                awa.GetComponent<LayoutElement>().enabled = false;
-                awa.transform.Find("Icon").gameObject.active = false;
-                UnityEngine.Object.DestroyImmediate(awa.transform.Find("Background").GetComponent<Image>());
-                if (Create.Ini.GetFloat("UIColour", "Red") == 277 ||
-                Create.Ini.GetFloat("UIColour", "Green") == 277 ||
-                Create.Ini.GetFloat("UIColour", "Blue") == 277)
-                {
-                    awa.transform.Find("Background").gameObject.AddComponent<Image>().color = new Color(1, 0, 1, 1);
-                }
-                else
-                {
-                    awa.transform.Find("Background").gameObject.AddComponent<Image>().color = new Color(UIColor.Red, UIColor.Green, UIColor.Blue, 1);
-                }
-                #endregion
+                //BlueColour.SetValue(Create.Ini.GetFloat("UIColour", "Blue"));
 
-                #endregion
+                //ApplyUiColour = UIColourButtons.AddSimpleSingleButton("Apply", null, () =>
+                //{
+                //    UIColor.action = "Apply";
+                //    UIColor.Thread();
+                //});
 
-                #endregion
+                //ResetUIColour = UIColourButtons.AddSimpleSingleButton("Reset", null, () =>
+                //{
+                //    awa.transform.Find("Background").gameObject.GetComponent<Image>().color = new Color(1, 0, 1, 1);
+                //    UIColor.action = "Reset";
+                //    UIColor.Thread();
+                //});
+
+                //awa = UnityEngine.Object.Instantiate<Transform>(ResetUIColour.transform, UIColourButtons.transform);
+                //awa.name = "Preview";
+                //awa.transform.Find("Text_H4").gameObject.active = false;
+                //awa.GetComponent<StyleElement>().enabled = false;
+                //awa.GetComponent<Button>().enabled = false;
+                //awa.GetComponent<CanvasGroup>().enabled = false;
+                //awa.GetComponent<LayoutElement>().enabled = false;
+                //awa.transform.Find("Icon").gameObject.active = false;
+                //UnityEngine.Object.DestroyImmediate(awa.transform.Find("Background").GetComponent<Image>());
+                //if (Create.Ini.GetFloat("UIColour", "Red") == 277 ||
+                //Create.Ini.GetFloat("UIColour", "Green") == 277 ||
+                //Create.Ini.GetFloat("UIColour", "Blue") == 277)
+                //{
+                //    awa.transform.Find("Background").gameObject.AddComponent<Image>().color = new Color(1, 0, 1, 1);
+                //}
+                //else
+                //{
+                //    awa.transform.Find("Background").gameObject.AddComponent<Image>().color = new Color(UIColor.Red, UIColor.Green, UIColor.Blue, 1);
+                //}
+                //#endregion
+
+                //#endregion
             };
 
             #region PlayerOptionsQuickMenu
 
-            while (GameObject.Find("UserInterface/Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_SelectedUser_Local/ScrollRect/Viewport/VerticalLayoutGroup") == null)
+            while (!ButtonAPI.HasInit || ButtonAPI.userinterface?.transform?.Find("Canvas_QuickMenu(Clone)/CanvasGroup/Container/Window/QMParent/Menu_SelectedUser_Local/ScrollRect/Viewport/VerticalLayoutGroup") == null)
             {
                 yield return null;
             }
             new Listeners().AddListeners();
             Player selectedplayer = null;
 
-            GameObject gameObject = GameObject.Find("UserInterface/Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_SelectedUser_Local/ScrollRect/Viewport/VerticalLayoutGroup");
+            GameObject gameObject = ButtonAPI.userinterface.transform.Find("Canvas_QuickMenu(Clone)/CanvasGroup/Container/Window/QMParent/Menu_SelectedUser_Local/ScrollRect/Viewport/VerticalLayoutGroup").gameObject;
 
-            var Murder4QuickMenu = new MenuPage("Murder4QuickMenu", "Murder 4", false);
+            var Murder4QuickMenu = MenuPage.CreatePage("Murder4QuickMenu", "Murder 4");
 
-            var Murder4QuickMenuButtons = new ButtonGroup(Murder4QuickMenu, null);
+            var Murder4QuickMenuButtons = Murder4QuickMenu.AddButtonGroup(null);
 
-            var Murder4RolesMenu = new MenuPage("Murder4RolesMenu", "Murder 4 Roles", false);
+            var Murder4RolesMenu = MenuPage.CreatePage("Murder4RolesMenu", "Murder 4 Roles");
 
-            var Murder4RolesButtons = new ButtonGroup(Murder4RolesMenu, null);
+            var Murder4RolesButtons = Murder4RolesMenu.AddButtonGroup(null);
 
-            var AmongUsQuickMenu = new MenuPage("AmongUsQuickMenu", "AmongUs", false);
+            var AmongUsQuickMenu = MenuPage.CreatePage("AmongUsQuickMenu", "AmongUs", false);
 
-            var AmongUsQuickMenuButtons = new ButtonGroup(AmongUsQuickMenu, null);
+            var AmongUsQuickMenuButtons = AmongUsQuickMenu.AddButtonGroup(null);
 
-            var AmongUsRolesMenu = new MenuPage("AmongUsRolesMenu", "AmongUs Roles", false);
+            var AmongUsRolesMenu = MenuPage.CreatePage("AmongUsRolesMenu", "AmongUs Roles", false);
 
-            var AmongUsRolesButtons = new ButtonGroup(AmongUsRolesMenu, null);
+            var AmongUsRolesButtons = AmongUsRolesMenu.AddButtonGroup(null);
 
-            var Murder3QuickMenu = new MenuPage("Murder3QuickMenu", "Murder 3", false);
+            var Murder3QuickMenu = MenuPage.CreatePage("Murder3QuickMenu", "Murder 3", false);
 
-            var Murder3QuickMenuButtons = new ButtonGroup(Murder3QuickMenu, null);
+            var Murder3QuickMenuButtons = Murder3QuickMenu.AddButtonGroup(null);
 
-            var PrisonEscapeQuickMenu = new MenuPage("PrisonEscapQuickMenu", "Prison Escape", false);
+            var PrisonEscapeQuickMenu = MenuPage.CreatePage("PrisonEscapQuickMenu", "Prison Escape", false);
 
-            var PrisonEscapeQuickMenuButtons = new ButtonGroup(PrisonEscapeQuickMenu, null);
+            var PrisonEscapeQuickMenuButtons = PrisonEscapeQuickMenu.AddButtonGroup(null);
 
-            var PrisonEscapeScoreboard = new MenuPage("PrisonEscapScoreboard", "Scoreboard", false);
+            var PrisonEscapeScoreboard = MenuPage.CreatePage("PrisonEscapScoreboard", "Scoreboard", false);
 
-            var PrisonEscapeScoreboardButtons = new ButtonGroup(PrisonEscapeScoreboard, null);
+            var PrisonEscapeScoreboardButtons = PrisonEscapeScoreboard.AddButtonGroup(null);
 
-            var Murder3RolesMenu = new MenuPage("Murder3RolesMenu", "Murder 3 Roles", false);
+            var Murder3RolesMenu = MenuPage.CreatePage("Murder3RolesMenu", "Murder 3 Roles", false);
 
-            var Murder3RolesButtons = new ButtonGroup(Murder3RolesMenu, null);
+            var Murder3RolesButtons = Murder3RolesMenu.AddButtonGroup(null);
 
             var quickmenuplayeroptions = new ButtonGroup(gameObject.transform, "Forbidden Client\n");
 
-            var LeashConfig = new MenuPage("LeashConfig", "Leash Config", false);
-
-            var LeashConfigButtons = new ButtonGroup(LeashConfig, null);
-
-            new SimpleSingleButton(quickmenuplayeroptions, "Teleport", "Teleports to player", () =>
+            quickmenuplayeroptions.AddSimpleSingleButton("Teleport", "Teleports to player", () =>
             {
                 selectedplayer = Utils.GetCurrentlySelectedPlayer();
                 Utils.TPLocalPlayer(selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position);
@@ -3175,49 +3068,49 @@ namespace ForbiddenClient
 
             #region Murder4Items
 
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Revolver", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Revolver", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 MelonCoroutines.Start(Items.GivePickup(selectedplayer, Murder4Items.revolverobject));
             });
 
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Knife", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Knife", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 MelonCoroutines.Start(Items.GivePickup(selectedplayer, Murder4Items.knife));
             });
 
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Luger", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Luger", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 MelonCoroutines.Start(Items.GivePickup(selectedplayer, Murder4Items.luger));
             });
 
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Shotgun", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Shotgun", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 MelonCoroutines.Start(Items.GivePickup(selectedplayer, Murder4Items.shotgun));
             });
 
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Grenade", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Grenade", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 MelonCoroutines.Start(Items.GivePickup(selectedplayer, Murder4Items.frag));
             });
 
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Smoke Bomb", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Smoke Bomb", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 MelonCoroutines.Start(Items.GivePickup(selectedplayer, Murder4Items.smokebomb));
             });
 
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Bear Trap", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Bear Trap", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 MelonCoroutines.Start(Items.GivePickup(selectedplayer, Murder4Items.Beartrap));
             });
 
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Kill Frag", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Kill Frag", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 try
@@ -3227,43 +3120,43 @@ namespace ForbiddenClient
                 }
                 catch { }
             });
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Kill", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Kill", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Kill");
             });
 
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Give Clues", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Give Clues", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Clues");
             });
 
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Give Roles", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Give Roles", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 Murder4RolesMenu.OpenMenu();
-            });
+            }, true);
 
-            new SimpleSingleButton(Murder4RolesButtons, "Bystander", null, () =>
+            Murder4RolesButtons.AddSimpleSingleButton("Bystander", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Bystander");
             });
 
-            new SimpleSingleButton(Murder4RolesButtons, "Detective", null, () =>
+            Murder4RolesButtons.AddSimpleSingleButton("Detective", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Detective");
             });
 
-            new SimpleSingleButton(Murder4RolesButtons, "Murderer", null, () =>
+            Murder4RolesButtons.AddSimpleSingleButton("Murderer", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Murderer");
             });
 
-            new SimpleSingleButton(Murder4QuickMenuButtons, "Give Patreon", null, () =>
+            Murder4QuickMenuButtons.AddSimpleSingleButton("Give Patreon", null, () =>
             {
                 if (!Murder4.worldLoaded) return;
                 givepatreon = true;
@@ -3273,7 +3166,7 @@ namespace ForbiddenClient
                 }
             });
 
-            new ToggleButton(Murder4QuickMenuButtons, "Auto Kill", null, null, (val) =>
+            Murder4QuickMenuButtons.AddToggleButton("Auto Kill", null, null, (val) =>
             {
                 if (!Murder4.worldLoaded) return;
                 PatchManager.AutoKill = val;
@@ -3287,7 +3180,7 @@ namespace ForbiddenClient
                 }
             }).SetToggleState(false, false);
 
-            new ToggleButton(Murder4QuickMenuButtons, "Respawn Annoy", null, null, (val) =>
+            Murder4QuickMenuButtons.AddToggleButton("Respawn Annoy", null, null, (val) =>
             {
                 if (!Murder4.worldLoaded) return;
                 if (val)
@@ -3306,56 +3199,56 @@ namespace ForbiddenClient
 
             #region Murder3Items
 
-            new SimpleSingleButton(Murder3QuickMenuButtons, "Revolver", null, () =>
+            Murder3QuickMenuButtons.AddSimpleSingleButton("Revolver", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.revolverobject);
                 Murder4Items.revolverobject.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
             });
 
-            new SimpleSingleButton(Murder3QuickMenuButtons, "Knife", null, () =>
+            Murder3QuickMenuButtons.AddSimpleSingleButton("Knife", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.knife);
                 Murder4Items.knife.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
             });
 
-            new SimpleSingleButton(Murder3QuickMenuButtons, "Luger", null, () =>
+            Murder3QuickMenuButtons.AddSimpleSingleButton("Luger", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.luger);
                 Murder4Items.luger.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
             });
 
-            new SimpleSingleButton(Murder3QuickMenuButtons, "Shotgun", null, () =>
+            Murder3QuickMenuButtons.AddSimpleSingleButton("Shotgun", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.shotgun);
                 Murder4Items.shotgun.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
             });
 
-            new SimpleSingleButton(Murder3QuickMenuButtons, "Grenade", null, () =>
+            Murder3QuickMenuButtons.AddSimpleSingleButton("Grenade", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.frag);
                 Murder4Items.frag.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
             });
 
-            new SimpleSingleButton(Murder3QuickMenuButtons, "Smoke Bomb", null, () =>
+            Murder3QuickMenuButtons.AddSimpleSingleButton("Smoke Bomb", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.smokebomb);
                 Murder4Items.smokebomb.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
             });
 
-            new SimpleSingleButton(Murder3QuickMenuButtons, "Bear Trap", null, () =>
+            Murder3QuickMenuButtons.AddSimpleSingleButton("Bear Trap", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Items.TakeOwnershipIfNecessary(Murder4Items.Beartrap);
                 Murder4Items.Beartrap.transform.position = selectedplayer.field_Private_VRCPlayerApi_0.gameObject.transform.position + new Vector3(0, 0.1f, 0);
             });
 
-            new SimpleSingleButton(Murder3QuickMenuButtons, "Kill Frag", null, () =>
+            Murder3QuickMenuButtons.AddSimpleSingleButton("Kill Frag", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 try
@@ -3366,43 +3259,43 @@ namespace ForbiddenClient
                 catch { }
             });
 
-            new SimpleSingleButton(Murder3QuickMenuButtons, "Kill", null, () =>
+            Murder3QuickMenuButtons.AddSimpleSingleButton("Kill", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Kill");
             });
 
-            new SimpleSingleButton(Murder3QuickMenuButtons, "Give Clues", null, () =>
+            Murder3QuickMenuButtons.AddSimpleSingleButton("Give Clues", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Clues");
             });
 
-            new SimpleSingleButton(Murder3QuickMenuButtons, "Give Roles", null, () =>
+            Murder3QuickMenuButtons.AddSimpleSingleButton("Give Roles", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Murder3RolesMenu.OpenMenu();
-            });
+            }, true);
 
-            new SimpleSingleButton(Murder3RolesButtons, "Bystander", null, () =>
+            Murder3RolesButtons.AddSimpleSingleButton("Bystander", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Bystander");
             });
 
-            new SimpleSingleButton(Murder3RolesButtons, "Detective", null, () =>
+            Murder3RolesButtons.AddSimpleSingleButton("Detective", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Detective");
             });
 
-            new SimpleSingleButton(Murder3RolesButtons, "Murderer", null, () =>
+            Murder3RolesButtons.AddSimpleSingleButton("Murderer", null, () =>
             {
                 if (!Murder3.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Murderer");
             });
 
-            new ToggleButton(Murder3QuickMenuButtons, "Give Patreon", null, null, (val) =>
+            Murder3QuickMenuButtons.AddToggleButton("Give Patreon", null, null, (val) =>
             {
                 if (!Murder3.worldLoaded) return;
                 try
@@ -3423,7 +3316,7 @@ namespace ForbiddenClient
                 catch { }
             }).SetToggleState(false, false);
 
-            new ToggleButton(Murder3QuickMenuButtons, "Auto Kill", null, null, (val) =>
+            Murder3QuickMenuButtons.AddToggleButton("Auto Kill", null, null, (val) =>
             {
                 if (!Murder3.worldLoaded) return;
                 PatchManager.AutoKill = val;
@@ -3441,37 +3334,37 @@ namespace ForbiddenClient
 
             #region AmongUsTarget
 
-            new SimpleSingleButton(AmongUsQuickMenuButtons, "Give Roles", null, () =>
+            AmongUsQuickMenuButtons.AddSimpleSingleButton("Give Roles", null, () =>
             {
                 if (!AmongUs.worldLoaded) return;
                 AmongUsRolesMenu.OpenMenu();
-            });
+            }, true);
 
-            new SimpleSingleButton(AmongUsRolesButtons, "Crewmate", null, () =>
+            AmongUsRolesButtons.AddSimpleSingleButton("Crewmate", null, () =>
             {
                 if (!AmongUs.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Bystander");
             });
 
-            new SimpleSingleButton(AmongUsRolesButtons, "Imposter", null, () =>
+            AmongUsRolesButtons.AddSimpleSingleButton("Imposter", null, () =>
             {
                 if (!AmongUs.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Murderer");
             });
 
-            new SimpleSingleButton(AmongUsQuickMenuButtons, "Kill", null, () =>
+            AmongUsQuickMenuButtons.AddSimpleSingleButton("Kill", null, () =>
             {
                 if (!AmongUs.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "Kill");
             });
 
-            new SimpleSingleButton(AmongUsQuickMenuButtons, "Vote Out", null, () =>
+            AmongUsQuickMenuButtons.AddSimpleSingleButton("Vote Out", null, () =>
             {
                 if (!AmongUs.worldLoaded) return;
                 Utils.SetRole(selectedplayer, "SyncVotedOut");
             });
 
-            new ToggleButton(AmongUsQuickMenuButtons, "Respawn Annoy", null, null, (val) =>
+            AmongUsQuickMenuButtons.AddToggleButton("Respawn Annoy", null, null, (val) =>
             {
                 if (!AmongUs.worldLoaded) return;
                 if (val)
@@ -3492,56 +3385,73 @@ namespace ForbiddenClient
 
             #region PrisonScoreboard
 
-            new SimpleSingleButton(PrisonEscapeQuickMenuButtons, "Change Scoreboard Values", null, () =>
+            PrisonEscapeQuickMenuButtons.AddSimpleSingleButton("Change Scoreboard Values", null, () =>
             {
                 if (!Prison.worldLoaded) return;
                 PrisonEscapeScoreboard.OpenMenu();
                 PrisonEscapeScoreboard.SetTitle(selectedplayer.prop_VRCPlayerApi_0.displayName + " Scoreboard");
             }, true);
 
-            new SimpleSingleButton(PrisonEscapeScoreboardButtons, "Add Points", null, () =>
+            PrisonEscapeScoreboardButtons.AddSimpleSingleButton("Add Points", null, () =>
             {
                 if (!Prison.worldLoaded) return;
-                selectedplayer.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPoints");
-                GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard");
+                if (GameObject.Find("Scripts/Game Effects/Canvas HUD/Points Canvas/Points Changed Panel/Text Points Changed").GetComponent<TextMeshProUGUI>().text != "+50")
+                {
+                    try
+                    {
+                        Player.prop_Player_0.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddWin");
+                        GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard");
+                    }
+                    finally
+                    {
+                        selectedplayer.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints");
+                        GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard");
+                    }
+                }
+                else
+                {
+                    selectedplayer.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPoints");
+                    GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard");
+                }
+                
             });
 
-            new SimpleSingleButton(PrisonEscapeScoreboardButtons, "Add Guard Kill", null, () =>
+            PrisonEscapeScoreboardButtons.AddSimpleSingleButton("Add Guard Kill", null, () =>
             {
                 if (!Prison.worldLoaded) return;
                 selectedplayer.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddGuardKill");
                 GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard");
             });
 
-            new SimpleSingleButton(PrisonEscapeScoreboardButtons, "Add Prisoner Kill", null, () =>
+            PrisonEscapeScoreboardButtons.AddSimpleSingleButton("Add Prisoner Kill", null, () =>
             {
                 if (!Prison.worldLoaded) return;
-                selectedplayer.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddPrisKill");
+                selectedplayer.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("__0__AddPrisKill");
                 GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard");
             });
 
-            new SimpleSingleButton(PrisonEscapeScoreboardButtons, "Add Escape", null, () =>
+            PrisonEscapeScoreboardButtons.AddSimpleSingleButton("Add Escape", null, () =>
             {
                 if (!Prison.worldLoaded) return;
                 selectedplayer.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddEscape");
                 GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard");
             });
 
-            new SimpleSingleButton(PrisonEscapeScoreboardButtons, "Add Win", null, () =>
+            PrisonEscapeScoreboardButtons.AddSimpleSingleButton("Add Win", null, () =>
             {
                 if (!Prison.worldLoaded) return;
                 selectedplayer.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_AddWin");
                 GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard");
             });
 
-            new SimpleSingleButton(PrisonEscapeScoreboardButtons, "Reset Score", null, () =>
+            PrisonEscapeScoreboardButtons.AddSimpleSingleButton("Reset Score", null, () =>
             {
                 if (!Prison.worldLoaded) return;
                 selectedplayer.GetPlayerScore().GetComponent<UdonBehaviour>().SendCustomEvent("_ClearScorecard");
                 GameObject.Find("Scripts/Scoreboard Display").GetComponent<UdonBehaviour>().SendCustomEvent("_UpdateScoreboard");
             });
 
-            new SimpleSingleButton(PrisonEscapeScoreboardButtons, "Clear All Player Data", null, () =>
+            PrisonEscapeScoreboardButtons.AddSimpleSingleButton("Clear All Player Data", null, () =>
             {
                 if (!Prison.worldLoaded) return;
                 selectedplayer.GetPlayerData().GetComponent<UdonBehaviour>().SendCustomEvent("_ClearData");
@@ -3550,13 +3460,20 @@ namespace ForbiddenClient
 
             #endregion
 
-            new SimpleSingleButton(PrisonEscapeQuickMenuButtons, "Kill", null, () =>
+            PrisonEscapeQuickMenuButtons.AddSimpleSingleButton("Kill", null, () =>
             {
                 if (!Prison.worldLoaded) return;
                 selectedplayer.GetPlayerData().GetComponent<UdonBehaviour>().SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Damage250");
             });
 
-            new ToggleButton(PrisonEscapeQuickMenuButtons, "Make Player Unable to Play", "Make Player Unable to Play", (val) =>
+            PrisonEscapeQuickMenuButtons.AddToggleButton("Stun Annoy Player", "Stuns The Player", (val) =>
+            {
+                if (!Prison.worldLoaded) return;
+                Prison.stunannoy = val;
+                MelonCoroutines.Start(Prison.StunAnnoy(selectedplayer));
+            });
+
+            PrisonEscapeQuickMenuButtons.AddToggleButton("Make Player Unable to Play", "Make Player Unable to Play", (val) =>
             {
                 if (!Prison.worldLoaded) return;
                 Prison.disableplayer = val;
@@ -3567,13 +3484,13 @@ namespace ForbiddenClient
 
             var Murder4Icon = ForbiddenClient.Resources.IconsVars.Knife.LoadSprite();
 
-            new SimpleSingleButton(quickmenuplayeroptions, "TP Pickups", "TP all pickups to the target", () =>
+            quickmenuplayeroptions.AddSimpleSingleButton("TP Pickups", "TP all pickups to the target", () =>
             {
                 selectedplayer = Utils.GetCurrentlySelectedPlayer();
                 Items.ItemsToPlayer(selectedplayer);
             });
 
-            Aimbot = new ToggleButton(quickmenuplayeroptions, "Aim at", "Aim at", (val) =>
+            Aimbot = quickmenuplayeroptions.AddToggleButton("Aim at", "Aim at", (val) =>
             {
                 if (!PatchManager.worldloaded) return;
                 if (val)
@@ -3592,7 +3509,7 @@ namespace ForbiddenClient
                 }
             });
 
-            WorldHacksPlayer = new SingleButton(quickmenuplayeroptions, "World Hacks", "Open World Target Options", () =>
+            WorldHacksPlayer = quickmenuplayeroptions.AddSingleButton("World Hacks", "Open World Target Options", () =>
             {
                 selectedplayer = Utils.GetCurrentlySelectedPlayer();
                 if (Murder4.worldLoaded)
@@ -3616,11 +3533,11 @@ namespace ForbiddenClient
                     PrisonEscapeQuickMenu.OpenMenu();
                     PrisonEscapeQuickMenu.SetTitle(selectedplayer.prop_VRCPlayerApi_0.displayName);
                 }
-            }, false, Murder4Icon);
+            }, true, Murder4Icon);
 
             WorldHacksPlayer.SetActive(false);
 
-            GiveOneShotPrisonEscape = new SimpleSingleButton(quickmenuplayeroptions, "Give One Shot", null, () =>
+            GiveOneShotPrisonEscape = quickmenuplayeroptions.AddSimpleSingleButton("Give One Shot", null, () =>
             {
                 Utils.ConsoleLog(Utils.ConsoleLogType.Msg, "Gave One Shot to: " + Utils.GetCurrentlySelectedPlayer().prop_VRCPlayer_0.field_Private_VRCPlayerApi_0.displayName, ConsoleColor.White, API.ConsoleUtils.Type.LogsType.Info);
                 Prison.GiveOneShot = Utils.GetCurrentlySelectedPlayer();
@@ -3628,72 +3545,32 @@ namespace ForbiddenClient
 
             GiveOneShotPrisonEscape.SetActive(false);
 
-            new ToggleButton(quickmenuplayeroptions, "Leash", "Leashes to the target", "Leashes to the target", (val) =>
-            {
-                Utils.target = Utils.GetCurrentlySelectedPlayer().field_Private_VRCPlayerApi_0;
-                Utils.Leashing = val;
-            });
+            //new SimpleSingleButton(quickmenuplayeroptions, "Fav/UnFav Avatar", "Favourite/Unfavourite avatar", () =>
+            //{
+            //    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+            //    if (!AvatarFavs.AvatarObjects.Exists(m => m.id == selectedplayer.prop_ApiAvatar_0.id))
+            //    {
+            //        AvatarFavs.FavouriteAvatar(selectedplayer.prop_ApiAvatar_0);
+            //        MelonCoroutines.Start(AvatarFavs.RefreshMenu(1));
+            //    }
+            //    else
+            //    {
+            //        AvatarFavs.UnfavouriteAvatar(selectedplayer.prop_ApiAvatar_0);
+            //        MelonCoroutines.Start(AvatarFavs.RefreshMenu(1));
+            //    }
+            //});
 
-            new SimpleSingleButton(quickmenuplayeroptions, "Leash Config", null, () =>
-            {
-                LeashConfig.OpenMenu();
-            });
-
-            new SimpleSingleButton(LeashConfigButtons, "+ Distance", null, () =>
-            {
-                var CurrentValue = Create.Ini.GetFloat("Values", "Leash Distance");
-                Create.Ini.SetFloat("Values", "Leash Distance", CurrentValue + 0.1f);
-                Utils.distance = CurrentValue + 0.1f;
-                LeashValue.SetText($"Current Value:\n {Create.Ini.GetFloat("Values", "Leash Distance")}");
-            });
-
-            new SimpleSingleButton(LeashConfigButtons, "- Distance", null, () =>
-            {
-                var CurrentValue = Create.Ini.GetFloat("Values", "Leash Distance");
-                Create.Ini.SetFloat("Values", "Leash Distance", CurrentValue - 0.1f);
-                Utils.distance = CurrentValue - 0.1f;
-                LeashValue.SetText($"Current Value:\n {Create.Ini.GetFloat("Values", "Leash Distance")}");
-            });
-
-            LeashValue = new SimpleSingleButton(LeashConfigButtons, $"Current Value:\n {Create.Ini.GetFloat("Values", "Leash Distance")}", null, () => { });
-
-            LeashValue.SetInteractable(false);
-
-            new SimpleSingleButton(quickmenuplayeroptions, "Fav/UnFav Avatar", "Favourite/Unfavourite avatar", () =>
-            {
-                selectedplayer = Utils.GetCurrentlySelectedPlayer();
-                if (!AvatarFavs.AvatarObjects.Exists(m => m.id == selectedplayer.prop_ApiAvatar_0.id))
-                {
-                    AvatarFavs.FavouriteAvatar(selectedplayer.prop_ApiAvatar_0);
-                    MelonCoroutines.Start(AvatarFavs.RefreshMenu(1));
-                }
-                else
-                {
-                    AvatarFavs.UnfavouriteAvatar(selectedplayer.prop_ApiAvatar_0);
-                    MelonCoroutines.Start(AvatarFavs.RefreshMenu(1));
-                }
-            });
-
-            new SimpleSingleButton(quickmenuplayeroptions, "Force Clone", null, () =>
+            quickmenuplayeroptions.AddSimpleSingleButton("Force Clone", null, () =>
             {
                 selectedplayer = Utils.GetCurrentlySelectedPlayer();
                 selectedplayer.CloneAvatar();
             });
 
-            new SimpleSingleButton(quickmenuplayeroptions, "Download VRCA", null, () =>
-            {
-                selectedplayer = Utils.GetCurrentlySelectedPlayer();
-                selectedplayer.DownloadAvatar(selectedplayer.prop_ApiAvatar_0.imageUrl);
-            });
-
-            if (ForbiddenMain.Devs.Contains(APIUser.CurrentUser.id))
-            {
-                new SimpleSingleButton(quickmenuplayeroptions, "Reupload Avatar", null, () =>
-                {
-                    selectedplayer = Utils.GetCurrentlySelectedPlayer();
-                    Utils.Reupload(selectedplayer.prop_ApiAvatar_0, selectedplayer.prop_ApiAvatar_0.imageUrl);
-                });
-            }
+            //new SimpleSingleButton(quickmenuplayeroptions, "Download VRCA", null, () =>
+            //{
+            //    selectedplayer = Utils.GetCurrentlySelectedPlayer();
+            //    selectedplayer.DownloadAvatar(selectedplayer.prop_ApiAvatar_0.imageUrl);
+            //});
 
             #endregion
 

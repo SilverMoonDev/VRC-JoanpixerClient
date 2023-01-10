@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnhollowerBaseLib;
 using UnhollowerRuntimeLib;
 using Object = UnityEngine.Object;
+using ForbiddenButtonAPI;
 
 namespace ForbiddenClient.Utility
 {
@@ -21,13 +22,13 @@ namespace ForbiddenClient.Utility
             #endregion
             try
             {
-                SettingsPage = GameObject.Find("UserInterface/MenuContent/Screens/Settings");
-                SocialPage = GameObject.Find("UserInterface/MenuContent/Screens/Social");
-                UserInfoPage = GameObject.Find("UserInterface/MenuContent/Screens/UserInfo");
-                AvatarPage = GameObject.Find("UserInterface/MenuContent/Screens/Avatar");
-                HeaderAvatarPage = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/TitlePanel (1)");
-                WorldsPage = GameObject.Find("UserInterface/MenuContent/Screens/Worlds");
-                WorldsInfoPage = GameObject.Find("UserInterface/MenuContent/Screens/WorldInfo");
+                SettingsPage = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/Settings").gameObject;
+                SocialPage = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/Social").gameObject;
+                UserInfoPage = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/UserInfo").gameObject;
+                AvatarPage = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/Avatar").gameObject;
+                HeaderAvatarPage = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/Avatar/TitlePanel (1)").gameObject;
+                WorldsPage = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/Worlds").gameObject;
+                WorldsInfoPage = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/WorldInfo").gameObject;
 
             }
             catch
@@ -38,23 +39,23 @@ namespace ForbiddenClient.Utility
                 switch (buttontype)
                 {
                     case MenuButtonType.WorldIfoButton:
-                        GameObject world = GameObject.Find("UserInterface/MenuContent/Screens/WorldInfo/ReportButton");
+                        GameObject world = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/WorldInfo/ReportButton").gameObject;
                         Button = Object.Instantiate(world, world.transform);
                         break;
                     case MenuButtonType.PlaylistButton:
-                        GameObject original = GameObject.Find("UserInterface/MenuContent/Screens/UserInfo/User Panel/Playlists/PlaylistsButton");
+                        GameObject original = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/UserInfo/User Panel/Playlists/PlaylistsButton").gameObject;
                         Button = Object.Instantiate(original, original.transform);
                         break;
                     case MenuButtonType.AvatarFavButton:
-                        GameObject gameObject = GameObject.Find("/UserInterface/MenuContent/Screens/Avatar/Favorite Button");
+                        GameObject gameObject = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/Avatar/Favorite Button").gameObject;
                         Button = Object.Instantiate(gameObject, gameObject.transform.parent);
                         break;
                     case MenuButtonType.AvatarButton:
-                        GameObject avatar = GameObject.Find("/UserInterface/MenuContent/Screens/Avatar/Change Button");
+                        GameObject avatar = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/Avatar/Change Button").gameObject;
                         Button = Object.Instantiate(avatar, avatar.transform.parent);
                         break;
                     case MenuButtonType.ReportButton:
-                        GameObject bigbutton = GameObject.Find("/UserInterface/MenuContent/Screens/WorldInfo/FavoriteButton");
+                        GameObject bigbutton = ButtonAPI.userinterface.transform.Find("MenuContent /Screens/WorldInfo/FavoriteButton").gameObject;
                         Button = Object.Instantiate(bigbutton, bigbutton.transform.parent);
                         break;
                 }

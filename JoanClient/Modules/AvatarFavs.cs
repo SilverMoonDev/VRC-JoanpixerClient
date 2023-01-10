@@ -2,6 +2,7 @@
 using ForbiddenClient.Api.Object;
 using MelonLoader;
 using Newtonsoft.Json;
+using ForbiddenButtonAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,23 +22,23 @@ namespace ForbiddenClient.Modules
         #endregion
         public void Start()
         {
-            avatarPage = GameObject.Find("UserInterface/MenuContent/Screens/Avatar");
-            PublicAvatarList = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/FavoriteListTemplate");
+            avatarPage = ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar").gameObject;
+            PublicAvatarList = ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/FavoriteListTemplate").gameObject;
             currPageAvatar = avatarPage.GetComponent<PageAvatar>();
             AvatarList = new VRCList(PublicAvatarList.transform.parent, "Forbidden Favorites");
             AvatarObjects = JsonConvert.DeserializeObject<List<AvatarObject>>(File.ReadAllText("Forbidden\\AvatarFavorites.json"));
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").SetActive(true);
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesButton").GetComponent<Image>().color = Color.magenta;
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").GetComponent<Button>().onClick.AddListener(new Action(() => { FavButton_OnClick(); })); 
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").GetComponent<Text>().text = "Fav/UnFav Avatar";
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").GetComponent<Text>().color = Color.white;
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").name = "Fav/UnFav Text";
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesButton").name = "Fav/UnFav Button Color";
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").name = "Fav Button";
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/Button/TitleText").GetComponent<Text>().text = $"Forbidden Favorites ({AvatarObjects.Count})";
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/Expired").active = false;
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").gameObject.SetActive(true);
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesButton").GetComponent<Image>().color = Color.magenta;
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").GetComponent<Button>().onClick.AddListener(new Action(() => { FavButton_OnClick(); })); 
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").GetComponent<Text>().text = "Fav/UnFav Avatar";
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").GetComponent<Text>().color = Color.white;
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesText").name = "Fav/UnFav Text";
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites/MoreFavoritesButton").name = "Fav/UnFav Button Color";
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/GetMoreFavorites").name = "Fav Button";
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/Button/TitleText").GetComponent<Text>().text = $"Forbidden Favorites ({AvatarObjects.Count})";
+            ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/Expired").gameObject.active = false;
         }
 
         public void Update()
@@ -61,7 +62,7 @@ namespace ForbiddenClient.Modules
             var avilist = new Il2CppSystem.Collections.Generic.List<ApiAvatar>();
             AvatarObjects.ForEach(avi => avilist.Add(avi.ToApiAvatar()));
             AvatarList.RenderElement(avilist);
-            GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/Button/TitleText").GetComponent<Text>().text = $"Forbidden Favourites ({AvatarObjects.Count})";
+            ButtonAPI.userinterface.transform.Find("MenuContent /Screens/Avatar/Vertical Scroll View/Viewport/Content/Forbidden Favorites/Button/TitleText").GetComponent<Text>().text = $"Forbidden Favourites ({AvatarObjects.Count})";
             yield break;
         }
 

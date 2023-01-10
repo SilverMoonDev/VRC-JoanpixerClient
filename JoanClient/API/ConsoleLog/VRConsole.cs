@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using ForbiddenButtonAPI;
 
 namespace ForbiddenClient.API.ConsoleUtils
 {
@@ -24,12 +25,12 @@ namespace ForbiddenClient.API.ConsoleUtils
 
 		public static IEnumerator Create()
 		{
-			while (GameObject.Find("UserInterface/Canvas_QuickMenu(Clone)/Container/Window/Wing_Right/Button/Icon") == null)
+			while (!ButtonAPI.HasInit || ButtonAPI.userinterface.transform.Find("Canvas_QuickMenu(Clone)/CanvasGroup/Container/Window/Wing_Right/Button/Icon") == null)
             {
 				yield return null;
             }
 			CanvasObject = new GameObject("ForbiddenClientConsole");
-			CanvasObject.transform.parent = GameObject.Find("UserInterface/Canvas_QuickMenu(Clone)/Container/Window/Wing_Right/Button/Icon").transform;
+			CanvasObject.transform.parent = ButtonAPI.userinterface.transform.Find("Canvas_QuickMenu(Clone)/CanvasGroup/Container/Window/Wing_Right/Button/Icon").transform;
 			CanvasObject.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
 			CanvasObject.transform.localPosition = new Vector3(77.5542f, 59f, 0f);
 			CanvasObject.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);

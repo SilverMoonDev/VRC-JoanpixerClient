@@ -1,10 +1,8 @@
-﻿using ForbiddenButtonAPI;
-using ForbiddenButtonAPI.Helpers;
-using ForbiddenClient.API;
-using ForbiddenClient.Features.Worlds;
+﻿using ForbiddenClient.Features.Worlds;
 using ForbiddenClient.FoldersManager;
 using ForbiddenClient.Modules;
 using MelonLoader;
+using ForbiddenButtonAPI;
 using RealisticEyeMovements;
 using RootMotion.FinalIK;
 using System;
@@ -56,42 +54,6 @@ namespace ForbiddenClient
             UnFriend
         }
 
-        
-
-
-
-        private static Func<VRCTracking.ID, Transform> ourGetTrackedTransform;
-
-        private static Transform GetTrackedTransform(VRCTracking.ID id)
-        {
-            ourGetTrackedTransform ??= (Func<VRCTracking.ID, Transform>)Delegate.CreateDelegate(
-                typeof(Func<VRCTracking.ID, Transform>), typeof(VRCTrackingManager)
-                    .GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly).Single(it =>
-                        it.Name.StartsWith("Method_Public_Static_Transform_ID_") && XrefScanner.UsedBy(it)
-                            .Any(
-                                jt =>
-                                {
-                                    var mr = jt.TryResolve();
-                                    return mr?.DeclaringType == typeof(PedalOption_HudPosition) && mr.Name == "Update";
-                                })));
-
-            return ourGetTrackedTransform(id);
-        }
-
-        internal static Transform LeftEffector;
-        internal static Transform RightEffector;
-        internal static Transform HeadEffector;
-        internal static Transform LeftFootEffector;
-        internal static Transform RightFootEffector;
-        internal static Transform HipEffector;
-
-        private static string username = null;
-        private static string password = null;
-        private static string userpass = null;
-        private static string avatarname = null;
-        private static string avatarurl = null;
-        private static string avatarimage = null;
-
         private static IEnumerator WaitForSeconds(float time, Action uwu)
         {
             yield return new WaitForSeconds(time);
@@ -110,82 +72,6 @@ namespace ForbiddenClient
                                select temp[randomString.Next(temp.Length)]).ToArray<char>());
         }
 
-        private static void Username()
-        {
-            ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { true });
-
-            BuiltinUiUtils.ShowInputPopup("Username", null, InputField.InputType.Standard, false, "Ok", (message, _, _2) =>
-            {
-                ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { false });
-                username = message;
-                MelonCoroutines.Start(WaitForSeconds(1, () => Password()));
-            }, () => { ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { false }); }, "Username:", true, null, false);
-        }
-
-        private static void CustomImage()
-        {
-            string[] Files = Directory.GetFiles("Forbidden\\UwU\\RandomPics");
-            System.Random random = new System.Random();
-            var randomimage = Files.ElementAt(random.Next(Files.Length));
-            if (File.Exists(randomimage))
-            {
-                avatarimage = randomimage;
-                Utils.Notification("Reuploading Avatar: " + avatarname, Color.green);
-                Utils.ConsoleLog(ConsoleLogType.Msg, "Reuploading Avatar: " + avatarname);
-                Process.Start(Environment.CurrentDirectory + "\\Forbidden\\UwU\\Reuploader.exe", string.Concat(avatarname, "|", avatarurl, "|", avatarimage));
-            }
-            else
-            {
-                Utils.ConsoleLog(Utils.ConsoleLogType.Warning, "[Reuploader]: Image cannot be found!, using Avatar's Image");
-                Utils.Notification("[Reuploader]: Image cannot be found!, using Avatar's Image", Color.red);
-                Utils.Notification("Reuploading Avatar: " + avatarname, Color.green);
-                Utils.ConsoleLog(ConsoleLogType.Msg, "Reuploading Avatar: " + avatarname);
-                Process.Start(Environment.CurrentDirectory + "\\Forbidden\\UwU\\Reuploader.exe", string.Concat(avatarname, "|", avatarurl, "|", avatarimage));
-            }
-        }
-
-        private static void Avatarname()
-        {
-            
-            ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { true });
-
-            BuiltinUiUtils.ShowInputPopup("Avatar Name", null, InputField.InputType.Standard, false, "Accept", (message, _, _2) =>
-            {
-                ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { false });
-                avatarname = message;
-                if (!File.Exists(Environment.CurrentDirectory + "\\Forbidden\\UwU\\Login.txt"))
-                {
-                    MelonCoroutines.Start(WaitForSeconds(1, () => Username()));
-                }
-                else
-                {
-                    CustomImage();
-                }
-                
-            }, () => { ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { false }); }, "Name:", true, null, false);
-        }
-
-        private static void Password()
-        {
-            ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { true });
-
-            BuiltinUiUtils.ShowInputPopup("Password", null, InputField.InputType.Standard, false, "Accept", (message, _, _2) =>
-            {
-                ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { false });
-                password = message;
-                userpass = string.Join(":", username, password);
-                File.AppendAllText(Environment.CurrentDirectory + "\\Forbidden\\UwU\\Login.txt", userpass);
-                CustomImage();
-            }, () => { ButtonAPI.UseKeyboardOnlyForText.Invoke(null, new object[] { false }); }, "Password:", true, null, false);
-        }
-
-        internal static void Reupload(ApiAvatar avatar, string image)
-        {
-            avatarurl = avatar.assetUrl;
-            avatarimage = image;
-            Avatarname();
-        }
-
         internal static void ExecuteCodeMultipleTimes(int times, Action code, Action codeafterloop = null)
         {
             for (var i = 0; i < times; i++)
@@ -196,27 +82,6 @@ namespace ForbiddenClient
             {
                 codeafterloop();
             }
-        }
-
-        internal static void MoveHeadAndHandTargets()
-        {
-            try
-            {
-                var headTracker = GetTrackedTransform(VRCTracking.ID.Hmd);
-                var leftTracker = GetTrackedTransform(VRCTracking.ID.HandTracker_LeftWrist);
-                var rightTracker = GetTrackedTransform(VRCTracking.ID.HandTracker_RightWrist);
-                var leftfootTracker = GetTrackedTransform(VRCTracking.ID.FootTracker_LeftFoot);
-                var rightfootTracker = GetTrackedTransform(VRCTracking.ID.FootTracker_RightFoot);
-                var HipTracker = GetTrackedTransform(VRCTracking.ID.BodyTracker_Hip);
-
-                LeftEffector.SetPositionAndRotation(leftTracker.position, leftTracker.rotation);
-                RightEffector.SetPositionAndRotation(rightTracker.position, rightTracker.rotation);
-                HeadEffector.SetPositionAndRotation(headTracker.position, headTracker.rotation);
-                LeftFootEffector.SetPositionAndRotation(leftfootTracker.position, leftfootTracker.rotation);
-                RightFootEffector.SetPositionAndRotation(rightfootTracker.position, rightfootTracker.rotation);
-                HipEffector.SetPositionAndRotation(HipTracker.position, HipTracker.rotation);
-            }
-            catch { }
         }
 
         static public string EncodeTo64(string toEncode)
@@ -414,23 +279,6 @@ namespace ForbiddenClient
             catch { }
         }
 
-        public static bool Leashing;
-        public static VRCPlayerApi target;
-        public static float distance = Create.Ini.GetFloat("Values", "Leash Distance");
-        public static void Leash()
-        {
-            if (!target.gameObject) return;
-            if (Vector3.Distance(CurrentUser.field_Private_VRCPlayerApi_0.gameObject.transform.position, target.gameObject.transform.position) > distance + 4)
-            {
-                CurrentUser.field_Private_VRCPlayerApi_0.gameObject.transform.position = target.gameObject.transform.position + new Vector3(0, 0, distance);
-            }
-
-            if (Vector3.Distance(CurrentUser.field_Private_VRCPlayerApi_0.gameObject.transform.position, target.gameObject.transform.position) > distance)
-            {
-                CurrentUser.field_Private_VRCPlayerApi_0.gameObject.transform.position = Vector3.Lerp(CurrentUser.field_Private_VRCPlayerApi_0.GetPosition(), target.gameObject.transform.position + new Vector3(distance, 0, 0), 0.05f);
-            }
-        }
-
         public static string GetRank(this APIUser Instance)
         {
             #region AntiDecompiler
@@ -478,12 +326,12 @@ namespace ForbiddenClient
 
         internal static Player GetCurrentlySelectedPlayer()
         {
-            if (GameObject.Find("UserInterface").GetComponentInChildren<SelectedUserMenuQM>() == null)
+            if (ButtonAPI.userinterface.GetComponentInChildren<SelectedUserMenuQM>() == null)
             {
                 return null;
             }
 
-            return GetPlayerFromIDInLobby(GameObject.Find("UserInterface").gameObject.GetComponentInChildren<SelectedUserMenuQM>().field_Private_IUser_0.prop_String_0);
+            return GetPlayerFromIDInLobby(ButtonAPI.userinterface.gameObject.GetComponentInChildren<SelectedUserMenuQM>().field_Private_IUser_0.prop_String_0);
         }
 
         public static void EnableJump()
@@ -503,18 +351,6 @@ namespace ForbiddenClient
         {
             if (player == null) return null;
             return player.field_Private_APIUser_0.id;
-        }
-
-        internal static void TogglePedal(this PedalOption pedal, bool state)
-        {
-            if (state)
-            {
-                pedal.SetPedalTypeIcon(Resources.IconsVars.ActionOn.LoadTexture());
-            }
-            else
-            {
-                pedal.SetPedalTypeIcon(Resources.IconsVars.ActionOff.LoadTexture());
-            }
         }
 
         public static void RestartAndRejoin()
@@ -566,8 +402,7 @@ namespace ForbiddenClient
 
         public static void ChangeToAvatar(string avatar)
         {
-            Transform screens = GameObject.Find("UserInterface/MenuContent/Screens/")?.transform;
-            PageAvatar avatarPage = screens.Find("Avatar")?.GetComponent<PageAvatar>();
+            PageAvatar avatarPage = ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar")?.GetComponent<PageAvatar>();
 
             avatarPage.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0 = new ApiAvatar { id = avatar };
 
@@ -576,9 +411,9 @@ namespace ForbiddenClient
 
         internal static Player GetPlayerFromIDInLobby(string id)
         {
-            var all_player = GetAllPlayers();
+            var all_players = GetAllPlayers();
 
-            foreach (var player in all_player)
+            foreach (var player in all_players)
             {
                 if (player != null && player.prop_APIUser_0 != null)
                 {
@@ -594,20 +429,21 @@ namespace ForbiddenClient
 
         internal static IEnumerator BlockedNameplate(VRC.Player __0, string i)
         {
-            while (__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats") == null)
+            GameObject nameplateroot = __0.prop_VRCPlayer_1.field_Public_PlayerNameplate_0.gameObject;
+            while (nameplateroot.transform.Find("Contents/Quick Stats") == null)
             {
                 yield return null;
             }
             try
             {
-                Transform transform = UnityEngine.Object.Instantiate<Transform>(__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats"), __0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents"));
+                Transform transform = UnityEngine.Object.Instantiate<Transform>(nameplateroot.transform.Find("Contents/Quick Stats"), nameplateroot.transform.Find("Contents"));
                 transform.gameObject.SetActive(true);
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().color = Color.red;
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().text = i;
-                transform.Find("Trust Icon").gameObject.SetActive(false);
-                transform.Find("Performance Icon").gameObject.SetActive(false);
-                transform.Find("Performance Text").gameObject.SetActive(false);
-                transform.Find("Friend Anchor Stats").gameObject.SetActive(false);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Trust Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Text").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Friend Anchor Stats").gameObject);
                 transform.name = "Blocked Nameplate";
                 transform.gameObject.transform.localPosition = new Vector3(5, -60, 0);
                 transform.GetComponent<ImageThreeSlice>().color = new Color(0, 0, 0, 1);
@@ -618,20 +454,21 @@ namespace ForbiddenClient
 
         internal static IEnumerator NameplateWorldBlacklisted(VRC.Player __0, string i)
         {
-            while (__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats") == null)
+            GameObject nameplateroot = __0.prop_VRCPlayer_1.field_Public_PlayerNameplate_0.gameObject;
+            while (nameplateroot.transform.Find("Contents/Quick Stats") == null)
             {
                 yield return null;
             }
             try
             {
-                Transform transform = UnityEngine.Object.Instantiate<Transform>(__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats"), __0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents"));
+                Transform transform = UnityEngine.Object.Instantiate<Transform>(nameplateroot.transform.Find("Contents/Quick Stats"), nameplateroot.transform.Find("Contents"));
                 transform.gameObject.SetActive(true);
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().color = Color.red;
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().text = i;
-                transform.Find("Trust Icon").gameObject.SetActive(false);
-                transform.Find("Performance Icon").gameObject.SetActive(false);
-                transform.Find("Performance Text").gameObject.SetActive(false);
-                transform.Find("Friend Anchor Stats").gameObject.SetActive(false);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Trust Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Text").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Friend Anchor Stats").gameObject);
                 transform.name = "NameplateWorldBlacklisted";
                 transform.gameObject.transform.localPosition = new Vector3(5, 110, 0);
                 transform.GetComponent<ImageThreeSlice>().color = new Color(0, 0, 0, 1);
@@ -642,20 +479,21 @@ namespace ForbiddenClient
 
         internal static IEnumerator NameplateWorldFangirl(VRC.Player __0, string i)
         {
-            while (__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats") == null)
+            GameObject nameplateroot = __0.prop_VRCPlayer_1.field_Public_PlayerNameplate_0.gameObject;
+            while (nameplateroot.transform.Find("Contents/Quick Stats") == null)
             {
                 yield return null;
             }
             try
             {
-                Transform transform = UnityEngine.Object.Instantiate<Transform>(__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats"), __0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents"));
+                Transform transform = UnityEngine.Object.Instantiate<Transform>(nameplateroot.transform.Find("Contents/Quick Stats"), nameplateroot.transform.Find("Contents"));
                 transform.gameObject.SetActive(true);
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().color = Color.red;
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().text = i;
-                transform.Find("Trust Icon").gameObject.SetActive(false);
-                transform.Find("Performance Icon").gameObject.SetActive(false);
-                transform.Find("Performance Text").gameObject.SetActive(false);
-                transform.Find("Friend Anchor Stats").gameObject.SetActive(false);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Trust Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Text").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Friend Anchor Stats").gameObject);
                 transform.name = "NameplateWorldFangirl";
                 transform.gameObject.transform.localPosition = new Vector3(5, 100, 0);
                 transform.GetComponent<ImageThreeSlice>().color = new Color(0, 0, 0, 1);
@@ -666,20 +504,21 @@ namespace ForbiddenClient
 
         internal static IEnumerator NameplateWorldUser(VRC.Player __0, string i)
         {
-            while (__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats") == null)
+            GameObject nameplateroot = __0.prop_VRCPlayer_1.field_Public_PlayerNameplate_0.gameObject;
+            while (nameplateroot.transform.Find("Contents/Quick Stats") == null)
             {
                 yield return null;
             }
             try
             {
-                Transform transform = UnityEngine.Object.Instantiate<Transform>(__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats"), __0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents"));
+                Transform transform = UnityEngine.Object.Instantiate<Transform>(nameplateroot.transform.Find("Contents/Quick Stats"), nameplateroot.transform.Find("Contents"));
                 transform.gameObject.SetActive(true);
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().color = Color.red;
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().text = i;
-                transform.Find("Trust Icon").gameObject.SetActive(false);
-                transform.Find("Performance Icon").gameObject.SetActive(false);
-                transform.Find("Performance Text").gameObject.SetActive(false);
-                transform.Find("Friend Anchor Stats").gameObject.SetActive(false);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Trust Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Text").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Friend Anchor Stats").gameObject);
                 transform.name = "NameplateWorldUser";
                 transform.gameObject.transform.localPosition = new Vector3(5, 90, 0);
                 transform.GetComponent<ImageThreeSlice>().color = new Color(0, 0, 0, 1);
@@ -690,20 +529,21 @@ namespace ForbiddenClient
 
         internal static IEnumerator ImposterNameplate(VRC.Player __0)
         {
-            while (__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats") == null)
+            GameObject nameplateroot = __0.prop_VRCPlayer_1.field_Public_PlayerNameplate_0.gameObject;
+            while (nameplateroot.transform.Find("Contents/Quick Stats") == null)
             {
                 yield return null;
             }
             try
             {
-                Transform transform = UnityEngine.Object.Instantiate<Transform>(__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats"), __0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents"));
+                Transform transform = UnityEngine.Object.Instantiate<Transform>(nameplateroot.transform.Find("Contents/Quick Stats"), nameplateroot.transform.Find("Contents"));
                 transform.gameObject.SetActive(true);
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().color = Color.red;
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().text = "Imposter";
-                transform.Find("Trust Icon").gameObject.SetActive(false);
-                transform.Find("Performance Icon").gameObject.SetActive(false);
-                transform.Find("Performance Text").gameObject.SetActive(false);
-                transform.Find("Friend Anchor Stats").gameObject.SetActive(false);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Trust Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Text").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Friend Anchor Stats").gameObject);
                 transform.name = "Imposter Nameplate";
                 transform.gameObject.transform.localPosition = new Vector3(5, 80, 0);
                 transform.GetComponent<ImageThreeSlice>().color = new Color(0, 0, 0, 1);
@@ -714,20 +554,21 @@ namespace ForbiddenClient
 
         internal static IEnumerator MurdererNameplate(VRC.Player __0)
         {
-            while (__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats") == null)
+            GameObject nameplateroot = __0.prop_VRCPlayer_1.field_Public_PlayerNameplate_0.gameObject;
+            while (nameplateroot.transform.Find("Contents/Quick Stats") == null)
             {
                 yield return null;
             }
             try
             {
-                Transform transform = UnityEngine.Object.Instantiate<Transform>(__0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents/Quick Stats"), __0.gameObject.transform.Find("Player Nameplate/Canvas/Nameplate/Contents"));
+                Transform transform = UnityEngine.Object.Instantiate<Transform>(nameplateroot.transform.Find("Contents/Quick Stats"), nameplateroot.transform.Find("Contents"));
                 transform.gameObject.SetActive(true);
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().color = Color.red;
                 transform.Find("Trust Text").GetComponent<TextMeshProUGUI>().text = "Murderer";
-                transform.Find("Trust Icon").gameObject.SetActive(false);
-                transform.Find("Performance Icon").gameObject.SetActive(false);
-                transform.Find("Performance Text").gameObject.SetActive(false);
-                transform.Find("Friend Anchor Stats").gameObject.SetActive(false);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Trust Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Icon").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Performance Text").gameObject);
+                UnityEngine.Object.DestroyImmediate(transform.Find("Friend Anchor Stats").gameObject);
                 transform.name = "Murderer Nameplate";
                 transform.gameObject.transform.localPosition = new Vector3(5, 80, 0);
                 transform.GetComponent<ImageThreeSlice>().color = new Color(0, 0, 0, 1);
@@ -1220,7 +1061,7 @@ namespace ForbiddenClient
         }
         private static void ChangeStatusRawr(string Text)
         {
-            if (PatchManager.changestatus && !Text.StartsWith("Sparkz~"))
+            if (PatchManager.changestatus)
             {
                 if (string.IsNullOrEmpty(originaldescription))
                 {
@@ -1228,41 +1069,41 @@ namespace ForbiddenClient
                 }
                 var uwu = APIUser.CurrentUser.status;
                 originalstatus = APIUser.StringToStatusValue(uwu);
-                GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/InputFieldStatus").GetComponent<UiInputField>().field_Private_String_0 = Text;
+                //ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/InputFieldStatus").GetComponent<UiInputField>().field_Private_String_0 = Text;
                 if (originalstatus == APIUser.UserStatus.Online)
                 {
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/OnlineStatus").GetComponent<Toggle>().onValueChanged.Invoke(true);
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/OnlineStatus").GetComponent<Toggle>().isOn = true;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/JoinMeStatus").GetComponent<Toggle>().isOn = false;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/AskMeStatus").GetComponent<Toggle>().isOn = false;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/DoNotDisturbStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/OnlineStatus").GetComponent<Toggle>().onValueChanged.Invoke(true);
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/OnlineStatus").GetComponent<Toggle>().isOn = true;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/JoinMeStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/AskMeStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/DoNotDisturbStatus").GetComponent<Toggle>().isOn = false;
                 }
                 if (originalstatus == APIUser.UserStatus.JoinMe)
                 {
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/JoinMeStatus").GetComponent<Toggle>().onValueChanged.Invoke(true);
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/JoinMeStatus").GetComponent<Toggle>().isOn = true;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/OnlineStatus").GetComponent<Toggle>().isOn = false;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/AskMeStatus").GetComponent<Toggle>().isOn = false;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/DoNotDisturbStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/JoinMeStatus").GetComponent<Toggle>().onValueChanged.Invoke(true);
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/JoinMeStatus").GetComponent<Toggle>().isOn = true;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/OnlineStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/AskMeStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/DoNotDisturbStatus").GetComponent<Toggle>().isOn = false;
                 }
                 if (originalstatus == APIUser.UserStatus.AskMe)
                 {
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/AskMeStatus").GetComponent<Toggle>().onValueChanged.Invoke(true);
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/AskMeStatus").GetComponent<Toggle>().isOn = true;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/OnlineStatus").GetComponent<Toggle>().isOn = false;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/JoinMeStatus").GetComponent<Toggle>().isOn = false;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/DoNotDisturbStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/AskMeStatus").GetComponent<Toggle>().onValueChanged.Invoke(true);
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/AskMeStatus").GetComponent<Toggle>().isOn = true;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/OnlineStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/JoinMeStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/DoNotDisturbStatus").GetComponent<Toggle>().isOn = false;
                 }
                 if (originalstatus == APIUser.UserStatus.DoNotDisturb)
                 {
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/DoNotDisturbStatus").GetComponent<Toggle>().onValueChanged.Invoke(true);
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/DoNotDisturbStatus").GetComponent<Toggle>().isOn = true;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/OnlineStatus").GetComponent<Toggle>().isOn = false;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/JoinMeStatus").GetComponent<Toggle>().isOn = false;
-                    GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/AskMeStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/DoNotDisturbStatus").GetComponent<Toggle>().onValueChanged.Invoke(true);
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/DoNotDisturbStatus").GetComponent<Toggle>().isOn = true;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/OnlineStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/JoinMeStatus").GetComponent<Toggle>().isOn = false;
+                    ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/StatusSettings/AskMeStatus").GetComponent<Toggle>().isOn = false;
 
                 }
-                GameObject.Find("UserInterface/MenuContent/Popups/UpdateStatusPopup/Popup/Buttons/UpdateButton").GetComponent<Button>().onClick.Invoke();
+                ButtonAPI.userinterface.transform.Find("MenuContent/Popups/UpdateStatusPopup/Popup/Buttons/UpdateButton").GetComponent<Button>().onClick.Invoke();
                 LastExecuted = Time.time;
             }
         }
@@ -1277,7 +1118,7 @@ namespace ForbiddenClient
 
         static IEnumerator CreateNotification(string Text, Color colour, int pos, int number)
         {
-            var hudRoot = GameObject.Find("UserInterface/UnscaledUI/HudContent_Old/Hud");
+            var hudRoot = ButtonAPI.userinterface.transform.Find("UnscaledUI/HudContent_Old/Hud").gameObject;
             var requestedParent = hudRoot.transform.Find("NotificationDotParent");
             var indicator = UnityEngine.Object.Instantiate(hudRoot.transform.Find("NotificationDotParent/NotificationDot").gameObject, requestedParent, false).Cast<GameObject>();
             indicator.name = "NotifyDot-" + "ForbiddenClient";
@@ -1392,11 +1233,8 @@ namespace ForbiddenClient
         {
             try
             {
-                if (!player.prop_APIUser_0.IsOnMobile)
-                {
-                    CustomTag(player, Color.red, "Cheater");
-                }
-                if (message != PatchManager.latestcheater && !player.prop_APIUser_0.IsOnMobile)
+                CustomTag(player, Color.red, "Cheater");
+                if (message != PatchManager.latestcheater)
                 {
                     PatchManager.latestcheater = message;
                     ConsoleLog(ConsoleLogType.Cheater, message, ConsoleColor.Yellow, API.ConsoleUtils.Type.LogsType.Cheater);

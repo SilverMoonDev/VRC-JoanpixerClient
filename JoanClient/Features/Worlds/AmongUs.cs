@@ -20,7 +20,7 @@ namespace ForbiddenClient.Features.Worlds
 
         public static void Initialize()
         {
-            // TODO: Check world ID aswell.
+            
             if (RoomManager.field_Internal_Static_ApiWorldInstance_0?.worldId == "wrld_dd036610-a246-4f52-bf01-9d7cea3405d7")
             {
                 var AmongUsIcon = Resources.IconsVars.AmongUs.LoadSprite();
@@ -43,11 +43,16 @@ namespace ForbiddenClient.Features.Worlds
 
         internal static IEnumerator RespawnAnnoy(Player player)
         {
-            while (player != null && respawnannoy)
+            
+            if (player != null)
             {
-                Utils.SetRole(player, "Bystander");
-                yield return new WaitForSeconds(0.1f);
-                Utils.SetRole(player, "SyncVotedOut");
+                UdonBehaviour respawnplayer = Utils.GetPlayerNodeFromPlayer(player).GetComponent<UdonBehaviour>();
+                while (player != null && respawnannoy)
+                {
+                    Udon.CallUdonEvent(respawnplayer, "Bystander");
+                    yield return new WaitForSeconds(0.1f);
+                    Udon.CallUdonEvent(respawnplayer, "SyncVotedOut");
+                }
             }
             yield break;
         }

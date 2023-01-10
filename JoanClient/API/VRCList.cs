@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ForbiddenButtonAPI;
+using UnityEngine;
 using UnityEngine.UI;
 using VRC.Core;
 
@@ -12,8 +13,8 @@ namespace ForbiddenClient.Api
 
         public VRCList(Transform parent, string name, int Position = 0)
         {
-                GameObject = UnityEngine.Object.Instantiate(PublicAvatarList.gameObject, GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content").transform);
-                GameObject.GetComponent<UiAvatarList>().field_Public_Category_0 = UiAvatarList.Category.SpecificList;
+                GameObject = UnityEngine.Object.Instantiate(PublicAvatarList.gameObject, ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/Content").transform);
+               // GameObject.GetComponent<UiAvatarList>().field_Public_Category_0 = UiAvatarList.Category.SpecificList;
                 UiVRCList = GameObject.GetComponent<UiVRCList>();
                 Text = GameObject.transform.Find("Button").GetComponentInChildren<Text>();
                 GameObject.transform.SetSiblingIndex(Position);
@@ -44,6 +45,6 @@ namespace ForbiddenClient.Api
         //    UiVRCList.Method_Protected_Void_List_1_T_Int32_Boolean_VRCUiContentButton_0<APIUser>(UserList, 0, true);
         //}
 
-        private static GameObject PublicAvatarList = GameObject.Find("UserInterface/MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/FavoriteListTemplate");
+        private static GameObject PublicAvatarList = ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar/Vertical Scroll View/Viewport/FavoriteListTemplate").gameObject;
     }
 }

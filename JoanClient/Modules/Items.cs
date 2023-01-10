@@ -7,6 +7,7 @@ using System.Collections;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.UserCamera;
+using ForbiddenClient.FoldersManager;
 //using System.Linq;
 //using static VRC.SDKBase.VRC_EventHandler;
 
@@ -42,7 +43,7 @@ namespace ForbiddenClient.Modules
 
         internal static bool itemlag2 = true;
 
-        internal static bool antitheft = FoldersManager.Create.Ini.GetBool("Toggles", "AntiTheft");
+        internal static bool antitheft = Create.Ini.GetBool("Toggles", "AntiTheft");
 
 
         internal static IEnumerator AntiTheft()
