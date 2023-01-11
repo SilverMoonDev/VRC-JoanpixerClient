@@ -517,15 +517,18 @@ namespace ForbiddenClient.Features.Worlds
 
         public static IEnumerator BWin()
         {
-            var players = Utils.GetAllPlayers();
             CallRevolver("SyncFire");
-            foreach (var awa in players)
+            if (PatchManager.Murderers.Count != 0)
             {
-                if (Murder4.MurderText.GetComponent<Text>().m_Text.Contains(awa.field_Private_VRCPlayerApi_0.displayName))
+                foreach (var murderer in PatchManager.Murderers.Keys)
                 {
                     yield return new WaitForSeconds(0.3f);
-                    Utils.SetRole(awa, "Kill");
+                    Utils.SetRole(Utils.GetPlayerFromNameInLobby(murderer), "Kill");
                 }
+            }
+            else
+            {
+                CallGameLogic("SyncVictoryB");
             }
             yield break;
         }
