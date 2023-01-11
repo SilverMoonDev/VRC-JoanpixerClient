@@ -274,6 +274,7 @@ namespace ForbiddenClient
                 else
                 {
                     UnityEngine.Object.Destroy(Capsule);
+                    PatchManager.serializeworking = false;
                 }
             }
             catch { }

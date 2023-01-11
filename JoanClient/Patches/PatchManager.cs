@@ -990,12 +990,12 @@ namespace ForbiddenClient
                     if (Imposters.Count == 1)
                     {
                         //Utils.Notification($"Imposter: {String.Join("", Imposters)}", Color.red);
-                        Utils.ConsoleLog(Utils.ConsoleLogType.Imposter, $"{String.Join("", Imposters)}", ConsoleColor.Red, API.ConsoleUtils.Type.LogsType.Imposter);
+                        Utils.ConsoleLog(Utils.ConsoleLogType.Imposter, $"{String.Join("", Imposters.Keys)}", ConsoleColor.Red, API.ConsoleUtils.Type.LogsType.Imposter);
                     }
                     else
                     {
                         //Utils.Notification($"Imposters: {String.Join(", ", Imposters)}", Color.red);
-                        Utils.ConsoleLog(Utils.ConsoleLogType.Imposters, $"{String.Join(", ", Imposters)}", ConsoleColor.Red, API.ConsoleUtils.Type.LogsType.Imposters);
+                        Utils.ConsoleLog(Utils.ConsoleLogType.Imposters, $"{String.Join(", ", Imposters.Keys)}", ConsoleColor.Red, API.ConsoleUtils.Type.LogsType.Imposters);
                     }
                 }
             }
@@ -1012,13 +1012,13 @@ namespace ForbiddenClient
             {
                 if (Murderers.Count == 1)
                 {
-                    Murder4.MurderText.GetComponent<Text>().m_Text = $"{String.Join("", Murderers)}";
+                    Murder4.MurderText.GetComponent<Text>().m_Text = $"{String.Join("", Murderers.Keys)}";
                 }
                 else
                 {
                     if (Murderers.Count == 1)
                     {
-                        Murder4.MurderText.GetComponent<Text>().m_Text = $"{String.Join(", ", Murderers)}";
+                        Murder4.MurderText.GetComponent<Text>().m_Text = $"{String.Join(", ", Murderers.Keys)}";
                     }
                 }
             }
@@ -1034,12 +1034,12 @@ namespace ForbiddenClient
                     if (Murderers.Count == 1)
                     {
                         //Utils.Notification($"Murderer: {String.Join("", Murderers)}", Color.red);
-                        Utils.ConsoleLog(Utils.ConsoleLogType.Murderer, $"{String.Join("", Murderers)}", ConsoleColor.Red, API.ConsoleUtils.Type.LogsType.Murderer);
+                        Utils.ConsoleLog(Utils.ConsoleLogType.Murderer, $"{String.Join("", Murderers.Keys)}", ConsoleColor.Red, API.ConsoleUtils.Type.LogsType.Murderer);
                     }
                     else
                     {
                         //Utils.Notification($"Murderers: {String.Join(", ", Murderers)}", Color.red);
-                        Utils.ConsoleLog(Utils.ConsoleLogType.Murderers, $"{String.Join(", ", Murderers)}", ConsoleColor.Red, API.ConsoleUtils.Type.LogsType.Murderers);
+                        Utils.ConsoleLog(Utils.ConsoleLogType.Murderers, $"{String.Join(", ", Murderers.Keys)}", ConsoleColor.Red, API.ConsoleUtils.Type.LogsType.Murderers);
                     }
                 }
             }
