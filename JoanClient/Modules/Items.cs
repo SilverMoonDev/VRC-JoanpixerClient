@@ -83,7 +83,7 @@ namespace ForbiddenClient.Modules
                         objectPickup = null;
                         interactions4 = null;
                     }
-                    if (hand[0].field_Internal_VRC_Pickup_0 != null && objectToStick == null && hand[0].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                    if (hand[0].field_Internal_VRC_Pickup_0 != null && objectToStick == null && hand[0].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                     {
                         objectToStick = hand[0].field_Internal_VRC_Pickup_0.gameObject;
                         objectPickup = hand[0].field_Internal_VRC_Pickup_0;
@@ -127,7 +127,7 @@ namespace ForbiddenClient.Modules
                         objectPickup2 = null;
                         interactions6 = null;
                     }
-                    if (hand[1].field_Internal_VRC_Pickup_0 != null && objectToStick2 == null && hand[1].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                    if (hand[1].field_Internal_VRC_Pickup_0 != null && objectToStick2 == null && hand[1].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                     {
                         objectToStick2 = hand[1].field_Internal_VRC_Pickup_0.gameObject;
                         objectPickup2 = hand[1].field_Internal_VRC_Pickup_0;

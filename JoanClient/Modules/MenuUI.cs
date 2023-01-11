@@ -23,6 +23,7 @@ using VRC.Core;
 using ForbiddenButtonAPI.Misc;
 using VRC.UI.Elements.Menus;
 using ForbiddenButtonAPI.External_Libraries;
+using UnityEngine.SceneManagement;
 
 namespace ForbiddenClient
 {
@@ -2517,8 +2518,7 @@ namespace ForbiddenClient
                     Items.pickupsenabled = !val;
                     foreach (var pickup in PatchManager.Pickups)
                     {
-                        if (pickup.gameObject.name.Equals("OscDebugConsole") || pickup.gameObject.name.Equals("AvatarDebugConsole") || pickup.gameObject.name.Equals("ViewFinder") || pickup.gameObject.name.Equals("PhotoCamera")){}
-                        else
+                        if (pickup.gameObject.scene.name != "DontDestroyOnLoad")
                         {
                             pickup.gameObject.active = Items.pickupsenabled;
                         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using VRC.Udon;
 
@@ -17,6 +18,8 @@ namespace ForbiddenClient.Features.Worlds
         public static GameObject Bedroom5;
         public static GameObject Bedroom6;
         public static GameObject Bedroom7;
+        private static List<UdonBehaviour> FreezeUdons = new();
+        private static List<UdonBehaviour> UnFreezeUdons = new();
         public static bool freeze;
 
         public static void Initialize()
@@ -33,6 +36,16 @@ namespace ForbiddenClient.Features.Worlds
                 Bedroom5 = GameObject.Find("Bedrooms/Bedroom 5");
                 Bedroom6 = GameObject.Find("Bedrooms/Bedroom 6");
                 Bedroom7 = GameObject.Find("Bedroom VIP");
+                foreach (var item in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                {
+                    if (item._eventTable.ContainsKey("OnDesktopTopDownViewStart"))
+                        FreezeUdons.Add(item);
+                }
+                foreach (var item in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                {
+                    if (item._eventTable.ContainsKey("OnPutDownCueLocally"))
+                        UnFreezeUdons.Add(item);
+                }
                 worldLoaded = true;
             }
             else
@@ -48,18 +61,16 @@ namespace ForbiddenClient.Features.Worlds
         #endregion
             if (freeze)
             {
-                foreach (var item in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                foreach (var item in FreezeUdons)
                 {
-                    if (item._eventTable.ContainsKey("OnDesktopTopDownViewStart"))
-                        Udon.CallUdonEvent(item, "OnDesktopTopDownViewStart");
+                    Udon.CallUdonEvent(item, "OnDesktopTopDownViewStart");
                 }
             }
             else
             {
-                foreach (var item in UnityEngine.Resources.FindObjectsOfTypeAll<UdonBehaviour>())
+                foreach (var item in UnFreezeUdons)
                 {
-                    if (item._eventTable.ContainsKey("OnPutDownCueLocally"))
-                        Udon.CallUdonEvent(item, "OnPutDownCueLocally");
+                    Udon.CallUdonEvent(item, "OnPutDownCueLocally");
                 }
             }
             

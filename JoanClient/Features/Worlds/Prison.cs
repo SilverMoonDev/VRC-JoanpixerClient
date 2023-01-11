@@ -280,7 +280,7 @@ namespace ForbiddenClient.Features.Worlds
             VRCHandGrasper[] hand = UnityEngine.Object.FindObjectsOfType<VRCHandGrasper>();
             if (hand[0].field_Internal_VRC_Pickup_0 != null)
             {
-                if (hand[0].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                if (hand[0].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                 {
                     VRC.SDKBase.VRC_Pickup pickup = hand[0].field_Internal_VRC_Pickup_0;
                     UdonBehaviour udon = pickup.gameObject.GetComponent<UdonBehaviour>();
@@ -292,7 +292,7 @@ namespace ForbiddenClient.Features.Worlds
             }
             if (hand[1].field_Internal_VRC_Pickup_0 != null)
             {
-                if (hand[1].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                if (hand[1].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                 {
                     VRC.SDKBase.VRC_Pickup pickup = hand[1].field_Internal_VRC_Pickup_0;
                     UdonBehaviour udon = pickup.gameObject.GetComponent<UdonBehaviour>();
@@ -315,7 +315,7 @@ namespace ForbiddenClient.Features.Worlds
                     }
                     if (hand[0].field_Internal_VRC_Pickup_0 != null && !stopright)
                     {
-                        if (hand[0].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                        if (hand[0].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                         {
                             VRC.SDKBase.VRC_Pickup pickup = hand[0].field_Internal_VRC_Pickup_0;
                             UdonBehaviour udon = pickup.gameObject.GetComponent<UdonBehaviour>();
@@ -355,7 +355,7 @@ namespace ForbiddenClient.Features.Worlds
                     }
                     if (hand[1].field_Internal_VRC_Pickup_0 != null && !stopleft)
                     {
-                        if (hand[1].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                        if (hand[1].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                         {
                             VRC.SDKBase.VRC_Pickup pickup = hand[1].field_Internal_VRC_Pickup_0;
                             UdonBehaviour udon = pickup.gameObject.GetComponent<UdonBehaviour>();
@@ -490,7 +490,7 @@ namespace ForbiddenClient.Features.Worlds
                     }
                     if (hand[0].field_Internal_VRC_Pickup_0 != null)
                     {
-                        if (hand[0].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                        if (hand[0].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                         {
                             pickup1 = hand[0].field_Internal_VRC_Pickup_0;
                             udon1 = pickup1.gameObject.GetComponent<UdonBehaviour>();
@@ -507,7 +507,7 @@ namespace ForbiddenClient.Features.Worlds
                     }
                     if (hand[1].field_Internal_VRC_Pickup_0 != null)
                     {
-                        if (hand[1].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                        if (hand[1].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                         {
                             pickup2 = hand[1].field_Internal_VRC_Pickup_0;
                             udon2 = pickup2.gameObject.GetComponent<UdonBehaviour>();
@@ -544,7 +544,7 @@ namespace ForbiddenClient.Features.Worlds
             bool stop = false;
             if (hand[0].field_Internal_VRC_Pickup_0 != null)
             {
-                if (hand[0].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                if (hand[0].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                 {
                     pickup = hand[0].field_Internal_VRC_Pickup_0;
                     udon = pickup.gameObject.GetComponent<UdonBehaviour>();
@@ -562,7 +562,7 @@ namespace ForbiddenClient.Features.Worlds
                 }
                 if (hand[0].field_Internal_VRC_Pickup_0 != null)
                 {
-                    if (hand[0].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                    if (hand[0].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                     {
                         stop = false;
                         pickup = hand[0].field_Internal_VRC_Pickup_0;
@@ -603,7 +603,7 @@ namespace ForbiddenClient.Features.Worlds
             bool stop = false;
             if (hand[1].field_Internal_VRC_Pickup_0 != null)
             {
-                if (hand[1].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                if (hand[1].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                 {
                     pickup = hand[1].field_Internal_VRC_Pickup_0;
                     udon = pickup.gameObject.GetComponent<UdonBehaviour>();
@@ -621,7 +621,7 @@ namespace ForbiddenClient.Features.Worlds
                 }
                 if (hand[1].field_Internal_VRC_Pickup_0 != null)
                 {
-                    if (hand[1].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                    if (hand[1].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                     {
                         stop = false;
                         pickup = hand[1].field_Internal_VRC_Pickup_0;

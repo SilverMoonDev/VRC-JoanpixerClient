@@ -60,7 +60,7 @@ namespace ForbiddenClient.Features.Worlds
                     }
                     if (hand[0].field_Internal_VRC_Pickup_0 != null)
                     {
-                        if (hand[0].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                        if (hand[0].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                         {
                             if (hand[0].field_Internal_VRC_Pickup_0.gameObject.GetComponent<UdonBehaviour>()._eventTable.ContainsKey("fire") && hand[0].field_Internal_VRCInput_1.field_Public_Single_0 == 1f && !stopperRight)
                             {
@@ -91,7 +91,7 @@ namespace ForbiddenClient.Features.Worlds
                     }
                     if (hand[1].field_Internal_VRC_Pickup_0 != null)
                     {
-                        if (hand[1].field_Internal_VRC_Pickup_0.gameObject.name != "ViewFinder")
+                        if (hand[1].field_Internal_VRC_Pickup_0.gameObject.scene.name != "DontDestroyOnLoad")
                         {
                             if (hand[1].field_Internal_VRC_Pickup_0.gameObject.GetComponent<UdonBehaviour>()._eventTable.ContainsKey("fire") && hand[1].field_Internal_VRCInput_1.field_Public_Single_0 == 1f && !stopperLeft)
                             {
