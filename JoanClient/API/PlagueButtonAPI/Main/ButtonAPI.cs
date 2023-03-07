@@ -139,7 +139,7 @@ namespace ForbiddenButtonAPI
                 MelonLogger.Error("wingSingleButtonBase == null!");
             }
 
-            sliderBase = userinterface.transform.Find("Canvas_QuickMenu(Clone)/CanvasGroup/Container/Window/QMParent/Menu_AudioSettings/Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/Audio/VolumeSlider_Master")?.gameObject;
+            sliderBase = userinterface.transform.Find("Canvas_QuickMenu(Clone)/CanvasGroup/Container/Window/QMParent/Menu_AudioSettings/Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/Audio/Audio/VolumeSlider_Master")?.gameObject;
 
             if (sliderBase == null)
             {

@@ -40,12 +40,12 @@ namespace ForbiddenButtonAPI.Misc
 
         public static Player GetCurrentlySelectedPlayer()
         {
-            return GetPlayerFromIDInLobby(ButtonAPI.userinterface?.gameObject?.GetComponentsInChildren<SelectedUserMenuQM>(true)?.First(o => o.field_Private_IUser_0 != null)?.field_Private_IUser_0?.prop_String_0);
+            return GetPlayerFromIDInLobby(ButtonAPI.userinterface?.gameObject?.GetComponentsInChildren<SelectedUserMenuQM>(true)?.First(o => o.field_Private_InterfacePublicAbstractStCoStBoObSt1BoSi1Unique_0 != null)?.field_Private_InterfacePublicAbstractStCoStBoObSt1BoSi1Unique_0?.prop_String_0);
         }
 
         public static string GetCurrentlySelectedPlayerID_LocalAndRemote()
         {
-            return ButtonAPI.userinterface?.gameObject?.GetComponentsInChildren<SelectedUserMenuQM>(true)?.First(o => o.field_Private_IUser_0 != null)?.field_Private_IUser_0?.prop_String_0;
+            return ButtonAPI.userinterface?.gameObject?.GetComponentsInChildren<SelectedUserMenuQM>(true)?.First(o => o.field_Private_InterfacePublicAbstractStCoStBoObSt1BoSi1Unique_0 != null)?.field_Private_InterfacePublicAbstractStCoStBoObSt1BoSi1Unique_0?.prop_String_0;
         }
 
         public static Player GetPlayerFromIDInLobby(string id)

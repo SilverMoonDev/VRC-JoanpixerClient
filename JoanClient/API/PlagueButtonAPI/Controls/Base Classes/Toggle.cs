@@ -20,7 +20,7 @@ namespace ForbiddenButtonAPI.Controls.Base_Classes
         [Obsolete]
         public UnityEngine.UI.Toggle buttontoggle => toggle;
 
-        public UIToggleTooltip tooltip => gameObject?.GetComponentInChildren<UIToggleTooltip>(true);
+        public UiToggleTooltip tooltip => gameObject?.GetComponentInChildren<UiToggleTooltip>(true);
 
         public Image OnImage => transform?.Find("Icon_On")?.GetComponentInChildren<Image>(true);
         public Image OffImage => transform?.Find("Icon_Off")?.GetComponentInChildren<Image>(true);

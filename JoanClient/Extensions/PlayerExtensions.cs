@@ -225,19 +225,19 @@ namespace FlightMod
             return (int)player.GetPlayerNet().field_Private_Int16_0;
         }
 
-        public static void ChangeAvatar(string AvatarID)
-        {
-            new PageAvatar
-            {
-                field_Public_SimpleAvatarPedestal_0 = new SimpleAvatarPedestal
-                {
-                    field_Internal_ApiAvatar_0 = new ApiAvatar
-                    {
-                        id = AvatarID
-                    }
-                }
-            }.ChangeToSelectedAvatar();
-        }
+        //public static void ChangeAvatar(string AvatarID)
+        //{
+        //    new PageAvatar
+        //    {
+        //        field_Public_SimpleAvatarPedestal_0 = new SimpleAvatarPedestal
+        //        {
+        //            field_Internal_ApiAvatar_0 = new ApiAvatar
+        //            {
+        //                id = AvatarID
+        //            }
+        //        }
+        //    }.ChangeToSelectedAvatar();
+        //}
 
         public static void SetLocalPlayerWalkSpeed(float speed)
         {

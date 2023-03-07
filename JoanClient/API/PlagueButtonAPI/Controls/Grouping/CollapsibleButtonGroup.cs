@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Linq;
-using MelonLoader;
 using ForbiddenButtonAPI.Misc;
 using ForbiddenButtonAPI.Pages;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
-using VRC.UI.Core.Styles;
-using VRC.UI.Elements;
 using Object = UnityEngine.Object;
 
 namespace ForbiddenButtonAPI.Controls.Grouping
@@ -26,17 +22,19 @@ namespace ForbiddenButtonAPI.Controls.Grouping
             buttonGroup.headerGameObject.transform.Find("Background_Button").gameObject.SetActive(true);
             buttonGroup.headerGameObject.transform.Find("Arrow").gameObject.SetActive(true);
 
-            var foldout = buttonGroup.headerGameObject.GetComponent<FoldoutToggle>();
+            var foldout = buttonGroup.headerGameObject.GetOrAddComponent<FoldoutToggle>();
 
-            foldout.field_Private_String_0 = "ForbiddenButtonGroup";
+            foldout.name = "ForbiddenButtonGroup";
 
-            foldout.field_Private_Action_1_Boolean_0 = new Action<bool>(val =>
-            {
-                buttonGroup.gameObject.SetActive(val);
-                IsOpen = val;
-            });
+            foldout.toggle.onValueChanged.AddListener((UnityAction<bool>)ToggleButtonState);
 
             buttonGroup.headerGameObject.transform.Find("Background_Button").gameObject.GetComponent<Toggle>().isOn = openByDefault;
+        }
+
+        public void ToggleButtonState(bool newState)
+        {
+            buttonGroup.SetActive(newState);
+            IsOpen = newState;
         }
 
         [Obsolete("This constructor is obsolete. Please use YourMenuPage.AddCollapsibleButtonGroup() instead.", true)]

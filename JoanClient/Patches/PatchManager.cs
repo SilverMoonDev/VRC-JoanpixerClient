@@ -44,7 +44,6 @@ namespace ForbiddenClient
                 BindingFlags.Static | BindingFlags.NonPublic));
         }
 
-        internal static MethodInfo _loadAvatarMethod;
 
         public static unsafe void InitPatch()
         {
@@ -53,49 +52,38 @@ namespace ForbiddenClient
             #endregion
             try
             {
-                loggedin = true;
                 MelonCoroutines.Start(Faggot());
-                _loadAvatarMethod =
-                typeof(VRCPlayer).GetMethods()
-                .First(mi =>
-                    mi.Name.StartsWith("Method_Private_Void_Boolean_")
-                    && mi.Name.Length < 31
-                    && mi.GetParameters().Any(pi => pi.IsOptional)
-                    && XrefScanner.UsedBy(mi) // Scan each method
-                        .Any(instance => instance.Type == XrefType.Method
-                            && instance.TryResolve() != null
-                            && instance.TryResolve().Name == "ReloadAvatarNetworkedRPC"));
-                
+
                 MethodInfo[] player = (from m in typeof(NetworkManager).GetMethods()
-                                      where m.Name.StartsWith("Method_Public_Void_Player_") && !m.Name.Contains("PDM")
-                                      select m).ToArray();
-                
+                                       where m.Name.StartsWith("Method_Public_Void_Player_") && !m.Name.Contains("PDM")
+                                       select m).ToArray();
+
                 Instance.Patch(typeof(APIUser).GetMethod("LocalAddFriend"), GetPatch("FriendAdded"), null);
-                
+
                 Instance.Patch(typeof(APIUser).GetMethod("UnfriendUser"), GetPatch("UnFriended"), null);
-                
+
                 Instance.Patch(typeof(PortalTrigger).GetMethod(nameof(PortalTrigger.OnTriggerEnter), BindingFlags.Public | BindingFlags.Instance), GetPatch("EnterPortal"), null, null);
-                
+
                 Instance.Patch(typeof(UdonSync).GetMethod(nameof(UdonSync.UdonSyncRunProgramAsRPC)), GetPatch("UdonSyncPatch"), null);
-                
+
                 Instance.Patch(typeof(NetworkManager).GetMethod(player[0].Name), GetPatch("OnPlayerJoin"), null);
-                
+
                 Instance.Patch(typeof(NetworkManager).GetMethod(player[1].Name), GetPatch("OnPlayerLeft"), null);
-                
+
                 Instance.Patch(typeof(VRC_EventDispatcherRFC).GetMethod("Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0"), GetPatch("OnVRCEvent"), null, null);
-                
+
                 Instance.Patch(typeof(NetworkManager).GetMethod("OnLeftRoom"), GetPatch("OnLeftRoom"), null);
-                
+
                 Instance.Patch(typeof(VRC_Pickup).GetMethod(nameof(VRC_Pickup.Awake)), GetPatch("Pickupsuwu"), null);
-                
+
                 Instance.Patch(typeof(VRC_Interactable).GetMethod(nameof(VRC_Interactable.Awake)), GetPatch("Triggers"), null);
-                
+
                 Instance.Patch(typeof(NetworkManager).GetMethod("Method_Public_Virtual_Final_New_Void_EventData_0"), GetPatch("OnEvent"), null);
-                
+
                 Instance.Patch(typeof(LoadBalancingClient).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0"), GetPatch("OpRaiseEventPrefix"), null, null);
-                
+
                 Instance.Patch(typeof(VRCHandGrasper).GetMethod(nameof(VRCHandGrasper.Method_Public_Static_VRCPlayerApi_VRC_Pickup_PDM_0)), GetPatch("Grasper"), null);
-                
+
                 //Hardware
                 if (SpoofAllHardware)
                 {
@@ -161,9 +149,9 @@ namespace ForbiddenClient
                     {
                         Utils.ConsoleLog(ConsoleLogType.Msg, "Spoofed All Hardware");
                     }
-                    
+
                 }
-                
+
             }
             catch (Exception arg)
             {

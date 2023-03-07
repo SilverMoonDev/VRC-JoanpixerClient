@@ -146,14 +146,7 @@ namespace ForbiddenButtonAPI.Pages
                 backButtonGameObject.GetComponentInChildren<Button>().onClick = new Button.ButtonClickedEvent();
                 backButtonGameObject.GetComponentInChildren<Button>().onClick.AddListener((Action)delegate
                 {
-                    if (isRoot)
-                    {
-                        ButtonAPI.GetMenuStateControllerInstance().Method_Public_Void_String_UIContext_Boolean_TransitionType_0("QuickMenuDashboard", null, false, UIPage.TransitionType.Right);
-                    }
-                    else
-                    {
-                        page.Method_Protected_Virtual_New_Void_0();
-                    }
+                    page.Method_Protected_Virtual_New_Void_0();
                 });
                 region++;
                 extButtonGameObject.SetActive(expandButton);
@@ -433,7 +426,7 @@ namespace ForbiddenButtonAPI.Pages
 
         public void OpenMenu()
         {
-            ButtonAPI.GetMenuStateControllerInstance().Method_Public_Void_String_UIContext_Boolean_TransitionType_0(page.field_Public_String_0);
+            ButtonAPI.GetMenuStateControllerInstance().Method_Public_Void_String_ObjectPublicStBoAc1ObObUnique_Boolean_EnumNPublicSealedvaNoLeRiBoIn6vUnique_0(page.field_Public_String_0);
         }
 
         public void OpenMenu(Action RunAfter) => OpenMenu(RunAfter, null);

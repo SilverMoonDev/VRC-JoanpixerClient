@@ -89,15 +89,15 @@ namespace ForbiddenClient.Modules
 
         void FavButton_OnClick()
         {
-            if (!AvatarObjects.Exists(m => m.id == currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0.id))
-            {
-                FavouriteAvatar(currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0);
-            }
-            else
-            {
-                UnfavouriteAvatar(currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0);
-            }
-            MelonCoroutines.Start(RefreshMenu(1));
+            //if (!AvatarObjects.Exists(m => m.id == currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0.id))
+            //{
+            //    FavouriteAvatar(currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0);
+            //}
+            //else
+            //{
+            //    UnfavouriteAvatar(currPageAvatar.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0);
+            //}
+            //MelonCoroutines.Start(RefreshMenu(1));
         }
 
 

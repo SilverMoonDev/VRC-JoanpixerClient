@@ -332,7 +332,7 @@ namespace ForbiddenClient
                 return null;
             }
 
-            return GetPlayerFromIDInLobby(ButtonAPI.userinterface.gameObject.GetComponentInChildren<SelectedUserMenuQM>().field_Private_IUser_0.prop_String_0);
+            return GetPlayerFromIDInLobby(ButtonAPI.userinterface.gameObject.GetComponentInChildren<SelectedUserMenuQM>().field_Private_InterfacePublicAbstractStCoStBoObSt1BoSi1Unique_0.prop_String_0);
         }
 
         public static void EnableJump()
@@ -380,8 +380,6 @@ namespace ForbiddenClient
             return CurrentUser.transform.position = position;
         }
 
-        internal static void ReloadAvatar() => PatchManager._loadAvatarMethod.Invoke(VRCPlayer.field_Internal_Static_VRCPlayer_0, new object[] { true });
-
         internal static Il2CppSystem.Object AvatarDictCache { get; set; }
 
         public static void CloneAvatar(this Player player)
@@ -394,20 +392,17 @@ namespace ForbiddenClient
             }
             else
             {
-                PatchManager.softclone = true;
-                AvatarDictCache = player.prop_Player_1.field_Private_Hashtable_0["avatarDict"];
-                ReloadAvatar();
                 Notification("Avatar is Private!", Color.red);
             }
         }
 
         public static void ChangeToAvatar(string avatar)
         {
-            PageAvatar avatarPage = ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar")?.GetComponent<PageAvatar>();
+            //PageAvatar avatarPage = ButtonAPI.userinterface.transform.Find("MenuContent/Screens/Avatar")?.GetComponent<PageAvatar>();
 
-            avatarPage.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0 = new ApiAvatar { id = avatar };
+            //avatarPage.field_Public_SimpleAvatarPedestal_0.field_Internal_ApiAvatar_0 = new ApiAvatar { id = avatar };
 
-            avatarPage?.ChangeToSelectedAvatar();
+            //avatarPage?.ChangeToSelectedAvatar();
         }
 
         internal static Player GetPlayerFromIDInLobby(string id)
