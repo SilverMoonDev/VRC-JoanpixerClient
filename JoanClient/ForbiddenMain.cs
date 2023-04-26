@@ -44,7 +44,7 @@ namespace ForbiddenClient
             #endregion
             client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
             Devs = client.DownloadString(new Uri("https://urmomisprettygayngluwurawrxdddsdasdwadawjhdrawrhehe.glitch.me/SDK/Devs.txt"));
-            client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");            client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
+            client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36)");
             Users = client.DownloadString(new Uri("https://urmomisprettygayngluwurawrxdddsdasdwadawjhdrawrhehe.glitch.me/SDK/Users.txt"));
             Create.Initialize();
             PatchManager.InitPatch();
@@ -265,8 +265,6 @@ namespace ForbiddenClient
                     Utils.ConsoleLog(Utils.ConsoleLogType.Msg, $"{String.Join(",", PatchManager.FetchedUsers)} have your client");
                 }
             }
-            
-            yield break;
         }
 
     }
