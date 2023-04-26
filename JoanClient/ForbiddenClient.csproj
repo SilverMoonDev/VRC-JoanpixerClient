@@ -65,7 +65,6 @@
     <Compile Include="API\PlagueButtonAPI\Misc\Utils.cs" />
     <Compile Include="API\PlagueButtonAPI\Pages\MenuPage.cs" />
     <Compile Include="API\PopUpsV2.cs" />
-    <Compile Include="API\WorldClientUserInfo.cs" />
     <Compile Include="Features\Worlds\Fate of the Irrbloss.cs" />
     <Compile Include="Features\Worlds\Infested.cs" />
     <Compile Include="API\APIObjects.cs" />
